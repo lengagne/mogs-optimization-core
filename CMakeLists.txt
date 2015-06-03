@@ -21,6 +21,7 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2 -fpic")
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
+SET(CMAKE_MODULE_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 set( LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
@@ -31,7 +32,7 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-find_package(ipopt REQUIRED)
+find_package(IPOPT REQUIRED)
 
 include_directories ( 
 	include
@@ -68,6 +69,17 @@ ADD_LIBRARY(	MogsOptimization SHARED
 target_link_libraries( MogsOptimization
 			MogsCore
 			${IPOPT_LIBRARIES})
+			
+add_custom_target(test_solver)
+			
+add_executable(	test_ipopt	EXCLUDE_FROM_ALL
+		"${CMAKE_CURRENT_SOURCE_DIR}/test/test_ipopt.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/test/MyNLP.cpp")
+		
+target_link_libraries(	test_ipopt
+			${IPOPT_LIBRARIES})
+			
+add_dependencies(test_solver test_ipopt)
 
 # Perform the proper linking
 SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
@@ -95,3 +107,5 @@ configure_file(MogsOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimi
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimization" COMPONENT dev ) 
+
+install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-optimization ${INSTALL_LIB_DIRS}/libMogsOptimization.so)")

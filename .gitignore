@@ -7,3 +7,5 @@ auto_install
 */include/config*.h
 *test*.xml
 *.kdev4
+
+include/config_MogsOptimization.h
