@@ -1,0 +1,16 @@
+# - Config file for the MogsOptimization lib
+# It defines the following variables
+#
+# MogsOptimization_INCLUDE_DIRS - include directories
+# MogsOptimization_LIBRARY_DIRS - library directory (normally not used!)
+# MogsOptimization_LIBRARIES - libraries to link against
+ 
+# Tell the user project where to find our headers and libraries
+
+set(MogsOptimization_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsOptimization_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsOptimization_LIBRARIES @MogsOptimization_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsOptimization_FLAGS @MogsOptimization_FLAGS@ @MogsCore_FLAGS@)
