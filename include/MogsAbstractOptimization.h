@@ -23,7 +23,6 @@
 #ifndef __MOGSABSTRACTOPTIMIZATION__
 #define __MOGSABSTRACTOPTIMIZATION__
 
-#include "MogsTinyxml.h"
 #include "MogsAbstractProblem.h"
 
 #include "IpIpoptApplication.hpp"
@@ -45,7 +44,7 @@ class MogsAbstractOptimization: public MogsAbstractProblem
 	 * 	The function returns false when the pattern is ended.	
 	 */
 	
-        virtual void read_problem (const mogs_string & filename);
+        virtual void read_problem (const mogs_string & filename) = 0;
 	
 	/** Solve the problem	 */
 	void solve();

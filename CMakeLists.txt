@@ -1,10 +1,10 @@
-PROJECT (MogsOptimization)
+PROJECT (MogsOptimizationCore)
 set(PROJECT_CONTACT lengagne@gmail.com)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-set (MogsOptimization_VERSION_MAJOR 1)
-set (MogsOptimization_VERSION_MINOR 0)
+set (MogsOptimizationCore_VERSION_MAJOR 1)
+set (MogsOptimizationCore_VERSION_MINOR 0)
 
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 include(CheckCXXCompilerFlag)
@@ -33,6 +33,7 @@ foreach(p LIB INCLUDE)
 endforeach()
 
 find_package(IPOPT REQUIRED)
+find_package(MogsCore REQUIRED)
 
 include_directories ( 
 	include
@@ -40,8 +41,8 @@ include_directories (
 	${IPOPT_INCLUDE_DIRS}
 )
 
-configure_file ( "${PROJECT_SOURCE_DIR}/config_MogsOptimization.h.in"
-		 "${PROJECT_SOURCE_DIR}/include/config_MogsOptimization.h" )
+configure_file ( "${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
+		 "${PROJECT_SOURCE_DIR}/include/config_MogsOptimizationCore.h" )
 
 
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
@@ -54,21 +55,9 @@ link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
 # Perform the proper linking
 SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
-file(	GLOB_RECURSE
-	MogsOptimization_SOURCES
-	src/* )
-
 FILE ( GLOB_RECURSE
-        header_files_MogsOptimization
+        header_files_MogsOptimizationCore
 	include/*.h)
-
-ADD_LIBRARY(	MogsOptimization SHARED 
-		${MogsOptimization_SOURCES}
-)
-
-target_link_libraries( MogsOptimization
-			MogsCore
-			${IPOPT_LIBRARIES})
 			
 add_custom_target(test_solver)
 			
@@ -85,27 +74,22 @@ add_dependencies(test_solver test_ipopt)
 SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
 # install the include files
-SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsOptimization)
+SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsOptimizationCore)
 SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
 # install the include files
-install(FILES ${header_files_MogsOptimization} DESTINATION ${INSTALL_INCLUDE_DIRS})
-
-# install the library files
-install( TARGETS MogsOptimization LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+install(FILES ${header_files_MogsOptimizationCore} DESTINATION ${INSTALL_INCLUDE_DIRS})
 
 ### Configure file
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-SET(MogsOptimization_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-SET(MogsOptimization_LIBRARY_DIRS  "${CMAKE_INSTALL_LIBDIR}/lib" CACHE INTERNAL "")
-SET(MogsOptimization_LIBRARIES  MogsOptimization CACHE INTERNAL "")
-SET(MogsOptimization_FLAGS "-DMogsOptimization_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
-# SET(MogsOptimization_FLAGS "-DMogsOptimization_FOUND" CACHE INTERNAL "")
-add_definitions(${MogsOptimization_FLAGS})
+SET(MogsOptimizationCore_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
+SET(MogsOptimizationCore_LIBRARIES  MogsOptimizationCore CACHE INTERNAL "")
+SET(MogsOptimizationCore_FLAGS "-DMogsOptimizationCore_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+add_definitions(${MogsOptimizationCore_FLAGS})
 #  add flags (done before)
-configure_file(MogsOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationConfig.cmake" @ONLY)
+configure_file(MogsOptimizationCoreConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake" @ONLY)
 
-install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimization" COMPONENT dev ) 
+install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
+		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimizationCore" COMPONENT dev ) 
 
-install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-optimization ${INSTALL_LIB_DIRS}/libMogsOptimization.so)")
+install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-optimization ${INSTALL_LIB_DIRS}/libMogsOptimizationCore.so)")

@@ -75,7 +75,7 @@ class MogsAbstractOptimizationNLP:public TNLP
 			     Number obj_factor, Index m,
 			     const Number * lambda, bool new_lambda,
 			     Index nele_hess, Index * iRow, Index * jCol,
-			     Number * values);
+			     Number * values) = 0;
 
 	//@}
 
