@@ -40,5 +40,15 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 
 void MogsIpoptOptimization::solve()
 {
+    std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
+}
 
+extern "C" MogsIpoptOptimization* create()
+{
+    return new MogsIpoptOptimization();
+}
+
+extern "C" void destroy(MogsIpoptOptimization* p)
+{
+    delete p;
 }

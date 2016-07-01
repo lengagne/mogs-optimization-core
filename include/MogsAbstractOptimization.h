@@ -33,21 +33,10 @@ class MogsAbstractOptimization: public MogsAbstractProblem
 {
       public:
 
-	MogsAbstractOptimization();
-
-	~MogsAbstractOptimization();
-
-
-	/** This function get the current time,
-	 *	the current values of joint position, velocity, acceleration and torques
-	 * 	and compute the needed values
-	 * 	The function returns false when the pattern is ended.
-	 */
-
         virtual void read_problem (const mogs_string & filename) = 0;
 
 	/** Solve the problem	 */
-	void solve();
+        virtual void solve() = 0;
 
 
       protected:

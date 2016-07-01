@@ -86,6 +86,9 @@ if(IPOPT_FOUND)
     # install the include files
     install(FILES ${header_files_MogsIpoptOptimization} DESTINATION ${INSTALL_INCLUDE_DIRS})
 
+    # install the library files
+    install( TARGETS MogsIpoptOptimization LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+
     ### Configure file
     get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
     SET(MogsIpoptOptimization_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
@@ -93,7 +96,11 @@ if(IPOPT_FOUND)
     SET(MogsIpoptOptimization_FLAGS "-DMogsIpoptOptimization_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
     add_definitions(${MogsIpoptOptimization_FLAGS})
     #  add flags (done before)
-    #configure_file(MogsIpoptOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsIpoptOptimizationConfig.cmake" @ONLY)
+    configure_file(MogsIpoptOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsIpoptOptimizationConfig.cmake" @ONLY)
+
+    install(DIRECTORY 		${CMAKE_CURRENT_SOURCE_DIR}/data/templates
+                            ${CMAKE_CURRENT_SOURCE_DIR}/data/xsd
+            DESTINATION 	${CMAKE_INSTALL_LIBDIR}/share/mogs2)
 
     install ( 	FILES "${PROJECT_BINARY_DIR}/MogsIpoptOptimizationConfig.cmake"
             DESTINATION "${INSTALL_LIB_PATH}/MogsIpoptOptimization" COMPONENT dev )

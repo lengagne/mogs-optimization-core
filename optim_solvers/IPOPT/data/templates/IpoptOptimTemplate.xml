@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="mogs-ipopt-optimization">
+    <robot>
+        <name>KUKA</name>
+    </robot>
+    <results/>
+</problem>
