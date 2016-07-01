@@ -31,6 +31,10 @@
 #include "IpSolveStatistics.hpp"
 
 
+#include "IpTNLP.hpp"
+
+using namespace Ipopt;
+
 class MogsIpoptOptimization: public MogsAbstractOptimization
 {
       public:
@@ -52,7 +56,10 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         void solve();
 
 
-      protected:
+      private:
+        SmartPtr < TNLP > nlp_;
+        SmartPtr < IpoptApplication > app_;
+
 };
 
 
