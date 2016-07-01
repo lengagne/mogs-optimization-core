@@ -1,0 +1,11 @@
+#ifndef MogsIpoptOptimization_CONFIG_H
+#define MogsIpoptOptimization_CONFIG_H
+
+#define MogsIpoptOptimization_VERSION_MAJOR @MogsIpoptOptimization_VERSION_MAJOR@
+#define MogsIpoptOptimization_VERSION_MINOR @MogsIpoptOptimization_VERSION_MINOR@
+
+#define MOGS_IPOPT_PROBLEM_OPTIMIZATION_XSD_FILE "@CMAKE_BINARY_DIR@/data/xsd/MogsIpoptOptimizationProblem.xsd"
+#define MOGS_IPOPT_PROBLEM_OPTIMIZATION_XML_FILE "@CMAKE_BINARY_DIR@/data/template/MogsIpoptOptimizationProblem.xml"
+
+#endif
+

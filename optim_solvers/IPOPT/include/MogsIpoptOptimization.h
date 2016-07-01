@@ -1,4 +1,4 @@
-//      MogsAbstractOptimization.h
+//      MogsIpoptOptimization.h
 //      Copyright (C) 2012 lengagne (lengagne@gmail.com)
 //
 //      This program is free software: you can redistribute it and/or modify
@@ -20,22 +20,24 @@
 //      2012-2013:  IUT de Beziers/ LIRMM, Beziers, France
 //	from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
-#ifndef __MOGSABSTRACTOPTIMIZATION__
-#define __MOGSABSTRACTOPTIMIZATION__
+#ifndef __MogsIpoptOptimization__
+#define __MogsIpoptOptimization__
 
-#include "MogsAbstractProblem.h"
+#include "MogsAbstractOptimization.h"
+
+#include "config_MogsIpoptOptimizationCore.h"
 
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
 
 
-class MogsAbstractOptimization: public MogsAbstractProblem
+class MogsIpoptOptimization: public MogsAbstractOptimization
 {
       public:
 
-	MogsAbstractOptimization();
+	MogsIpoptOptimization();
 
-	~MogsAbstractOptimization();
+	~MogsIpoptOptimization();
 
 
 	/** This function get the current time,
@@ -44,10 +46,10 @@ class MogsAbstractOptimization: public MogsAbstractProblem
 	 * 	The function returns false when the pattern is ended.
 	 */
 
-        virtual void read_problem (const mogs_string & filename) = 0;
+        void read_problem (const mogs_string & filename);
 
-	/** Solve the problem	 */
-	void solve();
+        /** Solve the problem	 */
+        void solve();
 
 
       protected:

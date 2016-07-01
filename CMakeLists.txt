@@ -32,50 +32,35 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-find_package(IPOPT REQUIRED)
 find_package(MogsCore REQUIRED)
 
-include_directories ( 
+include_directories (
 	include
 	${MogsCore_INCLUDE_DIRS}
-	${IPOPT_INCLUDE_DIRS}
 )
 
-configure_file ( "${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
-		 "${PROJECT_SOURCE_DIR}/include/config_MogsOptimizationCore.h" )
-
-
-get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-set(MOGS_CORE_INCLUDE_DIRS "${Include_Directories}" CACHE INTERNAL "" )
-
-link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
-			${IPOPT_LIBRARY_DIRS}
-)
-
-# Perform the proper linking
-SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-
-FILE ( GLOB_RECURSE
-        header_files_MogsOptimizationCore
-	include/*.h)
-			
-add_custom_target(test_solver)
-			
-add_executable(	test_ipopt	EXCLUDE_FROM_ALL
-		"${CMAKE_CURRENT_SOURCE_DIR}/test/test_ipopt.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/test/MyNLP.cpp")
-		
-target_link_libraries(	test_ipopt
-			${IPOPT_LIBRARIES})
-			
-add_dependencies(test_solver test_ipopt)
-
-# Perform the proper linking
-SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-
+configure_file ("${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
+                "${PROJECT_SOURCE_DIR}/include/config_MogsOptimizationCore.h" )
+#
+#
+#get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+#set(MOGS_CORE_INCLUDE_DIRS "${Include_Directories}" CACHE INTERNAL "" )
+#
+#link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
+#)
+#
+## Perform the proper linking
+#SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+#
+#FILE ( GLOB_RECURSE
+#        header_files_MogsOptimizationCore
+#        include/*.h)
+#
+## Perform the proper linking
+#SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+#
 # install the include files
 SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsOptimizationCore)
-SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
 # install the include files
 install(FILES ${header_files_MogsOptimizationCore} DESTINATION ${INSTALL_INCLUDE_DIRS})
@@ -85,11 +70,14 @@ get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY 
 SET(MogsOptimizationCore_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsOptimizationCore_LIBRARIES  MogsOptimizationCore CACHE INTERNAL "")
 SET(MogsOptimizationCore_FLAGS "-DMogsOptimizationCore_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsOptimizationCore_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsOptimizationCore_FLAGS})
 #  add flags (done before)
 configure_file(MogsOptimizationCoreConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake" @ONLY)
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimizationCore" COMPONENT dev ) 
+		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimizationCore" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-optimization ${INSTALL_LIB_DIRS}/libMogsOptimizationCore.so)")
+message("before include_directories")
+
+add_subdirectory(optim_solvers)

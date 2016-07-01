@@ -1,4 +1,4 @@
-//      MogsAbstractOptimization.h
+//      MogsIpoptOptimization.cpp
 //      Copyright (C) 2012 lengagne (lengagne@gmail.com)
 //
 //      This program is free software: you can redistribute it and/or modify
@@ -20,39 +20,25 @@
 //      2012-2013:  IUT de Beziers/ LIRMM, Beziers, France
 //	from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
-#ifndef __MOGSABSTRACTOPTIMIZATION__
-#define __MOGSABSTRACTOPTIMIZATION__
-
-#include "MogsAbstractProblem.h"
-
-#include "IpIpoptApplication.hpp"
-#include "IpSolveStatistics.hpp"
+#include "MogsIpoptOptimization.h"
 
 
-class MogsAbstractOptimization: public MogsAbstractProblem
+MogsIpoptOptimization::MogsIpoptOptimization()
 {
-      public:
+    xsd_file_ = MOGS_IPOPT_PROBLEM_OPTIMIZATION_XSD_FILE;
+}
 
-	MogsAbstractOptimization();
+MogsIpoptOptimization::~MogsIpoptOptimization()
+{
 
-	~MogsAbstractOptimization();
+}
 
+void MogsIpoptOptimization::read_problem (const mogs_string & filename)
+{
 
-	/** This function get the current time,
-	 *	the current values of joint position, velocity, acceleration and torques
-	 * 	and compute the needed values
-	 * 	The function returns false when the pattern is ended.
-	 */
+}
 
-        virtual void read_problem (const mogs_string & filename) = 0;
+void MogsIpoptOptimization::solve()
+{
 
-	/** Solve the problem	 */
-	void solve();
-
-
-      protected:
-};
-
-
-
-#endif
+}
