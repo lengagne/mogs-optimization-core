@@ -21,8 +21,7 @@
 //	    from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
 #include "MogsIpoptOptimization.h"
-
-#include "NLP_sample.hpp"
+#include "MogsProblemClassifier.h"
 
 MogsIpoptOptimization::MogsIpoptOptimization()
 {
@@ -31,13 +30,43 @@ MogsIpoptOptimization::MogsIpoptOptimization()
 
 MogsIpoptOptimization::~MogsIpoptOptimization()
 {
-
+    // FIXME
+//    destructor_(&nlp_);
 }
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
     // loaded the good type of problem
-    nlp_ = new NLP_sample ();
+    MogsProblemClassifier mpc;
+    mogs_string plugin_name = "NLP_sample";
+    mogs_string library_so;
+    if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
+    {
+        // load the library
+        void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
+        if (!library) {
+            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+            exit(0);
+        }
+
+        // load the symbols
+        creator_ = (create_nlp_ipopt*) dlsym(library, "create");
+        destructor_ = (destroy_nlp_ipopt*) dlsym(library, "destroy");
+        if (!creator_ || !destructor_)
+        {
+            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+            exit(0);
+        }
+
+        // create an instance of the class
+        nlp_ = creator_();
+    }else
+    {
+        qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
+        exit(0);
+    }
+
+
     	// Create an instance of the IpoptApplication
 	app_ = IpoptApplicationFactory ();
 

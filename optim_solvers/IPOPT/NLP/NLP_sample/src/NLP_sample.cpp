@@ -211,3 +211,14 @@ void NLP_sample::finalize_solution (SolverReturn status,
 	// so we could use the solution. Since the solution is displayed to the console,
 	// we currently do nothing here.
 }
+
+extern "C" NLP_sample* create()
+{
+    return new NLP_sample();
+}
+
+extern "C" void destroy(NLP_sample* p)
+{
+    delete p;
+}
+

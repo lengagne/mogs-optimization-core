@@ -111,4 +111,4 @@ else()
     message("IPOPT was not FOUND, so we do not compile MogsIpoptOptimization")
 endif(IPOPT_FOUND)
 
-# add_subdirectory(NLP)
+ add_subdirectory(NLP)

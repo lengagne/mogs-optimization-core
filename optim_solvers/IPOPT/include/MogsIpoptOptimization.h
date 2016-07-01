@@ -35,6 +35,10 @@
 
 using namespace Ipopt;
 
+// the types of the class factories
+typedef TNLP* create_nlp_ipopt();
+typedef void destroy_nlp_ipopt(TNLP*);
+
 class MogsIpoptOptimization: public MogsAbstractOptimization
 {
       public:
@@ -60,7 +64,11 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         SmartPtr < TNLP > nlp_;
         SmartPtr < IpoptApplication > app_;
 
+        create_nlp_ipopt* creator_;
+        destroy_nlp_ipopt* destructor_;
+
 };
+
 
 
 
