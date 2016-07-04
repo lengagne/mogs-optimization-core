@@ -2,54 +2,54 @@
 // All Rights Reserved.
 // This code is published under the Eclipse Public License.
 //
-// $Id: NLP_adolc.hpp 1861 2010-12-21 21:34:47Z andreasw $
+// $Id: MogsNlpIpopt.hpp 1861 2010-12-21 21:34:47Z andreasw $
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-11-05
 
-#ifndef __NLP_adolc_HPP__
-#define __NLP_adolc_HPP__
+#ifndef __MOGS_NLP_IPOPT_HPP__
+#define __MOGS_NLP_IPOPT_HPP__
 
 #include "IpTNLP.hpp"
 
 using namespace Ipopt;
 
-class NLP_adolc:public TNLP
+class MogsNlpIpopt:public TNLP
 {
       public:
   /** default constructor */
-	NLP_adolc ();
+	MogsNlpIpopt ();
 
   /** default destructor */
-	virtual ~ NLP_adolc ();
+	virtual ~ MogsNlpIpopt ();
 
   /**@name Overloaded from TNLP */
 	//@{
   /** Method to return some info about the nlp */
 	virtual bool get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 				   Index & nnz_h_lag,
-				   IndexStyleEnum & index_style);
+				   IndexStyleEnum & index_style)=0;
 
   /** Method to return the bounds for my problem */
 	virtual bool get_bounds_info (Index n, Number * x_l, Number * x_u,
-				      Index m, Number * g_l, Number * g_u);
+				      Index m, Number * g_l, Number * g_u)=0;
 
   /** Method to return the starting point for the algorithm */
 	virtual bool get_starting_point (Index n, bool init_x, Number * x,
 					 bool init_z, Number * z_L,
 					 Number * z_U, Index m,
-					 bool init_lambda, Number * lambda);
+					 bool init_lambda, Number * lambda)=0;
 
   /** Method to return the objective value */
 	virtual bool eval_f (Index n, const Number * x, bool new_x,
-			     Number & obj_value);
+			     Number & obj_value)=0;
 
   /** Method to return the gradient of the objective */
 	virtual bool eval_grad_f (Index n, const Number * x, bool new_x,
-				  Number * grad_f);
+				  Number * grad_f)=0;
 
   /** Method to return the constraint residuals */
 	virtual bool eval_g (Index n, const Number * x, bool new_x, Index m,
-			     Number * g);
+			     Number * g)=0;
 
   /** Method to return:
    *   1) The structure of the jacobian (if "values" is NULL)
@@ -57,19 +57,7 @@ class NLP_adolc:public TNLP
    */
 	virtual bool eval_jac_g (Index n, const Number * x, bool new_x,
 				 Index m, Index nele_jac, Index * iRow,
-				 Index * jCol, Number * values);
-
-  /** Method to return:
-   *   1) The structure of the hessian of the lagrangian (if "values" is NULL)
-   *   2) The values of the hessian of the lagrangian (if "values" is not NULL)
-   */
-	virtual bool eval_h (Index n, const Number * x, bool new_x,
-			     Number obj_factor, Index m,
-			     const Number * lambda, bool new_lambda,
-			     Index nele_hess, Index * iRow, Index * jCol,
-			     Number * values);
-
-	//@}
+				 Index * jCol, Number * values)=0;
 
   /** @name Solution Methods */
 	//@{
@@ -82,7 +70,7 @@ class NLP_adolc:public TNLP
 					const Number * lambda,
 					Number obj_value,
 					const IpoptData * ip_data,
-					IpoptCalculatedQuantities * ip_cq);
+					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
       private:
@@ -97,9 +85,9 @@ class NLP_adolc:public TNLP
    *
    */
 	//@{
-	//  NLP_adolc();
-	  NLP_adolc (const NLP_adolc &);
-	  NLP_adolc & operator= (const NLP_adolc &);
+	//  NLP_sample();
+	  MogsNlpIpopt (const MogsNlpIpopt &);
+	  MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
 };
 

@@ -31,13 +31,13 @@
 #include "IpSolveStatistics.hpp"
 
 
-#include "IpTNLP.hpp"
+#include "MogsNlpIpopt.hpp"
 
 using namespace Ipopt;
 
 // the types of the class factories
-typedef TNLP* create_nlp_ipopt();
-typedef void destroy_nlp_ipopt(TNLP*);
+typedef MogsNlpIpopt* create_nlp_ipopt();
+typedef void destroy_nlp_ipopt(MogsNlpIpopt*);
 
 class MogsIpoptOptimization: public MogsAbstractOptimization
 {
@@ -59,17 +59,11 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         /** Solve the problem	 */
         void solve();
 
-
       private:
-        SmartPtr < TNLP > nlp_;
+        SmartPtr < MogsNlpIpopt > nlp_;
         SmartPtr < IpoptApplication > app_;
-
         create_nlp_ipopt* creator_;
         destroy_nlp_ipopt* destructor_;
-
 };
-
-
-
 
 #endif
