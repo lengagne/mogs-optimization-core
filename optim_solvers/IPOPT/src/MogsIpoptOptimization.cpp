@@ -38,7 +38,7 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
     // loaded the good type of problem
     MogsProblemClassifier mpc;
-    mogs_string plugin_name = "NLP_sample";
+    mogs_string plugin_name = "NLP_Adolc";
     mogs_string library_so;
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {
