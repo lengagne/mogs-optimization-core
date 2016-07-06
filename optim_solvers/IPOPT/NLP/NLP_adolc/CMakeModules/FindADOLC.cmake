@@ -25,10 +25,20 @@ find_library( ADOLC_LIBRARY
 		adolc
 		PATHS "$ENV{ADOLC_HOME}/lib64"
 		"/usr/local/lib64")
+		
+# set optional path to HSL Solver
+find_path(ADOLC_LIBRARY_DIRS
+	NAMES libadolc.so
+	PATHS "$ENV{IPOPT_HSL_LIBRARY_PATH}"
+		"$ENV{HOME}/lib64"
+		"/usr/local/lib64"
+)		
 
 
 set(ADOLC_INCLUDE_DIRS "${ADOLC_INCLUDE_DIR}" "${ADOLC_INCLUDE_DIR}/../" )
 set(ADOLC_LIBRARIES ${ADOLC_LIBRARY} )
+
+set(ADOLC_LIBRARY_DIRS ${ADOLC_LIBRARY_DIRS})
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LIBCPLEX_FOUND to TRUE

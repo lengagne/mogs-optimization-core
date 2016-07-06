@@ -122,9 +122,6 @@ class NLP_adolc:public TNLP
             NLP_adolc (const NLP_adolc &);
             NLP_adolc & operator= (const NLP_adolc &);
 
-            NLP_adolc(const NLP_adolc&);
-            NLP_adolc& operator=(const NLP_adolc&);
-
             MogsKinematics<double> kin;
             MogsKinematics<adouble> akin;
 

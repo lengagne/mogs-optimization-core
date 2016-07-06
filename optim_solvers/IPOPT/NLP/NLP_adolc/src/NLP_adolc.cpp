@@ -196,3 +196,16 @@ void NLP_adolc::finalize_solution (SolverReturn status,
             printf("f(x*) = %e\n", obj_value);
 }
 
+// For dynamic loading of the library : do not remove !!
+
+extern "C" NLP_adolc* create()
+{
+    return new NLP_adolc();
+}
+
+extern "C" void destroy(NLP_adolc* p)
+{
+    delete p;
+}
+
+
