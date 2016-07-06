@@ -9,11 +9,11 @@
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
 
-#include "IpTNLP.hpp"
+#include "MogsNlpIpopt.hpp"
 
 using namespace Ipopt;
 
-class NLP_adolc:public TNLP
+class NLP_adolc:public MogsNlpIpopt
 {
       public:
   /** default constructor */
