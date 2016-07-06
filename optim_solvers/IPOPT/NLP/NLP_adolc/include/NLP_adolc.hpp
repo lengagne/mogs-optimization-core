@@ -8,10 +8,14 @@
 
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
-
 #include "IpTNLP.hpp"
+#include "MogsKinematics.h"
+#include <adolc.h>
 
-using namespace Ipopt;
+            using namespace Ipopt;
+            typedef Eigen::Matrix<double, 3, 1> Vec;
+            typedef Eigen::Matrix<adouble, 3, 1> aVec;
+            Vec Pd = Vec(0.5, 0.5, 0.5);
 
 class NLP_adolc:public TNLP
 {
@@ -83,8 +87,25 @@ class NLP_adolc:public TNLP
 					Number obj_value,
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
-	//@}
 
+ template<typename T> T critere( const T *x,MogsKinematics<T> *kin)
+{
+    T obj_value;
+	typedef Eigen::Matrix<T, 3, 1> Vec;
+    Vec Pd = Vec(0.5, 0.5, 0.5);
+
+	Eigen::Matrix < T,Eigen::Dynamic, 1 > aq;
+	aq.resize(kin->getNDof());
+
+    for (int i=0; i<7; i++)
+		aq[i] = x[i];
+
+	kin->UpdateKinematicsCustom(&aq);
+	Vec Pr =kin->getPosition(7,  Eigen::Matrix<double, 3, 1>::Zero());
+	for (int i=0;i<7;i++)
+    obj_value = (Pr - Pd).norm();
+	return obj_value;
+}
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -98,8 +119,22 @@ class NLP_adolc:public TNLP
    */
 	//@{
 	//  NLP_adolc();
-	  NLP_adolc (const NLP_adolc &);
-	  NLP_adolc & operator= (const NLP_adolc &);
+            NLP_adolc (const NLP_adolc &);
+            NLP_adolc & operator= (const NLP_adolc &);
+
+            NLP_adolc(const NLP_adolc&);
+            NLP_adolc& operator=(const NLP_adolc&);
+
+            MogsKinematics<double> kin;
+            MogsKinematics<adouble> akin;
+
+            MogsRobotProperties robot;
+
+            Eigen::Matrix < double,Eigen::Dynamic, 1 > q;
+            Eigen::Matrix < adouble,Eigen::Dynamic, 1 > aq;
+
+            std::vector < double >qmax;
+            std::vector < double >qmin;
 	//@}
 };
 
