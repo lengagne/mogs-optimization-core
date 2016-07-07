@@ -94,6 +94,8 @@ if(IPOPT_FOUND)
     SET(MogsIpoptOptimization_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsIpoptOptimization_LIBRARIES  MogsIpoptOptimization CACHE INTERNAL "")
     SET(MogsIpoptOptimization_FLAGS "-DMogsIpoptOptimization_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+    SET(MogsIpoptOptimization_FOUND TRUE CACHE INTERNAL "")
+
     add_definitions(${MogsIpoptOptimization_FLAGS})
     #  add flags (done before)
     configure_file(MogsIpoptOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsIpoptOptimizationConfig.cmake" @ONLY)

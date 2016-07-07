@@ -14,8 +14,6 @@ if(NOT ADOLC_FOUND)
     message("We do not compile NLPAdolc since adolc was not found")
 elseif(IPOPT_FOUND)
 
-    find_package(MogsIpoptOptimization REQUIRED)
-
     if (NOT MogsIpoptOptimization_FOUND)
         find_package(MogsIpoptOptimization REQUIRED)
     endif(NOT MogsIpoptOptimization_FOUND)

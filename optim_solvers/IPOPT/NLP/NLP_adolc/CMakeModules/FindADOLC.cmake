@@ -14,17 +14,18 @@ endif (ADOLC_INCLUDE_DIR)
 find_path(ADOLC_INCLUDE_DIR NAMES adolc.h
 PATHS  "$ENV{ADOLC_HOME}/include/adolc"
 	"/usr/local/include/adolc"
-
+	"~/adolc_base/include/adolc"	
 )
 find_path(ADOLC_INCLUDE_DIR NAMES adouble.h
 PATHS  "$ENV{ADOLC_HOME}/include/adolc"
 	"/usr/local/include/adolc"
-
+	"~/adolc_base/include/adolc"	
 )
 find_library( ADOLC_LIBRARY
 		adolc
 		PATHS "$ENV{ADOLC_HOME}/lib64"
-		"/usr/local/lib64")
+		"/usr/local/lib64"
+		"~/adolc_base/lib64"	)
 		
 # set optional path to HSL Solver
 find_path(ADOLC_LIBRARY_DIRS
@@ -32,6 +33,7 @@ find_path(ADOLC_LIBRARY_DIRS
 	PATHS "$ENV{IPOPT_HSL_LIBRARY_PATH}"
 		"$ENV{HOME}/lib64"
 		"/usr/local/lib64"
+		"~/adolc_base/lib64"
 )		
 
 
