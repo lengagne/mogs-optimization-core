@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="mogs-ipopt-optimization">
+    <robot>
+        <name>KUKA</name>
+    </robot>
+    <ipopt_options type="numeric" name="max_iter" value="100"/>
+    <criteres>
+        <critere type="position" weight="1.0">
+            <body> nom du corps </body>
+            <body_position> x y z </body_position>
+            <desired_position> x y z </desired_position>
+        </critere>
+    </criteres>
+    <results/>
+</problem>
