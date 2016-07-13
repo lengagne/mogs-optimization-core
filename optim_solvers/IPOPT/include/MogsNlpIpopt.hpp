@@ -91,8 +91,8 @@ class MogsNlpIpopt:public TNLP
 		  MogsNlpIpopt (const MogsNlpIpopt &);
 	  MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
+    std::vector < mogs_string > robots_url_;  // url of the robot
 
-	std::vector < mogs_string > robots_url_;	// url of the robot
 
 };
 
