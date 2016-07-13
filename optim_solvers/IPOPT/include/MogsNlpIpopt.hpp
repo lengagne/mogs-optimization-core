@@ -8,14 +8,15 @@
 
 #ifndef __MOGS_NLP_IPOPT_HPP__
 #define __MOGS_NLP_IPOPT_HPP__
-
+#include "MogsKinematics.h"
 #include "IpTNLP.hpp"
-
+#include "MogsAbstractProblem.h"
 using namespace Ipopt;
 
 class MogsNlpIpopt:public TNLP
 {
       public:
+	 MogsRobotProperties robot;
   /** default constructor */
 	MogsNlpIpopt ();
 
@@ -73,6 +74,8 @@ class MogsNlpIpopt:public TNLP
 					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
+    void set_robot_url(const std::vector<mogs_string> & in);
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -85,10 +88,12 @@ class MogsNlpIpopt:public TNLP
    *
    */
 	//@{
-	//  NLP_sample();
-	  MogsNlpIpopt (const MogsNlpIpopt &);
+		  MogsNlpIpopt (const MogsNlpIpopt &);
 	  MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
+
+	std::vector < mogs_string > robots_url_;	// url of the robot
+
 };
 
 

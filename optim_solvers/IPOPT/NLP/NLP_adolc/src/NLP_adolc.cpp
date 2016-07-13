@@ -43,15 +43,15 @@ NLP_adolc::~NLP_adolc ()
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-        robot.SetRobotFile("../../mogs-all/sample-mogs/robots/KUKA_LWR/kuka_lwr.urdf");
+//        robot.SetRobotFile("../../mogs-all/sample-mogs/robots/KUKA_LWR/kuka_lwr.urdf");
         kin.SetRobot(&robot);
         akin.SetRobot(&robot);
-
-        std::cout<<"Le robot a "<< robot.getNDof()<<" degres de liberté"<<std::endl;
-        std::cout<<"Le robot a "<< kin.getNBodies()<<" corps"<<std::endl;
-        q.resize(kin.getNDof());
-        aq.resize(akin.getNDof());
-        std::cout<<"akin.getNDof() =  "<<akin.getNDof()<<std::endl;
+//
+//        std::cout<<"Le robot a "<< robot.getNDof()<<" degres de liberté"<<std::endl;
+//        std::cout<<"Le robot a "<< kin.getNBodies()<<" corps"<<std::endl;
+//        q.resize(kin.getNDof());
+//        aq.resize(akin.getNDof());
+        //std::cout<<"akin.getNDof() =  "<<akin.getNDof()<<std::endl;
         robot.getPositionLimit(qmin,qmax);
         n=7;
         /*  Initialisation du gradient*/

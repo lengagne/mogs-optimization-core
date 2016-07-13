@@ -36,6 +36,7 @@ MogsIpoptOptimization::~MogsIpoptOptimization()
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
+    MogsAbstractProblem::read_problem(filename);
     // loaded the good type of problem
     MogsProblemClassifier mpc;
     mogs_string plugin_name = "NLP_Adolc";
@@ -60,6 +61,7 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 
         // create an instance of the class
         nlp_ = creator_();
+
     }else
     {
         qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
@@ -76,6 +78,13 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 void MogsIpoptOptimization::solve()
 {
     std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
+
+    std::cout<<"il y a "<< robots_url_.size()<<" robots."<<std::endl;
+    qDebug()<<robots_url_[0];
+
+     //donne les fichiers des robots
+     nlp_-> set_robot_url( robots_url_ );
+
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app_->Initialize ();

@@ -8,7 +8,7 @@
 
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
-#include "IpTNLP.hpp"
+#include "MogsNlpIpopt.hpp"
 #include "MogsKinematics.h"
 #include <adolc.h>
 
@@ -17,7 +17,7 @@
             typedef Eigen::Matrix<adouble, 3, 1> aVec;
             Vec Pd = Vec(0.5, 0.5, 0.5);
 
-class NLP_adolc:public TNLP
+class NLP_adolc:public MogsNlpIpopt
 {
       public:
   /** default constructor */
@@ -88,22 +88,23 @@ class NLP_adolc:public TNLP
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
 
- template<typename T> T critere( const T *x,MogsKinematics<T> *kin_)
-{
-    T obj_value;
-	typedef Eigen::Matrix<T, 3, 1> Vec;
-    Vec Pd = Vec(0.5, 0.5, 0.5);
-    Eigen::Matrix < T,Eigen::Dynamic, 1 > aq_;
-    aq_.resize(kin_->getNDof());
-    for (int i=0; i<7; i++)
-		aq_(i) = x[i];
+     template<typename T> T critere( const T *x,MogsKinematics<T> *kin_)
+    {
+        T obj_value;
+        typedef Eigen::Matrix<T, 3, 1> Vec;
+        Vec Pd = Vec(0.5, 0.5, 0.5);
+        Eigen::Matrix < T,Eigen::Dynamic, 1 > aq_;
+        aq_.resize(kin_->getNDof());
+        for (int i=0; i<7; i++)
+            aq_(i) = x[i];
 
-	kin_->UpdateKinematicsCustom(&aq_);
-	Vec Pr =kin_->getPosition(7,  Eigen::Matrix<double, 3, 1>::Zero());
-	for (int i=0;i<7;i++)
-    obj_value = (Pr - Pd).norm();
-	return obj_value;
-}
+       // std::cout<<"kin_->getNDof() = "<<kin_->getNDof()<<std::endl;
+        kin_->UpdateKinematicsCustom(&aq_);
+        Vec Pr =kin_->getPosition(7,  Eigen::Matrix<double, 3, 1>::Zero());
+        for (int i=0;i<7;i++)
+        obj_value = (Pr - Pd).norm();
+        return obj_value;
+    }
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -122,8 +123,6 @@ class NLP_adolc:public TNLP
 
             MogsKinematics<double> kin;
             MogsKinematics<adouble> akin;
-
-            MogsRobotProperties robot;
 
             Eigen::Matrix < double,Eigen::Dynamic, 1 > q;
             Eigen::Matrix < adouble,Eigen::Dynamic, 1 > aq;

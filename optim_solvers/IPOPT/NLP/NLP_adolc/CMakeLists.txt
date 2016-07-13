@@ -60,17 +60,18 @@ elseif(IPOPT_FOUND)
 
     target_link_libraries(  MogsNlpAdolc
                             ${MogsNlpAdolc_LIBRARIES}
-                            ${ADOLC_LIBRARIES})
+                            ${ADOLC_LIBRARIES}
+                            ${MogsIpoptOptimization_LIBRARIES})
 
 	link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
 						${ADOLC_LIBRARY_DIRS})
-						
+
 	message("ADOLC_LIBRARY_DIRS = " ${ADOLC_LIBRARY_DIRS})
 	message("CMAKE_INSTALL_RPATH  = " ${CMAKE_INSTALL_RPATH})
-	
-	SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")	
+
+	SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 	set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH} ${ADOLC_LIBRARY_DIRS}")
-	
+
 	message("CMAKE_INSTALL_RPATH  = " ${CMAKE_INSTALL_RPATH})
 
 ### Installation procedure
