@@ -16,3 +16,6 @@ void MogsNlpIpopt::set_robot_url(const std::vector<mogs_string> & in)
 
 
 }
+//void NLP_adolc::set_criterias(std::vector<AbstractAdolcCritere* > critere_robot);
+//{
+//}

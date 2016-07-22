@@ -6,9 +6,22 @@
     <ipopt_options type="numeric" name="max_iter" value="100"/>
     <criteres>
         <critere type="position" weight="1.0">
+            <robot> KUKA </robot>
+            <body> human </body>
+            <body_position> x y z </body_position>
+            <desired_position> 0.5 0.5 0.5 </desired_position>
+        </critere>
+        <critere type="position" weight="1.0">
+            <robot> KUKA </robot>
+            <body> robot </body>
+            <body_position> x y z </body_position>
+            <desired_position> 0.6 0.5 0.5 </desired_position>
+        </critere>
+        <critere type="position" weight="1.0">
+            <robot> KUKA </robot>
             <body> nom du corps </body>
             <body_position> x y z </body_position>
-            <desired_position> x y z </desired_position>
+            <desired_position> 0.5 0.7 0.5 </desired_position>
         </critere>
     </criteres>
     <results/>

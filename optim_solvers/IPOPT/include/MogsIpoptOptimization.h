@@ -30,8 +30,9 @@
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
 
-
 #include "MogsNlpIpopt.hpp"
+
+
 
 using namespace Ipopt;
 
@@ -64,6 +65,7 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         SmartPtr < IpoptApplication > app_;
         create_nlp_ipopt* creator_;
         destroy_nlp_ipopt* destructor_;
+
 };
 
 #endif

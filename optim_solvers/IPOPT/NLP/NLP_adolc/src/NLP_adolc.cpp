@@ -46,19 +46,25 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         kin.SetRobot(&robot);
         akin.SetRobot(&robot);
         robot.getPositionLimit(qmin,qmax);
+
+
+        criteres_.push_back( new PositionAdolcCritere());
+
+
         n=7;
         /*  Initialisation du gradient*/
         double yp = 0.0;
         adouble* x = new adouble[n];
-        adouble y = 1;
+        adouble y = 0;
         size_t tape_stats[STAT_SIZE];
                     trace_on(1);
 
                         for(int i=0;i<n;i++)
                         {
                             x[i] <<= i+1./2;
-                            std::cout<<"on a "<<x[i] <<" v"<<std::endl;
-                             y = critere(x,&akin);
+
+                            for (int i =0;i<criteres_.size();i++)
+                                y += criteres_[i]->compute(x,&akin);
                         }
                             y >>= yp;
                             delete[] x;
@@ -104,7 +110,12 @@ bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
 
 bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
 {
-            obj_value = critere(x,&kin);
+    int nb = criteres_.size();
+
+    obj_value =0;
+    for (int i =0;i<nb;i++)
+        obj_value += criteres_[i]->compute(x,&kin);
+
 	return true;
 }
 
@@ -188,6 +199,9 @@ void NLP_adolc::finalize_solution (SolverReturn status,
             printf("\n\nObjective value\n");
             printf("f(x*) = %e\n", obj_value);
 }
+
+
+
 
 // For dynamic loading of the library : do not remove !!
 

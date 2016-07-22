@@ -36,8 +36,63 @@ MogsIpoptOptimization::~MogsIpoptOptimization()
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
-    MogsAbstractProblem::read_problem(filename);
+
     // loaded the good type of problem
+    MogsAbstractProblem::read_problem(filename);
+
+   QDomElement criteres=root_.firstChildElement("criteres");
+
+    std::cout<<"find criteres = "<< !criteres.isNull()<<std::endl;
+
+    for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
+	{
+
+      while(!critere.isNull())
+{
+
+        std::cout<<"find one critere"<<std::endl;
+        QString Type=critere.attribute("Type","position");
+        QString  weight=critere.attribute(" weight","1");
+        std::cout << "critere type = " << Type.toStdString().c_str() << std::endl;
+        std::cout << "critere weight = " << weight.toStdString().c_str() << std::endl;
+
+        // Get the first child of the component
+        QDomElement Child=critere.firstChildElement().toElement();
+        QString Body;
+        QString Robot;
+        QString body_position;
+        QString desired_position;
+            // Read Name and value
+
+        while (!Child.isNull())
+        {
+              if (Child.tagName()=="robot")
+            {
+            Robot=Child.firstChild().toText().data();
+            std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
+            }
+
+             if (Child.tagName()=="body")
+            {
+            Body=Child.firstChild().toText().data();
+            std::cout << "   Body  = " << Body.toStdString().c_str() << std::endl;
+            }
+            if (Child.tagName()=="body_position")
+            {body_position=Child.firstChild().toText().data();
+            std::cout << "   body_position  = " << body_position.toStdString().c_str() << std::endl;
+            }
+             if (Child.tagName()=="desired_position")
+            {desired_position=Child.firstChild().toText().data();
+             std::cout << "   desired_position  = " << desired_position.toStdString().c_str() << std::endl;
+            }
+           Child = Child.nextSibling().toElement();
+        }
+
+        critere = critere.nextSibling().toElement();
+
+
+  }  }
+
     MogsProblemClassifier mpc;
     mogs_string plugin_name = "NLP_Adolc";
     mogs_string library_so;
@@ -49,7 +104,6 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
             std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
             exit(0);
         }
-
         // load the symbols
         creator_ = (create_nlp_ipopt*) dlsym(library, "create");
         destructor_ = (destroy_nlp_ipopt*) dlsym(library, "destroy");
@@ -58,21 +112,18 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
             std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
             exit(0);
         }
-
         // create an instance of the class
         nlp_ = creator_();
 
-    }else
+    }
+    else
     {
         qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
         exit(0);
     }
 
-
-    	// Create an instance of the IpoptApplication
+ 	// Create an instance of the IpoptApplication
 	app_ = IpoptApplicationFactory ();
-
-
 }
 
 void MogsIpoptOptimization::solve()
