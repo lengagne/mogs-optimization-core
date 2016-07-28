@@ -8,18 +8,18 @@
 
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
-
+#include "PositionAdolcCritere.hpp"
 #include "MogsNlpIpopt.hpp"
 #include "MogsKinematics.h"
 #include <adolc.h>
+#include "AbstractAdolcCritere.hpp"
 
-#include "PositionAdolcCritere.hpp"
 
 using namespace Ipopt;
 
-            typedef Eigen::Matrix<double, 3, 1> Vec;
-            typedef Eigen::Matrix<adouble, 3, 1> aVec;
-            Vec Pd = Vec(0.5, 0.5, 0.5);
+//            typedef Eigen::Matrix<double, 3, 1> Vec;
+//            typedef Eigen::Matrix<adouble, 3, 1> aVec;
+//            Vec Pd = Vec(0.5, 0.5, 0.5);
 
 class NLP_adolc:public MogsNlpIpopt
 {
@@ -92,10 +92,8 @@ class NLP_adolc:public MogsNlpIpopt
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
 
-//     template<typename T>
-//     T critere( const T *x,MogsKinematics<T> *kin_);
+        void load_xml(QDomElement criteres);
 
-   //  void set_criteria(std::vector<AbstractAdolcCritere* > critere_robot);
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -121,7 +119,7 @@ class NLP_adolc:public MogsNlpIpopt
             std::vector < double >qmax;
             std::vector < double >qmin;
 
-            std::vector<AbstractAdolcCritere* > criteres_;
+            std::vector<AbstractAdolcCritere* >criteres_;
 	//@}
 };
 

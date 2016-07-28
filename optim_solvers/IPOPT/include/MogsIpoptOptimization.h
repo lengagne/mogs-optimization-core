@@ -31,7 +31,7 @@
 #include "IpSolveStatistics.hpp"
 
 #include "MogsNlpIpopt.hpp"
-
+//#include "AbstractAdolcCritere.hpp"
 
 
 using namespace Ipopt;

@@ -10,10 +10,10 @@
 #define ABSTRACTADOLCCRITERE_HPP_INCLUDED
 
 
-#include "AbstractAdolcCritere.hpp"
+
 #include "MogsKinematics.h"
 #include <adolc.h>
-
+#include <PositionAdolcCritere.hpp>
 class AbstractAdolcCritere
 {
     public:

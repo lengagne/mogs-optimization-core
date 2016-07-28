@@ -2,20 +2,18 @@
 #define  POSITIONADOLCCRITERE_HPP_
 
 
-
+#include <NLP_adolc.hpp>
 #include <adolc.h>
-#include "MogsRobotProperties.h"
 #include "AbstractAdolcCritere.hpp"
+#include "MogsNlpIpopt.hpp"
+#include "MogsKinematics.h"
 
 class PositionAdolcCritere: public AbstractAdolcCritere
-{
-      public:
+{   public:
+	PositionAdolcCritere (QDomElement criteres,
+                          MogsKinematics<double>* kin);
 
-
-	PositionAdolcCritere ();
     ~PositionAdolcCritere ();
-
-
 
     double compute( const double *x , MogsKinematics<double> * kin)
     {
@@ -27,7 +25,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere
         return compute<adouble>(x,kin);
     }
 
- template<typename T>
+    template<typename T>
       T compute( const T *x,MogsKinematics<T> *kin_);
 
       private:
@@ -39,6 +37,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere
 
         Eigen::Matrix<double, 3, 1> body_position_;
         Eigen::Matrix<double, 3, 1> desired_position_;
+        std::vector<AbstractAdolcCritere* > criteres_;
 };
 
 #include "PositionAdolcCritere.hxx"

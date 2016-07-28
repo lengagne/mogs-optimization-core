@@ -40,10 +40,9 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
     // loaded the good type of problem
     MogsAbstractProblem::read_problem(filename);
 
-   QDomElement criteres=root_.firstChildElement("criteres");
-
+/*
     std::cout<<"find criteres = "<< !criteres.isNull()<<std::endl;
-
+    QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
 	{
 
@@ -91,7 +90,7 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
         critere = critere.nextSibling().toElement();
 
 
-  }  }
+  }  } */
 
     MogsProblemClassifier mpc;
     mogs_string plugin_name = "NLP_Adolc";
@@ -135,6 +134,10 @@ void MogsIpoptOptimization::solve()
 
      //donne les fichiers des robots
      nlp_-> set_robot_url( robots_url_ );
+
+      QDomElement criteres=root_.firstChildElement("criteres");
+
+      nlp_->load_xml(criteres);
 
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;

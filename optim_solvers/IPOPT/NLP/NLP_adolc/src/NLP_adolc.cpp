@@ -39,17 +39,34 @@ NLP_adolc::NLP_adolc ()
 NLP_adolc::~NLP_adolc ()
 {
 }
+void NLP_adolc::load_xml(QDomElement criteres)
+{
+                   // if (criteres.tagName()=="criteres")
 
+    for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
+        {
+                   QString type;
+                    if (criteres.tagName()=="criteres")
+                        {
+                            type=critere.attribute("type");
+                            std::cout << "critere " << type.toStdString().c_str() << std::endl;
+
+                            criteres_.push_back(new PositionAdolcCritere(critere,&kin));
+//                            else if(type=="camera")
+//                            criteres_.push_back( new CameraAdolcCritere(critere,kin));
+                        }
+                        else
+                        qDebug()<<"je ne connais pas le type de critere : "<<type;
+
+        }
+
+}
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
         kin.SetRobot(&robot);
         akin.SetRobot(&robot);
         robot.getPositionLimit(qmin,qmax);
-
-
-        criteres_.push_back( new PositionAdolcCritere());
-
 
         n=7;
         /*  Initialisation du gradient*/

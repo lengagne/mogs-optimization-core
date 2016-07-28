@@ -10,7 +10,6 @@
 #define __MOGS_NLP_IPOPT_HPP__
 #include "MogsKinematics.h"
 #include "IpTNLP.hpp"
-
 using namespace Ipopt;
 
 class MogsNlpIpopt:public TNLP
@@ -75,7 +74,9 @@ class MogsNlpIpopt:public TNLP
 	//@}
 
     void set_robot_url(const std::vector<mogs_string> & in);
-    //void set_criteria(std::vector<AbstractAdolcCritere* > critere_robot);
+
+     virtual  void load_xml(QDomElement criteres)=0;
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -92,7 +93,7 @@ class MogsNlpIpopt:public TNLP
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
      std::vector < mogs_string > robots_url_;  // url of the robot
-    // std::vector<AbstractAdolcCritere* > criteres_;
+
 
 };
 
