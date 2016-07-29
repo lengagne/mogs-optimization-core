@@ -14,6 +14,8 @@ if(NOT ADOLC_FOUND)
     message("We do not compile NLPAdolc since adolc was not found")
 elseif(IPOPT_FOUND)
 
+	find_package(MogsVisu REQUIRED)
+
     if (NOT MogsIpoptOptimization_FOUND)
         find_package(MogsIpoptOptimization REQUIRED)
     endif(NOT MogsIpoptOptimization_FOUND)
@@ -36,6 +38,7 @@ elseif(IPOPT_FOUND)
         ${MogsNlpAdolcCore_INCLUDE_DIRS}
         ${IPOPT_INCLUDE_DIRS}
         ${ADOLC_INCLUDE_DIRS}
+        ${MogsVisu_INCLUDE_DIRS}
     )
 
     configure_file ( "${CMAKE_CURRENT_SOURCE_DIR}/config_MogsNlpAdolc.h.in"
@@ -61,10 +64,12 @@ elseif(IPOPT_FOUND)
     target_link_libraries(  MogsNlpAdolc
                             ${MogsNlpAdolc_LIBRARIES}
                             ${ADOLC_LIBRARIES}
-                            ${MogsIpoptOptimization_LIBRARIES})
+                            ${MogsIpoptOptimization_LIBRARIES}
+                            ${MogsVisu_LIBRARIES})
 
 	link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
-						${ADOLC_LIBRARY_DIRS})
+						${ADOLC_LIBRARY_DIRS}
+						${MogsVisu_LIBRARY_DIRS})
 
 	message("ADOLC_LIBRARY_DIRS = " ${ADOLC_LIBRARY_DIRS})
 	message("CMAKE_INSTALL_RPATH  = " ${CMAKE_INSTALL_RPATH})
@@ -94,7 +99,7 @@ elseif(IPOPT_FOUND)
     SET(MogsNlpAdolc_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsNlpAdolc_LIBRARIES  MogsNlpAdolc CACHE INTERNAL "")
     SET(MogsNlpAdolc_FLAGS "-DMogsNlpAdolc_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
-    add_definitions(${MogsNlpAdolc_FLAGS})
+    add_definitions(${MogsNlpAdolc_FLAGS} ${MogsVisu_FLAGS})
     #  add flags (done before)
     configure_file(MogsNlpAdolcConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpAdolcConfig.cmake" @ONLY)
 
