@@ -27,6 +27,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <math.h>
+#include "VisuHolder.h"
 
 using namespace Ipopt;
 
@@ -219,6 +220,21 @@ void NLP_adolc::finalize_solution (SolverReturn status,
             }
             printf("\n\nObjective value\n");
             printf("f(x*) = %e\n", obj_value);
+			
+			
+#ifdef MogsVisu_FOUND
+    VisuHolder visu("resultats");
+
+    visu.add("robot",robot);
+	q.resize(robot.getNDof());
+
+    for (int i=0;i<robot.getNDof();i++)
+        q(i) = x[i];
+
+    visu.apply_q("robot",&q);
+
+    visu.wait_close();
+#endif // MogsVisu_FOUND	
 }
 
 
