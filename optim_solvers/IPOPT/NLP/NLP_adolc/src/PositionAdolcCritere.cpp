@@ -23,11 +23,16 @@ PositionAdolcCritere::PositionAdolcCritere (QDomElement critere,
                  if (Child.tagName()=="body")
                 {
                 Body=Child.firstChild().toText().data();
-
-                    MogsKinematics<double>* model;
-                    body_id_ = kin->GetBodyId(&model);
-
-                std::cout << "   Body  = " << Body.toStdString().c_str() << std::endl;
+                   if (!body_id_)
+                   {
+                  body_id_ = kin->model->GetBodyId(Body);
+                    std::cout << "   Body_id_  = " << body_id_ << std::endl;
+                    }
+                else
+                {
+                 std::cout << "   Body_id_  = -1" << std::endl;
+                    }
+                 std::cout << "   Body  = " << Body.toStdString().c_str() << std::endl;
                 }
                 if (Child.tagName()=="body_position")
                 {body_position=Child.firstChild().toText().data();
