@@ -29,7 +29,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere
       T compute( const T *x,MogsKinematics<T> *kin_);
 
       private:
-        QString body_;
+        QString body_, body_name;
         QString robot_;
 
         unsigned int robot_id_;

@@ -20,7 +20,7 @@ class AbstractAdolcCritere
 //     AbstractAdolcCritere ();
 //    ~ AbstractAdolcCritere ();
 
-    int weight_;
+    double weight_;
 
     virtual double compute( const double *x , MogsKinematics<double> * kin) = 0;
 
