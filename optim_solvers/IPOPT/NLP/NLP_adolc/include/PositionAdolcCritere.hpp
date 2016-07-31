@@ -29,14 +29,19 @@ class PositionAdolcCritere: public AbstractAdolcCritere
       T compute( const T *x,MogsKinematics<T> *kin_);
 
       private:
-        QString body_, body_name;
-        QString robot_;
 
+        QString Body;
+        QString Robot;
+        QString desired_position;
+        QString body_position;
+
+        double weight_=1;
         unsigned int robot_id_;
         unsigned int body_id_;
 
         Eigen::Matrix<double, 3, 1> body_position_;
         Eigen::Matrix<double, 3, 1> desired_position_;
+
         std::vector<AbstractAdolcCritere* > criteres_;
 };
 

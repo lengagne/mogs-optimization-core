@@ -17,10 +17,6 @@
 
 using namespace Ipopt;
 
-//            typedef Eigen::Matrix<double, 3, 1> Vec;
-//            typedef Eigen::Matrix<adouble, 3, 1> aVec;
-//            Vec Pd = Vec(0.5, 0.5, 0.5);
-
 class NLP_adolc:public MogsNlpIpopt
 {
       public:
@@ -122,6 +118,4 @@ class NLP_adolc:public MogsNlpIpopt
             std::vector<AbstractAdolcCritere* >criteres_;
 	//@}
 };
-
-//#include "NLP_adolc.hxx"
 #endif

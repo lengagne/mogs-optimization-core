@@ -44,33 +44,36 @@ void NLP_adolc::load_xml(QDomElement criteres)
 {
         kin.SetRobot(&robot);
         akin.SetRobot(&robot);
-                   // if (criteres.tagName()=="criteres")
 
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
         {
                    QString type;
-                   QString weight;
-                    if (criteres.tagName()=="criteres")
+                   QString  weight;
+                   double weight_;
+                   double tval;
+                         if (criteres.tagName()=="criteres")
                             {
                             type=critere.attribute("type");
-                            std::cout << "critere type" << type.toStdString().c_str() << std::endl;
+                            std::cout << "critere "   << type.toStdString().c_str() << std::endl;
+
+                            weight=critere.attribute("weight");
+                            std::istringstream smallData (weight.toStdString(), std::ios_base::in);
+                                smallData >> tval;
+                                weight_ = tval;
+                            std::cout << "   weight_ = " << weight_  << std::endl;
+
                             criteres_.push_back(new PositionAdolcCritere(critere,&kin));
 //                            else if(type=="camera")
 //                            criteres_.push_back( new CameraAdolcCritere(critere,kin));
-//                          type=critere.attribute("weight");
-//                             std::cout << "critere weight" << weight.toStdString().c_str() << std::endl;
-                            }
+                             }
                         else
 
-                        qDebug()<<"je ne connais pas le type de critere : "<<type;
-
+                       qDebug()<<"je ne connais pas le type de critere : "<<type;
         }
-
 }
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-
         robot.getPositionLimit(qmin,qmax);
 
         n=7;
@@ -220,8 +223,8 @@ void NLP_adolc::finalize_solution (SolverReturn status,
             }
             printf("\n\nObjective value\n");
             printf("f(x*) = %e\n", obj_value);
-			
-			
+
+
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
 
@@ -234,7 +237,7 @@ void NLP_adolc::finalize_solution (SolverReturn status,
     visu.apply_q("robot",&q);
 
     visu.wait_close();
-#endif // MogsVisu_FOUND	
+#endif // MogsVisu_FOUND
 }
 
 

@@ -4,21 +4,13 @@
 PositionAdolcCritere::PositionAdolcCritere (QDomElement critere,
                                             MogsKinematics<double>* kin)
 {
-    QString Body;
-    QString Robot;
-    QString body_position;
-    body_position_(0) = 0.0;
-	body_position_(1) = 0.0;
-	body_position_(2) = 0.0;
-    desired_position_(0) = 0.0;
-	desired_position_(1) = 0.0;
-	desired_position_(2) = 0.0;
-    QString desired_position;
+
+
 
      QDomElement Child=critere.firstChildElement().toElement();
     while (!Child.isNull())
-            {
-                  if (Child.tagName()=="robot")
+             {
+                 if (Child.tagName()=="robot")
                 {
                 Robot=Child.firstChild().toText().data();
                 std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
@@ -35,7 +27,6 @@ PositionAdolcCritere::PositionAdolcCritere (QDomElement critere,
                       exit(0);
                  }
                   std::cout << "   body_id_  = " << body_id_ << std::endl;
-
                 }
                 if (Child.tagName()=="body_position")
                     {
