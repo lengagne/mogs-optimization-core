@@ -34,7 +34,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere
         QString Robot;
         QString desired_position;
         QString body_position;
-
+        double tval;
         double weight_=1;
         unsigned int robot_id_;
         unsigned int body_id_;
