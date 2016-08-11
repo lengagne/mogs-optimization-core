@@ -9,18 +9,15 @@
 #ifndef ABSTRACTADOLCCRITERE_HPP_INCLUDED
 #define ABSTRACTADOLCCRITERE_HPP_INCLUDED
 
-
+#include "CameraAdolcCritere.hpp"
 
 #include "MogsKinematics.h"
 #include <adolc.h>
-#include <PositionAdolcCritere.hpp>
 class AbstractAdolcCritere
 {
     public:
 //     AbstractAdolcCritere ();
 //    ~ AbstractAdolcCritere ();
-
-    double weight_;
 
     virtual double compute( const double *x , MogsKinematics<double> * kin) = 0;
 

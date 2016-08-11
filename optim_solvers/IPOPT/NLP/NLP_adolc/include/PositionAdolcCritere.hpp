@@ -10,7 +10,7 @@
 
 class PositionAdolcCritere: public AbstractAdolcCritere
 {   public:
-	PositionAdolcCritere (QDomElement criteres,
+	PositionAdolcCritere (QDomElement critere,
                           MogsKinematics<double>* kin);
 
     ~PositionAdolcCritere ();

@@ -8,7 +8,9 @@
 
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
+#include "CameraAdolcCritere.hpp"
 #include "PositionAdolcCritere.hpp"
+
 #include "MogsNlpIpopt.hpp"
 #include "MogsKinematics.h"
 #include <adolc.h>
@@ -103,6 +105,12 @@ class NLP_adolc:public MogsNlpIpopt
    */
 	//@{
 	//  NLP_adolc();
+
+
+
+            double tval,weight_;
+            QString type,weight,name;
+
             NLP_adolc (const NLP_adolc &);
             NLP_adolc & operator= (const NLP_adolc &);
 

@@ -5,23 +5,61 @@
     </robot>
     <ipopt_options type="numeric" name="max_iter" value="100"/>
     <criteres>
-        <critere type="position" weight="1.0">
-            <robot> KUKA </robot>
-            <body> kuka_lwr_7_link </body>
-            <body_position> 0 1 2 </body_position>
-            <desired_position> 0.5 0.5 0.5 </desired_position>
+<!--        <critere type="position" weight="1.0">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_7_link </body>-->
+<!--            <body_position> 0 1 2 </body_position>-->
+<!--            <desired_position> 0.5 0.5 0.5 </desired_position>-->
+<!--        </critere>-->
+<!--        <critere type="position" weight="1.0">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_4_link </body>-->
+<!--            <body_position> 6 6 6 </body_position>-->
+<!--            <desired_position> 0.6 0.5 0.5 </desired_position>-->
+<!--        </critere>-->
+<!--        <critere type="position" weight="1.0">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_2_link </body>-->
+<!--            <body_position> 1 1 1 </body_position>-->
+<!--            <desired_position> 0.5 0.7 0.5 </desired_position>-->
+<!--        </critere>-->
+        <critere type="camera" name ="camera1">
+                       <focale> 12  </focale>
+                       <alpha_u> 12  </alpha_u>
+                       <alpha_v> 10  </alpha_v>
+                       <u0> 15  </u0>
+                       <v0> 19  </v0>
+                       <Position> 0
+                                  0
+                                  1000 </Position>
+                      <RotationX> 1.046 </RotationX>
+            <!--      <RotationY> 60 </RotationY>-->
+            <!--      <RotationZ> 60 </RotationZ>-->
+          <point>
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_4_link </Body>
+                     <body_position> 1 0 2</body_position>
+                     <desired_position_image> 15 20  </desired_position_image>
+           </point>
         </critere>
-        <critere type="position" weight="1.0">
-            <robot> KUKA </robot>
-            <body> kuka_lwr_4_link </body>
-            <body_position> 6 6 6 </body_position>
-            <desired_position> 0.6 0.5 0.5 </desired_position>
-        </critere>
-        <critere type="position" weight="1.0">
-            <robot> KUKA </robot>
-            <body> kuka_lwr_2_link </body>
-            <body_position> 1 1 1 </body_position>
-            <desired_position> 0.5 0.7 0.5 </desired_position>
+         <critere type="camera" name ="camera2">
+                       <focale> 10 </focale>
+                       <alpha_u> 18  </alpha_u>
+                       <alpha_v> 5  </alpha_v>
+                       <u0> 13  </u0>
+                       <v0> 14  </v0>
+                       <Position> 0
+                                  0
+                                  1000 </Position>
+                      <RotationX> 1.046 </RotationX>
+            <!--      <RotationY> 60 </RotationY>-->
+            <!--      <RotationZ> 60 </RotationZ>-->
+          <point>
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_4_link </Body>
+                     <body_position> 1 0 2</body_position>
+                     <desired_position_image> 10 15  </desired_position_image>
+           </point>
         </critere>
     </criteres>
     <results/>

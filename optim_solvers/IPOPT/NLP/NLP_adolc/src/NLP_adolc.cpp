@@ -45,31 +45,28 @@ void NLP_adolc::load_xml(QDomElement criteres)
         kin.SetRobot(&robot);
         akin.SetRobot(&robot);
 
-    for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
+    for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
         {
-                   QString type;
-                   QString  weight;
-                   double weight_;
-                   double tval;
-                         if (criteres.tagName()=="criteres")
-                            {
-                            type=critere.attribute("type");
-                            std::cout << "critere "   << type.toStdString().c_str() << std::endl;
 
-                            weight=critere.attribute("weight");
-                            std::istringstream smallData (weight.toStdString(), std::ios_base::in);
+                            if (criteres.tagName()=="criteres")
+                            {
+
+                            type=critere.attribute("type");
+                            name=critere.attribute("name");
+                            std::cout << "critere "   << type.toStdString().c_str() <<  std::endl;
+
+                            if(type=="position")
+                               { weight=critere.attribute("weight");
+                                std::istringstream smallData (weight.toStdString(), std::ios_base::in);
                                 smallData >> tval;
                                 weight_ = tval;
-                            std::cout << "   weight_ = " << weight_  << std::endl;
-
-                            criteres_.push_back(new PositionAdolcCritere(critere,&kin));
-//                            else if(type=="camera")
-//                            criteres_.push_back( new CameraAdolcCritere(critere,kin));
-                             }
-                        else
-
-                       qDebug()<<"je ne connais pas le type de critere : "<<type;
-        }
+                                std::cout << "   weight_ = " << weight_  << std::endl;
+                                criteres_.push_back(new PositionAdolcCritere(critere,&kin));}
+                            else if(type=="camera")
+                                 std::cout << "name "   <<name.toStdString().c_str() << std::endl;
+                                 criteres_.push_back(new CameraAdolcCritere(critere,&kin));
+                            }
+         }
 }
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
@@ -141,7 +138,7 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
     for (int i =0;i<nb;i++)
         obj_value += criteres_[i]->compute(x,&kin);
 
-	return true;
+return true;
 }
 
 bool NLP_adolc::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)

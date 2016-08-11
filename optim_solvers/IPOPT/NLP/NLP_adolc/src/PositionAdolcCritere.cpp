@@ -12,7 +12,7 @@ PositionAdolcCritere::PositionAdolcCritere (QDomElement critere,
                         Robot=Child.firstChild().toText().data();
                         std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
                    }
-                 if (Child.tagName()=="body")
+                 if (Child.tagName()=="Body")
                    {
                         Body=Child.firstChild().toText().data().simplified();
                         std::cout << "   Body  = " << Body.toStdString() << std::endl;
