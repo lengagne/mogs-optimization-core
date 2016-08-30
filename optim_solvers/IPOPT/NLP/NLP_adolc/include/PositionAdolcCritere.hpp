@@ -42,7 +42,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere
         Eigen::Matrix<double, 3, 1> body_position_;
         Eigen::Matrix<double, 3, 1> desired_position_;
 
-        std::vector<AbstractAdolcCritere* > criteres_;
+        //std::vector<AbstractAdolcCritere* > criteres_;
 };
 
 #include "PositionAdolcCritere.hxx"

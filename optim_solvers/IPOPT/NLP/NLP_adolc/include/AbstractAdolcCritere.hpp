@@ -9,8 +9,6 @@
 #ifndef ABSTRACTADOLCCRITERE_HPP_INCLUDED
 #define ABSTRACTADOLCCRITERE_HPP_INCLUDED
 
-#include "CameraAdolcCritere.hpp"
-
 #include "MogsKinematics.h"
 #include <adolc.h>
 class AbstractAdolcCritere

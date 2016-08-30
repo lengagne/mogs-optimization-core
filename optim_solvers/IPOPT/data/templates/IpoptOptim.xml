@@ -31,36 +31,15 @@
                        <v0> 19  </v0>
                        <Position> 0
                                   0
-                                  1000 </Position>
-                      <RotationX> 1.046 </RotationX>
-            <!--      <RotationY> 60 </RotationY>-->
-            <!--      <RotationZ> 60 </RotationZ>-->
-          <point>
+                                  0 </Position>
+                 <RotationX> 1.046 </RotationX>
+           <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
-                     <body_position> 1 0 2</body_position>
-                     <desired_position_image> 15 20  </desired_position_image>
+                     <body_position> 0 0 0</body_position>
+                     <desired_position_image> 100 30 </desired_position_image>
            </point>
-        </critere>
-         <critere type="camera" name ="camera2">
-                       <focale> 10 </focale>
-                       <alpha_u> 18  </alpha_u>
-                       <alpha_v> 5  </alpha_v>
-                       <u0> 13  </u0>
-                       <v0> 14  </v0>
-                       <Position> 0
-                                  0
-                                  1000 </Position>
-                      <RotationX> 1.046 </RotationX>
-            <!--      <RotationY> 60 </RotationY>-->
-            <!--      <RotationZ> 60 </RotationZ>-->
-          <point>
-                     <robot> KUKA </robot>
-                     <Body> kuka_lwr_4_link </Body>
-                     <body_position> 1 0 2</body_position>
-                     <desired_position_image> 10 15  </desired_position_image>
-           </point>
-        </critere>
-    </criteres>
+          </critere>
+      </criteres>
     <results/>
 </problem>

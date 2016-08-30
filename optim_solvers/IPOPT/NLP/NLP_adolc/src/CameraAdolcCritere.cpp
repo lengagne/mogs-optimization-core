@@ -8,7 +8,17 @@
     QDomElement Child=critere.firstChildElement().toElement();
     QDomElement point= critere.firstChildElement ("point");
     QDomElement h=point.firstChildElement().toElement();
+         nb_points_=0;
 
+
+         while (!point.isNull())
+                            {
+                                 if (point.tagName()=="point")
+
+{                           nb_points_++;
+                            std::cout << "   nb_points_=  " << nb_points_ << std::endl;
+
+}
        while (!h.isNull())
                             {
                                  if (h.tagName()=="robot")
@@ -56,61 +66,40 @@
                                              std::cout << "   desired_position_image_  = " <<    desired_position_image_  << std::endl;
                                         }
                                                    h= h.nextSibling().toElement();
-                                  }
 
-     while (!Child.isNull())
+                                  }
+point= point.nextSibling().toElement();
+
+}
+         while (!Child.isNull())
              {
 
                    if (Child.tagName()=="focale")
                    {
-                            focale=critere.attribute("focale");
-                            focale=Child.firstChild().toText().data();
-                            std::istringstream smallData (focale.toStdString(), std::ios_base::in);
-                                smallData >>tval;
-                                focale_ = tval;
-                            std::cout << "   focale_ = " << focale_  << std::endl;
+                        focale=Child.firstChild().toText().data().toDouble();std::cout << "   focale = " << focale << std::endl;
                    }
                    if (Child.tagName()=="alpha_u")
-                   {
-                            alpha_u=critere.attribute("alpha_u");
-                            alpha_u=Child.firstChild().toText().data();
-                            std::istringstream smallData (alpha_u.toStdString(), std::ios_base::in);
-                                        smallData >> tval;
-                                        alpha_u_= tval;
-                            std::cout << "   alpha_u_ = " << alpha_u_  << std::endl;
-
+                   {  int i=0;
+                            alpha_u=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   alpha_u = " << alpha_u  << std::endl;
+                            i=i++;std::cout << "   i = " <<i  << std::endl;
                    }
-
                     if (Child.tagName()=="alpha_v")
                    {
-                            alpha_v=critere.attribute("alpha_v");
-                            alpha_v=Child.firstChild().toText().data();
-                            std::istringstream smallData (alpha_v.toStdString(), std::ios_base::in);
-                                smallData >>tval;
-                                alpha_v_ = tval;
-                            std::cout << "   alpha_v_ = " << alpha_v_  << std::endl;
-                              double alpha_v1=alpha_v_;
-                   }
+                            alpha_v=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   alpha_v = " << alpha_v  << std::endl;
+                        }
 
-                    if (Child.tagName()=="u0")
-                   {
-                            u0=critere.attribute("u0");
-                            u0=Child.firstChild().toText().data();
-                            std::istringstream smallData (u0.toStdString(), std::ios_base::in);
-                                smallData >>tval;
-                                u0_ = tval;
-                            std::cout << "   u0_ = " << u0_  << std::endl;
+                    if (Child.tagName()=="u0")    {
+
+                            u0=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   u0 = " << u0  << std::endl;
 
                    }
-
                     if (Child.tagName()=="v0")
                    {
-                            v0=critere.attribute("v0");
-                            v0=Child.firstChild().toText().data();
-                            std::istringstream smallData (v0.toStdString(), std::ios_base::in);
-                                smallData >>tval;
-                                v0_ = tval;
-                            std::cout << "   v0_ = " << v0_  << std::endl;
+                            v0=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   v0 = " << v0  << std::endl;
 
                    }
                    if (Child.tagName()=="Position")
@@ -127,47 +116,34 @@
                    }
                      if (Child.tagName()=="RotationX")
                    {
-                            RotationX=critere.attribute("RotationX");
-                            RotationX=Child.firstChild().toText().data();
-                            std::istringstream smallData (RotationX.toStdString(), std::ios_base::in);
-
-                                        smallData >> tval;
-                                        RotationX_ = tval;
-                            std::cout << "  RotationX_ = " << RotationX_  << std::endl;
+                            RotationX=Child.firstChild().toText().data().toDouble();
+                            std::cout << "  RotationX = " << RotationX  << std::endl;
 
                                 R << 1, 0, 0,
-                                     0, cos(RotationX_), -sin(RotationX_),
-                                     0, sin(RotationX_), cos(RotationX_);
+                                     0, cos(RotationX), -sin(RotationX),
+                                     0, sin(RotationX), cos(RotationX);
                                      std::cout << "  R est égal = " << R <<std::endl;
 
                       }
                         Child = Child.nextSibling().toElement();
                 }
 
+
                                     RT << 1,          0,         0,    Position_(0),
-                                          0, cos(RotationX_), -sin(RotationX_),Position_(1),
-                                          0, sin(RotationX_), cos(RotationX_),Position_(2);
+                                          0, cos(RotationX), -sin(RotationX),Position_(1),
+                                          0, sin(RotationX), cos(RotationX),Position_(2);
                                          std::cout << "  RT est égal = " << RT <<std::endl;
-                                    K << alpha_u_ ,  0,     u0_,
-                                          0,      alpha_v_ , v0_,
-                                          0,        0,       1;
+                                    K << alpha_u ,  0,     u0,
+                                          0,      alpha_v ,v0,
+                                          0,        0,     1;
                                        std::cout << "  K est égal = " << K <<std::endl;
                                                           M=K*RT;
-                                        std::cout << "  M est égal = " << M <<std::endl;
-                                         su=M(0)*body_position_(0)+M(1)*body_position_(1)+M(2)*body_position_(2)+M(3);
-                                         sv=M(4)*body_position_(0)+M(5)*body_position_(1)+M(6)*body_position_(2)+M(7);
-                                         s=M(8)*body_position_(0)+M(9)*body_position_(1)+M(10)*body_position_(2)+M(11);
-                                         u= su/s;
-                                         v= sv/s;
-                                         std::cout << "  u est égal = " << u  << "  v est égal = " << v  <<std::endl;
-                                    projection_en_2D<<  u,
-                                                        v;
-                                    erreur_projection=(projection_en_2D - desired_position_image_).norm();
-                                              std::cout << " l'erreur_projection est égal = " << erreur_projection <<std::endl;
+                                       std::cout << "  M est égal = " << M <<std::endl;
 
-                  // uh=(alpha_u_*(RT(0)*body_position_(0)+RT(1)*body_position_(1)+RT(2)*body_position_(2)+Position_(0)))/(RT(9)*body_position_(0)+RT(10)*body_position_(1)+RT(11)*body_position_(2)+Position_(2))+u0_;
+//                                    erreur_projection=(projection_en_2D - desired_position_image_).norm();
+//                                              std::cout << " l'erreur_projection est égal = " << erreur_projection <<std::endl;
 
-
+                                               // uh=(alpha_u_*(RT(0)*body_position_(0)+RT(1)*body_position_(1)+RT(2)*body_position_(2)+Position_(0)))/(RT(9)*body_position_(0)+RT(10)*body_position_(1)+RT(11)*body_position_(2)+Position_(2))+u0_;
 }
 
 CameraAdolcCritere::~CameraAdolcCritere ()
