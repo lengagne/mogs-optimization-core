@@ -29,9 +29,9 @@
                        <Kv> 100  </Kv>
                        <u0> 2 </u0>
                        <v0> 2 </v0>
-                       <Position> 0
-                                  0
-                                  1000 </Position>
+                       <Position> 10
+                                  10
+                                  0 </Position>
                  <RotationX> 1.046 </RotationX>
            <point >
                      <robot> KUKA </robot>

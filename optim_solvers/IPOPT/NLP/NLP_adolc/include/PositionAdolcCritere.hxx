@@ -6,7 +6,7 @@ T PositionAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
 
     Eigen::Matrix < T,Eigen::Dynamic, 1 > aq_;
     aq_.resize(kin_->getNDof());
-    for (int i=0; i<body_id_; i++)
+    for (int i=0; i<kin_->getNDof(); i++)
         aq_(i) = x[i];
     kin_->UpdateKinematicsCustom(&aq_);
      Eigen::Matrix<T, 3, 1>  Pr =kin_->getPosition(body_id_,body_position_);

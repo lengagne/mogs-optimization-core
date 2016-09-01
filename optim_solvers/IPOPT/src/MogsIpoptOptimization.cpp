@@ -153,6 +153,7 @@ void MogsIpoptOptimization::solve()
     //set options
 
         app_->Options()->SetStringValue("derivative_test", "first-order");
+// 		app_->Options()->SetNumericValue("derivative_test_perturbation", 1e-3);
 
 	status = app_->OptimizeTNLP (nlp_);
 
