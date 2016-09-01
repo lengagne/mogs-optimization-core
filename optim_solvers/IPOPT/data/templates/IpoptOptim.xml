@@ -23,21 +23,21 @@
 <!--            <body_position> 1 1 1 </body_position>-->
 <!--            <desired_position> 0.5 0.7 0.5 </desired_position>-->
 <!--        </critere>-->
-        <critere type="camera" retine ="1/2">
-                       <focale> 12 </focale>
+        <critere type="camera" name= "camera1" retine ="1/2">
+                       <focale> 0.1 </focale>
                        <Ku> 100  </Ku>
                        <Kv> 100  </Kv>
-                       <u0> 2 </u0>
-                       <v0> 2 </v0>
+                       <u0> 320 </u0>
+                       <v0> 240 </v0>
                        <Position> 0
                                   0
-                                  1000 </Position>
-                 <RotationX> 1.046 </RotationX>
+                                  2000 </Position>
+                 <RotationX> 0 </RotationX>
            <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 320 240</desired_position_image>
+                     <desired_position_image> 3 2</desired_position_image>
            </point>
 <!--           <point >-->
 <!--                     <robot> KUKA </robot>-->

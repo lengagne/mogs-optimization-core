@@ -35,27 +35,14 @@ T CameraAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
 
 //        std::cout << "  su = " << su << std::endl;
 //        std::cout << "  sv = " << sv << std::endl;
-////        std::cout << "  s = " << s << std::endl;
+//        std::cout << "  s = " << s << std::endl;
 //        std::cout << "  u = " << u << std::endl;
 //        std::cout << "  v = " << v << std::endl;
-//
-//
-
-
 
        en_2D(0) = u-desired_position_image_(0);
        en_2D(1) = v-desired_position_image_(1);
-//        std::cout << "  en_2D(0) = " << en_2D(0) << std::endl;
-//        std::cout << "  en_2D(1) = " << en_2D(1) << std::endl;
-//         std::cout << "  en_2D = " << en_2D.norm() << std::endl;
+
         obj_value = obj_value + en_2D.norm();
-//        std::cout << "  obj_value = " <<obj_value << std::endl;
-
-//        std::cout << "  su = " << su << std::endl;
-//        std::cout << "  sv = " << sv << std::endl;
-//        std::cout << "  u = " << u << std::endl;
-//        std::cout << "  v = " << v << std::endl;
-
 //}
       return obj_value;
 }

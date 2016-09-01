@@ -33,7 +33,6 @@
                                     Body=h.firstChild().toText().data().simplified();
                                     std::cout << "   Body  = " << Body.toStdString() << std::endl;
                                     body_id_ = kin->model->GetBodyId(Body);
-                                    std::cout << "   body_id_  = " << body_id_ << std::endl;
 
                                 if (body_id_  ==  std::numeric_limits <unsigned int >::max () )
                                       {
