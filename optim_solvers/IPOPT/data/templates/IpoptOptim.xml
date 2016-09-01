@@ -23,22 +23,28 @@
 <!--            <body_position> 1 1 1 </body_position>-->
 <!--            <desired_position> 0.5 0.7 0.5 </desired_position>-->
 <!--        </critere>-->
-        <critere type="camera" name ="camera1">
-                       <focale> 12  </focale>
-                       <alpha_u> 12  </alpha_u>
-                       <alpha_v> 10  </alpha_v>
-                       <u0> 15  </u0>
-                       <v0> 19  </v0>
+        <critere type="camera" retine ="1/2">
+                       <focale> 12 </focale>
+                       <Ku> 100  </Ku>
+                       <Kv> 100  </Kv>
+                       <u0> 2 </u0>
+                       <v0> 2 </v0>
                        <Position> 0
                                   0
-                                  0 </Position>
+                                  1000 </Position>
                  <RotationX> 1.046 </RotationX>
            <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
-                     <body_position> 0 0 0</body_position>
-                     <desired_position_image> 100 30 </desired_position_image>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 320 240</desired_position_image>
            </point>
+<!--           <point >-->
+<!--                     <robot> KUKA </robot>-->
+<!--                     <Body> kuka_lwr_4_link </Body>-->
+<!--                     <body_position> 0 1 0</body_position>-->
+<!--                     <desired_position_image> 10  0</desired_position_image>-->
+<!--           </point>-->
           </critere>
       </criteres>
     <results/>

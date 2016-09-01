@@ -73,7 +73,8 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 {
         robot.getPositionLimit(qmin,qmax);
 
-        n=7;
+        n= kin.getNDof();
+        std::cout << "   kin.getNDof() = " << n  << std::endl;
         /*  Initialisation du gradient*/
         double yp = 0.0;
         adouble* x = new adouble[n];
@@ -83,10 +84,12 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
                         for(int i=0;i<n;i++)
                         {
-                            x[i] <<= i+1./2;
-
+                            x[i] <<=0.1;
+                                std::cout << "x[i]"   << x[i] <<  std::endl;
                             for (int i =0;i<criteres_.size();i++)
                                 y += criteres_[i]->compute(x,&akin);
+                                  std::cout << "y==="   << y<<  std::endl;
+
                         }
                             y >>= yp;
                             delete[] x;
@@ -104,6 +107,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
 {
 
             assert(n == kin.getNDof());
+
             assert(m == 0);
             // the variables have lower bounds of -qmax
             for (Index i=0; i<n; i++)
@@ -125,8 +129,8 @@ bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
             assert(init_z == false);
             assert(init_lambda == false);
             // initialize to the given starting point
-            for(int i=0;i<7;i++)
-                x[i] = i+1/2;
+            for(int i=0;i<n;i++)
+                x[i] = 0.1;
 	return true;
 }
 
@@ -137,6 +141,8 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
     obj_value =0;
     for (int i =0;i<nb;i++)
         obj_value += criteres_[i]->compute(x,&kin);
+
+    //getchar();
 
 return true;
 }

@@ -150,6 +150,10 @@ void MogsIpoptOptimization::solve()
 		  return ;
 	  }
 
+    //set options
+
+        app_->Options()->SetStringValue("derivative_test", "first-order");
+
 	status = app_->OptimizeTNLP (nlp_);
 
 	if (status == Solve_Succeeded)

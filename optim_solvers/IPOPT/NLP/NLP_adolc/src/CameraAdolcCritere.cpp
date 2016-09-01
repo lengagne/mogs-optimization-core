@@ -11,14 +11,14 @@
          nb_points_=0;
 
 
-         while (!point.isNull())
-                            {
-                                 if (point.tagName()=="point")
-
-{                           nb_points_++;
-                            std::cout << "   nb_points_=  " << nb_points_ << std::endl;
-
-}
+//         while (!point.isNull())
+//                            {
+//                                 if (point.tagName()=="point")
+//
+//                                    {
+//                            nb_points_++;
+//                            std::cout << "   nb_points_=  " << nb_points_ << std::endl;
+//                                    }
        while (!h.isNull())
                             {
                                  if (h.tagName()=="robot")
@@ -33,13 +33,15 @@
                                     Body=h.firstChild().toText().data().simplified();
                                     std::cout << "   Body  = " << Body.toStdString() << std::endl;
                                     body_id_ = kin->model->GetBodyId(Body);
+                                    std::cout << "   body_id_  = " << body_id_ << std::endl;
+
                                 if (body_id_  ==  std::numeric_limits <unsigned int >::max () )
                                       {
                                       std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
                                       exit(0);
                                         }
                                             std::cout << "   body_id_  = " << body_id_ << std::endl;
-                                       }
+                                        }
 
                                 if (h.tagName()=="body_position")
                                         {
@@ -68,9 +70,9 @@
                                                    h= h.nextSibling().toElement();
 
                                   }
-point= point.nextSibling().toElement();
-
-}
+//point= point.nextSibling().toElement();
+//
+//}
          while (!Child.isNull())
              {
 
@@ -78,16 +80,17 @@ point= point.nextSibling().toElement();
                    {
                         focale=Child.firstChild().toText().data().toDouble();std::cout << "   focale = " << focale << std::endl;
                    }
-                   if (Child.tagName()=="alpha_u")
+
+                   if (Child.tagName()=="Ku")
                    {  int i=0;
-                            alpha_u=Child.firstChild().toText().data().toDouble();
-                            std::cout << "   alpha_u = " << alpha_u  << std::endl;
+                            Ku=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   Ku = " << Ku  << std::endl;
                             i=i++;std::cout << "   i = " <<i  << std::endl;
                    }
-                    if (Child.tagName()=="alpha_v")
+                    if (Child.tagName()=="Kv")
                    {
-                            alpha_v=Child.firstChild().toText().data().toDouble();
-                            std::cout << "   alpha_v = " << alpha_v  << std::endl;
+                            Kv=Child.firstChild().toText().data().toDouble();
+                            std::cout << "   Kv = " << Kv  << std::endl;
                         }
 
                     if (Child.tagName()=="u0")    {
@@ -133,10 +136,10 @@ point= point.nextSibling().toElement();
                                           0, cos(RotationX), -sin(RotationX),Position_(1),
                                           0, sin(RotationX), cos(RotationX),Position_(2);
                                          std::cout << "  RT est égal = " << RT <<std::endl;
-                                    K << alpha_u ,  0,     u0,
-                                          0,      alpha_v ,v0,
+                                    K << focale*Ku ,  0,     u0,
+                                          0,      focale*Kv ,v0,
                                           0,        0,     1;
-                                       std::cout << "  K est égal = " << K <<std::endl;
+                                       std::cout << "  K est égal = " << K<<std::endl;
                                                           M=K*RT;
                                        std::cout << "  M est égal = " << M <<std::endl;
 

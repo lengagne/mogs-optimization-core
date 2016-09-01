@@ -39,11 +39,11 @@ class CameraAdolcCritere: public AbstractAdolcCritere
                      double l1,l2;
 
 
-                    QString  desired_position_image,name;
+                    QString  desired_position_image,retine;
                     QString  Position,robot,Body,body_position;
                  //   adouble su,sv,s,u,v;
                     double  RotationX,tval,erreur_projection;
-                    double focale,alpha_v,alpha_u,u0,v0;            // Paramètres intrinsèques de la caméra
+                    double focale,Kv,Ku,u0,v0;            // Paramètres intrinsèques de la caméra
 
                     Eigen::Matrix<double, 3, 3> R,K;                //Matrice de rotation sur X d'un angle= pi/3 et matrice de calibration
                     Eigen::Matrix<double, 3, 4> RT;                 //Matrice de rotation et de translation;
