@@ -46,27 +46,32 @@ void NLP_adolc::load_xml(QDomElement criteres)
         akin.SetRobot(&robot);
 
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
-        {
+	{
 
-                            if (criteres.tagName()=="criteres")
-                            {
+		if (criteres.tagName()=="criteres")
+		{
 
-                            type=critere.attribute("type");
-                            name=critere.attribute("name");
-                            std::cout << "critere "   << type.toStdString().c_str() <<  std::endl;
+			type=critere.attribute("type");
+			name=critere.attribute("name");
+			std::cout << "critere "   << type.toStdString().c_str() <<  std::endl;
 
-                            if(type=="position")
-                               { weight=critere.attribute("weight");
-                                std::istringstream smallData (weight.toStdString(), std::ios_base::in);
-                                smallData >> tval;
-                                weight_ = tval;
-                                std::cout << "   weight_ = " << weight_  << std::endl;
-                                criteres_.push_back(new PositionAdolcCritere(critere,&kin));}
-                            else if(type=="camera")
-                                 std::cout << "name "   <<name.toStdString().c_str() << std::endl;
-                                 criteres_.push_back(new CameraAdolcCritere(critere,&kin));
-                            }
-         }
+			if(type=="position")
+			{
+				weight=critere.attribute("weight");
+				std::istringstream smallData (weight.toStdString(), std::ios_base::in);
+				smallData >> tval;
+				weight_ = tval;
+				std::cout << "   weight_ = " << weight_  << std::endl;
+				criteres_.push_back(new PositionAdolcCritere(critere,&kin));
+			
+			}
+			else if(type=="camera")
+			{
+				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
+				criteres_.push_back(new CameraAdolcCritere(critere,&kin));
+			}
+		}
+	}
 }
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
@@ -85,11 +90,9 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
                         for(int i=0;i<n;i++)
                         {
                             x[i] <<=0.1;
-                                std::cout << "x[i]"   << x[i] <<  std::endl;
-                            for (int i =0;i<criteres_.size();i++)
-                                y += criteres_[i]->compute(x,&akin);
-                                  std::cout << "y==="   << y<<  std::endl;
-
+							y=0;
+                            for (int j =0;j<criteres_.size();j++)
+                                y += criteres_[j]->compute(x,&akin);
                         }
                             y >>= yp;
                             delete[] x;
@@ -155,9 +158,10 @@ bool NLP_adolc::eval_grad_f (Index n, const Number * x, bool new_x, Number * gra
             assert(n == kin.getNDof());
             double* g = new double[n];
             gradient(1,n,x,g);
-            for(int i(0);i<n;++i)
+            for(unsigned int i=0;i<n;i++)
+			{
                 grad_f[i] = g[i];
-
+			}
 	return true;
 }
 

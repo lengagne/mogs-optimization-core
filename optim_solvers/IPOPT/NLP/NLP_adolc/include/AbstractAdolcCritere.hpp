@@ -21,6 +21,7 @@ class AbstractAdolcCritere
 
     virtual adouble compute( const adouble *x , MogsKinematics<adouble> * kin) = 0;
 
+	double weight_=1;
 };
 
 

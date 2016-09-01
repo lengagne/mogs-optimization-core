@@ -27,12 +27,21 @@
                        <focale> 0.1 </focale>
                        <Ku> 100  </Ku>
                        <Kv> 100  </Kv>
+<<<<<<< HEAD
                        <u0> 320 </u0>
                        <v0> 240 </v0>
                        <Position> 0
                                   0
                                   2000 </Position>
                  <RotationX> 0 </RotationX>
+=======
+                       <u0> 2 </u0>
+                       <v0> 2 </v0>
+                       <Position> 10
+                                  10
+                                  0 </Position>
+                 <RotationX> 1.046 </RotationX>
+>>>>>>> 7217eba95b3146b1b35b18fa50208f9b6c9c7c39
            <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
