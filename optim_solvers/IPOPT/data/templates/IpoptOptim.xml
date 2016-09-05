@@ -24,35 +24,35 @@
 <!--            <desired_position> 0.5 0.7 0.5 </desired_position>-->
 <!--        </critere>-->
         <critere type="camera" retine ="1/2">
-                       <focale> 12 </focale>
-                       <Ku> 100  </Ku>
-                       <Kv> 100  </Kv>
-                       <u0> 320 </u0>
-                       <v0> 240 </v0>
+                       <focale> 0.012 </focale>
+                       <Ku> 0.1  </Ku>
+                       <Kv> 0.1  </Kv>
+                       <u0> 0.320 </u0>
+                       <v0> 0.240 </v0>
                        <Position> 0
                                   0
-                                  1000 </Position>
-                     <RotationX> 1.046 </RotationX>
+                                  1 </Position>
+                     <RotationX> 0 </RotationX>
                      <RotationY> 0 </RotationY>
                      <RotationZ> 0 </RotationZ>
            <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 30 20</desired_position_image>
+                     <desired_position_image> 0.330 0.240</desired_position_image>
            </point>
-           <point>
-                     <robot> humanoide </robot>
-                     <Body> kuka_lwr_5_link </Body>
-                     <body_position> 0 0 1</body_position>
-                     <desired_position_image> 10  40</desired_position_image>
-           </point>
-           <point>
-                     <robot> human </robot>
-                     <Body> kuka_lwr_6_link </Body>
-                     <body_position> 0 1 1</body_position>
-                     <desired_position_image> 50  60</desired_position_image>
-           </point>
+<!--           <point>-->
+<!--                     <robot> humanoide </robot>-->
+<!--                     <Body> kuka_lwr_5_link </Body>-->
+<!--                     <body_position> 0 0 1</body_position>-->
+<!--                     <desired_position_image> 0.320  0.240</desired_position_image>-->
+<!--           </point>-->
+<!--           <point>-->
+<!--                     <robot> human </robot>-->
+<!--                     <Body> kuka_lwr_6_link </Body>-->
+<!--                     <body_position> 0 1 1</body_position>-->
+<!--                     <desired_position_image> 0.340  0.240</desired_position_image>-->
+<!--           </point>-->
           </critere>
       </criteres>
     <results/>

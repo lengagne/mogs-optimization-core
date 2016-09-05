@@ -18,26 +18,29 @@ T CameraAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
 
 
     for(int i=0;i<nb_points_.size();i++)
- {
+     {
 
-     Eigen::Matrix<T, 3, 1>Pr=kin_->getPosition(body_id_[i],bodyposition[i]);
-
-
-     su=M(0)*Pr(0)+M(1)*Pr(1)+M(2)*Pr(2)+M(3);
-	 sv=M(4)*Pr(0)+M(5)*Pr(1)+M(6)*Pr(2)+M(7);
-     s=M(8)*Pr(0)+M(9)*Pr(1)+M(10)*Pr(2)+M(11);
-     u= su/s;
-     v= sv/s;
+         Eigen::Matrix<T, 3, 1>Pr=kin_->getPosition(body_id_[i],bodyposition[i]);
 
 
-              std::cout << " body_id_, = " <<  body_id_[i]<< std::endl;
-              std::cout << " bodyposition  = " << bodyposition[i]<< std::endl;
-              std::cout << " desired_position_image  = " << desiredpositionimage[i]<< std::endl;
+         su=M(0)*Pr(0)+M(1)*Pr(1)+M(2)*Pr(2)+M(3);
+         sv=M(4)*Pr(0)+M(5)*Pr(1)+M(6)*Pr(2)+M(7);
+         s=M(8)*Pr(0)+M(9)*Pr(1)+M(10)*Pr(2)+M(11);
+         u= su/s;
+         v= sv/s;
 
-       en_2D(0) = u-desiredpositionimage[i](0);
-       en_2D(1) = v-desiredpositionimage[i](0);
-}
-        obj_value = obj_value + en_2D.norm();
+
+                  std::cout << "u= " <<  u<< std::endl;
+                  std::cout << " v = " << v<< std::endl;
+    //              std::cout << " desired_position_image[i](0 ) = " << desiredpositionimage[i](0)<< std::endl;
+    //              std::cout << " desired_position_image[i](1) = " << desiredpositionimage[i](1)<< std::endl;
+
+           en_2D(0) = u-desiredpositionimage[i](0);
+           en_2D(1) = v-desiredpositionimage[i](1);
+
+             obj_value = obj_value + en_2D.norm();
+    }
+
       return obj_value * weight_;
 
 }

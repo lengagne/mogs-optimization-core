@@ -198,7 +198,7 @@
                             std::cout << "  RotationZ = " << RotationZ  << std::endl;
 
                                 RZ << cos(RotationZ), -sin(RotationZ), 0,
-                                     sin(RotationZ),  cos(RotationZ), 0,
+                                      sin(RotationZ),  cos(RotationZ), 0,
                                         0,           0,               1;
                              std::cout << "  Rotation sur Z est égal = " << RZ <<std::endl;
 
