@@ -15,14 +15,7 @@
                                      if (point.tagName()=="point")
                                     nb_points_.push_back(nb_points);
                                     nb_points++;
-//                                    while(!nb_points_.size())
-//                                    for (int i(0); i <nb_points_.size(); i++)
                                     std::cout << "le vecteur contient " << nb_points_.size() << " points.\n";
-                                    std::cout << "le vecteur contient " << nb_points<< " points.\n";
-
-//                                    if(nb_points_.size()==2)
-
-
 
        while (!h.isNull())
                             {
@@ -69,15 +62,6 @@
                                             }
                                                 std::cout << "   body_id_  = " <<  body_id_[2] << std::endl;
                                             }
-                                             if(nb_points==3)
-                                            {
-                                            if (body_id_[3] ==  std::numeric_limits <unsigned int >::max () )
-                                            {
-                                          std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
-                                          exit(0);
-                                            }
-                                                std::cout << "   body_id_  = " <<  body_id_[2] << std::endl;
-                                            }
 
                                             }
 
@@ -106,8 +90,6 @@
                                             if(nb_points==3)
                                                       {
                                           std::cout << "   body_position pour le troisième point est = " << bodyposition[2] << std::endl;}
-
-
 
                                      }
 
@@ -238,10 +220,14 @@
                                                           M=K*RT;
                                        std::cout << "  M est égal = " << M <<std::endl;
 
-//                                    erreur_projection=(projection_en_2D - desired_position_image_).norm();
-//                                              std::cout << " l'erreur_projection est égal = " << erreur_projection <<std::endl;
 
-                                               // uh=(alpha_u_*(RT(0)*body_position_(0)+RT(1)*body_position_(1)+RT(2)*body_position_(2)+Position_(0)))/(RT(9)*body_position_(0)+RT(10)*body_position_(1)+RT(11)*body_position_(2)+Position_(2))+u0_;
+//                                          for(int i=0;i<nb_points_.size();i++)
+//                                    {
+//                                    std::cout << " on body_id_, = " <<  body_id_[i]<< std::endl;
+//                                      std::cout << " on a bodyposition  = " << bodyposition[i]<< std::endl;
+//
+//                                      std::cout << "on a desired_position_image  = " << desiredpositionimage[i]<< std::endl;}
+
 }
 
 CameraAdolcCritere::~CameraAdolcCritere ()

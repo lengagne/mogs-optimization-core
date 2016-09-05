@@ -83,14 +83,16 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         /*  Initialisation du gradient*/
         double yp = 0.0;
         adouble* x = new adouble[n];
-        adouble y = 1.0;
+        adouble y = 0.0;
         size_t tape_stats[STAT_SIZE];
                     trace_on(1);
 
                         for(int i=0;i<kin.getNDof();i++)
                         {
                             x[i] <<=0.1;
+                            y=0;
                             for (int j =0;j<criteres_.size();j++)
+
                                 y+=criteres_[j]->compute(x,&akin);
                         }
                             y >>= yp;

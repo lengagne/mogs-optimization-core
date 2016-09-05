@@ -32,14 +32,14 @@
                        <Position> 0
                                   0
                                   1000 </Position>
-                     <RotationX> 90 </RotationX>
-                     <RotationY> 90 </RotationY>
-                     <RotationZ> 1.046 </RotationZ>
+                     <RotationX> 1.046 </RotationX>
+                     <RotationY> 0 </RotationY>
+                     <RotationZ> 0 </RotationZ>
            <point >
                      <robot> KUKA </robot>
                      <Body> kuka_lwr_4_link </Body>
-                     <body_position>1 0 0</body_position>
-                     <desired_position_image> 20 30</desired_position_image>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 30 20</desired_position_image>
            </point>
            <point>
                      <robot> humanoide </robot>
