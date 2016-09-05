@@ -38,7 +38,7 @@ T CameraAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
            en_2D(0) = u-desiredpositionimage[i](0);
            en_2D(1) = v-desiredpositionimage[i](1);
 
-             obj_value = obj_value + en_2D.norm();
+             obj_value = obj_value + en_2D.squaredNorm();
     }
 
       return obj_value * weight_;
