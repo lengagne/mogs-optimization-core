@@ -35,14 +35,13 @@ class PositionAdolcCritere: public AbstractAdolcCritere
         QString desired_position;
         QString body_position;
         double tval;
-        
+
         unsigned int robot_id_;
         unsigned int body_id_;
 
         Eigen::Matrix<double, 3, 1> body_position_;
         Eigen::Matrix<double, 3, 1> desired_position_;
 
-        //std::vector<AbstractAdolcCritere* > criteres_;
 };
 
 #include "PositionAdolcCritere.hxx"

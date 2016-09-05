@@ -63,7 +63,7 @@ void NLP_adolc::load_xml(QDomElement criteres)
 				weight_ = tval;
 				std::cout << "   weight_ = " << weight_  << std::endl;
 				criteres_.push_back(new PositionAdolcCritere(critere,&kin));
-			
+
 			}
 			else if(type=="camera")
 			{
@@ -76,23 +76,22 @@ void NLP_adolc::load_xml(QDomElement criteres)
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-        robot.getPositionLimit(qmin,qmax);
+
 
         n= kin.getNDof();
         std::cout << "   kin.getNDof() = " << n  << std::endl;
         /*  Initialisation du gradient*/
         double yp = 0.0;
         adouble* x = new adouble[n];
-        adouble y = 0;
+        adouble y = 1.0;
         size_t tape_stats[STAT_SIZE];
                     trace_on(1);
 
-                        for(int i=0;i<n;i++)
+                        for(int i=0;i<kin.getNDof();i++)
                         {
                             x[i] <<=0.1;
-							y=0;
                             for (int j =0;j<criteres_.size();j++)
-                                y += criteres_[j]->compute(x,&akin);
+                                y+=criteres_[j]->compute(x,&akin);
                         }
                             y >>= yp;
                             delete[] x;
@@ -112,14 +111,17 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
             assert(n == kin.getNDof());
 
             assert(m == 0);
+            Index i;
+            robot.getPositionLimit(qmin,qmax);
             // the variables have lower bounds of -qmax
-            for (Index i=0; i<n; i++)
-            x_l[i] =qmin[i];
+            for (i=0; i<kin.getNDof(); i++)
+            {x_l[i] =qmin[i];
+            std::cout << "   x_l[i] = " << x_l[i]  << std::endl;}
 
             // the variables have upper bounds of +qmax
-            for (Index i=0; i<n; i++)
-            x_u[i] = qmax[i];
-
+            for (Index i=0; i<kin.getNDof(); i++)
+            {x_u[i] =qmax[i];
+            std::cout << "   x_u[i] = " << x_u[i]  << std::endl;}
 
 	return true;
 }
@@ -132,8 +134,9 @@ bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
             assert(init_z == false);
             assert(init_lambda == false);
             // initialize to the given starting point
-            for(int i=0;i<n;i++)
+            for(int i=0;i<kin.getNDof();i++)
                 x[i] = 0.1;
+
 	return true;
 }
 
@@ -143,7 +146,7 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
 
     obj_value =0;
     for (int i =0;i<nb;i++)
-        obj_value += criteres_[i]->compute(x,&kin);
+        obj_value+=criteres_[i]->compute(x,&kin);
 
     //getchar();
 
@@ -161,6 +164,7 @@ bool NLP_adolc::eval_grad_f (Index n, const Number * x, bool new_x, Number * gra
             for(unsigned int i=0;i<n;i++)
 			{
                 grad_f[i] = g[i];
+			//std::cout << "   g[i] = " << g[i]  << std::endl;
 			}
 	return true;
 }
