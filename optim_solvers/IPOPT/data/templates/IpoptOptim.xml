@@ -7,21 +7,22 @@
     <criteres>
 <!--        <critere type="position" weight="1.0">-->
 <!--            <robot> KUKA </robot>-->
-<!--            <body> kuka_lwr_7_link </body>-->
-<!--            <body_position> 0 1 2 </body_position>-->
-<!--            <desired_position> 0.5 0.5 0.5 </desired_position>-->
+<!--           <body> kuka_lwr_7_link </body>-->
+<!--           <body_position> 0 0 0.05 </body_position>-->
+<!--           <desired_position> 0.4 0.4 0.3 </desired_position>-->
 <!--        </critere>-->
-<!--        <critere type="position" weight="1.0">-->
+<!---->
+<!--        <critere type="position" weight="0.001">-->
 <!--            <robot> KUKA </robot>-->
-<!--            <body> kuka_lwr_4_link </body>-->
-<!--            <body_position> 6 6 6 </body_position>-->
-<!--            <desired_position> 0.6 0.5 0.5 </desired_position>-->
+<!--            <body> kuka_lwr_5_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
 <!--        </critere>-->
-<!--        <critere type="position" weight="1.0">-->
+<!--        <critere type="position" weight="0.001">-->
 <!--            <robot> KUKA </robot>-->
-<!--            <body> kuka_lwr_2_link </body>-->
-<!--            <body_position> 1 1 1 </body_position>-->
-<!--            <desired_position> 0.5 0.7 0.5 </desired_position>-->
+<!--            <body> kuka_lwr_3_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
 <!--        </critere>-->
         <critere type="camera" retine ="1/2">
                        <focale> 0.012 </focale>
@@ -37,23 +38,23 @@
                      <RotationZ> 0 </RotationZ>
            <point >
                      <robot> KUKA </robot>
-                     <Body> kuka_lwr_4_link </Body>
+                     <Body> kuka_lwr_7_link </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.330 0.240</desired_position_image>
+                     <desired_position_image> 0.320 0.240</desired_position_image>
            </point>
-<!--           <point>-->
-<!--                     <robot> humanoide </robot>-->
-<!--                     <Body> kuka_lwr_5_link </Body>-->
-<!--                     <body_position> 0 0 1</body_position>-->
-<!--                     <desired_position_image> 0.320  0.240</desired_position_image>-->
-<!--           </point>-->
-<!--           <point>-->
-<!--                     <robot> human </robot>-->
-<!--                     <Body> kuka_lwr_6_link </Body>-->
-<!--                     <body_position> 0 1 1</body_position>-->
-<!--                     <desired_position_image> 0.340  0.240</desired_position_image>-->
-<!--           </point>-->
-          </critere>
+           <point>
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_5_link </Body>
+                     <body_position> 0 0 1</body_position>
+                     <desired_position_image> 0.330  0.240</desired_position_image>
+           </point>
+           <point>
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_6_link </Body>
+                     <body_position> 0 1 1</body_position>
+                     <desired_position_image> 0.340  0.240</desired_position_image>
+           </point>
+           </critere>
       </criteres>
     <results/>
 </problem>

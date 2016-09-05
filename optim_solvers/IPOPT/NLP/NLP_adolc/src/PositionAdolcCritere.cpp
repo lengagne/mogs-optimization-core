@@ -4,9 +4,12 @@
 PositionAdolcCritere::PositionAdolcCritere (QDomElement critere,
                                             MogsKinematics<double>* kin)
 {
+    weight_ = critere.attribute("weight").toDouble();
+    std::cout<<"weight = "<< weight_<<std::endl;
   QDomElement Child=critere.firstChildElement().toElement();
     while (!Child.isNull())
              {
+
                  if (Child.tagName()=="robot")
                    {
                         Robot=Child.firstChild().toText().data();
