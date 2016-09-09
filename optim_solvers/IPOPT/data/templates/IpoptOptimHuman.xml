@@ -29,132 +29,137 @@
 <!--        </critere>-->
         <critere type="camera" retine ="1/2">
                        <focale> 0.012 </focale>
-                       <Ku> 0.1  </Ku>
-                       <Kv> 0.1  </Kv>
-                       <u0> 0.320 </u0>
-                       <v0> 0.240 </v0>
+                       <Ku> 3e-6  </Ku>
+                       <Kv> 3e-6  </Kv>
+                       <u0> 170 </u0>
+                       <v0> 215 </v0>
                        <Position> 0
-                                  -1
+                                  0
                                   1 </Position>
-                     <RotationX> 0 </RotationX>
-                     <RotationY> 0 </RotationY>
-                     <RotationZ> 0 </RotationZ>
+                     <Rotation> 0 0 0</Rotation>
+<!--           <point >
+                     <robot> yogi </robot>
+                     <Body> waist </Body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 170 215 </desired_position_image>
+           </point>			-->		 
            <point >
                      <robot> yogi </robot>
                      <Body> lefthand </Body>
                      <body_position>0 0 0.17</body_position>
-                     <desired_position_image> 0.5441	0.0104</desired_position_image>
+                     <desired_position_image> 185 5 </desired_position_image>
+					 
            </point>
-           <point >
+<!--           <point >
                      <robot> yogi </robot>
                      <Body> righthand </Body>
                      <body_position>0 0 0.17</body_position>
-                     <desired_position_image> 0.5470	0.0104</desired_position_image>
+                     <desired_position_image> 186 5</desired_position_image>
            </point>		   
 		   
          <point >
                      <robot> yogi </robot>
                      <Body> lefthand </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5353	0.0771</desired_position_image>
+                     <desired_position_image> 189 32 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> righthand </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5559	0.0667</desired_position_image>
+                     <desired_position_image> 182 37 </desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
                      <Body> leftlowerarm </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.4323	0.1480</desired_position_image>
+                     <desired_position_image> 216 75</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> rightlowerarm </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.6353	0.1562</desired_position_image>
+                     <desired_position_image> 147 71 </desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
                      <Body> leftupperarm </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.4765	0.2479</desired_position_image>
+                     <desired_position_image> 208 121</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> rightupperarm </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.6118	0.2521</desired_position_image>
+                     <desired_position_image> 162 119</desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
                      <Body> neck </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5382	0.1479</desired_position_image>
+                     <desired_position_image> 183 119	</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> head </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5441	0.2104</desired_position_image>
+                     <desired_position_image> 185 101</desired_position_image>
            </point>		   
 
 		   <point >
                      <robot> yogi </robot>
                      <Body> leftthigh </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5823	0.4458</desired_position_image>
+                     <desired_position_image> 198 214	 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> rightthigh </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.4853	0.4583</desired_position_image>
+                     <desired_position_image> 165 220 </desired_position_image>
            </point>		   
 
 		<point >
                      <robot> yogi </robot>
                      <Body> rightshank </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5117	0.59375</desired_position_image>
+                     <desired_position_image>  174 285	 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> leftshank </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.7412	0.5271</desired_position_image>
+                     <desired_position_image> 252 253 </desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
                      <Body> rightfoot </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5559	0.7604</desired_position_image>
+                     <desired_position_image> 189 365	</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> leftfoot </Body>
                      <body_position>0 0 0</body_position>
-                     <desired_position_image> 0.5412	0.525</desired_position_image>
+                     <desired_position_image> 184 252</desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
                      <Body> rightfoot </Body>
                      <body_position>0 0 0.236</body_position>
-                     <desired_position_image> 0.5029	0.7875</desired_position_image>
+                     <desired_position_image> 171 378</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
                      <Body> leftfoot </Body>
                      <body_position>0 0 0.236</body_position>
-                     <desired_position_image> 0.5324	0.5917</desired_position_image>
-           </point>		   
+                     <desired_position_image> 181 284</desired_position_image>
+           </point>		 -->  
 
 		</critere>
       </criteres>

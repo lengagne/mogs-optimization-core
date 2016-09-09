@@ -19,6 +19,8 @@
 
        while (!h.isNull())
                             {
+                                qDebug()<<"h.tagName() = "<< h.tagName() ;
+
                                  if (h.tagName()=="robot")
                                         {
                                      robot = h.attribute("robot");
@@ -31,39 +33,15 @@
                                         Body=h.firstChild().toText().data().simplified();
 
                                         std::cout << "   Body  = " << Body.toStdString() << std::endl;
-
-                                      body_id_.push_back(kin->model->GetBodyId(Body));
-
-                                        if(nb_points==1)
-                                                      {
-                                    if (body_id_[0] ==  std::numeric_limits <unsigned int >::max () )
-                                            {
+                                    unsigned int id = kin->model->GetBodyId(Body);
+                                     if (id ==  std::numeric_limits <unsigned int >::max () )
+                                    {
                                           std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
                                           exit(0);
-                                            }
-                                                std::cout << "   body_id_  = " <<  body_id_[0] << std::endl;
-                                            }
-
-                                     if(nb_points==2)
-                                            {
-                                    if (body_id_[1] ==  std::numeric_limits <unsigned int >::max () )
-                                            {
-                                          std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
-                                          exit(0);
-                                            }
-                                                std::cout << "   body_id_  = " <<  body_id_[1] << std::endl;
-                                            }
-                                            if(nb_points==3)
-                                            {
-                                    if (body_id_[2] ==  std::numeric_limits <unsigned int >::max () )
-                                            {
-                                          std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
-                                          exit(0);
-                                            }
-                                                std::cout << "   body_id_  = " <<  body_id_[2] << std::endl;
-                                            }
-
-                                            }
+                                    }
+                                     body_id_.push_back(id);
+                                            std::cout << "   body_id_  = " <<  id << std::endl;
+                                        }
 
 
                                 if (h.tagName()=="body_position")
@@ -78,18 +56,8 @@
                                                         body_position_(i) = tval;
                                                       }
                                                 bodyposition.push_back(body_position_);
+                                                std::cout<<"body_position_ = "<< body_position_.transpose()<<std::endl;
 
-                                             if(nb_points==1)
-                                                      {
-                                          std::cout << "   body_position pour le premier point est = " << bodyposition[0] << std::endl;
-
-                                          }
-                                             if(nb_points==2)
-                                                      {
-                                          std::cout << "   body_position pour le deuxième point est = " << bodyposition[1] << std::endl;}
-                                            if(nb_points==3)
-                                                      {
-                                          std::cout << "   body_position pour le troisième point est = " << bodyposition[2] << std::endl;}
 
                                      }
 
@@ -104,22 +72,8 @@
                                                         smallData >> tval;
                                                         desired_position_image_(i) = tval;
                                                       }
+                                                    std::cout<<"desired_position_image_ = "<< desired_position_image_.transpose()<<std::endl;
                                              desiredpositionimage.push_back(desired_position_image_);
-                                         if(nb_points==1)
-                                                      {
-                                          std::cout << "   desired_position_image  pour le premier point est = " << desiredpositionimage[0] << std::endl;
-
-                                          }
-                                          if(nb_points==2)
-                                                      {
-                                          std::cout << "   desired_position_image  pour le deuxième point est = " << desiredpositionimage[1] << std::endl;
-
-                                          }
-                                           if(nb_points==3)
-                                                      {
-                                         std::cout << "   desired_position_image  pour le troisième point est = " << desiredpositionimage[2] << std::endl;}
-
-
                                        //     std::cout << "  desired_position_image  pour le second point = " << desiredpositionimage<< std::endl;
 
                                         }
@@ -167,57 +121,40 @@
                                     }
                             std::cout << "   Position_ = " << Position_  << std::endl;
                    }
-                     if (Child.tagName()=="RotationX")
+
+                   if (Child.tagName()=="Rotation")
                    {
-                            //RotationX=critere.attribute("RotationX");
-                            RotationX=Child.firstChild().toText().data().toDouble();
-                            std::cout << "  RotationX = " << RotationX  << std::endl;
+                            Rotation=critere.attribute("Rotation");
+                            Rotation=Child.firstChild().toText().data();
+                            std::istringstream smallData (Rotation.toStdString(), std::ios_base::in);
+                               for (int i = 0; i < 3; i++)
+                                    {
+                                        smallData >> tval;
+                                        Rotation_(i) = tval;
+                                    }
+                            std::cout << "   Rotation_ = " << Rotation_  << std::endl;
+                   }
+                Child = Child.nextSibling().toElement();
+             }
 
-                                RX << 1, 0, 0,
-                                     0, cos(RotationX), -sin(RotationX),
-                                     0, sin(RotationX), cos(RotationX);
-                                     std::cout << "  Rotation sur X est égal = " << RX <<std::endl;
-
-                      }
-                       if (Child.tagName()=="RotationY")
-                   {
-
-                            RotationY=Child.firstChild().toText().data().toDouble();
-                            std::cout << "  RotationY = " << RotationY  << std::endl;
-
-                                RY << cos(RotationY),    0, sin(RotationY),
-                                            0,          1,         0,
-                                     -sin(RotationY),   0, cos(RotationY);
-                                     std::cout << "  Rotation sur Y est égal = " << RY <<std::endl;
-
-                      }
-                         if (Child.tagName()=="RotationZ")
-                   {
-
-                            RotationZ=Child.firstChild().toText().data().toDouble();
-                            std::cout << "  RotationZ = " << RotationZ  << std::endl;
-
-                                RZ << cos(RotationZ), -sin(RotationZ), 0,
-                                      sin(RotationZ),  cos(RotationZ), 0,
-                                        0,           0,               1;
-                             std::cout << "  Rotation sur Z est égal = " << RZ <<std::endl;
-
-                      }
-                        Child = Child.nextSibling().toElement();
-                }
+                    camera_pose_ = SpatialTransform<double>(Rotation_,Position_);
+                                         std::cout << " camera_pose_= " << camera_pose_ <<std::endl;
 
 
-                                    RT << 1,          0,         0,          Position_(0),
-                                          0, cos(RotationX), -sin(RotationX),Position_(1),
-                                          0, sin(RotationX), cos(RotationX), Position_(2);
-                                         std::cout << "  RT est égal = " << RT <<std::endl;
+									// focale *Ku est en général plus grand que 1
+									// en général focal / taille d'un pixel sur le capteur (en m)
 
-
-                                    K << focale*Ku ,  0,     u0,
-                                          0,      focale*Kv ,v0,
+                                    K << focale/Ku ,  0,     u0,
+                                          0,      focale/Kv ,v0,
                                           0,        0,     1;
                                        std::cout << "  K est égal = " << K<<std::endl;
-                                                          M=K*RT;
+
+                                    Eigen::Matrix<double,3,3> R = K * camera_pose_.E.transpose();
+                                    Eigen::Matrix<double,3,1> P =  - K  *  camera_pose_.E* camera_pose_.r;
+                                        M = SpatialTransform<double>(R,P);
+
+//                                       M = K * camera_pose_.transpose();
+//                                                          M=K*RT;
                                        std::cout << "  M est égal = " << M <<std::endl;
 
 

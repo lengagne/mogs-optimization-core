@@ -118,13 +118,19 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
             robot.getPositionLimit(qmin,qmax);
             // the variables have lower bounds of -qmax
             for (i=0; i<kin.getNDof(); i++)
-            {x_l[i] = qmin[i];
-            std::cout << "   x_l[i] = " << x_l[i]  << std::endl;}
+            {
+                x_l[i] = qmin[i];
+                if(x_l[i]<-10) x_l[i] = -10;
+//            std::cout << "   x_l[i] = " << x_l[i]  << std::endl;
+            }
 
             // the variables have upper bounds of +qmax
             for (Index i=0; i<kin.getNDof(); i++)
-            {x_u[i] = qmax[i];
-            std::cout << "   x_u[i] = " << x_u[i]  << std::endl;}
+            {
+                x_u[i] = qmax[i];
+                if(x_u[i]>10) x_u[i] = 10;
+//            std::cout << "   x_u[i] = " << x_u[i]  << std::endl;
+            }
 
 	return true;
 }
@@ -138,7 +144,7 @@ bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
             assert(init_lambda == false);
             // initialize to the given starting point
             for(int i=0;i<kin.getNDof();i++)
-                x[i] = 0.1 * i;
+                x[i] = 0.;
 
 	return true;
 }

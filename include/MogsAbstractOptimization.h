@@ -25,9 +25,6 @@
 
 #include "MogsAbstractProblem.h"
 
-#include "IpIpoptApplication.hpp"
-#include "IpSolveStatistics.hpp"
-
 
 class MogsAbstractOptimization: public MogsAbstractProblem
 {

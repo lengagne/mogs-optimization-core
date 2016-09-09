@@ -42,29 +42,23 @@ typedef void destroy_nlp_ipopt(MogsNlpIpopt*);
 
 class MogsIpoptOptimization: public MogsAbstractOptimization
 {
-      public:
+    public:
 
-	MogsIpoptOptimization();
+    MogsIpoptOptimization();
 
-	~MogsIpoptOptimization();
+    ~MogsIpoptOptimization();
 
 
-	/** This function get the current time,
-	 *	the current values of joint position, velocity, acceleration and torques
-	 * 	and compute the needed values
-	 * 	The function returns false when the pattern is ended.
-	 */
+    void read_problem (const mogs_string & filename);
 
-        void read_problem (const mogs_string & filename);
+    /** Solve the problem	 */
+    void solve();
 
-        /** Solve the problem	 */
-        void solve();
-
-      private:
-        SmartPtr < MogsNlpIpopt > nlp_;
-        SmartPtr < IpoptApplication > app_;
-        create_nlp_ipopt* creator_;
-        destroy_nlp_ipopt* destructor_;
+    private:
+    SmartPtr < MogsNlpIpopt > nlp_;
+    SmartPtr < IpoptApplication > app_;
+    create_nlp_ipopt* creator_;
+    destroy_nlp_ipopt* destructor_;
 
 };
 
