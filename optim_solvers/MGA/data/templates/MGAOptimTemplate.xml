@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="mogs-mga-optimization">
+    <robot>
+        <name>KUKA</name>
+    </robot>
+    <ipopt_options type="numeric" name="max_iter" value="100"/>
+    <results/>
+</problem>
