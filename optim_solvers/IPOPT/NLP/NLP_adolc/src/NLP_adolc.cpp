@@ -29,6 +29,9 @@
 #include <math.h>
 #include "VisuHolder.h"
 
+#include "CameraAdolcCritere.hpp"
+#include "PositionAdolcCritere.hpp"
+
 using namespace Ipopt;
 
 /* Constructor. */
@@ -40,10 +43,11 @@ NLP_adolc::NLP_adolc ()
 NLP_adolc::~NLP_adolc ()
 {
 }
+
 void NLP_adolc::load_xml(QDomElement criteres)
 {
-        kin.SetRobot(&robot);
-        akin.SetRobot(&robot);
+        kin.SetRobot(&robot_);
+        akin.SetRobot(&robot_);
 
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
@@ -72,6 +76,7 @@ void NLP_adolc::load_xml(QDomElement criteres)
 			}
 		}
 	}
+	std::cout<<"End of load xml"<<std::endl;
 }
 bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
@@ -115,7 +120,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
 
             assert(m == 0);
             Index i;
-            robot.getPositionLimit(qmin,qmax);
+            robot_.getPositionLimit(qmin,qmax);
             // the variables have lower bounds of -qmax
             for (i=0; i<kin.getNDof(); i++)
             {
@@ -252,10 +257,10 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
 
-    visu.add("robot",robot);
-	q.resize(robot.getNDof());
+    visu.add("robot",robot_);
+	q.resize(robot_.getNDof());
 
-    for (int i=0;i<robot.getNDof();i++)
+    for (int i=0;i<robot_.getNDof();i++)
         q(i) = x[i];
 
     visu.apply_q("robot",&q);

@@ -15,7 +15,6 @@ using namespace Ipopt;
 class MogsNlpIpopt:public TNLP
 {
       public:
-	 MogsRobotProperties robot;
   /** default constructor */
 	MogsNlpIpopt ();
 
@@ -93,7 +92,8 @@ class MogsNlpIpopt:public TNLP
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
      std::vector < mogs_string > robots_url_;  // url of the robot
-
+    protected:
+	 MogsRobotProperties robot_;
 
 };
 

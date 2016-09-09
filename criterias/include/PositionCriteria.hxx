@@ -1,6 +1,6 @@
 
 template<typename T>
-T PositionAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
+T PositionCriteria::compute( const T *x,MogsKinematics<T> *kin_)
 {
     T obj_value;
 

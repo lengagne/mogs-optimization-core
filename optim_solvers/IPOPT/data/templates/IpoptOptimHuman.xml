@@ -33,23 +33,21 @@
                        <Kv> 3e-6  </Kv>
                        <u0> 170 </u0>
                        <v0> 215 </v0>
-                       <Position> 0
-                                  0
-                                  1 </Position>
+                       <Position> 0 0 1 </Position>
                      <Rotation> 0 0 0</Rotation>
-<!--           <point >
+           <point >
                      <robot> yogi </robot>
                      <Body> waist </Body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 170 215 </desired_position_image>
-           </point>			-->		 
-           <point >
+           </point>					 
+<!--           <point >
                      <robot> yogi </robot>
                      <Body> lefthand </Body>
                      <body_position>0 0 0.17</body_position>
                      <desired_position_image> 185 5 </desired_position_image>
 					 
-           </point>
+           </point>-->
 <!--           <point >
                      <robot> yogi </robot>
                      <Body> righthand </Body>

@@ -1,6 +1,6 @@
 
 template<typename T>
-T CameraAdolcCritere::compute( const T *x,MogsKinematics<T> *kin_)
+T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_)
 {
 
      T su,sv,s,u,v;

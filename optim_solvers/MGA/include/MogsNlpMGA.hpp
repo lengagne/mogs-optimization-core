@@ -34,6 +34,7 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     void finalize_solution( optim_infos &info);
 
+    void load_xml(QDomElement criteres);
 
 //
 //  /**@name Overloaded from TNLP */
@@ -91,7 +92,7 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //
 //     virtual  void load_xml(QDomElement criteres)=0;
 //
-//      private:
+      private:
 //  /**@name Methods to block default compiler methods.
 //   * The compiler automatically generates the following three methods.
 //   *  Since the default compiler implementation is generally not what
@@ -108,6 +109,9 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //	//@}
 //     std::vector < mogs_string > robots_url_;  // url of the robot
 //
+    MogsRobotProperties robot_;
+
+    MogsKinematics<double> kin_;
 
 };
 

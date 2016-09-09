@@ -37,11 +37,12 @@ if(MogsGeneticAlgorithm_FOUND)
 
 
     get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+
     set(MOGS_CORE_INCLUDE_DIRS "${Include_Directories}" CACHE INTERNAL "" )
 
-    link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
-                ${MogsGeneticAlgorithm_LIBRARY_DIRS}
-    )
+#    link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
+#                        ${MogsGeneticAlgorithm_LIBRARY_DIRS}
+#    )
 
     # Perform the proper linking
     SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")

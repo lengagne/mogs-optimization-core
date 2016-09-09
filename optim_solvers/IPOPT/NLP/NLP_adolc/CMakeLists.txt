@@ -1,4 +1,3 @@
-
 cmake_minimum_required (VERSION 2.8)
 enable_language(CXX)
 project(NLP_adolc)
@@ -31,11 +30,14 @@ elseif(IPOPT_FOUND)
         endif()
     endforeach()
 
+    message("MogsCriteria_INCLUDE_DIRS = " ${MogsCriteria_INCLUDE_DIRS})
+    message("MogsOptimizationCore_INCLUDE_DIRS = " ${MogsOptimizationCore_INCLUDE_DIRS})
 
     include_directories (
         include
         ${MogsCore_INCLUDE_DIRS}
-        ${MogsNlpAdolcCore_INCLUDE_DIRS}
+        ${MogsCriteria_INCLUDE_DIRS}
+        ${MogsOptimizationCore_INCLUDE_DIRS}
         ${IPOPT_INCLUDE_DIRS}
         ${ADOLC_INCLUDE_DIRS}
         ${MogsVisu_INCLUDE_DIRS}
@@ -62,22 +64,18 @@ elseif(IPOPT_FOUND)
     )
 
     target_link_libraries(  MogsNlpAdolc
-                            ${MogsNlpAdolc_LIBRARIES}
                             ${ADOLC_LIBRARIES}
                             ${MogsIpoptOptimization_LIBRARIES}
+                            ${MogsCriteria_LIBRARIES}
                             ${MogsVisu_LIBRARIES})
 
 	link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
 						${ADOLC_LIBRARY_DIRS}
 						${MogsVisu_LIBRARY_DIRS})
 
-	message("ADOLC_LIBRARY_DIRS = " ${ADOLC_LIBRARY_DIRS})
-	message("CMAKE_INSTALL_RPATH  = " ${CMAKE_INSTALL_RPATH})
-
 	SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 	set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH} ${ADOLC_LIBRARY_DIRS}")
 
-	message("CMAKE_INSTALL_RPATH  = " ${CMAKE_INSTALL_RPATH})
 
 ### Installation procedure
 

@@ -8,8 +8,6 @@
 
 #ifndef __NLP_adolc_HPP__
 #define __NLP_adolc_HPP__
-#include "CameraAdolcCritere.hpp"
-#include "PositionAdolcCritere.hpp"
 
 #include "MogsNlpIpopt.hpp"
 #include "MogsKinematics.h"

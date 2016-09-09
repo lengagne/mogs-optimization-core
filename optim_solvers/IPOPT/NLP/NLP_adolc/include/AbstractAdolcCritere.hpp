@@ -11,17 +11,19 @@
 
 #include "MogsKinematics.h"
 #include <adolc.h>
-class AbstractAdolcCritere
+#include "AbstractCriteria.hpp"
+
+class AbstractAdolcCritere : public AbstractCriteria
 {
     public:
 //     AbstractAdolcCritere ();
 //    ~ AbstractAdolcCritere ();
 
+//      From AbstractCriteria
     virtual double compute( const double *x , MogsKinematics<double> * kin) = 0;
 
     virtual adouble compute( const adouble *x , MogsKinematics<adouble> * kin) = 0;
 
-	double weight_=1;
 };
 
 

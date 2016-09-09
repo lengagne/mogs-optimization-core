@@ -7,9 +7,11 @@
 #include "AbstractAdolcCritere.hpp"
 #include "MogsNlpIpopt.hpp"
 #include "MogsKinematics.h"
+#include "PositionCriteria.hpp"
 
-class PositionAdolcCritere: public AbstractAdolcCritere
+class PositionAdolcCritere: public AbstractAdolcCritere, PositionCriteria
 {   public:
+	
 	PositionAdolcCritere (QDomElement critere,
                           MogsKinematics<double>* kin);
 
@@ -17,33 +19,13 @@ class PositionAdolcCritere: public AbstractAdolcCritere
 
     double compute( const double *x , MogsKinematics<double> * kin)
     {
-        return compute<double>(x,kin);
+        return PositionCriteria::compute<double>(x,kin);
     }
 
     adouble compute( const adouble *x , MogsKinematics<adouble> * kin)
     {
-        return compute<adouble>(x,kin);
+        return PositionCriteria::compute<adouble>(x,kin);
     }
-
-    template<typename T>
-      T compute( const T *x,MogsKinematics<T> *kin_);
-
-      private:
-
-        QString Body;
-        QString Robot;
-        QString desired_position;
-        QString body_position;
-        double tval;
-
-        unsigned int robot_id_;
-        unsigned int body_id_;
-
-        Eigen::Matrix<double, 3, 1> body_position_;
-        Eigen::Matrix<double, 3, 1> desired_position_;
-
 };
-
-#include "PositionAdolcCritere.hxx"
 
 #endif // POSITIONADOLCCRITERE_HPP_

@@ -24,6 +24,7 @@ if(IPOPT_FOUND)
 
     include_directories (
         include
+        ../criterias/include
         ${MogsCore_INCLUDE_DIRS}
         ${MogsOptimizationCore_INCLUDE_DIRS}
         ${IPOPT_INCLUDE_DIRS}
