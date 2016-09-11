@@ -17,14 +17,14 @@ class PositionAdolcCritere: public AbstractAdolcCritere, PositionCriteria
 
     ~PositionAdolcCritere ();
 
-    double compute( const double *x , MogsKinematics<double> * kin)
+    double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin)
     {
-        return PositionCriteria::compute<double>(x,kin);
+        return PositionCriteria::compute<double>(x,kin, compute_kin);
     }
 
-    adouble compute( const adouble *x , MogsKinematics<adouble> * kin)
+    adouble compute( const adouble *x , MogsKinematics<adouble> * kin, bool* compute_kin)
     {
-        return PositionCriteria::compute<adouble>(x,kin);
+        return PositionCriteria::compute<adouble>(x,kin, compute_kin);
     }
 };
 

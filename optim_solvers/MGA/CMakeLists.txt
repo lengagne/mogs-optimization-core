@@ -7,6 +7,8 @@ if(MogsGeneticAlgorithm_FOUND)
 
     message("MogsGeneticAlgorithm_INCLUDE_DIRS = " ${MogsGeneticAlgorithm_INCLUDE_DIRS})
 
+	find_package(MogsVisu QUIET)
+    
     find_package(MogsCore REQUIRED)
 
     if (NOT MogsOptimizationCore_FOUND)
@@ -28,8 +30,10 @@ if(MogsGeneticAlgorithm_FOUND)
     include_directories (
         include
         ${MogsCore_INCLUDE_DIRS}
+        ${MogsCriteria_INCLUDE_DIRS}
         ${MogsOptimizationCore_INCLUDE_DIRS}
         ${MogsGeneticAlgorithm_INCLUDE_DIRS}
+        ${MogsVisu_INCLUDE_DIRS}
     )
 
     configure_file ( "${CMAKE_CURRENT_SOURCE_DIR}/config_MogsMGAOptimization.h.in"
@@ -61,7 +65,10 @@ if(MogsGeneticAlgorithm_FOUND)
 
     target_link_libraries( MogsMGAOptimization
                 ${MogsGeneticAlgorithm_LIBRARIES}
-                ${MogsCore_LIBRARIES})
+                ${MogsCore_LIBRARIES}
+                ${MogsCriteria_LIBRARIES}
+                ${MogsVisu_LIBRARIES}
+                )
 
 
 
@@ -87,7 +94,7 @@ if(MogsGeneticAlgorithm_FOUND)
     SET(MogsMGAOptimization_FLAGS "-DMogsMGAOptimization_FOUND ${MGA_FLAGS}" CACHE INTERNAL "")
     SET(MogsMGAOptimization_FOUND TRUE CACHE INTERNAL "")
 
-    add_definitions(${MogsMGAOptimization_FLAGS})
+    add_definitions(${MogsMGAOptimization_FLAGS} ${MogsVisu_FLAGS})
     #  add flags (done before)
     configure_file(MogsMGAOptimizationConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsMGAOptimizationConfig.cmake" @ONLY)
 

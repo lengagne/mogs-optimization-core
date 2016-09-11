@@ -129,11 +129,9 @@ void MogsIpoptOptimization::solve()
 {
     std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
 
-    std::cout<<"il y a "<< robots_url_.size()<<" robots."<<std::endl;
-    qDebug()<<robots_url_[0];
-
+    std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
      //donne les fichiers des robots
-     nlp_-> set_robot_url( robots_url_ );
+     nlp_-> set_robots( robots_ );
 
       QDomElement criteres=root_.firstChildElement("criteres");
 
@@ -154,8 +152,9 @@ void MogsIpoptOptimization::solve()
 
         app_->Options()->SetStringValue("derivative_test", "first-order");
 // 		app_->Options()->SetNumericValue("derivative_test_perturbation", 1e-3);
- 		app_->Options()->SetNumericValue("tol", 1e-4);
-
+ 		app_->Options()->SetNumericValue("tol", 1e-3);
+		app_->Options()->SetIntegerValue("max_iter", 500);
+		
 	status = app_->OptimizeTNLP (nlp_);
 
 	if (status == Solve_Succeeded)
@@ -184,3 +183,4 @@ extern "C" void destroy(MogsIpoptOptimization* p)
 {
     delete p;
 }
+

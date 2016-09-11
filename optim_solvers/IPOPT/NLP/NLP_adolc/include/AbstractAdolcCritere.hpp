@@ -20,9 +20,9 @@ class AbstractAdolcCritere : public AbstractCriteria
 //    ~ AbstractAdolcCritere ();
 
 //      From AbstractCriteria
-    virtual double compute( const double *x , MogsKinematics<double> * kin) = 0;
+    virtual double compute( const double *x , MogsKinematics<double> * kin,bool* compute_kin) = 0;
 
-    virtual adouble compute( const adouble *x , MogsKinematics<adouble> * kin) = 0;
+    virtual adouble compute( const adouble *x , MogsKinematics<adouble> * kin,bool* compute_kin) = 0;
 
 };
 

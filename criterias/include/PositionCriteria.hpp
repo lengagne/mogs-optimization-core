@@ -11,13 +11,13 @@ class PositionCriteria: public AbstractCriteria
 
     ~PositionCriteria ();
 
-    double compute( const double *x , MogsKinematics<double> * kin)
+    double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin)
     {
-        return compute<double>(x,kin);
+        return compute<double>(x,kin, compute_kin);
     }
 
     template<typename T>
-      T compute( const T *x,MogsKinematics<T> *kin_);
+      T compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin);
 
       private:
 

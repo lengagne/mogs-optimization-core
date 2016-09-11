@@ -9,10 +9,9 @@ MogsNlpIpopt::~MogsNlpIpopt ()
 {
 }
 
-void MogsNlpIpopt::set_robot_url(const std::vector<mogs_string> & in)
+void MogsNlpIpopt::set_robots(const std::vector<MogsRobotProperties*> & in)
 {
-    robots_url_ = in;
-    robot_.SetRobotFile(robots_url_[0]);
+    robots_ = in;
 }
 
 

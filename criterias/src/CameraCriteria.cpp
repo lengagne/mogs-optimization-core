@@ -165,6 +165,18 @@
 //
 //                                      std::cout << "on a desired_position_image  = " << desiredpositionimage[i]<< std::endl;}
 
+	for (int i=0;i<desiredpositionimage.size();i++)
+	{
+		Eigen::Matrix<double,3,1> tmp;
+		tmp(0) = (desiredpositionimage[i](0) - u0) * Ku;
+		tmp(1) = (desiredpositionimage[i](1) - v0) * Kv;
+		tmp(2) = focale;
+		std::cout<<"desiredpositionimage["<<i<<"] = "<< desiredpositionimage[i].transpose()<<std::endl;
+		std::cout<<"tmp = "<< tmp.transpose()<<std::endl;
+		tmp.normalize();
+		droite_point_.push_back(tmp);
+	}
+									   
 }
 
 CameraCriteria::~CameraCriteria ()

@@ -35,7 +35,7 @@
                        <v0> 215 </v0>
                        <Position> 0
                                   0
-                                  1 </Position>
+                                  0 </Position>
                      <Rotation> 0 0 0</Rotation>
 <!--           <point >
                      <robot> yogi </robot>
@@ -50,7 +50,7 @@
                      <desired_position_image> 185 5 </desired_position_image>
 
            </point>
-<!--           <point >
+           <point >
                      <robot> yogi </robot>
                      <Body> righthand </Body>
                      <body_position>0 0 0.17</body_position>
@@ -147,7 +147,7 @@
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 184 252</desired_position_image>
            </point>
-
+ 
 			<point >
                      <robot> yogi </robot>
                      <Body> rightfoot </Body>
@@ -159,7 +159,7 @@
                      <Body> leftfoot </Body>
                      <body_position>0 0 0.236</body_position>
                      <desired_position_image> 181 284</desired_position_image>
-           </point>		 -->
+           </point>		
 
 		</critere>
       </criteres>

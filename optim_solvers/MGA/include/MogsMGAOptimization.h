@@ -42,49 +42,6 @@ class MogsMGAOptimization: public MogsAbstractOptimization
     /** Solve the problem	 */
     void solve();
 
-//      public:
-//    public:
-//        MogsMGAOptimization(MogsRobotProperties *robot,
-//                     const Eigen::Matrix<double,3,1>& objective,
-//                     const Eigen::Matrix<double,3,1>& sphere_obstacle,
-//                     double rayon_sphere,
-//                     const Eigen::Matrix<double,Eigen::Dynamic,1>& qinit,
-//                     const Eigen::Matrix<double,Eigen::Dynamic,1>& dqinit,
-//                     double dt);
-//
-//        virtual ~MogsMGAOptimization();
-//
-//        void get_problem_info(unsigned int & nb_variables,
-//                              unsigned int & nb_objectives,
-//                              unsigned int & nb_constraints,
-//                              std::vector<double>& seuils,
-//                              std::vector<double>& min_var,
-//                              std::vector<double>& max_var);
-//
-//        void evaluate(  std::vector<optim_infos> &infos);
-//
-//        void finalize_solution( optim_infos &info);
-//
-//
-//    protected:
-//    private:
-//        void evaluate(  optim_infos& info );
-//
-//    MogsKinematics<double> dyn_;
-//    Eigen::Matrix<double,Eigen::Dynamic,1> q,dq,ddq,torque;
-//
-//    Eigen::Matrix<double,Eigen::Dynamic,1> qinit,dqinit,ddqinit;
-//
-//    Eigen::Matrix<double,3,1> objective_;
-//
-//    Eigen::Matrix<double,3,1> sphere_;
-//    double rayon_sphere_;
-//
-//    unsigned int ndof;
-//
-//    double delta_t_;
-//
-//    std::vector < double >QMIN,QMAX, DQMAX,TORQUEMAX;
       private:
         MogsNlpMGA* my_pb_;
 };

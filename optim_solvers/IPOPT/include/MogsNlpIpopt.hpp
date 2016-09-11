@@ -72,7 +72,7 @@ class MogsNlpIpopt:public TNLP
 					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
-    void set_robot_url(const std::vector<mogs_string> & in);
+    void set_robots(const std::vector<MogsRobotProperties*> & in);
 
      virtual  void load_xml(QDomElement criteres)=0;
 
@@ -91,9 +91,8 @@ class MogsNlpIpopt:public TNLP
 		  MogsNlpIpopt (const MogsNlpIpopt &);
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
-     std::vector < mogs_string > robots_url_;  // url of the robot
     protected:
-	 MogsRobotProperties robot_;
+	 std::vector<MogsRobotProperties*> robots_;
 
 };
 

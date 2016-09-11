@@ -15,14 +15,14 @@ class CameraAdolcCritere: public AbstractAdolcCritere, CameraCriteria
 
     ~CameraAdolcCritere ();
 
-    double compute( const double *x , MogsKinematics<double> * kin)
+    double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin)
     {
-        return CameraCriteria::compute<double>(x,kin);
+        return CameraCriteria::compute<double>(x,kin, compute_kin);
     }
 
-    adouble compute( const adouble *x , MogsKinematics<adouble> * kin)
+    adouble compute( const adouble *x , MogsKinematics<adouble> * kin, bool* compute_kin)
     {
-        return CameraCriteria::compute<adouble>(x,kin);
+        return CameraCriteria::compute<adouble>(x,kin, compute_kin);
     }
 
 

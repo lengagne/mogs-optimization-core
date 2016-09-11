@@ -46,8 +46,8 @@ NLP_adolc::~NLP_adolc ()
 
 void NLP_adolc::load_xml(QDomElement criteres)
 {
-        kin.SetRobot(&robot_);
-        akin.SetRobot(&robot_);
+	kin.SetRobot(robots_[0]);
+	akin.SetRobot(robots_[0]);
 
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
@@ -98,8 +98,9 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 								x[i] = 0;
                             x[i] <<=0;
                             y=0;
+							bool mem_kin = false;
                             for (int j =0;j<criteres_.size();j++)
-                                y+=criteres_[j]->compute(x,&akin);
+                                y+=criteres_[j]->compute(x,&akin,&mem_kin);
                         }
                             y >>= yp;
                             delete[] x;
@@ -120,7 +121,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
 
             assert(m == 0);
             Index i;
-            robot_.getPositionLimit(qmin,qmax);
+            robots_[0]->getPositionLimit(qmin,qmax);
             // the variables have lower bounds of -qmax
             for (i=0; i<kin.getNDof(); i++)
             {
@@ -159,9 +160,10 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
     int nb = criteres_.size();
 
     obj_value =0;
+	bool mem_kin = false;
     for (int i =0;i<nb;i++)
     {
-        double tmp = criteres_[i]->compute(x,&kin);
+        double tmp = criteres_[i]->compute(x,&kin,&mem_kin);
         obj_value+= tmp;
 //        std::cout<<"crit("<<i<<") = " << tmp<<" \t\t total = "<< obj_value<<std::endl;
     }
@@ -243,13 +245,13 @@ void NLP_adolc::finalize_solution (SolverReturn status,
             for (Index i=0; i<n; i++) {
             printf("x[%d] = %e\n", i, x[i]);
             }
-            printf("\n\nSolution of the bound multipliers, z_L and z_U\n");
-            for (Index i=0; i<n; i++) {
-            printf("z_L[%d] = %e\n", i, z_L[i]);
-            }
-            for (Index i=0; i<n; i++) {
-            printf("z_U[%d] = %e\n", i, z_U[i]);
-            }
+//             printf("\n\nSolution of the bound multipliers, z_L and z_U\n");
+//             for (Index i=0; i<n; i++) {
+//             printf("z_L[%d] = %e\n", i, z_L[i]);
+//             }
+//             for (Index i=0; i<n; i++) {
+//             printf("z_U[%d] = %e\n", i, z_U[i]);
+//             }
             printf("\n\nObjective value\n");
             printf("f(x*) = %e\n", obj_value);
 
@@ -257,10 +259,10 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
 
-    visu.add("robot",robot_);
-	q.resize(robot_.getNDof());
+    visu.add("robot",robots_[0]);
+	q.resize(robots_[0]->getNDof());
 
-    for (int i=0;i<robot_.getNDof();i++)
+    for (int i=0;i<robots_[0]->getNDof();i++)
         q(i) = x[i];
 
     visu.apply_q("robot",&q);

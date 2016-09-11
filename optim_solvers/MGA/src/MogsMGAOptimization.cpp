@@ -33,14 +33,15 @@ MogsMGAOptimization::~MogsMGAOptimization()
 
 void MogsMGAOptimization::read_problem (const mogs_string & filename)
 {
-    std::cout<<"MogsMGAOptimization read problem"<<std::endl;
 
-    // loaded the good type of problem
+   // loaded the good type of problem
     MogsAbstractProblem::read_problem(filename);
 
     my_pb_ = new MogsNlpMGA();
+	
+	
 
-/*
+	/*
     std::cout<<"find criteres = "<< !criteres.isNull()<<std::endl;
     QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
@@ -129,10 +130,16 @@ void MogsMGAOptimization::solve()
 {
     std::cout<<"MogsMGAOptimization::solve()"<<std::endl;
 
+	my_pb_->set_robots(robots_);
+	
+     QDomElement criteres=root_.firstChildElement("criteres");
+//
+     my_pb_->load_xml(criteres);	
+	
     MogsGeneticSolver solver;
-    solver.set_nb_queue(100);
-    solver.set_nb_selected(10);
-    solver.set_max_iter(100000);
+    solver.set_nb_queue(100000);
+    solver.set_nb_selected(200);
+    solver.set_max_iter(1000);
     solver.set_search_range_th(1e-3);
 
     solver.solve(my_pb_);

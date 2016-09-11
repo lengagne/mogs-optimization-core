@@ -11,6 +11,7 @@
 
 #include "MogsKinematics.h"
 #include "MogsAbstractGeneticProblem.h"
+#include "AbstractCriteria.hpp"
 
 class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 {
@@ -35,6 +36,10 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
     void finalize_solution( optim_infos &info);
 
     void load_xml(QDomElement criteres);
+	
+	// intern
+	
+	void set_robots(const std::vector<MogsRobotProperties*> & in);
 
 //
 //  /**@name Overloaded from TNLP */
@@ -107,11 +112,12 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //		  MogsNlpMGA (const MogsNlpMGA &);
 //          MogsNlpMGA & operator= (const MogsNlpMGA &);
 //	//@}
-//     std::vector < mogs_string > robots_url_;  // url of the robot
 //
-    MogsRobotProperties robot_;
+    std::vector<MogsRobotProperties*> robots_;
 
     MogsKinematics<double> kin_;
+	
+	std::vector<AbstractCriteria* >criteres_;
 
 };
 

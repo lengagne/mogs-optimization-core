@@ -7,7 +7,7 @@ class AbstractCriteria
 {
  public:
 
-    virtual double compute( const double *x , MogsKinematics<double> * kin) = 0;
+    virtual double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin) = 0;
 
 
 	double weight_=1;
