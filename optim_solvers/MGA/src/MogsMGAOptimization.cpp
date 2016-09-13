@@ -137,9 +137,9 @@ void MogsMGAOptimization::solve()
      my_pb_->load_xml(criteres);	
 	
     MogsGeneticSolver solver;
-    solver.set_nb_queue(100000);
-    solver.set_nb_selected(200);
-    solver.set_max_iter(1000);
+    solver.set_nb_queue(10000);
+    solver.set_nb_selected(100);
+    solver.set_max_iter(100);
     solver.set_search_range_th(1e-3);
 
     solver.solve(my_pb_);
