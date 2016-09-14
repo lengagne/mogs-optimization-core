@@ -152,7 +152,7 @@ void MogsIpoptOptimization::solve()
 
         app_->Options()->SetStringValue("derivative_test", "first-order");
 // 		app_->Options()->SetNumericValue("derivative_test_perturbation", 1e-3);
- 		app_->Options()->SetNumericValue("tol", 1e-3);
+//  		app_->Options()->SetNumericValue("tol", 1e-3);
 		app_->Options()->SetIntegerValue("max_iter", 500);
 		
 	status = app_->OptimizeTNLP (nlp_);

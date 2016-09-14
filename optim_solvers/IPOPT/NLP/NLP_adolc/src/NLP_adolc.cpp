@@ -165,7 +165,7 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
     {
         double tmp = criteres_[i]->compute(x,&kin,&mem_kin);
         obj_value+= tmp;
-//        std::cout<<"crit("<<i<<") = " << tmp<<" \t\t total = "<< obj_value<<std::endl;
+       std::cout<<"crit("<<i<<") = " << tmp<<" \t\t total = "<< obj_value<<std::endl;
     }
 
 
@@ -264,6 +264,9 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 
     for (int i=0;i<robots_[0]->getNDof();i++)
         q(i) = x[i];
+	
+	for (int i=0;i<3;i++)	q(i)= 0;
+	std::cout<<"q = "<< q.transpose()<<std::endl;	
 
     visu.apply_q("robot",&q);
 

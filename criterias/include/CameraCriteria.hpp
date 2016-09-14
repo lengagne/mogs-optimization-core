@@ -35,9 +35,8 @@ class CameraCriteria: public AbstractCriteria
                     Eigen::Matrix<double, 3,1> Position_, Rotation_;           // correspond à la transaltion tx_ty_tz, supposant que le centre de l'object est à 1m du centre de la focale
 
 
-                    int nb_points=0;
+                    unsigned int nb_points_=0;
                    // unsigned int body_id;
-                        std::vector< unsigned int> nb_points_;
                      std::vector< unsigned int> body_id_;
 
                      Eigen::Matrix<double, 3,1> body_position_;

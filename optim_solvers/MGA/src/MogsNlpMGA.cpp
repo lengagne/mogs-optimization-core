@@ -72,6 +72,7 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 void MogsNlpMGA::finalize_solution( optim_infos &info)
 {
 	double x[kin_.getNDof()];
+	std::cout<<"Optimal criteria = "<< info.obj[0]<<std::endl;
 	printf("\n\nSolution of the variables, x\n");
 	for (int i=0; i<kin_.getNDof(); i++) {
 	printf("x[%d] = %e\n", i,  info.var[i]);
@@ -84,8 +85,8 @@ void MogsNlpMGA::finalize_solution( optim_infos &info)
 	q.resize(robots_[0]->getNDof());
 
     for (int i=0;i<robots_[0]->getNDof();i++)
-        q(i) = x[i];
-	
+        q(i) = info.var[i];
+	std::cout<<"q = "<< q.transpose()<<std::endl;
 	for (int i=0;i<3;i++)	q(i)= 0;
 	
     visu.apply_q("robot",&q);

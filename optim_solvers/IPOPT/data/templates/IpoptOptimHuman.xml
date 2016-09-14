@@ -37,123 +37,123 @@
                      <Rotation> 0 0 0</Rotation>
 <!--            <point > -->
 <!--                      <robot> yogi </robot> -->
-<!--                      <Body> waist </Body> -->
+<!--                      <body> waist </body> -->
 <!--                      <body_position>0 0 0</body_position> -->
 <!--                      <desired_position_image> 170 215 </desired_position_image> -->
 <!--            </point>					  -->
            <point >
                      <robot> yogi </robot>
-                     <Body> lefthand </Body>
+                     <body> lefthand </body>
                      <body_position>0 0 0.17</body_position>
                      <desired_position_image> 185 5 </desired_position_image>
 					 
            </point>
            <point >
                      <robot> yogi </robot>
-                     <Body> righthand </Body>
+                     <body> righthand </body>
                      <body_position>0 0 0.17</body_position>
                      <desired_position_image> 186 5</desired_position_image>
            </point>		   
 		   
          <point >
                      <robot> yogi </robot>
-                     <Body> lefthand </Body>
+                     <body> lefthand </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 189 32 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> righthand </Body>
+                     <body> righthand </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 182 37 </desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
-                     <Body> leftlowerarm </Body>
+                     <body> leftlowerarm </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 216 75</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> rightlowerarm </Body>
+                     <body> rightlowerarm </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 147 71 </desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
-                     <Body> leftupperarm </Body>
+                     <body> leftupperarm </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 208 121</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> rightupperarm </Body>
+                     <body> rightupperarm </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 162 119</desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
-                     <Body> neck </Body>
+                     <body> neck </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 183 119	</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> head </Body>
+                     <body> head </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 185 101</desired_position_image>
            </point>		   
 
 		   <point >
                      <robot> yogi </robot>
-                     <Body> leftthigh </Body>
+                     <body> leftthigh </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 198 214	 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> rightthigh </Body>
+                     <body> rightthigh </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 165 220 </desired_position_image>
            </point>		   
 
 		<point >
                      <robot> yogi </robot>
-                     <Body> rightshank </Body>
+                     <body> rightshank </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image>  174 285	 </desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> leftshank </Body>
+                     <body> leftshank </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 252 253 </desired_position_image>
            </point>		   
 			<point >
                      <robot> yogi </robot>
-                     <Body> rightfoot </Body>
+                     <body> rightfoot </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 189 365	</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> leftfoot </Body>
+                     <body> leftfoot </body>
                      <body_position>0 0 0</body_position>
                      <desired_position_image> 184 252</desired_position_image>
            </point>		   
 
 			<point >
                      <robot> yogi </robot>
-                     <Body> rightfoot </Body>
+                     <body> rightfoot </body>
                      <body_position>0 0 0.236</body_position>
                      <desired_position_image> 171 378</desired_position_image>
            </point>		   
          <point >
                      <robot> yogi </robot>
-                     <Body> leftfoot </Body>
+                     <body> leftfoot </body>
                      <body_position>0 0 0.236</body_position>
                      <desired_position_image> 181 284</desired_position_image>
            </point>		   

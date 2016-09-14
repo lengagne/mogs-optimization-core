@@ -20,7 +20,7 @@
                      <Rotation> 0 0 0</Rotation>
            <point name ="red">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 -0.1 -0.1</body_position>
                      <desired_position_image> 120 120 </desired_position_image>
 
@@ -28,36 +28,36 @@
 		   
            <point name ="green">
                     <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 0.1 -0.1</body_position>
                      <desired_position_image> 140 120 </desired_position_image>
 
            </point>
            <point name ="blue">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 -0.1 0.1</body_position>
                      <desired_position_image> 120 140 </desired_position_image>
            </point>
            <point name ="purple">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 0.1 0.1</body_position>
                      <desired_position_image> 140 140 </desired_position_image>
 
            </point>
 		   
-           <point name ="green">
+<!--           <point name ="green">
                     <robot> 2Boxes </robot>
-                     <Body> TopBoxes </Body>
+                     <body> TopBoxes </body>
                      <body_position> -0.1 0.1 -0.1</body_position>
                      <desired_position_image> 140 140 </desired_position_image>					 
 
-           </point>
-
-<!--           <point name ="green">
+           </point>-->
+<!--
+           <point name ="green">
                     <robot> 2Boxes </robot>
-                     <Body> TopBoxes </Body>
+                     <body> TopBoxes </body>
                      <body_position> -0.1 0.1 -0.1</body_position>
                     <desired_position_image> 150 125 </desired_position_image>
            </point>-->

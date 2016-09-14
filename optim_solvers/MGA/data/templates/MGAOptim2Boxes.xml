@@ -14,19 +14,11 @@
                        <Kv> 3e-6  </Kv>
                        <u0> 170 </u0>
                        <v0> 215 </v0>
-                       <Position> 0
-                                  0
-                                  0 </Position>
+                       <Position> 0 0 0 </Position>
                      <Rotation> 0 0 0</Rotation>
-<!--           <point >
-                     <robot> yogi </robot>
-                     <Body> waist </Body>
-                     <body_position>0 0 0</body_position>
-                     <desired_position_image> 170 215 </desired_position_image>
-           </point>			-->
            <point name ="red">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 -0.1 -0.1</body_position>
                      <desired_position_image> 120 120 </desired_position_image>
 
@@ -34,41 +26,40 @@
 		   
            <point name ="green">
                     <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 0.1 -0.1</body_position>
                      <desired_position_image> 140 120 </desired_position_image>
 
            </point>
            <point name ="blue">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 -0.1 0.1</body_position>
                      <desired_position_image> 120 140 </desired_position_image>
            </point>
            <point name ="purple">
                      <robot> 2Boxes </robot>
-                     <Body> MainBody </Body>
+                     <body> MainBody </body>
                      <body_position> -0.1 0.1 0.1</body_position>
                      <desired_position_image> 140 140 </desired_position_image>
 
            </point>
 		   
 
-<!--           <point name ="green">
-                    <robot> 2Boxes </robot>
-                     <Body> TopBoxes </Body>
-                     <body_position> -0.1 0.1 -0.1</body_position>
-                     <desired_position_image> 140 140 </desired_position_image>					 
-
-           </point>-->
-
            <point name ="green">
                     <robot> 2Boxes </robot>
-                     <Body> TopBoxes </Body>
+                     <body> TopBoxes </body>
                      <body_position> -0.1 0.1 -0.1</body_position>
-                    <desired_position_image> 150 125 </desired_position_image>
+                     <desired_position_image> 140 140 </desired_position_image>
+
            </point>
-		   
+
+<!--           <point name ="green">
+                    <robot> 2Boxes </robot>
+                     <body> TopBoxes </body>
+                     <body_position> -0.1 0.1 -0.1</body_position>
+                    <desired_position_image> 141 139 </desired_position_image>
+           </point>-->
 		</critere>
       </criteres>
     <results/>
