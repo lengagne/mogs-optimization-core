@@ -395,7 +395,7 @@
 		tmp(1) = (desiredpositionimage[i](1) - v0) * Kv;
 		tmp(2) = focale;
 		std::cout<<"desiredpositionimage["<<i<<"] = "<< desiredpositionimage[i].transpose()<<std::endl;
-		std::cout<<"tmp = "<< tmp.transpose()<<std::endl;
+// 		std::cout<<"tmp = "<< tmp.transpose()<<std::endl;
 		tmp.normalize();
 		droite_point_.push_back(tmp);
 	}

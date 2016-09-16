@@ -36,6 +36,12 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 		if (min_var [i] < -1000.)	min_var [i] = -1000.;
 		if (max_var [i] >  1000.)	max_var [i] =  1000.;
 	}
+	
+	for (int i=0;i<nb_variables;i++)
+	{
+		
+		std::cout<<"variables in ["<< min_var [i]<<":"<<max_var [i]<<":]"<<std::endl;
+	}
 
 }
 
@@ -77,6 +83,17 @@ void MogsNlpMGA::finalize_solution( optim_infos &info)
 	for (int i=0; i<kin_.getNDof(); i++) {
 	printf("x[%d] = %e\n", i,  info.var[i]);
 	}
+	
+	
+	 std::vector<optim_infos> tmp;
+	 optim_infos t = info;
+	 t.var[6] = 0.;
+	 tmp.push_back(info);	 
+	 tmp.push_back(t);	 
+	 evaluate(tmp);
+	 std::cout<<"Optimal criteria = "<< tmp[0].obj[0]<<std::endl;
+	 std::cout<<"tmp criteria = "<< tmp[1].obj[0]<<std::endl;
+	
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
 

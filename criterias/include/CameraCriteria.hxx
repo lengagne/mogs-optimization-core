@@ -27,11 +27,11 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 
     for(int i=0;i<nb_points_;i++)
      {
-//          std::cout << " body_id_["<<i<<"] = " << body_id_[i]<< std::endl;
-//         std::cout << " bodyposition[i] = " << bodyposition[i].transpose()<< std::endl;
-
+//         std::cout << " body_id_["<<i<<"] = " << body_id_[i]<< std::endl;
+//         std::cout << " bodyposition["<<i<<"] = " << bodyposition[i].transpose()<< std::endl;
+// 		std::cout << " droite_point_["<<i<<"] = " << droite_point_[i].transpose()<< std::endl;
          Eigen::Matrix<T, 3, 1>Pr=kin_->getPosition(body_id_[i],bodyposition[i]);
-// 			std::cout<<"Pr = "<< Pr(0)<<" "<< Pr(1)<<" "<<Pr(2)<<std::endl;
+// 			std::cout<<"Pr("<<i<<") = "<< Pr(0)<<" "<< Pr(1)<<" "<<Pr(2)<<std::endl;
 
 //         Eigen::Matrix<T, 3, 3>  R = M.E.transpose().cast<T>();
 //         Eigen::Matrix<T, 3, 1> Image =  M.r.cast<T>() + R * Pr;
@@ -63,8 +63,10 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 		Cross(0) = Image(1)* droite_point_[i](2) - Image(2)* droite_point_[i](1);
 		Cross(1) = Image(2)* droite_point_[i](0) - Image(0)* droite_point_[i](2);
 		Cross(2) = Image(0)* droite_point_[i](1) - Image(1)* droite_point_[i](0);
-// 		obj_value += Cross.squaredNorm(); // droite_point_[i].squaredNorm();
-		obj_value += Cross.norm(); // droite_point_[i].squaredNorm();
+// 		std::cout<<"Image = "<< Cross(0)<<" "<< Cross(1)<<" "<<Cross(2)<<std::endl;
+		
+		obj_value += Cross.squaredNorm(); // droite_point_[i].squaredNorm();
+// 		obj_value += Cross.norm(); // droite_point_[i].squaredNorm();
 		
 // 		std::cout<<"tmp("<<i<<") = "<< Cross.squaredNorm()<< " obj_value = "<< obj_value <<std::endl <<std::endl;
 		
