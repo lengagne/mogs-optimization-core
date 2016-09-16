@@ -126,7 +126,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
             for (i=0; i<kin.getNDof(); i++)
             {
                 x_l[i] = qmin[i];
-                if(x_l[i]<-10) x_l[i] = -10;
+//                 if(x_l[i]<-10) x_l[i] = -10;
 //            std::cout << "   x_l[i] = " << x_l[i]  << std::endl;
             }
 
@@ -134,7 +134,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
             for (Index i=0; i<kin.getNDof(); i++)
             {
                 x_u[i] = qmax[i];
-                if(x_u[i]>10) x_u[i] = 10;
+//                 if(x_u[i]>10) x_u[i] = 10;
 //            std::cout << "   x_u[i] = " << x_u[i]  << std::endl;
             }
 
