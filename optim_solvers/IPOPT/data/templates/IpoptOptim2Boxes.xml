@@ -46,21 +46,21 @@
                      <desired_position_image> 140 140 </desired_position_image>
 
            </point>
-<!--		   
-           <point name ="green">
+		   
+<!--           <point name ="green">
                     <robot> 2Boxes </robot>
                      <body> BlackBox </body>
                      <body_position>-0.1 0.2 0 </body_position>
                      <desired_position_image> 140 140 </desired_position_image>					 
 
            </point>-->
-
+<!--
            <point name ="green">
                     <robot> 2Boxes </robot>
                      <body> BlackBox </body>
                      <body_position> -0.1 0.2 0 </body_position>
                     <desired_position_image> 160 160 </desired_position_image>
-           </point>
+           </point>-->
 		   
 		</critere>
       </criteres>
