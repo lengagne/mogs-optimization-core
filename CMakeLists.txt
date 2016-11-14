@@ -80,4 +80,6 @@ install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
 
 message("before include_directories")
 
+add_subdirectory(criterias)
 add_subdirectory(optim_solvers)
+

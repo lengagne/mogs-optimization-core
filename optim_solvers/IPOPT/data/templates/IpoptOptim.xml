@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="mogs-ipopt-optimization">
+    <robot>
+        <name>KUKA</name>
+    </robot>
+<!--    <robot>-->
+<!--        <name>Yogi</name>-->
+<!--    </robot>-->
+    <ipopt_options type="numeric" name="max_iter" value="100"/>
+    <criteres>
+<!--        <critere type="position" weight="1.0">-->
+<!--            <robot> KUKA </robot>-->
+<!--           <body> kuka_lwr_7_link </body>-->
+<!--           <body_position> 0 0 0.05 </body_position>-->
+<!--           <desired_position> 0.4 0.4 0.3 </desired_position>-->
+<!--        </critere>-->
+<!---->
+<!--        <critere type="position" weight="0.001">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_5_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
+<!--        </critere>-->
+<!--        <critere type="position" weight="0.001">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_3_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
+<!--        </critere>-->
+        <critere type="camera" retine ="1/2">
+                       <focale> 0.012 </focale>
+                       <Ku> 0.1  </Ku>
+                       <Kv> 0.1  </Kv>
+                       <u0> 0.320 </u0>
+                       <v0> 0.240 </v0>
+                       <Position> 0
+                                  -1
+                                  1 </Position>
+                     <RotationX> 0 </RotationX>
+                     <RotationY> 0 </RotationY>
+                     <RotationZ> 0 </RotationZ>
+           <point >
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_7_link </Body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 0.320 0.240</desired_position_image>
+           </point>
+<!--           <point>-->
+<!--                     <robot> KUKA </robot>-->
+<!--                     <Body> kuka_lwr_5_link </Body>-->
+<!--                     <body_position> 0 0 1</body_position>-->
+<!--                     <desired_position_image> 0.330  0.240</desired_position_image>-->
+<!--           </point>-->
+<!--           <point>-->
+<!--                     <robot> KUKA </robot>-->
+<!--                     <Body> kuka_lwr_6_link </Body>-->
+<!--                     <body_position> 0 1 1</body_position>-->
+<!--                     <desired_position_image> 0.340  0.240</desired_position_image>-->
+<!--           </point>-->
+           </critere>
+
+      <critere type="camera" retine ="1/2">
+                       <focale> 0.012 </focale>
+                       <Ku> 0.1  </Ku>
+                       <Kv> 0.1  </Kv>
+                       <u0> 0.320 </u0>
+                       <v0> 0.240 </v0>
+                       <Position> 0.01
+                                  -1
+                                  1 </Position>
+                     <RotationX> 0 </RotationX>
+                     <RotationY> 0 </RotationY>
+                     <RotationZ> 0 </RotationZ>
+           <point >
+                     <robot> KUKA </robot>
+                     <Body> kuka_lwr_7_link </Body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 0.330 0.240</desired_position_image>
+           </point>
+<!--           <point>-->
+<!--                     <robot> KUKA </robot>-->
+<!--                     <Body> kuka_lwr_5_link </Body>-->
+<!--                     <body_position> 0 0 1</body_position>-->
+<!--                     <desired_position_image> 0.330  0.240</desired_position_image>-->
+<!--           </point>-->
+<!--           <point>-->
+<!--                     <robot> KUKA </robot>-->
+<!--                     <Body> kuka_lwr_6_link </Body>-->
+<!--                     <body_position> 0 1 1</body_position>-->
+<!--                     <desired_position_image> 0.340  0.240</desired_position_image>-->
+<!--           </point>-->
+           </critere>
+      </criteres>
+    <results/>
+</problem>

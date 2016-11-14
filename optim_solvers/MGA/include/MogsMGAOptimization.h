@@ -1,4 +1,4 @@
-//      MogsAbstractOptimization.h
+//      MogsMGAOptimization.h
 //      Copyright (C) 2012 lengagne (lengagne@gmail.com)
 //
 //      This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,30 @@
 //      2012-2013:  IUT de Beziers/ LIRMM, Beziers, France
 //	from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
-#ifndef __MOGSABSTRACTOPTIMIZATION__
-#define __MOGSABSTRACTOPTIMIZATION__
+#ifndef __MogsMGAOptimization__
+#define __MogsMGAOptimization__
 
-#include "MogsAbstractProblem.h"
+#include "MogsAbstractOptimization.h"
+#include "config_MogsMGAOptimization.h"
+#include "MogsGeneticSolver.h"
+#include "MogsNlpMGA.hpp"
 
 
-class MogsAbstractOptimization: public MogsAbstractProblem
+class MogsMGAOptimization: public MogsAbstractOptimization
 {
       public:
 
-        virtual void read_problem (const mogs_string & filename) = 0;
+	MogsMGAOptimization();
 
-	/** Solve the problem	 */
-        virtual void solve() = 0;
+	~MogsMGAOptimization();
 
+    void read_problem (const mogs_string & filename);
 
-      protected:
+    /** Solve the problem	 */
+    void solve();
+
+      private:
+        MogsNlpMGA* my_pb_;
 };
-
-
 
 #endif

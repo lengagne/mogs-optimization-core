@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="mogs-mga-optimization">
+    <robot>
+        <name>Yogi</name>
+    </robot>
+<!--    <robot>-->
+<!--        <name>Yogi</name>-->
+<!--    </robot>-->
+    <ipopt_options type="numeric" name="max_iter" value="100"/>
+   <criteres>
+<!--        <critere type="position" weight="1.0">
+           <robot> yogi </robot>
+          <body> head </body>
+          <body_position> 0 0 0.05 </body_position>
+          <desired_position> 0.4 0.4 0.3 </desired_position>
+       </critere>-->
+<!---->
+<!--        <critere type="position" weight="0.001">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_5_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
+<!--        </critere>-->
+<!--        <critere type="position" weight="0.001">-->
+<!--            <robot> KUKA </robot>-->
+<!--            <body> kuka_lwr_3_link </body>-->
+<!--            <body_position> 0 0 0 </body_position>-->
+<!--            <desired_position> 0.4 0.4 0.3 </desired_position>-->
+<!--        </critere>-->
+        <critere type="camera" retine ="1/2">
+                       <focale> 0.012 </focale>
+                       <Ku> 3e-6  </Ku>
+                       <Kv> 3e-6  </Kv>
+                       <u0> 170 </u0>
+                       <v0> 215 </v0>
+                       <Position> 0
+                                  0
+                                  0 </Position>
+                     <Rotation> 0 0 0</Rotation>
+<!--           <point >
+                     <robot> yogi </robot>
+                     <body> waist </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 170 215 </desired_position_image>
+           </point>			-->
+           <point >
+                     <robot> yogi </robot>
+                     <body> lefthand </body>
+                     <body_position>0 0 0.17</body_position>
+                     <desired_position_image> 185 5 </desired_position_image>
+
+           </point>
+           <point >
+                     <robot> yogi </robot>
+                     <body> righthand </body>
+                     <body_position>0 0 0.17</body_position>
+                     <desired_position_image> 186 5</desired_position_image>
+           </point>
+
+         <point >
+                     <robot> yogi </robot>
+                     <body> lefthand </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 189 32 </desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> righthand </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 182 37 </desired_position_image>
+           </point>
+
+			<point >
+                     <robot> yogi </robot>
+                     <body> leftlowerarm </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 216 75</desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> rightlowerarm </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 147 71 </desired_position_image>
+           </point>
+
+			<point >
+                     <robot> yogi </robot>
+                     <body> leftupperarm </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 208 121</desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> rightupperarm </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 162 119</desired_position_image>
+           </point>
+
+			<point >
+                     <robot> yogi </robot>
+                     <body> neck </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 183 119	</desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> head </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 185 101</desired_position_image>
+           </point>
+
+		   <point >
+                     <robot> yogi </robot>
+                     <body> leftthigh </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 198 214	 </desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> rightthigh </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 165 220 </desired_position_image>
+           </point>
+
+		<point >
+                     <robot> yogi </robot>
+                     <body> rightshank </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image>  174 285	 </desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> leftshank </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 252 253 </desired_position_image>
+           </point>
+
+			<point >
+                     <robot> yogi </robot>
+                     <body> rightfoot </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 189 365	</desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> leftfoot </body>
+                     <body_position>0 0 0</body_position>
+                     <desired_position_image> 184 252</desired_position_image>
+           </point>
+ 
+			<point >
+                     <robot> yogi </robot>
+                     <body> rightfoot </body>
+                     <body_position>0 0 0.236</body_position>
+                     <desired_position_image> 171 378</desired_position_image>
+           </point>
+         <point >
+                     <robot> yogi </robot>
+                     <body> leftfoot </body>
+                     <body_position>0 0 0.236</body_position>
+                     <desired_position_image> 181 284</desired_position_image>
+           </point>		
+
+		</critere>
+      </criteres>
+    <results/>
+</problem>

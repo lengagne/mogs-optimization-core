@@ -32,7 +32,6 @@ NLP_sample::NLP_sample ()
 NLP_sample::~NLP_sample ()
 {
 }
-
 bool NLP_sample::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {

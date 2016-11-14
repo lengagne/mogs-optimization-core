@@ -18,33 +18,30 @@
 //      from 2012: IUT de Beziers/ LIRMM, Beziers, France
 //	from 2013 : Université Blaise Pascal / axis : ISPR / theme MACCS
 
-#include "NLP_adolc.hpp"
+#include "NLP_FADBAD_1_4.hpp"
 #include <cassert>
-#include <adolc.h>
-#include <adolc/adouble.h>
-#include <adolc/drivers/drivers.h>
-#include <adolc/taping.h>
+#include <fadiff.h>
 #include <iostream>
 #include <cstdlib>
 #include <math.h>
 #include "VisuHolder.h"
 
-#include "CameraAdolcCritere.hpp"
-#include "PositionAdolcCritere.hpp"
+#include "CameraFADBAD_1_4Critere.hpp"
+#include "PositionFADBAD_1_4Critere.hpp"
 
 using namespace Ipopt;
 
 /* Constructor. */
-NLP_adolc::NLP_adolc ()
+NLP_FADBAD_1_4::NLP_FADBAD_1_4 ()
 {
-    std::cout<<"Constructor of NLP_adolc"<<std::endl;
+    std::cout<<"Constructor of NLP_FADBAD_1_4"<<std::endl;
 }
 
-NLP_adolc::~NLP_adolc ()
+NLP_FADBAD_1_4::~NLP_FADBAD_1_4 ()
 {
 }
 
-void NLP_adolc::load_xml(QDomElement criteres)
+void NLP_FADBAD_1_4::load_xml(QDomElement criteres)
 {
 	kin.SetRobot(robots_[0]);
 	akin.SetRobot(robots_[0]);
@@ -66,19 +63,19 @@ void NLP_adolc::load_xml(QDomElement criteres)
 				smallData >> tval;
 				weight_ = tval;
 				std::cout << "   weight_ = " << weight_  << std::endl;
-				criteres_.push_back(new PositionAdolcCritere(critere,&kin));
+				criteres_.push_back(new PositionFADBAD_1_4Critere(critere,&kin));
 
 			}
 			else if(type=="camera")
 			{
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
-				criteres_.push_back(new CameraAdolcCritere(critere,&kin));
+				criteres_.push_back(new CameraFADBAD_1_4Critere(critere,&kin));
 			}
 		}
 	}
 	std::cout<<"End of load xml"<<std::endl;
 }
-bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
+bool NLP_FADBAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
 
@@ -87,25 +84,6 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         std::cout << "   kin.getNDof() = " << n  << std::endl;
         /*  Initialisation du gradient*/
         double yp = 0.0;
-        adouble* x = new adouble[n];
-        adouble y = 0.0;
-        size_t tape_stats[STAT_SIZE];
-                    trace_on(1);
-
-                        for(int i=0;i<kin.getNDof();i++)
-                        {
-							for(int j=0;j<kin.getNDof();j++)
-								x[i] = 0;
-                            x[i] <<=0;
-                            y=0;
-							bool mem_kin = false;
-                            for (int j =0;j<criteres_.size();j++)
-                                y+=criteres_[j]->compute(x,&akin,&mem_kin);
-                        }
-                            y >>= yp;
-                            delete[] x;
-                    trace_off();
-              tapestats(1,tape_stats);
           m = 0;
           nnz_jac_g = 0;
           nnz_h_lag = 0;
@@ -113,7 +91,7 @@ bool NLP_adolc::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 	return true;
 }
 
-bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
+bool NLP_FADBAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
 
@@ -141,7 +119,7 @@ bool NLP_adolc::get_bounds_info (Index n, Number * x_l, Number * x_u,
 	return true;
 }
 
-bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
+bool NLP_FADBAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 			   bool init_z, Number * z_L, Number * z_U,
 			   Index m, bool init_lambda, Number * lambda)
 {
@@ -155,7 +133,7 @@ bool NLP_adolc::get_starting_point (Index n, bool init_x, Number * x,
 	return true;
 }
 
-bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
+bool NLP_FADBAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
 {
     int nb = criteres_.size();
 
@@ -174,22 +152,29 @@ bool NLP_adolc::eval_f (Index n, const Number * x, bool new_x, Number & obj_valu
 return true;
 }
 
-bool NLP_adolc::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
+bool NLP_FADBAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
 {
 	// return the gradient of the objective function grad_{x} f(x)
 
     assert(n == kin.getNDof());
-    double* g = new double[n];
-    gradient(1,n,x,g);
+	F<double>* X = new F<double>[n];
+	for(unsigned int i=0;i<n;i++)
+	{
+		X[i] = x[i];
+		X[i].diff(i,n);		
+	}
+	bool mem_kin = false;
+	F<double> out;
+	for (int j =0;j<criteres_.size();j++)
+		out+=criteres_[j]->compute(X,&akin,&mem_kin);	
     for(unsigned int i=0;i<n;i++)
-    {
-        grad_f[i] = g[i];
-//                std::cout << "   g[i] = " << g[i]  << std::endl;
+    {	
+        grad_f[i] = out.d(i);
     }
 	return true;
 }
 
-bool NLP_adolc::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
+bool NLP_FADBAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
             assert(n == kin.getNDof());
             assert(m == 0);
@@ -197,7 +182,7 @@ bool NLP_adolc::eval_g (Index n, const Number * x, bool new_x, Index m, Number *
 	return true;
 }
 
-bool NLP_adolc::eval_jac_g (Index n, const Number * x, bool new_x,
+bool NLP_FADBAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Index m, Index nele_jac, Index * iRow, Index * jCol,
 		   Number * values)
 {
@@ -212,7 +197,7 @@ bool NLP_adolc::eval_jac_g (Index n, const Number * x, bool new_x,
 	return true;
 }
 
-bool NLP_adolc::eval_h (Index n, const Number * x, bool new_x,
+bool NLP_FADBAD_1_4::eval_h (Index n, const Number * x, bool new_x,
 	       Number obj_factor, Index m, const Number * lambda,
 	       bool new_lambda, Index nele_hess, Index * iRow,
 	       Index * jCol, Number * values)
@@ -233,7 +218,7 @@ bool NLP_adolc::eval_h (Index n, const Number * x, bool new_x,
 	return true;
 }
 
-void NLP_adolc::finalize_solution (SolverReturn status,
+void NLP_FADBAD_1_4::finalize_solution (SolverReturn status,
 			  Index n, const Number * x, const Number * z_L,
 			  const Number * z_U, Index m, const Number * g,
 			  const Number * lambda, Number obj_value,
@@ -261,12 +246,13 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 
     visu.add("robot",robots_[0]);
 	q.resize(robots_[0]->getNDof());
+	aq.resize(robots_[0]->getNDof());
 
     for (int i=0;i<robots_[0]->getNDof();i++)
         q(i) = x[i];
-	
+
 	for (int i=0;i<3;i++)	q(i)= 0;
-	std::cout<<"q = "<< q.transpose()<<std::endl;	
+	std::cout<<"q = "<< q.transpose()<<std::endl;
 
     visu.apply_q("robot",&q);
 
@@ -279,12 +265,12 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 
 // For dynamic loading of the library : do not remove !!
 
-extern "C" NLP_adolc* create()
+extern "C" NLP_FADBAD_1_4* create()
 {
-    return new NLP_adolc();
+    return new NLP_FADBAD_1_4();
 }
 
-extern "C" void destroy(NLP_adolc* p)
+extern "C" void destroy(NLP_FADBAD_1_4* p)
 {
     delete p;
 }

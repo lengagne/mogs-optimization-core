@@ -4,8 +4,6 @@ find_package(IPOPT QUIET)
 
 if(IPOPT_FOUND)
 
-    find_package(MogsIpoptOptimization REQUIRED)
-
     if (NOT MogsIpoptOptimization_FOUND)
         find_package(MogsIpoptOptimization REQUIRED)
     endif(NOT MogsIpoptOptimization_FOUND)

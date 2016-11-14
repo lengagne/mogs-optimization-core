@@ -10,6 +10,10 @@
 #define __NLP_adolc_HPP__
 
 #include "MogsNlpIpopt.hpp"
+#include "MogsKinematics.h"
+#include <adolc.h>
+#include "AbstractAdolcCritere.hpp"
+
 
 using namespace Ipopt;
 
@@ -83,7 +87,8 @@ class NLP_adolc:public MogsNlpIpopt
 					Number obj_value,
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
-	//@}
+
+        void load_xml(QDomElement criteres);
 
       private:
   /**@name Methods to block default compiler methods.
@@ -98,10 +103,25 @@ class NLP_adolc:public MogsNlpIpopt
    */
 	//@{
 	//  NLP_adolc();
-	  NLP_adolc (const NLP_adolc &);
-	  NLP_adolc & operator= (const NLP_adolc &);
+
+
+
+            double tval,weight_;
+            QString type,weight,name;
+
+            NLP_adolc (const NLP_adolc &);
+            NLP_adolc & operator= (const NLP_adolc &);
+
+            MogsKinematics<double> kin;
+            MogsKinematics<adouble> akin;
+
+            Eigen::Matrix < double,Eigen::Dynamic, 1 > q;
+            Eigen::Matrix < adouble,Eigen::Dynamic, 1 > aq;
+
+            std::vector < double >qmax;
+            std::vector < double >qmin;
+
+            std::vector<AbstractAdolcCritere* >criteres_;
 	//@}
 };
-
-
 #endif
