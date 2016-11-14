@@ -1,0 +1,8 @@
+#ifndef MogsCameraCriteriaNlpAdolc_CONFIG_H
+#define MogsCameraCriteriaNlpAdolc_CONFIG_H
+
+#define MogsCameraCriteriaNlpAdolc_VERSION_MAJOR 
+#define MogsCameraCriteriaNlpAdolc_VERSION_MINOR 
+
+#endif
+

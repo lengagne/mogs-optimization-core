@@ -1,16 +1,16 @@
-# - Config file for the MogsIpoptOptimization lib
+# - Config file for the MogsNlpAdolc lib
 # It defines the following variables
 #
-# MogsIpoptOptimization_INCLUDE_DIRS - include directories
-# MogsIpoptOptimization_LIBRARY_DIRS - library directory (normally not used!)
-# MogsIpoptOptimization_LIBRARIES - libraries to link against
+# MogsNlpAdolc_INCLUDE_DIRS - include directories
+# MogsNlpAdolc_LIBRARY_DIRS - library directory (normally not used!)
+# MogsNlpAdolc_LIBRARIES - libraries to link against
 
 # Tell the user project where to find our headers and libraries
 
-set(MogsIpoptOptimization_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+set(MogsNlpAdolc_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
 
-set(MogsIpoptOptimization_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+set(MogsNlpAdolc_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
 
-set(MogsIpoptOptimization_LIBRARIES @MogsIpoptOptimization_LIBRARIES@ @MogsCore_LIBRARIES@)
+set(MogsNlpAdolc_LIBRARIES @MogsNlpAdolc_LIBRARIES@ @MogsCore_LIBRARIES@)
 
-SET(MogsIpoptOptimization_FLAGS @MogsIpoptOptimization_FLAGS@ @MogsCore_FLAGS@)
+SET(MogsNlpAdolc_FLAGS @MogsNlpAdolc_FLAGS@ @MogsCore_FLAGS@)

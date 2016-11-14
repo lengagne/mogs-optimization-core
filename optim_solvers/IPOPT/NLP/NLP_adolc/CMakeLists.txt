@@ -95,6 +95,8 @@ elseif(IPOPT_FOUND)
     SET(MogsNlpAdolc_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsNlpAdolc_LIBRARIES  MogsNlpAdolc CACHE INTERNAL "")
     SET(MogsNlpAdolc_FLAGS "-DMogsNlpAdolc_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+    SET(MogsNlpAdolc_FOUND "TRUE" CACHE INTERNAL "")
+    
     add_definitions(${MogsNlpAdolc_FLAGS} ${MogsVisu_FLAGS})
     #  add flags (done before)
     configure_file(MogsNlpAdolcConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpAdolcConfig.cmake" @ONLY)
@@ -104,6 +106,8 @@ elseif(IPOPT_FOUND)
             DESTINATION "${INSTALL_LIB_PATH}/MogsNlpAdolc" COMPONENT dev )
 
     install(CODE "execute_process(COMMAND mogs2 plugins add ipopt_optimization_nlp NLP_Adolc ${INSTALL_LIB_DIRS}/libMogsNlpAdolc.so)")
+    
+    message("dans le cmake MogsNlpAdolc_FOUND = " ${MogsNlpAdolc_FOUND} )
 
 else()
     message("IPOPT was not FOUND, so we do not compile MogsNlpAdolc")

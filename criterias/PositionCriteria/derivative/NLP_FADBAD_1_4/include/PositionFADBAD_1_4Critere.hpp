@@ -1,19 +1,17 @@
-#ifndef  POSITIONFADBAD_1_4CRITERE_HPP_
-#define  POSITIONFADBAD_1_4CRITERE_HPP_
-
+#ifndef PositionFADBAD_1_4Critere_HPP_
+#define PositionFADBAD_1_4Critere_HPP_
 
 #include <NLP_FADBAD_1_4.hpp>
 #include <fadiff.h>
 #include "AbstractFADBAD_1_4Critere.hpp"
-#include "MogsNlpIpopt.hpp"
-#include "MogsKinematics.h"
 #include "PositionCriteria.hpp"
+#include "MogsNlpIpopt.hpp"
 
 class PositionFADBAD_1_4Critere: public AbstractFADBAD_1_4Critere, PositionCriteria
-{   public:
-
+{
+ public:
 	PositionFADBAD_1_4Critere (QDomElement critere,
-                          MogsKinematics<double>* kin);
+                           MogsKinematics<double> *kin);
 
     ~PositionFADBAD_1_4Critere ();
 
@@ -26,6 +24,7 @@ class PositionFADBAD_1_4Critere: public AbstractFADBAD_1_4Critere, PositionCrite
     {
         return PositionCriteria::compute<F<double> >(x,kin, compute_kin);
     }
-};
 
-#endif // POSITIONFADBAD_1_4CRITERE_HPP_
+
+};
+#endif // PositionFADBAD_1_4Critere_HPP_INCLUDED

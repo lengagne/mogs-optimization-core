@@ -8,10 +8,10 @@ auto_install
 *test*.xml
 *.kdev4
 
-include/config_*.h
-*/include/config_*.h
-*/*/include/config_*.h
-*/*/*/include/config_*.h
-*/*/*/include/config_*.h
+include/config*.h
+*/include/config*.h
+*/*/include/config*.h
+*/*/*/include/config*.h
+*/*/*/*/include/config*.h
 *FADBAD++
 *FADBAD++*.zip*

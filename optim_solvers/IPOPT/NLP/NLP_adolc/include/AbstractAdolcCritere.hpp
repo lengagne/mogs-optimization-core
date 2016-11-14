@@ -26,5 +26,10 @@ class AbstractAdolcCritere : public AbstractCriteria
 
 };
 
+// the types of the class factories
+typedef AbstractAdolcCritere* create_AdolcCritere(QDomElement critere,
+													MogsKinematics<double> *kin);
+typedef void destroy_AdolcCritere(AbstractAdolcCritere*);
+
 
 #endif  // ABSTRACTADOLCCRITERIA_HPP_INCLUDED

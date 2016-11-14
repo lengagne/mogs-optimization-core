@@ -48,7 +48,7 @@ if(IPOPT_FOUND)
     )
 
     target_link_libraries( MogsNlpSample
-                ${MogsNlpSample_LIBRARIES})
+                ${MogsIpoptOptimization_LIBRARIES})
 
 
 ### Installation procedure

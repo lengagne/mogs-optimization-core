@@ -93,8 +93,9 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
   }  } */
 
     MogsProblemClassifier mpc;
-//     mogs_string plugin_name = "NLP_Adolc";
-	mogs_string plugin_name = "NLP_FADBAD_1_4";
+    mogs_string plugin_name = root_.attribute("derivative");
+// 	"NLP_Adolc";
+// 	mogs_string plugin_name = "NLP_FADBAD_1_4";
     mogs_string library_so;
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {

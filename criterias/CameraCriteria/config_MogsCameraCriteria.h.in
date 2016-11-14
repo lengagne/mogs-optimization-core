@@ -1,0 +1,9 @@
+#ifndef MogsCameraCriteria_CONFIG_H
+#define MogsCameraCriteria_CONFIG_H
+
+#define MogsCameraCriteria_VERSION_MAJOR @MogsCameraCriteria_VERSION_MAJOR@
+#define MogsCameraCriteria_VERSION_MINOR @MogsCameraCriteria_VERSION_MINOR@
+
+
+#endif
+

@@ -1,19 +1,15 @@
-#ifndef  POSITIONADOLCCRITERE_HPP_
-#define  POSITIONADOLCCRITERE_HPP_
+#ifndef PositionAdolcCritere_HPP_
+#define PositionAdolcCritere_HPP_
 
-
-#include <NLP_adolc.hpp>
 #include <adolc.h>
 #include "AbstractAdolcCritere.hpp"
-#include "MogsNlpIpopt.hpp"
-#include "MogsKinematics.h"
 #include "PositionCriteria.hpp"
 
 class PositionAdolcCritere: public AbstractAdolcCritere, PositionCriteria
-{   public:
-	
+{
+ public:
 	PositionAdolcCritere (QDomElement critere,
-                          MogsKinematics<double>* kin);
+                           MogsKinematics<double> *kin);
 
     ~PositionAdolcCritere ();
 
@@ -26,6 +22,7 @@ class PositionAdolcCritere: public AbstractAdolcCritere, PositionCriteria
     {
         return PositionCriteria::compute<adouble>(x,kin, compute_kin);
     }
-};
 
-#endif // POSITIONADOLCCRITERE_HPP_
+
+};
+#endif // PositionAdolcCritere_HPP_INCLUDED

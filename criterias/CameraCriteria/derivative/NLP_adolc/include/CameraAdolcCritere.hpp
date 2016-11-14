@@ -1,11 +1,9 @@
 #ifndef CameraAdolcCritere_HPP_
 #define CameraAdolcCritere_HPP_
 
-#include <NLP_adolc.hpp>
 #include <adolc.h>
 #include "AbstractAdolcCritere.hpp"
 #include "CameraCriteria.hpp"
-#include "MogsNlpIpopt.hpp"
 
 class CameraAdolcCritere: public AbstractAdolcCritere, CameraCriteria
 {

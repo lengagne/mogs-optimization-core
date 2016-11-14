@@ -6,6 +6,7 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 SET(CMAKE_MODULE_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
+# We assume (from compilation) that IPOPT is available
 # find_package(IPOPT QUIET)
 find_package(FADBAD_1_4 QUIET)
 
@@ -94,15 +95,19 @@ elseif(IPOPT_FOUND)
     SET(MogsNlpFADBAD_1_4_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsNlpFADBAD_1_4_LIBRARIES  MogsNlpFADBAD_1_4 CACHE INTERNAL "")
     SET(MogsNlpFADBAD_1_4_FLAGS "-DMogsNlpFADBAD_1_4_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+    SET(MogsNlpFADBAD_1_4_FOUND "TRUE" CACHE INTERNAL "")
+    
     add_definitions(${MogsNlpFADBAD_1_4_FLAGS} ${MogsVisu_FLAGS})
-#     #  add flags (done before)
-#     configure_file(MogsNlpFADBAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpFADBAD_1_4Config.cmake" @ONLY)
+    #  add flags (done before)
+    configure_file(MogsNlpFADBAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpFADBAD_1_4Config.cmake" @ONLY)
 
 
-#     install ( 	FILES "${PROJECT_BINARY_DIR}/MogsNlpFADBAD_1_4Config.cmake"
-#             DESTINATION "${INSTALL_LIB_PATH}/MogsNlpFADBAD_1_4" COMPONENT dev )
+    install ( 	FILES "${PROJECT_BINARY_DIR}/MogsNlpFADBAD_1_4Config.cmake"
+            DESTINATION "${INSTALL_LIB_PATH}/MogsNlpFADBAD_1_4" COMPONENT dev )
 
     install(CODE "execute_process(COMMAND mogs2 plugins add ipopt_optimization_nlp NLP_FADBAD_1_4 ${INSTALL_LIB_DIRS}/libMogsNlpFADBAD_1_4.so)")
+    
+    message("dans le cmake MogsNlpFADBAD_1_4_FOUND = " ${MogsNlpFADBAD_1_4_FOUND} )
 
 else()
     message("IPOPT was not FOUND, so we do not compile MogsNlpFADBAD_1_4")

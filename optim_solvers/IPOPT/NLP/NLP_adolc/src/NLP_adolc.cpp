@@ -28,9 +28,7 @@
 #include <cstdlib>
 #include <math.h>
 #include "VisuHolder.h"
-
-#include "CameraAdolcCritere.hpp"
-#include "PositionAdolcCritere.hpp"
+#include "MogsProblemClassifier.h"
 
 using namespace Ipopt;
 
@@ -48,32 +46,47 @@ void NLP_adolc::load_xml(QDomElement criteres)
 {
 	kin.SetRobot(robots_[0]);
 	akin.SetRobot(robots_[0]);
-
+	
+	MogsProblemClassifier mpc;
+	mogs_string library_so;
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
-
 		if (criteres.tagName()=="criteres")
 		{
-
 			type=critere.attribute("type");
 			name=critere.attribute("name");
-			std::cout << "critere "   << type.toStdString().c_str() <<  std::endl;
-
-			if(type=="position")
+			create_AdolcCritere* creator_;
+			destroy_AdolcCritere* destructor_;
+	
+			if ( mpc.get_library_plugin("MogsCriteriaNlpAdolc",type,library_so))
 			{
-				weight=critere.attribute("weight");
-				std::istringstream smallData (weight.toStdString(), std::ios_base::in);
-				smallData >> tval;
-				weight_ = tval;
-				std::cout << "   weight_ = " << weight_  << std::endl;
-				criteres_.push_back(new PositionAdolcCritere(critere,&kin));
-
-			}
-			else if(type=="camera")
-			{
+				// load the library
+				void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
+				if (!library) {
+					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+					exit(0);
+				}
+				// load the symbols
+				creator_ = (create_AdolcCritere*) dlsym(library, "create");
+				destructor_ = (destroy_AdolcCritere*) dlsym(library, "destroy");
+				if (!creator_ || !destructor_)
+				{
+					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+					exit(0);
+				}
+				// create an instance of the class
+				AbstractAdolcCritere* crit = creator_(critere,&kin);
+				// FIXME for the moment no init from the xml
+// 				crit->init(critere);	
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
-				criteres_.push_back(new CameraAdolcCritere(critere,&kin));
+// 				criteres_.push_back(new CameraAdolcCritere(critere,&kin));
+				criteres_.push_back(crit);
 			}
+			else
+			{
+				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsCriteriaNlpAdolc plugin";
+				exit(0);
+			}			
 		}
 	}
 	std::cout<<"End of load xml"<<std::endl;

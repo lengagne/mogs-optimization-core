@@ -1,7 +1,6 @@
 #include <MogsNlpMGA.hpp>
 
-#include "CameraCriteria.hpp"
-#include "PositionCriteria.hpp"
+#include "AbstractCriteria.hpp"
 #include "VisuHolder.h"
 
 
@@ -123,8 +122,8 @@ void MogsNlpMGA::load_xml(QDomElement criteres)
 	{
 		if (criteres.tagName()=="criteres")
 		{
-
-			type=critere.attribute("type");
+			qDebug()<<"Fix me , for the moment no criteria implemented !!";
+/*			type=critere.attribute("type");
 			name=critere.attribute("name");
 			std::cout << "critere "   << type.toStdString().c_str() <<  std::endl;
 
@@ -144,7 +143,7 @@ void MogsNlpMGA::load_xml(QDomElement criteres)
 			    //FIX ME
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
 				criteres_.push_back(new CameraCriteria(critere,&kin_));
-			}
+			}*/
 		}
 	}
 }
