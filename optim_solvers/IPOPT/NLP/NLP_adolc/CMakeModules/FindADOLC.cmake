@@ -45,7 +45,6 @@ set(ADOLC_LIBRARY_DIRS ${ADOLC_LIBRARY_DIRS})
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LIBCPLEX_FOUND to TRUE
 # if all listed variables are TRUE
-find_package_handle_standard_args(ADOLC  DEFAULT_MSG
-				ADOLC_LIBRARY ADOLC_INCLUDE_DIR)
+find_package_handle_standard_args(ADOLC  DEFAULT_MSG ADOLC_LIBRARY ADOLC_INCLUDE_DIR)
 
 mark_as_advanced(ADOLC_INCLUDE_DIR ADOLC_LIBRARY )
