@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <problem type="mogs-ipopt-optimization" derivative="NLP_Adolc"> -->
-<problem type="mogs-ipopt-optimization" derivative="NLP_FADBAD_1_4">
+<problem type="mogs-ipopt-optimization" derivative="NLP_FAD_1_4">
+<!-- 	<problem type="mogs-ipopt-optimization" derivative="NLP_BAD_1_4"> -->
     <robot>
         <name>Yogi</name>
     </robot>

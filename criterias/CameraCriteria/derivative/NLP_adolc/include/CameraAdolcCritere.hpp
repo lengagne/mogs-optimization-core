@@ -1,8 +1,7 @@
 #ifndef CameraAdolcCritere_HPP_
 #define CameraAdolcCritere_HPP_
 
-#include <adolc.h>
-#include "AbstractAdolcCritere.hpp"
+#include "NLP_adolc.hpp"
 #include "CameraCriteria.hpp"
 
 class CameraAdolcCritere: public AbstractAdolcCritere, CameraCriteria

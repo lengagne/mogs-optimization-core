@@ -1,8 +1,0 @@
-#ifndef MogsPositionCriteriaNlpAdolc_CONFIG_H
-#define MogsPositionCriteriaNlpAdolc_CONFIG_H
-
-#define MogsPositionCriteriaNlpAdolc_VERSION_MAJOR 
-#define MogsPositionCriteriaNlpAdolc_VERSION_MINOR 
-
-#endif
-

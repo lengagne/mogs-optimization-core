@@ -7,9 +7,6 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 SET(CMAKE_MODULE_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 # We assume (from compilation) that IPOPT is available
-message("MogsCameraCriteria_FOUND = " ${MogsCameraCriteria_FOUND} )
-
-message("MogsNlpAdolc_FOUND = " ${MogsNlpAdolc_FOUND} )
 
 
 if(NOT MogsCameraCriteria_FOUND)

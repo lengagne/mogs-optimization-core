@@ -1,0 +1,8 @@
+#ifndef MogsNlpFAD_1_4_CONFIG_H
+#define MogsNlpFAD_1_4_CONFIG_H
+
+#define MogsNlpFAD_1_4_VERSION_MAJOR @MogsNlpFAD_1_4_VERSION_MAJOR@
+#define MogsNlpFAD_1_4_VERSION_MINOR @MogsNlpFAD_1_4_VERSION_MINOR@
+
+#endif
+

@@ -2,7 +2,6 @@
 template<typename T>
 T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin)
 {
-
      T su,sv,s,u,v;
      T obj_value=0;
 
