@@ -96,12 +96,10 @@ bool NLP_FADBAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
         n= kin.getNDof();
         std::cout << "   kin.getNDof() = " << n  << std::endl;
-        /*  Initialisation du gradient*/
-        double yp = 0.0;
-          m = 0;
-          nnz_jac_g = 0;
-          nnz_h_lag = 0;
-          index_style = TNLP::C_STYLE;
+		m = 0;
+		nnz_jac_g = 0;
+		nnz_h_lag = 0;
+		index_style = TNLP::C_STYLE;
 	return true;
 }
 
@@ -118,16 +116,12 @@ bool NLP_FADBAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
             for (i=0; i<kin.getNDof(); i++)
             {
                 x_l[i] = qmin[i];
-//                 if(x_l[i]<-10) x_l[i] = -10;
-//            std::cout << "   x_l[i] = " << x_l[i]  << std::endl;
             }
 
             // the variables have upper bounds of +qmax
             for (Index i=0; i<kin.getNDof(); i++)
             {
                 x_u[i] = qmax[i];
-//                 if(x_u[i]>10) x_u[i] = 10;
-//            std::cout << "   x_u[i] = " << x_u[i]  << std::endl;
             }
 
 	return true;
@@ -155,13 +149,9 @@ bool NLP_FADBAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj
 	bool mem_kin = false;
     for (int i =0;i<nb;i++)
     {
-        double tmp = criteres_[i]->compute(x,&kin,&mem_kin);
+        Number tmp = criteres_[i]->compute(x,&kin,&mem_kin);
         obj_value+= tmp;
-//        std::cout<<"crit("<<i<<") = " << tmp<<" \t\t total = "<< obj_value<<std::endl;
     }
-
-
-    //getchar();
 
 return true;
 }
@@ -171,14 +161,14 @@ bool NLP_FADBAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number 
 	// return the gradient of the objective function grad_{x} f(x)
 
     assert(n == kin.getNDof());
-	F<double>* X = new F<double>[n];
+	F<Number>* X = new F<Number>[n];
 	for(unsigned int i=0;i<n;i++)
 	{
 		X[i] = x[i];
 		X[i].diff(i,n);		
 	}
 	bool mem_kin = false;
-	F<double> out;
+	F<Number> out;
 	for (int j =0;j<criteres_.size();j++)
 		out+=criteres_[j]->compute(X,&akin,&mem_kin);	
     for(unsigned int i=0;i<n;i++)

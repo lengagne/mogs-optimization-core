@@ -11,18 +11,18 @@ class CameraFADBAD_1_4Critere: public AbstractFADBAD_1_4Critere, CameraCriteria
 {
  public:
 	CameraFADBAD_1_4Critere (QDomElement critere,
-                           MogsKinematics<double> *kin);
+                           MogsKinematics<Number> *kin);
 
     ~CameraFADBAD_1_4Critere ();
 
-    double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin)
+    Number compute( const Number *x , MogsKinematics<Number> * kin, bool* compute_kin)
     {
-        return CameraCriteria::compute<double>(x,kin, compute_kin);
+        return CameraCriteria::compute<Number>(x,kin, compute_kin);
     }
 
-    F<double>  compute( const F<double>  *x , MogsKinematics<F<double> > * kin, bool* compute_kin)
+    F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin, bool* compute_kin)
     {
-        return CameraCriteria::compute<F<double> >(x,kin, compute_kin);
+        return CameraCriteria::compute<F<Number> >(x,kin, compute_kin);
     }
 
 

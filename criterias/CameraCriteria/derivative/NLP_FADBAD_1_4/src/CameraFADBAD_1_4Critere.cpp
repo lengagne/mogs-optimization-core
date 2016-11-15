@@ -1,7 +1,7 @@
 #include <CameraFADBAD_1_4Critere.hpp>
 
 CameraFADBAD_1_4Critere::CameraFADBAD_1_4Critere (QDomElement critere,
-                           MogsKinematics<double> *kin):CameraCriteria(critere,kin)
+                           MogsKinematics<Number> *kin):CameraCriteria(critere,kin)
 {
 
 }
@@ -11,7 +11,7 @@ CameraFADBAD_1_4Critere::~CameraFADBAD_1_4Critere ()
 
 }
 
-extern "C" CameraFADBAD_1_4Critere* create(QDomElement critere, MogsKinematics<double> *kin)
+extern "C" CameraFADBAD_1_4Critere* create(QDomElement critere, MogsKinematics<Number> *kin)
 {
     return new CameraFADBAD_1_4Critere(critere, kin);
 }

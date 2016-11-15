@@ -18,15 +18,15 @@ class AbstractFADBAD_1_4Critere : public AbstractCriteria
     public:
 
 //      From AbstractCriteria
-    virtual double compute( const double *x , MogsKinematics<double> * kin,bool* compute_kin) = 0;
+    virtual Number compute( const Number *x , MogsKinematics<Number> * kin,bool* compute_kin) = 0;
 
-    virtual F<double>  compute( const F<double>  *x , MogsKinematics<F<double> > * kin,bool* compute_kin) = 0;
+    virtual F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
 
 };
 
 // the types of the class factories
 typedef AbstractFADBAD_1_4Critere* create_FADBAD_1_4Critere(QDomElement critere,
-													MogsKinematics<double> *kin);
+													MogsKinematics<Number> *kin);
 typedef void destroy_FADBAD_1_4Critere(AbstractFADBAD_1_4Critere*);
 
 
