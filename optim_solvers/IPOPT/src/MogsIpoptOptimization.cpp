@@ -31,7 +31,6 @@ MogsIpoptOptimization::MogsIpoptOptimization()
 MogsIpoptOptimization::~MogsIpoptOptimization()
 {
     // FIXME
-//    destructor_(&nlp_);
 }
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
@@ -39,63 +38,8 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 
     // loaded the good type of problem
     MogsAbstractProblem::read_problem(filename);
-
-/*
-    std::cout<<"find criteres = "<< !criteres.isNull()<<std::endl;
-    QDomElement criteres=root_.firstChildElement("criteres");
-    for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull(); critere = critere.nextSiblingElement("critere"))
-	{
-
-      while(!critere.isNull())
-{
-
-        std::cout<<"find one critere"<<std::endl;
-        QString Type=critere.attribute("Type","position");
-        QString  weight=critere.attribute(" weight","1");
-        std::cout << "critere type = " << Type.toStdString().c_str() << std::endl;
-        std::cout << "critere weight = " << weight.toStdString().c_str() << std::endl;
-
-        // Get the first child of the component
-        QDomElement Child=critere.firstChildElement().toElement();
-        QString Body;
-        QString Robot;
-        QString body_position;
-        QString desired_position;
-            // Read Name and value
-
-        while (!Child.isNull())
-        {
-              if (Child.tagName()=="robot")
-            {
-            Robot=Child.firstChild().toText().data();
-            std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
-            }
-
-             if (Child.tagName()=="body")
-            {
-            Body=Child.firstChild().toText().data();
-            std::cout << "   Body  = " << Body.toStdString().c_str() << std::endl;
-            }
-            if (Child.tagName()=="body_position")
-            {body_position=Child.firstChild().toText().data();
-            std::cout << "   body_position  = " << body_position.toStdString().c_str() << std::endl;
-            }
-             if (Child.tagName()=="desired_position")
-            {desired_position=Child.firstChild().toText().data();
-             std::cout << "   desired_position  = " << desired_position.toStdString().c_str() << std::endl;
-            }
-           Child = Child.nextSibling().toElement();
-        }
-
-        critere = critere.nextSibling().toElement();
-
-
-  }  } */
-
     MogsProblemClassifier mpc;
     mogs_string plugin_name = root_.attribute("derivative");
-// 	"NLP_Adolc";
-// 	mogs_string plugin_name = "NLP_FADBAD_1_4";
     mogs_string library_so;
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {
@@ -135,9 +79,23 @@ void MogsIpoptOptimization::solve()
      //donne les fichiers des robots
      nlp_-> set_robots( robots_ );
 
-      QDomElement criteres=root_.firstChildElement("criteres");
+	QDomElement criteres=root_.firstChildElement("criteres");
 
-      nlp_->load_xml(criteres);
+	nlp_->load_xml(criteres);
+	
+	// read the options
+	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
+	{
+		qDebug()<<"We find one option";
+		mogs_string type = childOptions.attribute("type");
+		mogs_string name = childOptions.attribute("name");
+		mogs_string value = childOptions.attribute("value");
+		
+		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
+		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
+		else	qDebug()<<"option of type : "<< type <<" not defined.";
+	}
+	
 
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
@@ -157,7 +115,7 @@ void MogsIpoptOptimization::solve()
 		
 // 		app_->Options()->SetNumericValue("derivative_test_perturbation", 1e-3);
 //  		app_->Options()->SetNumericValue("tol", 1e-3);
-		app_->Options()->SetIntegerValue("max_iter", 5000);
+// 		app_->Options()->SetIntegerValue("max_iter", 5000);
 		
 	status = app_->OptimizeTNLP (nlp_);
 
