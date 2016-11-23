@@ -59,8 +59,9 @@ if(IPOPT_FOUND)
     target_link_libraries( MogsIpoptOptimization
                 ${IPOPT_LIBRARIES}
                 ${MogsCore_LIBRARIES})
+	message("IPOPT_LIBRARIES = " ${IPOPT_LIBRARIES})
 
-
+                
 ###  Test of IPOPT
 
     add_custom_target(test_solver)
