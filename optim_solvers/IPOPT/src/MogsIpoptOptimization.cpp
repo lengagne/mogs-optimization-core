@@ -22,6 +22,8 @@
 
 #include "MogsIpoptOptimization.h"
 #include "MogsProblemClassifier.h"
+#include <ctime>
+
 
 MogsIpoptOptimization::MogsIpoptOptimization()
 {
@@ -117,7 +119,11 @@ void MogsIpoptOptimization::solve()
 //  		app_->Options()->SetNumericValue("tol", 1e-3);
 // 		app_->Options()->SetIntegerValue("max_iter", 5000);
 		
+		
+	clock_t begin = clock();
 	status = app_->OptimizeTNLP (nlp_);
+	clock_t end = clock();
+	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
 
 	if (status == Solve_Succeeded)
 	  {
