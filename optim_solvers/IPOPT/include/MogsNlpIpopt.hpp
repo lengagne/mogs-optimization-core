@@ -72,6 +72,15 @@ class MogsNlpIpopt:public TNLP
 					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
+	void save_results( 	Index n,
+						const Number* x,
+						Number obj_value);
+	
+	void set_root(QDomElement root)
+	{
+		root_ = root;
+	}
+					
     void set_robots(const std::vector<MogsRobotProperties*> & in);
 
      virtual  void load_xml(QDomElement criteres)=0;
@@ -93,6 +102,8 @@ class MogsNlpIpopt:public TNLP
 	//@}
     protected:
 	 std::vector<MogsRobotProperties*> robots_;
+	 
+	 QDomElement root_;
 
 };
 

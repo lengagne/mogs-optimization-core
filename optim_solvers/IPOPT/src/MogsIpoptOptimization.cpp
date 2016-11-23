@@ -83,6 +83,7 @@ void MogsIpoptOptimization::solve()
 
 	QDomElement criteres=root_.firstChildElement("criteres");
 
+	nlp_->set_root(root_);
 	nlp_->load_xml(criteres);
 	
 	// read the options
@@ -111,14 +112,8 @@ void MogsIpoptOptimization::solve()
 	  }
 
     //set options
-
-        app_->Options()->SetStringValue("derivative_test", "first-order");
-		app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
-		
-// 		app_->Options()->SetNumericValue("derivative_test_perturbation", 1e-3);
-//  		app_->Options()->SetNumericValue("tol", 1e-3);
-// 		app_->Options()->SetIntegerValue("max_iter", 5000);
-		
+	app_->Options()->SetStringValue("derivative_test", "first-order");
+	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 		
 	clock_t begin = clock();
 	status = app_->OptimizeTNLP (nlp_);

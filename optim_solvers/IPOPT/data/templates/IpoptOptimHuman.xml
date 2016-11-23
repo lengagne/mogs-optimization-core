@@ -8,7 +8,7 @@
 <!--    <robot>-->
 <!--        <name>Yogi</name>-->
 <!--    </robot>-->
-    <ipopt_options type="integer" name="max_iter" value="100000"/>
+    <ipopt_options type="integer" name="max_iter" value="100"/>
 	
 <!-- Linear solver	 -->
 	<ipopt_options type="string" name="linear_solver" value="mumps"/>

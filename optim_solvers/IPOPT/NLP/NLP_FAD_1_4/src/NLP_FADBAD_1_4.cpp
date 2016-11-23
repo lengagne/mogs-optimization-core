@@ -229,21 +229,7 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 			  const IpoptData * ip_data,
 			  IpoptCalculatedQuantities * ip_cq)
 {
-            // For this example, we write the solution to the console
-            printf("\n\nSolution of the primal variables, x\n");
-            for (Index i=0; i<n; i++) {
-            printf("x[%d] = %e\n", i, x[i]);
-            }
-//             printf("\n\nSolution of the bound multipliers, z_L and z_U\n");
-//             for (Index i=0; i<n; i++) {
-//             printf("z_L[%d] = %e\n", i, z_L[i]);
-//             }
-//             for (Index i=0; i<n; i++) {
-//             printf("z_U[%d] = %e\n", i, z_U[i]);
-//             }
-            printf("\n\nObjective value\n");
-            printf("f(x*) = %e\n", obj_value);
-
+	save_results(n,x,obj_value);
 
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
