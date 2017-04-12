@@ -23,6 +23,6 @@ class CloseToMiddleCriteria: public AbstractCriteria
        Eigen::Matrix<double,Eigen::Dynamic,  1> qm_;
 };
 
-
+#include "CloseToMiddleCriteria.hxx"
 
 #endif // CloseToMiddleCriteria_HPP_

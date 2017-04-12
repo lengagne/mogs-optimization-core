@@ -2,10 +2,8 @@
 #define CloseToMiddleFAD_1_4Critere_HPP_
 
 #include <NLP_FAD_1_4.hpp>
-#include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "CloseToMiddleCriteria.hpp"
-#include "MogsNlpIpopt.hpp"
 
 class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, CloseToMiddleCriteria
 {
@@ -27,4 +25,4 @@ class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, CloseToMiddleC
 
 
 };
-#endif // PositionFAD_1_4Critere_HPP_INCLUDED
+#endif // CloseToMiddleFAD_1_4Critere_HPP_

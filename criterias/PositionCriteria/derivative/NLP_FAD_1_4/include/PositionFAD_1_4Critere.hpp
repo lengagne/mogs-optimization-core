@@ -2,10 +2,8 @@
 #define PositionFAD_1_4Critere_HPP_
 
 #include <NLP_FAD_1_4.hpp>
-#include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "PositionCriteria.hpp"
-#include "MogsNlpIpopt.hpp"
 
 class PositionFAD_1_4Critere: public AbstractFAD_1_4Critere, PositionCriteria
 {

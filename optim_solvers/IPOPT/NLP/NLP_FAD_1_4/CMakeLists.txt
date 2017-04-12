@@ -41,8 +41,6 @@ elseif(IPOPT_FOUND)
         ${FAD_1_4_INCLUDE_DIRS}
         ${MogsVisu_INCLUDE_DIRS}
     )
-
-    message("MogsIpoptOptimization_INCLUDE_DIRS =" ${MogsIpoptOptimization_INCLUDE_DIRS})
     
     configure_file ( "${CMAKE_CURRENT_SOURCE_DIR}/config_MogsNlpFAD_1_4.h.in"
              "${CMAKE_CURRENT_SOURCE_DIR}/include/config_MogsNlpFAD_1_4.h" )
