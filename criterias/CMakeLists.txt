@@ -1,2 +1,3 @@
 add_subdirectory(CameraCriteria)
 add_subdirectory(PositionCriteria)
+add_subdirectory(CloseToMiddleCriteria)

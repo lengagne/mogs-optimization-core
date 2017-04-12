@@ -13,8 +13,9 @@ find_package(FADBAD_1_4 QUIET)
 if(NOT FADBAD_1_4_FOUND)
     message("We do not compile NLPFAD_1_4 since FADBAD 14 was not found")
 elseif(IPOPT_FOUND)
-
-	find_package(MogsVisu REQUIRED)
+    if(NOT MogsVisu_FOUND)
+        find_package(MogsVisu REQUIRED)
+    endif(NOT MogsVisu_FOUND)
 
     if (NOT MogsIpoptOptimization_FOUND)
         find_package(MogsIpoptOptimization REQUIRED)
@@ -96,7 +97,7 @@ elseif(IPOPT_FOUND)
     SET(MogsNlpFAD_1_4_LIBRARIES  MogsNlpFAD_1_4 CACHE INTERNAL "")
     SET(MogsNlpFAD_1_4_FLAGS "-DMogsNlpFAD_1_4_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
     SET(MogsNlpFAD_1_4_FOUND "TRUE" CACHE INTERNAL "")
-    
+
     add_definitions(${MogsNlpFAD_1_4_FLAGS} ${MogsVisu_FLAGS})
     #  add flags (done before)
     configure_file(MogsNlpFAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpFAD_1_4Config.cmake" @ONLY)
@@ -106,7 +107,7 @@ elseif(IPOPT_FOUND)
             DESTINATION "${INSTALL_LIB_PATH}/MogsNlpFAD_1_4" COMPONENT dev )
 
     install(CODE "execute_process(COMMAND mogs2 plugins add ipopt_optimization_nlp NLP_FAD_1_4 ${INSTALL_LIB_DIRS}/libMogsNlpFAD_1_4.so)")
-    
+
     message("dans le cmake MogsNlpFAD_1_4_FOUND = " ${MogsNlpFAD_1_4_FOUND} )
 
 else()
