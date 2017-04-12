@@ -46,7 +46,8 @@ if(IPOPT_FOUND)
 
     FILE ( GLOB_RECURSE
             header_files_MogsIpoptOptimization
-            include/*.h)
+            include/*.h
+            include/*.hpp)
 
     FILE ( GLOB_RECURSE
             source_files_MogsIpoptOptimization
@@ -61,7 +62,7 @@ if(IPOPT_FOUND)
                 ${MogsCore_LIBRARIES})
 	message("IPOPT_LIBRARIES = " ${IPOPT_LIBRARIES})
 
-                
+
 ###  Test of IPOPT
 
     add_custom_target(test_solver)
@@ -93,8 +94,8 @@ if(IPOPT_FOUND)
 
     ### Configure file
     get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-    SET(MogsIpoptOptimization_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-    SET(MogsIpoptOptimization_LIBRARIES  MogsIpoptOptimization CACHE INTERNAL "")
+    SET(MogsIpoptOptimization_INCLUDE_DIRS ${MogsOptimizationCore_INCLUDE_DIRS} ${Include_Directories} CACHE INTERNAL "")
+    SET(MogsIpoptOptimization_LIBRARIES  MogsIpoptOptimization ${MogsOptimizationCore_LIBRARIES} CACHE INTERNAL "")
     SET(MogsIpoptOptimization_FLAGS "-DMogsIpoptOptimization_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
     SET(MogsIpoptOptimization_FOUND TRUE CACHE INTERNAL "")
 

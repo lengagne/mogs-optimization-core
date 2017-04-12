@@ -53,9 +53,9 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 		{
 			type=critere.attribute("type");
 			name=critere.attribute("name");
-			create_FAD_1_4Critere* creator_;
-			destroy_FAD_1_4Critere* destructor_;
-	
+			create_FAD_1_4Critere* creator;
+			destroy_FAD_1_4Critere* destructor;
+
 			if ( mpc.get_library_plugin("MogsCriteriaNlpFAD_1_4",type,library_so))
 			{
 				// load the library
@@ -65,17 +65,17 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 					exit(0);
 				}
 				// load the symbols
-				creator_ = (create_FAD_1_4Critere*) dlsym(library, "create");
-				destructor_ = (destroy_FAD_1_4Critere*) dlsym(library, "destroy");
-				if (!creator_ || !destructor_)
+				creator = (create_FAD_1_4Critere*) dlsym(library, "create");
+				destructor = (destroy_FAD_1_4Critere*) dlsym(library, "destroy");
+				if (!creator || !destructor)
 				{
 					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
 					exit(0);
 				}
 				// create an instance of the class
-				AbstractFAD_1_4Critere* crit = creator_(critere,&kin);
+				AbstractFAD_1_4Critere* crit = creator(critere,&kin);
 				// FIXME for the moment no init from the xml
-// 				crit->init(critere);	
+// 				crit->init(critere);
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
 // 				criteres_.push_back(new CameraFAD_1_4Critere(critere,&kin));
 				criteres_.push_back(crit);
@@ -84,7 +84,7 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 			{
 				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsCriteriaNlpFAD_1_4 plugin";
 				exit(0);
-			}	
+			}
 		}
 	}
 	std::cout<<"End of load xml"<<std::endl;
@@ -165,14 +165,14 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 	for(unsigned int i=0;i<n;i++)
 	{
 		X[i] = x[i];
-		X[i].diff(i,n);		
+		X[i].diff(i,n);
 	}
 	bool mem_kin = false;
 	F<Number> out;
 	for (int j =0;j<criteres_.size();j++)
-		out+=criteres_[j]->compute(X,&akin,&mem_kin);	
+		out+=criteres_[j]->compute(X,&akin,&mem_kin);
     for(unsigned int i=0;i<n;i++)
-    {	
+    {
         grad_f[i] = out.d(i);
     }
 	return true;

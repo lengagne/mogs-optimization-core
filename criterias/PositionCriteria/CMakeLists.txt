@@ -31,7 +31,9 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-find_package(MogsOptimizationCore REQUIRED)
+IF (NOT MogsOptimizationCore_FOUND)
+    find_package(MogsOptimizationCore REQUIRED)
+endIF (NOT MogsOptimizationCore_FOUND)
 
 include_directories (
 	include
@@ -57,7 +59,7 @@ ADD_LIBRARY(	MogsPositionCriteria SHARED
 target_link_libraries( MogsPositionCriteria
 			${MogsIpoptOptimization_LIBRARIES})
 
-                
+
 #
 # install the include files
 SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsPositionCriteria)

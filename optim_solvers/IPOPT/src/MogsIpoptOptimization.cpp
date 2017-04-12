@@ -73,6 +73,12 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 	app_ = IpoptApplicationFactory ();
 }
 
+void MogsIpoptOptimization::set_nlp_problem( MogsNlpIpopt *in)
+{
+    nlp_ = in;
+    app_ = IpoptApplicationFactory ();
+}
+
 void MogsIpoptOptimization::solve()
 {
     std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
@@ -85,7 +91,7 @@ void MogsIpoptOptimization::solve()
 
 	nlp_->set_root(root_);
 	nlp_->load_xml(criteres);
-	
+
 	// read the options
 	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
 	{
@@ -93,12 +99,12 @@ void MogsIpoptOptimization::solve()
 		mogs_string type = childOptions.attribute("type");
 		mogs_string name = childOptions.attribute("name");
 		mogs_string value = childOptions.attribute("value");
-		
+
 		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
 		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
 		else	qDebug()<<"option of type : "<< type <<" not defined.";
 	}
-	
+
 
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
@@ -114,7 +120,7 @@ void MogsIpoptOptimization::solve()
     //set options
 	app_->Options()->SetStringValue("derivative_test", "first-order");
 	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
-		
+
 	clock_t begin = clock();
 	status = app_->OptimizeTNLP (nlp_);
 	clock_t end = clock();

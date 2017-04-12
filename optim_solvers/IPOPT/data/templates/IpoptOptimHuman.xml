@@ -8,7 +8,7 @@
 <!--    <robot>-->
 <!--        <name>Yogi</name>-->
 <!--    </robot>-->
-    <ipopt_options type="integer" name="max_iter" value="10000"/>
+    <ipopt_options type="integer" name="max_iter" value="100"/>
 	
 <!-- Linear solver	 -->
 <!-- 	<ipopt_options type="string" name="linear_solver" value="mumps"/> -->
@@ -17,6 +17,9 @@
 <!-- 	<ipopt_options type="string" name="linear_solver" value="ma77"/> -->
 <!-- 	<ipopt_options type="string" name="linear_solver" value="ma86"/>		 -->
 	<ipopt_options type="string" name="linear_solver" value="ma97"/>		
+	
+	<ipopt_options type="string" name="linear_system_scaling" value="mc19"/>		
+	
    <criteres>
 <!--        <critere type="position" weight="1.0">
            <robot> yogi </robot>

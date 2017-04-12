@@ -51,6 +51,8 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     void read_problem (const mogs_string & filename);
 
+    void set_nlp_problem( MogsNlpIpopt * in);
+
     /** Solve the problem	 */
     void solve();
 
