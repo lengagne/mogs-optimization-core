@@ -10,13 +10,11 @@ SET(CMAKE_MODULE_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 if(NOT MogsCloseToMiddleCriteria_FOUND)
 	find_package(MogsCloseToMiddleCriteria REQUIRED)
-endif(NOT MogscCloseToMiddleCriteria_FOUND)
+endif(NOT MogsCloseToMiddleCriteria_FOUND)
 
 if(NOT MogsNlpFAD_1_4_FOUND)
 	find_package(MogsNlpFAD_1_4 REQUIRED)
 endif(NOT MogsNlpFAD_1_4_FOUND)
-
-
 
 set( LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
@@ -51,6 +49,7 @@ FILE ( GLOB_RECURSE
 		source_files_MogsCloseToMiddleCriteriaNlpFAD_1_4
 		src/*.cpp)
 
+
 ADD_LIBRARY(	MogsCloseToMiddleCriteriaNlpFAD_1_4 SHARED
 		${source_files_MogsCloseToMiddleCriteriaNlpFAD_1_4}
 )
@@ -58,9 +57,6 @@ ADD_LIBRARY(	MogsCloseToMiddleCriteriaNlpFAD_1_4 SHARED
 target_link_libraries(  MogsCloseToMiddleCriteriaNlpFAD_1_4
 						${MogsNlpFAD_1_4_LIBRARIES}
 						${MogsCloseToMiddleCriteria_LIBRARIES})
-
-message("MogsCloseToMiddleCriteria_LIBRARIES = " ${MogsCloseToMiddleCriteria_LIBRARIES})
-message("MogsNlpFAD_1_4_LIBRARIES = " ${MogsNlpFAD_1_4_LIBRARIES})
 
 link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
 					${MogsNlpFAD_1_4_LIBRARY_DIRS}

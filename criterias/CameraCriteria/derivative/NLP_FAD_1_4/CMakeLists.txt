@@ -29,7 +29,6 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-message("MogsNlpFAD_1_4_INCLUDE_DIRS = " ${MogsNlpFAD_1_4_INCLUDE_DIRS})
 include_directories (
 	include
 	${MogsCameraCriteria_INCLUDE_DIRS}

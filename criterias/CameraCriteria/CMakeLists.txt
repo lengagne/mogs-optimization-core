@@ -46,7 +46,9 @@ configure_file ("${PROJECT_SOURCE_DIR}/config_MogsCameraCriteria.h.in"
 
 FILE ( GLOB_RECURSE
 		header_files_MogsCameraCriteria
-		include/*.h)
+		include/*.h
+		include/*.hpp
+		include/*.hxx)
 
 FILE ( GLOB_RECURSE
 		source_files_MogsCameraCriteria

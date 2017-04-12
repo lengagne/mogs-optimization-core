@@ -55,7 +55,8 @@ configure_file ("${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
 
 FILE ( GLOB_RECURSE
         header_files_MogsOptimizationCore
-        include/*.h)
+        include/*.h
+        include/*.hpp)
 #
 ## Perform the proper linking
 #SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")

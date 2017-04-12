@@ -2,9 +2,6 @@
 #define  CloseToMiddleCriteria_HPP_
 
 #include "AbstractCriteria.hpp"
-#include "MogsKinematics.h"
-//#include "close_to_middleCriteria.hxx"
-//#include "MogsRobotProperties.h"
 
 class CloseToMiddleCriteria: public AbstractCriteria
 {   public:
@@ -28,4 +25,4 @@ class CloseToMiddleCriteria: public AbstractCriteria
 
 
 
-#endif // PositionCriteria_HPP_
+#endif // CloseToMiddleCriteria_HPP_

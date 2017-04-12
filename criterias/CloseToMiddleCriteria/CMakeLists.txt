@@ -31,7 +31,9 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-find_package(MogsOptimizationCore REQUIRED)
+IF (NOT MogsOptimizationCore_FOUND)
+    find_package(MogsOptimizationCore REQUIRED)
+endIF (NOT MogsOptimizationCore_FOUND)
 
 include_directories (
 	include
@@ -44,7 +46,9 @@ configure_file ("${PROJECT_SOURCE_DIR}/config_MogsCloseToMiddleCriteria.h.in"
 
 FILE ( GLOB_RECURSE
 		header_files_MogsCloseToMiddleCriteria
-		include/*.h)
+		include/*.h
+		include/*.hpp
+		include/*.hxx)
 
 FILE ( GLOB_RECURSE
 		source_files_MogsCloseToMiddleCriteria
