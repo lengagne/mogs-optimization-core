@@ -1,0 +1,9 @@
+#ifndef Mogsclose_to_middleCriteria_CONFIG_H
+#define Mogsclose_to_middleCriteria_CONFIG_H
+
+#define Mogsclose_to_middleCriteria_VERSION_MAJOR @Mogsclose_to_middleCriteria_VERSION_MAJOR@
+#define Mogsclose_to_middleCriteria_VERSION_MINOR @Mogsclose_to_middleCriteria_VERSION_MINOR@
+
+
+#endif
+
