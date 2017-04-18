@@ -22,6 +22,7 @@ if(IPOPT_FOUND)
 
     include_directories (
         include
+        ${MogsIpoptOptimization_INCLUDE_DIRS}
         ${MogsCore_INCLUDE_DIRS}
         ${MogsNlpSampleCore_INCLUDE_DIRS}
         ${IPOPT_INCLUDE_DIRS}

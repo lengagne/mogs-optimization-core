@@ -96,8 +96,8 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
         n= kin.getNDof();
         std::cout << "   kin.getNDof() = " << n  << std::endl;
-		m = 0;
-		nnz_jac_g = 0;
+		m = 2;
+		nnz_jac_g = n/2;
 		nnz_h_lag = 0;
 		index_style = TNLP::C_STYLE;
 	return true;
@@ -181,7 +181,15 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
             assert(n == kin.getNDof());
-            assert(m == 0);
+            assert(m == 1);
+                for (int i=0; i<kin.getNDof(); i++)
+                {
+                g[0] += x[i];
+                }
+                for (int i=0; i<(kin.getNDof()/2); i++)
+                {
+                g[1] += x[2*i];
+                }
 
 	return true;
 }
@@ -192,10 +200,27 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 {
             if (values == NULL)
             {
-             }
+//                for (int i=0; i<kin.getNDof(); i++)
+//                {
+//                    iRow[i] = 1;
+//                    jCol[i] = i+1;
+//                }
+                for (int j=0; j<2; j++)
+                {
+                    for (int i=0; i<kin.getNDof(); i++)
+                    {
+                        iRow[j,i] = j+1;
+                        jCol[j,i] = i+1;
+                    }
+                }
+
+            }
             else
             {
-
+                for (int i=0; i<kin.getNDof(); i++)
+                {
+                    values[i] = 1.0;
+                }
             }
 
 	return true;

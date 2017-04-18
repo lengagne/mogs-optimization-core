@@ -97,7 +97,7 @@ if(IPOPT_FOUND)
     get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
     SET(MogsIpoptOptimization_INCLUDE_DIRS ${MogsOptimizationCore_INCLUDE_DIRS} ${Include_Directories} CACHE INTERNAL "")
     SET(MogsIpoptOptimization_LIBRARIES  MogsIpoptOptimization ${MogsOptimizationCore_LIBRARIES} CACHE INTERNAL "")
-    SET(MogsIpoptOptimization_FLAGS "-DMogsIpoptOptimization_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+    SET(MogsIpoptOptimization_FLAGS "-DMogsIpoptOptimization_FOUND ${IPOPT_FLAGS} -DHAVE_CSTDDEF" CACHE INTERNAL "")
     SET(MogsIpoptOptimization_FOUND TRUE CACHE INTERNAL "")
 
     add_definitions(${MogsIpoptOptimization_FLAGS})

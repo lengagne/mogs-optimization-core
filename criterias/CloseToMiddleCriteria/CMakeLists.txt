@@ -77,7 +77,7 @@ install( TARGETS MogsCloseToMiddleCriteria LIBRARY DESTINATION ${INSTALL_LIB_DIR
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 SET(MogsCloseToMiddleCriteria_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsCloseToMiddleCriteria_LIBRARIES  MogsCloseToMiddleCriteria CACHE INTERNAL "")
-SET(MogsCloseToMiddleCriteria_FLAGS "-DMogsCloseToMiddleCriteria_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsCloseToMiddleCriteria_FLAGS "-DMogsCloseToMiddleCriteria_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
 SET(MogsCloseToMiddleCriteria_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsCloseToMiddleCriteria_FLAGS})
 #  add flags (done before)

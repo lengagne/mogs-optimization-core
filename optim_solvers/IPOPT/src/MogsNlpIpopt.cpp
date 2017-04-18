@@ -4,11 +4,9 @@ using namespace Ipopt;
 MogsNlpIpopt::MogsNlpIpopt ()
 {
 }
-
 MogsNlpIpopt::~MogsNlpIpopt ()
 {
 }
-
 void MogsNlpIpopt::save_results( 	Index n,
 									const Number* x,
 									Number obj_value)
@@ -19,15 +17,15 @@ void MogsNlpIpopt::save_results( 	Index n,
 	printf("x[%d] = %e\n", i, x[i]);
 	}
 	printf("\n\nObjective value\n");
-	printf("f(x*) = %e\n", obj_value);	
-	
+	printf("f(x*) = %e\n", obj_value);
+
 	QDomElement ElResults = root_.firstChildElement ("results");
-	
+
 	qDebug()<<"Create node";
 	QDomDocument doc = root_.ownerDocument();
 	QDomElement node = doc.createElement("result");
 	ElResults.appendChild(node);
-	
+
 	qDebug()<<" fichiers = "<< doc.toString();
 // 	root_.
 }
@@ -36,6 +34,3 @@ void MogsNlpIpopt::set_robots(const std::vector<MogsRobotProperties*> & in)
 {
     robots_ = in;
 }
-
-
-

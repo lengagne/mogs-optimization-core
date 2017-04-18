@@ -77,7 +77,7 @@ install( TARGETS MogsPositionCriteria LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  C
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 SET(MogsPositionCriteria_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsPositionCriteria_LIBRARIES  MogsPositionCriteria CACHE INTERNAL "")
-SET(MogsPositionCriteria_FLAGS "-DMogsPositionCriteria_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsPositionCriteria_FLAGS "-DMogsPositionCriteria_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
 SET(MogsPositionCriteria_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsPositionCriteria_FLAGS})
 #  add flags (done before)

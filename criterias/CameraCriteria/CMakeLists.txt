@@ -61,6 +61,7 @@ ADD_LIBRARY(	MogsCameraCriteria SHARED
 target_link_libraries( MogsCameraCriteria
 			${MogsIpoptOptimization_LIBRARIES})
 
+add_definitions(${MogsIpoptOptimization_FLAGS})
 
 #
 # install the include files
@@ -77,7 +78,7 @@ install( TARGETS MogsCameraCriteria LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COM
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 SET(MogsCameraCriteria_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsCameraCriteria_LIBRARIES  MogsCameraCriteria CACHE INTERNAL "")
-SET(MogsCameraCriteria_FLAGS "-DMogsCameraCriteria_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsCameraCriteria_FLAGS "-DMogsCameraCriteria_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
 SET(MogsCameraCriteria_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsCameraCriteria_FLAGS})
 #  add flags (done before)
