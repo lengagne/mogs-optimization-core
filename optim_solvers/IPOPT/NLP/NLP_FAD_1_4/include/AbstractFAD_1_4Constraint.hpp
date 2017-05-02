@@ -12,7 +12,7 @@
 #include "MogsKinematics.h"
 #include <fadiff.h>
 #include "AbstractConstraint.hpp"
-#include <NLP_FAD_1_4.hpp>
+#include "MogsNlpIpopt.hpp"
 
 class AbstractFAD_1_4Constraint : public AbstractConstraint
 {
