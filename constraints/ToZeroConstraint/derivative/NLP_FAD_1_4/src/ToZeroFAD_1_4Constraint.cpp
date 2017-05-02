@@ -13,7 +13,7 @@ ToZeroFAD_1_4Constraint::~ToZeroFAD_1_4Constraint ()
 
 extern "C" ToZeroFAD_1_4Constraint* create(QDomElement constraint, MogsKinematics<double> *kin)
 {
-    return new TozeroFAD_1_4Constraint(constraint, kin);
+    return new ToZeroFAD_1_4Constraint(constraint, kin);
 }
 
 extern "C" void destroy(ToZeroFAD_1_4Constraint* p)

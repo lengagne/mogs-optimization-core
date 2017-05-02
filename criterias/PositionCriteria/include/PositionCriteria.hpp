@@ -3,7 +3,7 @@
 
 #include "AbstractCriteria.hpp"
 #include "MogsKinematics.h"
-#include "PositionCriteria.hxx"
+
 
 class PositionCriteria: public AbstractCriteria
 {   public:
@@ -36,6 +36,6 @@ class PositionCriteria: public AbstractCriteria
 
 };
 
-
+#include "PositionCriteria.hxx"
 
 #endif // PositionCriteria_HPP_

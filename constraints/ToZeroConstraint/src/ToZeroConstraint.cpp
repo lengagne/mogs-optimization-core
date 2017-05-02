@@ -1,10 +1,11 @@
 #include <ToZeroConstraint.hpp>
 
-ToZeroConstraint::ToZeroConstraint (  QDomElement critere,
+ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
                                                     MogsKinematics<double>* kin)
 {
     m = 1;
-    nnz_jac_g = kin->getNDof();
+    n = kin->getNDof();
+//    nnz_jac_g = kin->getNDof();
     lower.resize(m);
     upper.resize(m);
     upper(0) = 0;
@@ -12,9 +13,9 @@ ToZeroConstraint::ToZeroConstraint (  QDomElement critere,
     //upper(1) = 0;
     //lower(1) = 0;
 
-//    weight_ = critere.attribute("weight").toDouble();
+//    weight_ = ele.attribute("weight").toDouble();
 //    std::cout<<"weight = "<< weight_<<std::endl;
-//    QDomElement Child=critere.firstChildElement().toElement();
+    QDomElement Child=ele.firstChildElement().toElement();
 
     while (!Child.isNull())
     {
@@ -30,25 +31,7 @@ ToZeroConstraint::ToZeroConstraint (  QDomElement critere,
 
 }
 
-ToZeroConstraint::get_nb_constraints()
-{
-    return m;
-}
 
-int ToZeroConstraint::get_nnz_jac_g()
-{
-    return nnz_jac_g;
-}
-
-double ToZeroConstraint::get_upper(int i)
-{
-    return upper(i);
-}
-
-double ToZeroConstraint::get_lower(int i)
-{
-    return lower(i);
-}
 
 //bool ToZeroConstraint::eval_g(Index n, Index m, const Number * x, Number * g)
 //{

@@ -14,7 +14,7 @@
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 //#include <ToZeroConstraint.hpp>
-#include "ToZeroFAD_1_4Constraint.hpp"
+//#include "ToZeroFAD_1_4Constraint.hpp"
 
 
 
@@ -126,7 +126,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             std::vector<AbstractFAD_1_4Critere* >criteres_;
 
         public:
-        ToZeroFAD_1_4Constraint ctr_;
+//        ToZeroFAD_1_4Constraint ctr_;
 	//@}
 };
 #endif

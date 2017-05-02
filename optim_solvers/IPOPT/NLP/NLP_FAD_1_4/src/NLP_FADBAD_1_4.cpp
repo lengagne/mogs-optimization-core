@@ -94,8 +94,8 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 {
     n = kin.getNDof();
     std::cout << "   kin.getNDof() = " << n  << std::endl;
-    m = ctr_.get_nb_constraints();
-	nnz_jac_g = ctr_.get_nnz_jac_g();
+    m = 0; //ctr_.get_nb_constraints();
+	nnz_jac_g = 0; //ctr_.get_nnz_jac_g();
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
 	return true;
@@ -105,7 +105,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
     assert(n == kin.getNDof());
-    assert(m == ctr_.get_nb_constraints());
+    assert(m == 0); //ctr_.get_nb_constraints());
     Index i;
     robots_[0]->getPositionLimit(qmin,qmax);
     // the variables have lower bounds of -qmax
@@ -118,14 +118,12 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     {
         x_u[i] = qmax[i];
     }
-    for (i=0; i<m; i++)
+/*    for (i=0; i<m; i++)
     {
         g_l[i] = ctr_.get_lower(i);
         g_u[i] = ctr_.get_upper(i);
-    }
-    //g_l[0] = -1e10;
-    //g_u[0] = 1e10;
-    //g_l[1] = g_u[1] = 0;
+    }*/
+
 	return true;
 }
 
@@ -180,8 +178,8 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
     assert(n == kin.getNDof());
-    assert(m == ctr_.get_nb_constraints());
-    return ctr_.eval_g(n, m, x, g);
+//    assert(m == ctr_.get_nb_constraints());
+    return true; // ctr_.eval_g(n, m, x, g);
 }
 
 bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
@@ -189,14 +187,14 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Number * values)
 {
             assert(n == kin.getNDof());
-            assert(m == ctr_.get_nb_constraints());
+//            assert(m == ctr_.get_nb_constraints());
             if (values == NULL)
             {
-                ctr_.particuliar_jacobian(iRow, jCol, n);
+//                ctr_.particuliar_jacobian(iRow, jCol, n);
             }
            else
            {
-                ctr_.derivative(values, n);
+//                ctr_.derivative(values, n);
            }
 
 	return true;

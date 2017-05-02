@@ -12,15 +12,16 @@
 #include "MogsKinematics.h"
 #include <fadiff.h>
 #include "AbstractConstraint.hpp"
+#include <NLP_FAD_1_4.hpp>
 
 class AbstractFAD_1_4Constraint : public AbstractConstraint
 {
     public:
 
 //      From AbstractConstraint
-    virtual Number compute( const Number *x , MogsKinematics<Number> * kin,bool* compute_kin) = 0;
+    virtual void compute( const Number *x , Number *g, MogsKinematics<Number> * kin,bool* compute_kin) = 0;
 
-    virtual F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
+    virtual void  compute( const F<Number>  *x , F<Number>* g, MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
 
 };
 
@@ -28,6 +29,7 @@ class AbstractFAD_1_4Constraint : public AbstractConstraint
 typedef AbstractFAD_1_4Constraint* create_FAD_1_4Constraint(QDomElement constraint,
 													MogsKinematics<Number> *kin);
 typedef void destroy_FAD_1_4Constraint(AbstractFAD_1_4Constraint*);
+
 
 
 #endif  // ABSTRACTFAD_1_4CONSTRAINT_HPP_INCLUDED
