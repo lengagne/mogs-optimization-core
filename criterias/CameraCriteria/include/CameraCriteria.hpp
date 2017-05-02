@@ -31,7 +31,7 @@ class CameraCriteria: public AbstractCriteria
                     double  RotationX,RotationY,RotationZ,tval,erreur_projection;
                     double focale,Kv,Ku,u0,v0;                           // Paramètres intrinsèques de la caméra
 
-                    Eigen::Matrix<double, 3, 3> K;                //Matrice de rotation sur X d'un angle= pi/3 et matrice de calibration
+                    Eigen::Matrix<double, 3,3> K;                //Matrice de rotation sur X d'un angle= pi/3 et matrice de calibration
                     Eigen::Matrix<double, 3,1> Position_, Rotation_;           // correspond à la transaltion tx_ty_tz, supposant que le centre de l'object est à 1m du centre de la focale
 
 
@@ -43,7 +43,7 @@ class CameraCriteria: public AbstractCriteria
                      Eigen::Matrix<double, 2,1> desired_position_image_;
                      std::vector<Eigen::Matrix<double, 3,1>> bodyposition;
                      std::vector<Eigen::Matrix<double, 2,1>> desiredpositionimage;
-					 
+
 					 std::vector<Eigen::Matrix<double, 3,1>> droite_point_;
 
                     SpatialTransform<double> camera_pose_;

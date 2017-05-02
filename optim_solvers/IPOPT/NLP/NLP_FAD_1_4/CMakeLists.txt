@@ -36,12 +36,13 @@ elseif(IPOPT_FOUND)
         include
         ${MogsCore_INCLUDE_DIRS}
         ${MogsCriteria_INCLUDE_DIRS}
+        ${MogsConstraint_INCLUDE_DIRS}
         ${MogsIpoptOptimization_INCLUDE_DIRS}
         ${IPOPT_INCLUDE_DIRS}
         ${FAD_1_4_INCLUDE_DIRS}
         ${MogsVisu_INCLUDE_DIRS}
     )
-    
+
     configure_file ( "${CMAKE_CURRENT_SOURCE_DIR}/config_MogsNlpFAD_1_4.h.in"
              "${CMAKE_CURRENT_SOURCE_DIR}/include/config_MogsNlpFAD_1_4.h" )
 
@@ -67,6 +68,7 @@ elseif(IPOPT_FOUND)
                             ${FAD_1_4_LIBRARIES}
                             ${MogsIpoptOptimization_LIBRARIES}
                             ${MogsCriteria_LIBRARIES}
+                            ${MogsConstraint_LIBRARIES}
                             ${MogsVisu_LIBRARIES})
 
 	link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}

@@ -92,38 +92,40 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-
-
-        n= kin.getNDof();
-        std::cout << "   kin.getNDof() = " << n  << std::endl;
-		m = 2;
-		nnz_jac_g = n/2;
-		nnz_h_lag = 0;
-		index_style = TNLP::C_STYLE;
+    n = kin.getNDof();
+    std::cout << "   kin.getNDof() = " << n  << std::endl;
+    m = ctr_.get_nb_constraints();
+	nnz_jac_g = ctr_.get_nnz_jac_g();
+	nnz_h_lag = 0;
+	index_style = TNLP::C_STYLE;
 	return true;
 }
 
 bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
-
-            assert(n == kin.getNDof());
-
-            assert(m == 0);
-            Index i;
-            robots_[0]->getPositionLimit(qmin,qmax);
-            // the variables have lower bounds of -qmax
-            for (i=0; i<kin.getNDof(); i++)
-            {
-                x_l[i] = qmin[i];
-            }
-
-            // the variables have upper bounds of +qmax
-            for (Index i=0; i<kin.getNDof(); i++)
-            {
-                x_u[i] = qmax[i];
-            }
-
+    assert(n == kin.getNDof());
+    assert(m == ctr_.get_nb_constraints());
+    Index i;
+    robots_[0]->getPositionLimit(qmin,qmax);
+    // the variables have lower bounds of -qmax
+    for (i=0; i<kin.getNDof(); i++)
+    {
+        x_l[i] = qmin[i];
+    }
+    // the variables have upper bounds of +qmax
+    for (Index i=0; i<kin.getNDof(); i++)
+    {
+        x_u[i] = qmax[i];
+    }
+    for (i=0; i<m; i++)
+    {
+        g_l[i] = ctr_.get_lower(i);
+        g_u[i] = ctr_.get_upper(i);
+    }
+    //g_l[0] = -1e10;
+    //g_u[0] = 1e10;
+    //g_l[1] = g_u[1] = 0;
 	return true;
 }
 
@@ -131,20 +133,18 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 			   bool init_z, Number * z_L, Number * z_U,
 			   Index m, bool init_lambda, Number * lambda)
 {
-            assert(init_x == true);
-            assert(init_z == false);
-            assert(init_lambda == false);
-            // initialize to the given starting point
-            for(int i=0;i<kin.getNDof();i++)
-                x[i] = 0.;
-
+    assert(init_x == true);
+    assert(init_z == false);
+    assert(init_lambda == false);
+    // initialize to the given starting point
+    for(int i=0;i<kin.getNDof();i++)
+        x[i] = 0.;
 	return true;
 }
 
 bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
 {
     int nb = criteres_.size();
-
     obj_value =0;
 	bool mem_kin = false;
     for (int i =0;i<nb;i++)
@@ -159,7 +159,6 @@ return true;
 bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
 {
 	// return the gradient of the objective function grad_{x} f(x)
-
     assert(n == kin.getNDof());
 	F<Number>* X = new F<Number>[n];
 	for(unsigned int i=0;i<n;i++)
@@ -180,48 +179,25 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
-            assert(n == kin.getNDof());
-            assert(m == 1);
-                for (int i=0; i<kin.getNDof(); i++)
-                {
-                g[0] += x[i];
-                }
-                for (int i=0; i<(kin.getNDof()/2); i++)
-                {
-                g[1] += x[2*i];
-                }
-
-	return true;
+    assert(n == kin.getNDof());
+    assert(m == ctr_.get_nb_constraints());
+    return ctr_.eval_g(n, m, x, g);
 }
 
 bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Index m, Index nele_jac, Index * iRow, Index * jCol,
 		   Number * values)
 {
+            assert(n == kin.getNDof());
+            assert(m == ctr_.get_nb_constraints());
             if (values == NULL)
             {
-//                for (int i=0; i<kin.getNDof(); i++)
-//                {
-//                    iRow[i] = 1;
-//                    jCol[i] = i+1;
-//                }
-                for (int j=0; j<2; j++)
-                {
-                    for (int i=0; i<kin.getNDof(); i++)
-                    {
-                        iRow[j,i] = j+1;
-                        jCol[j,i] = i+1;
-                    }
-                }
-
+                ctr_.particuliar_jacobian(iRow, jCol, n);
             }
-            else
-            {
-                for (int i=0; i<kin.getNDof(); i++)
-                {
-                    values[i] = 1.0;
-                }
-            }
+           else
+           {
+                ctr_.derivative(values, n);
+           }
 
 	return true;
 }

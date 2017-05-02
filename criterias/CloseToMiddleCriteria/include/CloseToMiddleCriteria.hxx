@@ -12,7 +12,6 @@ T CloseToMiddleCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* comp
 		aq_[i] = x[i];
 		// norme entre qm et aq
 		Norm += (qm_[i] - aq_[i])*(qm_[i] - aq_[i]);
-
 	}
 
     return Norm*weight_;

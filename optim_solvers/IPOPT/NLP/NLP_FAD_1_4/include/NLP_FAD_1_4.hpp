@@ -13,6 +13,10 @@
 #include "MogsKinematics.h"
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
+//#include <ToZeroConstraint.hpp>
+#include "ToZeroFAD_1_4Constraint.hpp"
+
+
 
 
 using namespace Ipopt;
@@ -101,10 +105,8 @@ class NLP_FAD_1_4:public MogsNlpIpopt
    *  knowing. (See Scott Meyers book, "Effective C++")
    *
    */
-	//@{
+
 	//  NLP_FAD_1_4();
-
-
 
             double tval,weight_;
             QString type,weight,name;
@@ -122,6 +124,9 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             std::vector < double >qmin;
 
             std::vector<AbstractFAD_1_4Critere* >criteres_;
+
+        public:
+        ToZeroFAD_1_4Constraint ctr_;
 	//@}
 };
 #endif

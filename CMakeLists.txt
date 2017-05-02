@@ -61,7 +61,7 @@ FILE ( GLOB_RECURSE
 ## Perform the proper linking
 #SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 #
-# install the include files
+# install the include files// return the structure of the Jacobian
 SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsOptimizationCore)
 
 # install the include files
@@ -81,8 +81,9 @@ install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
 
 message("before include_directories")
 
+add_subdirectory(constraints)
 add_subdirectory(optim_solvers)
 add_subdirectory(criterias)
 #//////////////////////////////////////////////////////
-add_subdirectory(constraints)
+
 
