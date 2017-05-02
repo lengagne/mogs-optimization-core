@@ -34,7 +34,7 @@ class NLP_sample:public MogsNlpIpopt
   /** default destructor */
 	virtual ~ NLP_sample ();
 
-   void load_xml(QDomElement criteres);
+   void load_xml( );
 
   /**@name Overloaded from TNLP */
 	//@{

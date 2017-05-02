@@ -16,10 +16,10 @@
 <!-- 		<ipopt_options type="string" name="linear_solver" value="ma57"/> -->
 <!-- 	<ipopt_options type="string" name="linear_solver" value="ma77"/> -->
 <!-- 	<ipopt_options type="string" name="linear_solver" value="ma86"/>		 -->
-	<ipopt_options type="string" name="linear_solver" value="ma97"/>		
-	
-	<ipopt_options type="string" name="linear_system_scaling" value="mc19"/>		
-	
+	<ipopt_options type="string" name="linear_solver" value="ma97"/>
+
+	<ipopt_options type="string" name="linear_system_scaling" value="mc19"/>
+
    <criteres>
         <critere type="position" weight="1.0">
            <robot> yogi </robot>
@@ -27,10 +27,10 @@
           <body_position> 0 0 0.05 </body_position>
           <desired_position> 0.4 0.4 0.3 </desired_position>
        </critere>
-	   
+
         <critere type="close_to_middle" weight="1.0">
            <robot> yogi </robot>
-       </critere>	   
+       </critere>
 <!---->
 <!--        <critere type="position" weight="0.001">-->
 <!--            <robot> KUKA </robot>-->
@@ -46,5 +46,13 @@
 <!--        </critere>-->
 
       </criteres>
+      <constraints>
+
+          <constraint type="ToZero">
+              <robot>yogi</robot>
+
+          </constraint>
+      </constraints>
+
     <results/>
 </problem>

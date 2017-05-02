@@ -42,13 +42,14 @@ NLP_adolc::~NLP_adolc ()
 {
 }
 
-void NLP_adolc::load_xml(QDomElement criteres)
+void NLP_adolc::load_xml()
 {
 	kin.SetRobot(robots_[0]);
 	akin.SetRobot(robots_[0]);
-	
+
 	MogsProblemClassifier mpc;
 	mogs_string library_so;
+    QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
 		if (criteres.tagName()=="criteres")
@@ -57,7 +58,7 @@ void NLP_adolc::load_xml(QDomElement criteres)
 			name=critere.attribute("name");
 			create_AdolcCritere* creator_;
 			destroy_AdolcCritere* destructor_;
-	
+
 			if ( mpc.get_library_plugin("MogsCriteriaNlpAdolc",type,library_so))
 			{
 				// load the library
@@ -77,7 +78,7 @@ void NLP_adolc::load_xml(QDomElement criteres)
 				// create an instance of the class
 				AbstractAdolcCritere* crit = creator_(critere,&kin);
 				// FIXME for the moment no init from the xml
-// 				crit->init(critere);	
+// 				crit->init(critere);
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
 // 				criteres_.push_back(new CameraAdolcCritere(critere,&kin));
 				criteres_.push_back(crit);
@@ -86,7 +87,7 @@ void NLP_adolc::load_xml(QDomElement criteres)
 			{
 				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsCriteriaNlpAdolc plugin";
 				exit(0);
-			}			
+			}
 		}
 	}
 	std::cout<<"End of load xml"<<std::endl;
@@ -254,7 +255,7 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 			  IpoptCalculatedQuantities * ip_cq)
 {
 	save_results(n,x,obj_value);
-	
+
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
 
@@ -263,9 +264,9 @@ void NLP_adolc::finalize_solution (SolverReturn status,
 
     for (int i=0;i<robots_[0]->getNDof();i++)
         q(i) = x[i];
-	
+
 	for (int i=0;i<3;i++)	q(i)= 0;
-	std::cout<<"q = "<< q.transpose()<<std::endl;	
+	std::cout<<"q = "<< q.transpose()<<std::endl;
 
     visu.apply_q("robot",&q);
 

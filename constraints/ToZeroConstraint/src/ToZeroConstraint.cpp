@@ -3,6 +3,7 @@
 ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
                                                     MogsKinematics<double>* kin)
 {
+    qDebug()<<"Constructor of ToZeroConstraint";
     m = 1;
     n = kin->getNDof();
 //    nnz_jac_g = kin->getNDof();

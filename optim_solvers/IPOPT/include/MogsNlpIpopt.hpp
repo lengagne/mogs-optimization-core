@@ -75,15 +75,15 @@ class MogsNlpIpopt:public TNLP
 	void save_results( 	Index n,
 						const Number* x,
 						Number obj_value);
-	
+
 	void set_root(QDomElement root)
 	{
 		root_ = root;
 	}
-					
+
     void set_robots(const std::vector<MogsRobotProperties*> & in);
 
-     virtual  void load_xml(QDomElement criteres)=0;
+     virtual  void load_xml( )=0;
 
       private:
   /**@name Methods to block default compiler methods.
@@ -102,7 +102,7 @@ class MogsNlpIpopt:public TNLP
 	//@}
     protected:
 	 std::vector<MogsRobotProperties*> robots_;
-	 
+
 	 QDomElement root_;
 
 };

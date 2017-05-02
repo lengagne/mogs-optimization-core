@@ -87,10 +87,8 @@ void MogsIpoptOptimization::solve()
      //donne les fichiers des robots
      nlp_-> set_robots( robots_ );
 
-	QDomElement criteres=root_.firstChildElement("criteres");
-
 	nlp_->set_root(root_);
-	nlp_->load_xml(criteres);
+	nlp_->load_xml( );
 
 	// read the options
 	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )

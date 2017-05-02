@@ -39,13 +39,13 @@ NLP_FAD_1_4::~NLP_FAD_1_4 ()
 {
 }
 
-void NLP_FAD_1_4::load_xml(QDomElement criteres)
+void NLP_FAD_1_4::load_xml( )
 {
 	kin.SetRobot(robots_[0]);
 	akin.SetRobot(robots_[0]);
 	MogsProblemClassifier mpc;
 	mogs_string library_so;
-
+    QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
 
@@ -67,6 +67,7 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 				// load the symbols
 				creator = (create_FAD_1_4Critere*) dlsym(library, "create");
 				destructor = (destroy_FAD_1_4Critere*) dlsym(library, "destroy");
+				/// FIXME store the destructor !!
 				if (!creator || !destructor)
 				{
 					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
@@ -87,6 +88,52 @@ void NLP_FAD_1_4::load_xml(QDomElement criteres)
 			}
 		}
 	}
+    QDomElement constraints=root_.firstChildElement("constraints");
+
+    for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
+	{
+
+		if (constraints.tagName()=="constraints")
+		{
+			type=constraint.attribute("type");
+			name=constraint.attribute("name");
+			create_FAD_1_4Constraint* creator;
+			destroy_FAD_1_4Constraint* destructor;
+			/// FIXME store the destructor !!
+
+			if ( mpc.get_library_plugin("MogsConstarintNlpFAD_1_4",type,library_so))
+			{
+				// load the library
+				void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
+				if (!library) {
+					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+					exit(0);
+				}
+				// load the symbols
+				creator = (create_FAD_1_4Constraint*) dlsym(library, "create");
+				destructor = (destroy_FAD_1_4Constraint*) dlsym(library, "destroy");
+				if (!creator || !destructor)
+				{
+					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+					exit(0);
+				}
+				// create an instance of the class
+				AbstractFAD_1_4Constraint* ctr = creator(constraint,&kin);
+				// FIXME for the moment no init from the xml
+// 				crit->init(constraint);
+				std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
+// 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
+				constraints_.push_back(ctr);
+			}
+			else
+			{
+				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsConstarintNlpFAD_1_4 plugin";
+				exit(0);
+			}
+		}
+	}
+
+
 	std::cout<<"End of load xml"<<std::endl;
 }
 bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,

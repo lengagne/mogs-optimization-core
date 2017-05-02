@@ -89,7 +89,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
 
-        void load_xml(QDomElement criteres);
+        void load_xml( );
 
       private:
   /**@name Methods to block default compiler methods.
