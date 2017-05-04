@@ -141,8 +141,10 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 {
     n = kin.getNDof();
     std::cout << "   kin.getNDof() = " << n  << std::endl;
-    m = 0; //ctr_.get_nb_constraints();
-	nnz_jac_g = 0; //ctr_.get_nnz_jac_g();
+
+    m = 1;//constraints_.size(); //ctr_.get_nb_constraints();
+    //added
+	nnz_jac_g = n;//n; //ctr_.get_nnz_jac_g();
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
 	return true;
@@ -152,7 +154,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
     assert(n == kin.getNDof());
-    assert(m == 0); //ctr_.get_nb_constraints());
+    //added
+    assert(m == constraints_.size()); //ctr_.get_nb_constraints());
     Index i;
     robots_[0]->getPositionLimit(qmin,qmax);
     // the variables have lower bounds of -qmax
@@ -165,11 +168,15 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     {
         x_u[i] = qmax[i];
     }
-/*    for (i=0; i<m; i++)
+    //added
+    for (i=0; i<m; i++)
     {
-        g_l[i] = ctr_.get_lower(i);
-        g_u[i] = ctr_.get_upper(i);
-    }*/
+        g_l[i] = constraints_[i]->get_lower();
+        g_u[i] = constraints_[i]->get_upper();
+        std::cout << "g_l[i] :" << g_l[i] << std::endl;
+        std::cout << "g_u[i] :" << g_u[i] << std::endl;
+
+    }
 
 	return true;
 }
@@ -212,7 +219,7 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 		X[i].diff(i,n);
 	}
 	bool mem_kin = false;
-	F<Number> out;
+	F<Number> out=0;
 	for (int j =0;j<criteres_.size();j++)
 		out+=criteres_[j]->compute(X,&akin,&mem_kin);
     for(unsigned int i=0;i<n;i++)
@@ -224,9 +231,18 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
+    bool compute_kin = false;
     assert(n == kin.getNDof());
-//    assert(m == ctr_.get_nb_constraints());
-    return true; // ctr_.eval_g(n, m, x, g);
+    assert(m == 1);
+//   for (int i =0;i<m;i++)
+//   {
+
+        constraints_[0]->compute(x,g,&kin,&compute_kin);
+
+        std::cout << "constraints_[0] :" << constraints_[0] << std::endl;
+
+ // }
+    return true;
 }
 
 bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
@@ -234,16 +250,39 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Number * values)
 {
             assert(n == kin.getNDof());
-//            assert(m == ctr_.get_nb_constraints());
+            assert(m == 1);
+            F<Number>* X = new F<Number>[n];
+
             if (values == NULL)
             {
-//                ctr_.particuliar_jacobian(iRow, jCol, n);
+                for(int j = 0; j < m; j++)
+                {
+                    for (int i=0; i<n; i++)
+                    {
+                        iRow[i] = j;
+                        jCol[i] = i;
+                    }
+                }
             }
            else
            {
-//                ctr_.derivative(values, n);
-           }
+                for (unsigned int i=0; i<n; i++)
+                {
+                    values[i] = 1.0;
+//                    X[i] = x[i];
+//                    X[i].diff(i,n);
+                    //std::cout << " X[i] =  "<< X[i].diff(i,n) << std::endl;
+               }
+//                bool compute_kin = false;
+//                F<Number> out=0;
+//                for (int j =0;j<m;j++)
+//                    constraints_[j]->compute(x,g,&kin,&compute_kin);
+//                for(unsigned int i=0;i<n;i++)
+//                {
+//                    grad_f[i] = out.d(i);
+//                }
 
+           }
 	return true;
 }
 
@@ -252,17 +291,20 @@ bool NLP_FAD_1_4::eval_h (Index n, const Number * x, bool new_x,
 	       bool new_lambda, Index nele_hess, Index * iRow,
 	       Index * jCol, Number * values)
 {
-            if (values == NULL) {
+        assert(n == kin.getNDof());
+        assert(m == 1);
+
+            if (values == NULL)
+            {
             // return the structure. This is a symmetric matrix, fill the lower left
             // triangle only.
             // the Hessian for this problem is actually dense
-
             }
-            else {
+            else
+            {
             // return the values. This is a symmetric matrix, fill the lower left
             // triangle only
             // fill the objective portion
-
             }
 
 	return true;

@@ -14,12 +14,13 @@ class ToZeroFAD_1_4Constraint: public AbstractFAD_1_4Constraint, ToZeroConstrain
 
     void compute( const Number *x , Number* g, MogsKinematics<Number> * kin, bool* compute_kin)
     {
-        ToZeroConstraint::compute<Number>(x,g,kin, compute_kin);
+        ToZeroConstraint::compute<Number>(x,g, kin, compute_kin);
     }
 
     void compute( const F<Number>  *x , F<Number>* g, MogsKinematics<F<Number> > * kin, bool* compute_kin)
     {
-        ToZeroConstraint::compute<F<Number> >(x,g,kin, compute_kin);
+        ToZeroConstraint::compute<F<Number> >(x,g, kin, compute_kin);
     }
+
 };
 #endif // PositionFAD_1_4Critere_HPP_INCLUDED

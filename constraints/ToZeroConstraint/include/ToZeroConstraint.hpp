@@ -13,7 +13,7 @@ class ToZeroConstraint: public AbstractConstraint
 
     void compute( const double *x , double * g, MogsKinematics<double> * kin, bool* compute_kin)
     {
-        return compute<double>(x,g,kin, compute_kin);
+        return compute<double>(x,g, kin, compute_kin);
     }
 
     template<typename T>
