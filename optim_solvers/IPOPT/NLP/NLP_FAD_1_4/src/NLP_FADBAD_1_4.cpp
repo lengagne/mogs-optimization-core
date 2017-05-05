@@ -155,7 +155,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 {
     assert(n == kin.getNDof());
     //added
-    assert(m == constraints_.size()); //ctr_.get_nb_constraints());
+    assert(m == 1); //ctr_.get_nb_constraints());   constraints_.size()
     Index i;
     robots_[0]->getPositionLimit(qmin,qmax);
     // the variables have lower bounds of -qmax
@@ -173,8 +173,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     {
         g_l[i] = constraints_[i]->get_lower();
         g_u[i] = constraints_[i]->get_upper();
-        std::cout << "g_l[i] :" << g_l[i] << std::endl;
-        std::cout << "g_u[i] :" << g_u[i] << std::endl;
+        std::cout << "g_l["<<i<<"] :" << g_l[i] << std::endl;
+        std::cout << "g_u["<<i<<"] :" << g_u[i] << std::endl;
 
     }
 
@@ -234,14 +234,13 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     bool compute_kin = false;
     assert(n == kin.getNDof());
     assert(m == 1);
-//   for (int i =0;i<m;i++)
-//   {
 
-        constraints_[0]->compute(x,g,&kin,&compute_kin);
+   for (int i =0;i<constraints_.size();i++)
 
-        std::cout << "constraints_[0] :" << constraints_[0] << std::endl;
-
- // }
+  {
+        constraints_[i]->compute(x,g,&kin,&compute_kin);
+        //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
+  }
     return true;
 }
 
@@ -251,7 +250,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 {
             assert(n == kin.getNDof());
             assert(m == 1);
-            F<Number>* X = new F<Number>[n];
+            bool compute_kin = false;
 
             if (values == NULL)
             {
@@ -266,22 +265,28 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
             }
            else
            {
-                for (unsigned int i=0; i<n; i++)
+                F<Number>* X = new F<Number>[n];
+                F<Number>* G = new F<Number>[m];
+                for(unsigned int i=0;i<n;i++)
                 {
-                    values[i] = 1.0;
-//                    X[i] = x[i];
-//                    X[i].diff(i,n);
-                    //std::cout << " X[i] =  "<< X[i].diff(i,n) << std::endl;
-               }
-//                bool compute_kin = false;
-//                F<Number> out=0;
-//                for (int j =0;j<m;j++)
-//                    constraints_[j]->compute(x,g,&kin,&compute_kin);
-//                for(unsigned int i=0;i<n;i++)
-//                {
-//                    grad_f[i] = out.d(i);
-//                }
+                    X[i] = x[i];
+                    X[i].diff(i,n);
+                }
 
+                for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
+                {
+                    constraints_[i]->compute(X,G,&akin,&compute_kin);
+                   // for (unsigned int i=0; i<n; i++)
+                   // values[i] = 1.0;
+                   // std::cout << " values[" << i <<"] ="<<  values[i] << std::endl;
+                }
+
+                for(unsigned int i=0;i<n;i++)
+                {
+                    values[i] = G->d(i);
+                    std::cout << " values[" << i <<"] =" << values[i] << std::endl;
+                }
+                //std::cout << "constraints_size = : " << constraints_.size() << std::endl;
            }
 	return true;
 }
