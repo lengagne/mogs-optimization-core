@@ -14,7 +14,7 @@
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
-
+#include "Dependency.h"
 
 using namespace Ipopt;
 
@@ -123,6 +123,10 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             std::vector<AbstractFAD_1_4Critere* >criteres_;
 
             std::vector<AbstractFAD_1_4Constraint*> constraints_;
+
+            // to remeber the dependancies
+            unsigned int nnz_jac_g_;
+            std::vector<unsigned int> col_,row_;
 
         public:
 

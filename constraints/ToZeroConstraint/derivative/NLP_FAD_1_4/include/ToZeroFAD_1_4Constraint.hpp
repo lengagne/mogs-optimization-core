@@ -22,5 +22,10 @@ class ToZeroFAD_1_4Constraint: public AbstractFAD_1_4Constraint, ToZeroConstrain
         ToZeroConstraint::compute<F<Number> >(x,g, kin, compute_kin);
     }
 
+    void compute( const Dependency  *x , Dependency* g, MogsKinematics<Dependency> * kin, bool* compute_kin)
+    {
+        ToZeroConstraint::compute<Dependency>(x,g, kin, compute_kin);
+    }
+
 };
 #endif // PositionFAD_1_4Critere_HPP_INCLUDED

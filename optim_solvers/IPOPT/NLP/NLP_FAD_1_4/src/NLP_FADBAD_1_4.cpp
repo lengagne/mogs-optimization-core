@@ -142,7 +142,32 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     n = kin.getNDof();
     std::cout << "   kin.getNDof() = " << n  << std::endl;
     m = constraints_.size();
-	nnz_jac_g = n*m;
+
+    // detection of the dependency
+    Dependency * X = new Dependency [n];
+    for(int i=0;i<n;i++)
+        X[i].init(i,n);
+    Dependency * G = new Dependency [m];
+    MogsKinematics<Dependency> k;
+    k.SetRobot(kin.model);
+    bool computation_done = false;
+    for (unsigned int i=0; i<constraints_.size(); i++)
+    {
+        constraints_[i]->compute(X,G,&k,&computation_done);
+    }
+    for(int i=0;i<m;i++)    for(int j=0;j<n;j++)
+    {
+        if(G[i].get(j)){
+            col_.push_back(j);
+            row_.push_back(i);
+        }
+    }
+
+
+    nnz_jac_g_ = col_.size();
+	nnz_jac_g = nnz_jac_g_;
+	std::cout<<"nnz_jac_g = "<< nnz_jac_g <<std::endl;
+
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
 	return true;
@@ -251,14 +276,11 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
             int cpt=0;
             if (values == NULL)
             {
-                for(int j = 0; j < m; j++)
+                for (int i=0;i<nele_jac;i++)
                 {
-                    for (int i=0; i<n; i++)
-                    {
-                        iRow[cpt] = j;
-                        jCol[cpt] = i;
-                        cpt++;
-                    }
+                    iRow[i] = row_[i];
+                    jCol[i] = col_[i];
+//                    std::cout<<"deriv : "<< iRow[i]<<" : "<< jCol[i]<<std::endl;
                 }
             }
            else
@@ -276,32 +298,8 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
                     constraints_[i]->compute(X,G,&akin,&compute_kin);
                 }
 
-                for(int j = 0; j < m; j++)
-                {
-                    for (int i=0; i<n; i++)
-                    {
-                        values[cpt] = G[j].d(i);
-                        cpt++;
-                    }
-                }
-
-
-                   // for (unsigned int i=0; i<n; i++)
-                   // values[i] = 1.0;
-                   // std::cout << " values[" << i <<"] ="<<  values[i] << std::endl;
-
-
-               /* for(unsigned int i=0;i<n;i++)
-                {
-                    values[i] = G->d(i);
-                    std::cout << " values[" << i <<"] =" << values[i] << std::endl;
-
-                    if (values != 0 )
-                    {
-                        int nz +=1;
-                    }
-                }*/
-                //std::cout << "constraints_size = : " << constraints_.size() << std::endl;
+                for (int i=0;i<nele_jac;i++)
+                    values[i] = G[row_[i]].d(col_[i]);
            }
 	return true;
 }

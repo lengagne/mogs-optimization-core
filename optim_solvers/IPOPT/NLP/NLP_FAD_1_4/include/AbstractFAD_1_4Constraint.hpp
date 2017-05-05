@@ -13,6 +13,7 @@
 #include <fadiff.h>
 #include "AbstractConstraint.hpp"
 #include "MogsNlpIpopt.hpp"
+#include "Dependency.h"
 
 class AbstractFAD_1_4Constraint : public AbstractConstraint
 {
@@ -22,6 +23,8 @@ class AbstractFAD_1_4Constraint : public AbstractConstraint
     virtual void compute( const Number *x , Number *g, MogsKinematics<Number> * kin,bool* compute_kin) = 0;
 
     virtual void  compute( const F<Number>  *x , F<Number>* g, MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
+
+    virtual void  compute( const Dependency  *x , Dependency* g, MogsKinematics<Dependency> * kin,bool* compute_kin) = 0;
 
 };
 
