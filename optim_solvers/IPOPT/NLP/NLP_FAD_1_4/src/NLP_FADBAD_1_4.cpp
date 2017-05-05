@@ -141,10 +141,8 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 {
     n = kin.getNDof();
     std::cout << "   kin.getNDof() = " << n  << std::endl;
-
-    m = 1;//constraints_.size(); //ctr_.get_nb_constraints();
-    //added
-	nnz_jac_g = n;//n; //ctr_.get_nnz_jac_g();
+    m = constraints_.size();
+	nnz_jac_g = n*m;
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
 	return true;
@@ -155,7 +153,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 {
     assert(n == kin.getNDof());
     //added
-    assert(m == 1); //ctr_.get_nb_constraints());   constraints_.size()
+    assert(m == constraints_.size()); //ctr_.get_nb_constraints());   constraints_.size()
     Index i;
     robots_[0]->getPositionLimit(qmin,qmax);
     // the variables have lower bounds of -qmax
@@ -169,7 +167,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         x_u[i] = qmax[i];
     }
     //added
-    for (i=0; i<m; i++)
+    for (i=0; i<constraints_.size(); i++)
     {
         g_l[i] = constraints_[i]->get_lower();
         g_u[i] = constraints_[i]->get_upper();
@@ -233,10 +231,9 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
 {
     bool compute_kin = false;
     assert(n == kin.getNDof());
-    assert(m == 1);
+    assert(m == constraints_.size());
 
    for (int i =0;i<constraints_.size();i++)
-
   {
         constraints_[i]->compute(x,g,&kin,&compute_kin);
         //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
@@ -249,17 +246,18 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Number * values)
 {
             assert(n == kin.getNDof());
-            assert(m == 1);
+            assert(m == constraints_.size());
             bool compute_kin = false;
-
+            int cpt=0;
             if (values == NULL)
             {
                 for(int j = 0; j < m; j++)
                 {
                     for (int i=0; i<n; i++)
                     {
-                        iRow[i] = j;
-                        jCol[i] = i;
+                        iRow[cpt] = j;
+                        jCol[cpt] = i;
+                        cpt++;
                     }
                 }
             }
@@ -272,20 +270,37 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
                     X[i] = x[i];
                     X[i].diff(i,n);
                 }
-
+                int cpt=0;
                 for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
                 {
                     constraints_[i]->compute(X,G,&akin,&compute_kin);
+                }
+
+                for(int j = 0; j < m; j++)
+                {
+                    for (int i=0; i<n; i++)
+                    {
+                        values[cpt] = G[j].d(i);
+                        cpt++;
+                    }
+                }
+
+
                    // for (unsigned int i=0; i<n; i++)
                    // values[i] = 1.0;
                    // std::cout << " values[" << i <<"] ="<<  values[i] << std::endl;
-                }
 
-                for(unsigned int i=0;i<n;i++)
+
+               /* for(unsigned int i=0;i<n;i++)
                 {
                     values[i] = G->d(i);
                     std::cout << " values[" << i <<"] =" << values[i] << std::endl;
-                }
+
+                    if (values != 0 )
+                    {
+                        int nz +=1;
+                    }
+                }*/
                 //std::cout << "constraints_size = : " << constraints_.size() << std::endl;
            }
 	return true;
@@ -297,7 +312,7 @@ bool NLP_FAD_1_4::eval_h (Index n, const Number * x, bool new_x,
 	       Index * jCol, Number * values)
 {
         assert(n == kin.getNDof());
-        assert(m == 1);
+        assert(m == constraints_.size());
 
             if (values == NULL)
             {

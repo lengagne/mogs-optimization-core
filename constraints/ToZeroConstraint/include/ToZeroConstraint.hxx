@@ -10,6 +10,6 @@ void ToZeroConstraint::compute( const T *x, T* g, MogsKinematics<T> *kin_, bool*
         {
             g[0] += x[i];
         }
- std::cout << "g[0] :" <<  g[0] << std::endl;
+ //std::cout << "g[0] :" <<  g[0] << std::endl;
 
 }
