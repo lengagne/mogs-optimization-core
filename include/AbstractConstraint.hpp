@@ -14,21 +14,29 @@ class AbstractConstraint
             return m;
         }
 
-        double get_upper()
+        double get_upper(int i)
         {
-            return upper;
+            return upper(i);
         }
 
-        double get_lower()
+        double get_lower( int i)
         {
-            return lower;
+            return lower(i);
+        }
+
+        int get_test( )
+        {
+            return test;
         }
 
  protected:
-      unsigned int m; /// number of constraints
 
-      double upper = 0;
-      double lower = 0;
+      unsigned int m; /// number of constraints
+      Eigen::Matrix<double, 3, 1> upper ;
+      Eigen::Matrix<double, 3, 1> lower ;
+
+      int test;
+
 };
 
 #endif // AbstractConstraint_HPP_INCLUDED

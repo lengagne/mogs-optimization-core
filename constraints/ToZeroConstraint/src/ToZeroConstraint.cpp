@@ -3,10 +3,11 @@
 ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
                                                     MogsKinematics<double>* kin)
 {
-    qDebug()<<"Constructor of ToZeroConstraint";
+    qDebug()<<"Constructor ofToZeroConstraint";
     m = 1;
     n = kin->getNDof();
-
+    double upper =0;
+    double lower =0;
 
     QDomElement Child=ele.firstChildElement().toElement();
 
