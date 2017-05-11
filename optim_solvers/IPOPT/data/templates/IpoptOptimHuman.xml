@@ -48,11 +48,20 @@
       </criteres>
       <constraints>
 
-          <constraint type="ToZero">
-              <robot>yogi</robot>
+<!--          <constraint type="ToZero">-->
+<!--              <robot>yogi</robot>-->
+<!--          </constraint>-->
 
-          </constraint>
+       <constraint type="PositionD">
+           <robot> yogi </robot>
+          <body> righthand </body>
+          <body_position> 0 0 0.0 </body_position>
+          <desired_position> 0.4 0.4 0.3 </desired_position>
+        </constraint>
+
       </constraints>
+
+
 
     <results/>
 </problem>

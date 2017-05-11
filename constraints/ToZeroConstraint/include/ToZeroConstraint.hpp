@@ -4,7 +4,7 @@
 #include "MogsKinematics.h"
 #include "AbstractConstraint.hpp"
 
-class ToZeroConstraint: public AbstractConstraint
+class ToZeroConstraint: virtual public AbstractConstraint
 {   public:
 	ToZeroConstraint (QDomElement Constraint,
                           MogsKinematics<double>* kin);

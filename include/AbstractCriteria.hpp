@@ -11,6 +11,7 @@ class AbstractCriteria
 
 
 	double weight_=1;
+
 };
 
 #endif // AbstractCriteria_HPP_INCLUDED

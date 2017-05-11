@@ -101,7 +101,7 @@ void NLP_FAD_1_4::load_xml( )
 			destroy_FAD_1_4Constraint* destructor;
 			/// FIXME store the destructor !!
 
-			if ( mpc.get_library_plugin("MogsConstarintNlpFAD_1_4",type,library_so))
+			if ( mpc.get_library_plugin("MogsConstraintNlpFAD_1_4",type,library_so))
 			{
 				// load the library
 				void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
@@ -119,15 +119,21 @@ void NLP_FAD_1_4::load_xml( )
 				}
 				// create an instance of the class
 				AbstractFAD_1_4Constraint* ctr = creator(constraint,&kin);
+//                std::cout << "test : " << ctr->get_test() << std::endl;
+//                for(int ii = 0; ii < 3; ii++){
+//                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
+//                    std::cout << "Constraint created : g_u["<<ii<<"] :" << ctr->get_upper(ii) << std::endl;
+//                }
 				// FIXME for the moment no init from the xml
-// 				crit->init(constraint);
+ 				//ctr->init(constraint);
+ 				//std::cout << "test : " << ctr->get_test() << std::endl;
 				std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
 // 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
 				constraints_.push_back(ctr);
 			}
 			else
 			{
-				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsConstarintNlpFAD_1_4 plugin";
+				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsConstraintNlpFAD_1_4 plugin";
 				exit(0);
 			}
 		}
@@ -140,9 +146,11 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
     n = kin.getNDof();
-    std::cout << "   kin.getNDof() = " << n  << std::endl;
-    m = constraints_.size();
-
+    std::cout << "   n = " << n  << std::endl;
+    m = 0;
+    for(int i=0;i<constraints_.size();i++)
+        m += constraints_[i]->get_nb_constraints();
+    std::cout << "   m = " << m  << std::endl;
     // detection of the dependency
     Dependency * X = new Dependency [n];
     for(int i=0;i<n;i++)
@@ -151,6 +159,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     MogsKinematics<Dependency> k;
     k.SetRobot(kin.model);
     bool computation_done = false;
+    std::cout<<"Compute the dependency of the derivative"<<std::endl;
     for (unsigned int i=0; i<constraints_.size(); i++)
     {
         constraints_[i]->compute(X,G,&k,&computation_done);
@@ -162,7 +171,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
             row_.push_back(i);
         }
     }
-
+    std::cout<<"End the dependency of the derivative"<<std::endl;
 
     nnz_jac_g_ = col_.size();
 	nnz_jac_g = nnz_jac_g_;
@@ -177,9 +186,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
     assert(n == kin.getNDof());
-    //added
-    assert(m == constraints_.size()); //ctr_.get_nb_constraints());   constraints_.size()
-    Index i;
+
+    Index i, j;
     robots_[0]->getPositionLimit(qmin,qmax);
     // the variables have lower bounds of -qmax
     for (i=0; i<kin.getNDof(); i++)
@@ -192,13 +200,17 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         x_u[i] = qmax[i];
     }
     //added
+    unsigned int cpt = 0;
     for (i=0; i<constraints_.size(); i++)
     {
-        g_l[i] = constraints_[i]->get_lower();
-        g_u[i] = constraints_[i]->get_upper();
-        std::cout << "g_l["<<i<<"] :" << g_l[i] << std::endl;
-        std::cout << "g_u["<<i<<"] :" << g_u[i] << std::endl;
-
+        for (j=0; j<constraints_[i]->get_nb_constraints(); j++)
+        {
+            g_l[cpt] = constraints_[i]->get_lower(j);
+            g_u[cpt] = constraints_[i]->get_upper(j);
+            std::cout << "Const["<<cpt<<"] : g_l["<<cpt<<"] :" << g_l[cpt] << std::endl;
+            std::cout << "Const["<<cpt<<"] : g_u["<<cpt<<"] :" << g_u[cpt] << std::endl;
+            cpt++;
+        }
     }
 
 	return true;
@@ -256,8 +268,8 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
 {
     bool compute_kin = false;
     assert(n == kin.getNDof());
-    assert(m == constraints_.size());
 
+    m = 3 ;
    for (int i =0;i<constraints_.size();i++)
   {
         constraints_[i]->compute(x,g,&kin,&compute_kin);
@@ -271,7 +283,9 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Number * values)
 {
             assert(n == kin.getNDof());
-            assert(m == constraints_.size());
+            //assert(m == constraints_.size());
+            m = 3;
+
             bool compute_kin = false;
             int cpt=0;
             if (values == NULL)
@@ -280,7 +294,6 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
                 {
                     iRow[i] = row_[i];
                     jCol[i] = col_[i];
-//                    std::cout<<"deriv : "<< iRow[i]<<" : "<< jCol[i]<<std::endl;
                 }
             }
            else
@@ -309,8 +322,8 @@ bool NLP_FAD_1_4::eval_h (Index n, const Number * x, bool new_x,
 	       bool new_lambda, Index nele_hess, Index * iRow,
 	       Index * jCol, Number * values)
 {
-        assert(n == kin.getNDof());
-        assert(m == constraints_.size());
+        //assert(n == kin.getNDof());
+        //assert(m == constraints_.size());
 
             if (values == NULL)
             {

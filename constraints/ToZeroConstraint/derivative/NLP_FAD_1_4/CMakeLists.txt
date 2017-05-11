@@ -96,4 +96,4 @@ configure_file(MogsToZeroConstraintNlpFAD_1_4Config.cmake.in "${PROJECT_BINARY_D
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsToZeroConstraintNlpFAD_1_4Config.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsToZeroConstraintNlpFAD_1_4" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstarintNlpFAD_1_4 ToZero ${INSTALL_LIB_DIRS}/libMogsToZeroConstraintNlpFAD_1_4.so)")
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraintNlpFAD_1_4 ToZero ${INSTALL_LIB_DIRS}/libMogsToZeroConstraintNlpFAD_1_4.so)")

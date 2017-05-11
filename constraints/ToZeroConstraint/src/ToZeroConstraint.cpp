@@ -6,7 +6,10 @@ ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
     qDebug()<<"Constructor of ToZeroConstraint";
     m = 1;
     n = kin->getNDof();
-
+    upper.resize(1);
+    upper(0) =0;
+    lower.resize(1);
+    lower(0) =0;
 
     QDomElement Child=ele.firstChildElement().toElement();
 
@@ -20,7 +23,7 @@ ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
            }
        Child = Child.nextSibling().toElement();
     }
-    //
+    qDebug()<<"m = "<< m ;
 }
 
 ToZeroConstraint::~ToZeroConstraint ()

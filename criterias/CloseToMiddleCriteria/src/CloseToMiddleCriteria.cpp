@@ -5,6 +5,7 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
                                                     MogsKinematics<double>* kin)
 {
     weight_ = critere.attribute("weight").toDouble();
+
     std::cout<<"weight = "<< weight_<<std::endl;
     QDomElement Child=critere.firstChildElement().toElement();
     while (!Child.isNull())

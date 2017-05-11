@@ -7,7 +7,7 @@ class Dependency
     public:
         Dependency(){n=0;}
 
-        Dependency(double a){n=0; }
+        Dependency(const double &a){n=0; }
 
         Dependency(const Dependency &a){ n = a.n;   d = a.d;}
 
@@ -50,6 +50,33 @@ class Dependency
                 d(i) |= a.d(i);
         }
 
+        inline Dependency operator + (const Dependency& a) const
+        {
+            Dependency s=*this;
+            s+= a;
+            return s;
+        }
+
+        inline Dependency operator - ( ) const
+        {
+            return *this;
+        }
+
+        inline Dependency operator - (const Dependency& a) const
+        {
+            return *this+a;
+        }
+
+        inline Dependency operator * (const Dependency& a) const
+        {
+            return *this+a;
+        }
+
+        inline Dependency operator / (const Dependency& a) const
+        {
+            return *this+a;
+        }
+
         friend std::ostream & operator<<(std::ostream &os, const Dependency& a) {
             return os << a.d.transpose();
         }
@@ -60,6 +87,35 @@ class Dependency
         Eigen::Matrix<bool, Eigen::Dynamic,1> d;
 };
 
+Dependency operator+ (const double& a, const Dependency & b)
+{
+    return b;
+}
+
+Dependency operator- (const double& a, const Dependency & b)
+{
+    return b;
+}
+
+Dependency operator* (const double& a, const Dependency & b)
+{
+    return b;
+}
+
+Dependency operator/ (const double& a, const Dependency & b)
+{
+    return b;
+}
+
+Dependency sin(const Dependency & b)
+{
+    return b;
+}
+
+Dependency cos(const Dependency & b)
+{
+    return b;
+}
 
 
 #endif // Dependency_H

@@ -15,7 +15,7 @@
 #include "MogsNlpIpopt.hpp"
 #include "Dependency.h"
 
-class AbstractFAD_1_4Constraint : public AbstractConstraint
+class AbstractFAD_1_4Constraint : virtual public AbstractConstraint
 {
     public:
 
