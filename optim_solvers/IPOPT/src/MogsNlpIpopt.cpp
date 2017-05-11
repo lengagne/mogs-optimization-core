@@ -33,4 +33,5 @@ void MogsNlpIpopt::save_results( 	Index n,
 void MogsNlpIpopt::set_robots(const std::vector<MogsRobotProperties*> & in)
 {
     robots_ = in;
+    nb_robots_  = robots_.size();
 }

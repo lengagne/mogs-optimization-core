@@ -10,7 +10,7 @@
 #define __NLP_FAD_1_4_HPP__
 
 #include "MogsNlpIpopt.hpp"
-#include "MogsKinematics.h"
+#include "MogsDynamics.h"
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
@@ -111,14 +111,14 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             NLP_FAD_1_4 (const NLP_FAD_1_4 &);
             NLP_FAD_1_4 & operator= (const NLP_FAD_1_4 &);
 
-            MogsKinematics<double> kin;
-            MogsKinematics<F<double> > akin;
+            std::vector<MogsDynamics<double>* > dyns_;
+            std::vector<MogsDynamics<F<double> >* > adyns_;
 
-            Eigen::Matrix < double,Eigen::Dynamic, 1 > q;
-            Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > aq;
+            std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
+            std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;
 
-            std::vector < double >qmax;
-            std::vector < double >qmin;
+            std::vector<std::vector < double > >qmax;
+            std::vector<std::vector < double > >qmin;
 
             std::vector<AbstractFAD_1_4Critere* >criteres_;
 
@@ -127,6 +127,8 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             // to remeber the dependancies
             unsigned int nnz_jac_g_;
             std::vector<unsigned int> col_,row_;
+
+            unsigned int nb_var_;
 
         public:
 

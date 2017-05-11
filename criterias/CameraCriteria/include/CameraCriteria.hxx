@@ -1,8 +1,11 @@
 
 template<typename T>
-T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin)
+T CameraCriteria::compute( const T *x,std::vector<MogsDynamics<T> *> dyns, bool* compute_kin)
 {
+     /// FIXME For the moment only for the first robot declared
+
      T su,sv,s,u,v;
+
      T obj_value=0;
 
      Eigen::Matrix<T, 2,1> en_2D;
@@ -10,17 +13,17 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 
 // 	 if (*compute_kin == false)
 	 {
-		aq_.resize(kin_->getNDof());
+		aq_.resize(dyns[0]->getNDof());
 // 		std::cout<<"q =";
-		for (int i=0; i<kin_->getNDof(); i++)
+		for (int i=0; i<dyns[0]->getNDof(); i++)
 		{
 // 			std::cout<<x[i]<<" ";
 			aq_(i) = x[i];
 		}
 // 		std::cout<<std::endl;
-		kin_->UpdateKinematicsCustom(&aq_);
+		dyns[0]->UpdateKinematicsCustom(&aq_);
 		*compute_kin = true;
-		
+
 	 }
 
 
@@ -29,7 +32,7 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 //         std::cout << " body_id_["<<i<<"] = " << body_id_[i]<< std::endl;
 //         std::cout << " bodyposition["<<i<<"] = " << bodyposition[i].transpose()<< std::endl;
 // 		std::cout << " droite_point_["<<i<<"] = " << droite_point_[i].transpose()<< std::endl;
-         Eigen::Matrix<T, 3, 1>Pr=kin_->getPosition(body_id_[i],bodyposition[i]);
+         Eigen::Matrix<T, 3, 1>Pr=dyns[0]->getPosition(body_id_[i],bodyposition[i]);
 // 			std::cout<<"Pr("<<i<<") = "<< Pr(0)<<" "<< Pr(1)<<" "<<Pr(2)<<std::endl;
 
 //         Eigen::Matrix<T, 3, 3>  R = M.E.transpose().cast<T>();
@@ -41,7 +44,7 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 //         u= su/s;
 //         v= sv/s;
 
-		
+
 // 		u = Image(0)/Image(2);
 // 		v = Image(1)/Image(2);
 // 		en_2D(0) = u-desiredpositionimage[i](0);
@@ -50,25 +53,25 @@ T CameraCriteria::compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin
 
 // 		en_2D(0) = Image(0)-desiredpositionimage[i](0)*Image(2);
 // 		en_2D(1) = Image(1)-desiredpositionimage[i](1)*Image(2);
-// 		
-// 		
+//
+//
 //      obj_value = obj_value + en_2D.squaredNorm();
 
         Eigen::Matrix<T, 3, 3>  R = camera_pose_.E.transpose().cast<T>();
 		Eigen::Matrix<T, 3, 1> Image =  camera_pose_.r.cast<T>() + R * Pr;
 // 		std::cout<<"Image = "<< Image(0)<<" "<< Image(1)<<" "<<Image(2)<<std::endl;
 		Eigen::Matrix<T, 3, 1> Cross;
-		
+
 		Cross(0) = Image(1)* droite_point_[i](2) - Image(2)* droite_point_[i](1);
 		Cross(1) = Image(2)* droite_point_[i](0) - Image(0)* droite_point_[i](2);
 		Cross(2) = Image(0)* droite_point_[i](1) - Image(1)* droite_point_[i](0);
 // 		std::cout<<"Image = "<< Cross(0)<<" "<< Cross(1)<<" "<<Cross(2)<<std::endl;
-		
+
 		obj_value += Cross.squaredNorm(); // droite_point_[i].squaredNorm();
 // 		obj_value += Cross.norm(); // droite_point_[i].squaredNorm();
-		
+
 // 		std::cout<<"tmp("<<i<<") = "<< Cross.squaredNorm()<< " obj_value = "<< obj_value <<std::endl <<std::endl;
-		
+
     }
 
       return obj_value * weight_;

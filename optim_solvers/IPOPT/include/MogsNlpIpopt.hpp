@@ -101,6 +101,7 @@ class MogsNlpIpopt:public TNLP
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
     protected:
+     unsigned int nb_robots_;
 	 std::vector<MogsRobotProperties*> robots_;
 
 	 QDomElement root_;

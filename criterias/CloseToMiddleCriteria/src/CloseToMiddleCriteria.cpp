@@ -2,7 +2,7 @@
 
 
 CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
-                                                    MogsKinematics<double>* kin)
+                                                std::vector<MogsDynamics<double> *> dyns)
 {
     weight_ = critere.attribute("weight").toDouble();
 
@@ -20,12 +20,12 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
     }
 
    // calcul de qm
-    // a partir de kin->model
+    // a partir de dyns[0]->model
     std::vector<double> qmin;
     std::vector<double> qmax;
-    kin->model->getPositionLimit(qmin,qmax);
-    qm_.resize(kin->getNDof());
-    for (int i=0; i<kin->getNDof(); i++)
+    dyns[0]->model->getPositionLimit(qmin,qmax);
+    qm_.resize(dyns[0]->getNDof());
+    for (int i=0; i<dyns[0]->getNDof(); i++)
     {
         qm_(i) = (qmin[i] + qmax[i])/2;
     }

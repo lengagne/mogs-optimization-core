@@ -13,20 +13,20 @@
 #include <fadiff.h>
 #include "AbstractCriteria.hpp"
 
-class AbstractFAD_1_4Critere : public AbstractCriteria
+class AbstractFAD_1_4Critere : virtual public AbstractCriteria
 {
     public:
 
 //      From AbstractCriteria
-    virtual Number compute( const Number *x , MogsKinematics<Number> * kin,bool* compute_kin) = 0;
+    virtual Number compute( const Number *x , std::vector<MogsDynamics<Number> *> dyns,bool* compute_kin) = 0;
 
-    virtual F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
+    virtual F<Number>  compute( const F<Number>  *x , std::vector<MogsDynamics<F<Number>>*> dyns,bool* compute_kin) = 0;
 
 };
 
 // the types of the class factories
 typedef AbstractFAD_1_4Critere* create_FAD_1_4Critere(QDomElement critere,
-													MogsKinematics<Number> *kin);
+                                                        std::vector<MogsDynamics<double> *>& dyns);
 typedef void destroy_FAD_1_4Critere(AbstractFAD_1_4Critere*);
 
 

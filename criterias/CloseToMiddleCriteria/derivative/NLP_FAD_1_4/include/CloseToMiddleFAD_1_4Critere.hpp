@@ -9,18 +9,18 @@ class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, CloseToMiddleC
 {
  public:
 	CloseToMiddleFAD_1_4Critere (QDomElement critere,
-                           MogsKinematics<Number> *kin);
+                                 std::vector<MogsDynamics<double> *> dyns);
 
     ~CloseToMiddleFAD_1_4Critere ();
 
-    Number compute( const Number *x , MogsKinematics<Number> * kin, bool* compute_kin)
+    Number compute( const Number *x , std::vector<MogsDynamics<Number> *> dyns, bool* compute_kin)
     {
-        return CloseToMiddleCriteria::compute<Number>(x,kin, compute_kin);
+        return CloseToMiddleCriteria::compute<Number>(x,dyns, compute_kin);
     }
 
-    F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin, bool* compute_kin)
+    F<Number>  compute( const F<Number>  *x , std::vector<MogsDynamics<F<Number>> *> dyns, bool* compute_kin)
     {
-        return CloseToMiddleCriteria::compute<F<Number> >(x,kin, compute_kin);
+        return CloseToMiddleCriteria::compute<F<Number> >(x,dyns, compute_kin);
     }
 
 

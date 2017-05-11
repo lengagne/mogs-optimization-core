@@ -1,11 +1,11 @@
 #include <PositionDConstraint.hpp>
 
 PositionDConstraint::PositionDConstraint (  QDomElement contraint,
-                                                    MogsKinematics<double>* kin)
+                                            std::vector<MogsDynamics<double> *> dyns)
 {
     qDebug()<<"Constructor of PositionDConstraint";
     //m = 1;
-    n = kin->getNDof();
+//    n = kin->getNDof();
     m = 3; //desired_Position_.size();
     std::cout << " m  = " << m << std::endl;
     //Eigen::Matrix<double, 3, 1> upper (0.4 , 0.4 , 0.3);
@@ -26,12 +26,25 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
                    {
                         Robot=Child.firstChild().toText().data();
                         std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
+                        robot_id_ = -1;
+                        for (int i=0;i<dyns.size();i++)
+                            if(Robot == dyns[i]->getRobotName())
+                            {
+                                robot_id_ = i;
+                                break;
+                            }
+                        if(robot_id_==-1)
+                        {
+                            std::cerr<<"Error in "<<__FILE__<<" at line "<< __LINE__<<std::endl;
+                            std::cerr<<"Error cannot recognize robot_id !!"<<std::endl;
+                            exit(-1);
+                        }
                    }
                  if (Child.tagName()=="body")
                    {
                                 Body=Child.firstChild().toText().data().simplified();
                                 std::cout << "   Body  = " << Body.toStdString() << std::endl;
-                                body_id_ = kin->model->GetBodyId(Body);
+                                body_id_ = dyns[robot_id_]->model->GetBodyId(Body);
                          if (body_id_  ==  std::numeric_limits <unsigned int >::max () )
                             {
                                   std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;

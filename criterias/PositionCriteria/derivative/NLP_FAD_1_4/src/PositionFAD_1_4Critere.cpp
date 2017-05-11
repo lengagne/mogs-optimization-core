@@ -1,7 +1,7 @@
 #include <PositionFAD_1_4Critere.hpp>
 
 PositionFAD_1_4Critere::PositionFAD_1_4Critere (QDomElement critere,
-                           MogsKinematics<double> *kin):PositionCriteria(critere,kin)
+                          std::vector<MogsDynamics<double> *> dyns):PositionCriteria(critere,dyns)
 {
 
 }
@@ -11,9 +11,9 @@ PositionFAD_1_4Critere::~PositionFAD_1_4Critere ()
 
 }
 
-extern "C" PositionFAD_1_4Critere* create(QDomElement critere, MogsKinematics<double> *kin)
+extern "C" PositionFAD_1_4Critere* create(QDomElement critere,  std::vector<MogsDynamics<double> *> dyns)
 {
-    return new PositionFAD_1_4Critere(critere, kin);
+    return new PositionFAD_1_4Critere(critere, dyns);
 }
 
 extern "C" void destroy(PositionFAD_1_4Critere* p)

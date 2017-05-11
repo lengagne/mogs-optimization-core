@@ -36,9 +36,9 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
     void finalize_solution( optim_infos &info);
 
     void load_xml(QDomElement criteres);
-	
+
 	// intern
-	
+
 	void set_robots(const std::vector<MogsRobotProperties*> & in);
 
 //
@@ -115,8 +115,9 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //
     std::vector<MogsRobotProperties*> robots_;
 
-    MogsKinematics<double> kin_;
-	
+    unsigned int nb_robots_;
+    std::vector<MogsDynamics<double>*> dyns_;
+
 	std::vector<AbstractCriteria* >criteres_;
 
 };

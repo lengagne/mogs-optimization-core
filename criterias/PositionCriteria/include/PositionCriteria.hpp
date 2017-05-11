@@ -5,20 +5,20 @@
 #include "MogsKinematics.h"
 
 
-class PositionCriteria: public AbstractCriteria
+class PositionCriteria: virtual public AbstractCriteria
 {   public:
 	PositionCriteria (QDomElement critere,
-                          MogsKinematics<double>* kin);
+                       std::vector<MogsDynamics<double> *> dyns);
 
     ~PositionCriteria ();
 
-    double compute( const double *x , MogsKinematics<double> * kin, bool* compute_kin)
+    double compute( const double *x , std::vector<MogsDynamics<double> *> dyns, bool* compute_kin)
     {
-        return compute<double>(x,kin, compute_kin);
+        return compute<double>(x,dyns, compute_kin);
     }
 
     template<typename T>
-      T compute( const T *x,MogsKinematics<T> *kin_, bool* compute_kin);
+      T compute( const T *x, std::vector<MogsDynamics<T> *> dyns, bool* compute_kin);
 
       private:
 

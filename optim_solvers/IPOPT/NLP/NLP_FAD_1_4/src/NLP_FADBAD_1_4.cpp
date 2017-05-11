@@ -41,8 +41,13 @@ NLP_FAD_1_4::~NLP_FAD_1_4 ()
 
 void NLP_FAD_1_4::load_xml( )
 {
-	kin.SetRobot(robots_[0]);
-	akin.SetRobot(robots_[0]);
+    for (int i=0;i<nb_robots_;i++)
+    {
+        dyns_.push_back( new MogsDynamics<double>(robots_[i]));
+        adyns_.push_back( new MogsDynamics<F<double>>(robots_[i]));
+    }
+//	kin.SetRobot(robots_[0]);
+//	akin.SetRobot(robots_[0]);
 	MogsProblemClassifier mpc;
 	mogs_string library_so;
     QDomElement criteres=root_.firstChildElement("criteres");
@@ -74,7 +79,7 @@ void NLP_FAD_1_4::load_xml( )
 					exit(0);
 				}
 				// create an instance of the class
-				AbstractFAD_1_4Critere* crit = creator(critere,&kin);
+				AbstractFAD_1_4Critere* crit = creator(critere,dyns_);
 				// FIXME for the moment no init from the xml
 // 				crit->init(critere);
 				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
@@ -118,7 +123,7 @@ void NLP_FAD_1_4::load_xml( )
 					exit(0);
 				}
 				// create an instance of the class
-				AbstractFAD_1_4Constraint* ctr = creator(constraint,&kin);
+				AbstractFAD_1_4Constraint* ctr = creator(constraint,dyns_);
 //                std::cout << "test : " << ctr->get_test() << std::endl;
 //                for(int ii = 0; ii < 3; ii++){
 //                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
@@ -145,7 +150,11 @@ void NLP_FAD_1_4::load_xml( )
 bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-    n = kin.getNDof();
+    nb_var_=0;
+    for(int i=0;i<nb_robots_;i++)
+        nb_var_ += dyns_[i]->getNDof();
+
+    n = nb_var_;
     std::cout << "   n = " << n  << std::endl;
     m = 0;
     for(int i=0;i<constraints_.size();i++)
@@ -156,13 +165,14 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     for(int i=0;i<n;i++)
         X[i].init(i,n);
     Dependency * G = new Dependency [m];
-    MogsKinematics<Dependency> k;
-    k.SetRobot(kin.model);
+    std::vector< MogsDynamics<Dependency> *> k;
+    for(int i=0;i<nb_robots_;i++)
+        k.push_back(new MogsDynamics<Dependency>(dyns_[i]->model));
     bool computation_done = false;
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
     for (unsigned int i=0; i<constraints_.size(); i++)
     {
-        constraints_[i]->compute(X,G,&k,&computation_done);
+        constraints_[i]->compute(X,G,k,&computation_done);
     }
     for(int i=0;i<m;i++)    for(int j=0;j<n;j++)
     {
@@ -179,28 +189,33 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
+
+	// destroy the object
+	for(int i=0;i<nb_robots_;i++)
+        delete k[i];
 	return true;
 }
 
 bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
-    assert(n == kin.getNDof());
+    assert(n == nb_var_);
 
     Index i, j;
-    robots_[0]->getPositionLimit(qmin,qmax);
-    // the variables have lower bounds of -qmax
-    for (i=0; i<kin.getNDof(); i++)
+    unsigned int cpt = 0;
+    for (int k=0;k<nb_robots_;k++)
     {
-        x_l[i] = qmin[i];
-    }
-    // the variables have upper bounds of +qmax
-    for (Index i=0; i<kin.getNDof(); i++)
-    {
-        x_u[i] = qmax[i];
+        robots_[k]->getPositionLimit(qmin[k],qmax[k]);
+        // the variables have lower bounds of -qmax
+        for (i=0; i<dyns_[k]->getNDof(); i++)
+        {
+            x_l[cpt] = qmin[k][i];
+            x_u[cpt++] = qmax[k][i];
+        }
+
     }
     //added
-    unsigned int cpt = 0;
+    cpt = 0;
     for (i=0; i<constraints_.size(); i++)
     {
         for (j=0; j<constraints_[i]->get_nb_constraints(); j++)
@@ -224,7 +239,7 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
     assert(init_z == false);
     assert(init_lambda == false);
     // initialize to the given starting point
-    for(int i=0;i<kin.getNDof();i++)
+    for(int i=0;i<nb_var_;i++)
         x[i] = 0.;
 	return true;
 }
@@ -236,7 +251,7 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
 	bool mem_kin = false;
     for (int i =0;i<nb;i++)
     {
-        Number tmp = criteres_[i]->compute(x,&kin,&mem_kin);
+        Number tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
         obj_value+= tmp;
     }
 
@@ -246,7 +261,7 @@ return true;
 bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
 {
 	// return the gradient of the objective function grad_{x} f(x)
-    assert(n == kin.getNDof());
+    assert(n == nb_var_);
 	F<Number>* X = new F<Number>[n];
 	for(unsigned int i=0;i<n;i++)
 	{
@@ -256,7 +271,7 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 	bool mem_kin = false;
 	F<Number> out=0;
 	for (int j =0;j<criteres_.size();j++)
-		out+=criteres_[j]->compute(X,&akin,&mem_kin);
+		out+=criteres_[j]->compute(X,adyns_,&mem_kin);
     for(unsigned int i=0;i<n;i++)
     {
         grad_f[i] = out.d(i);
@@ -267,12 +282,12 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
     bool compute_kin = false;
-    assert(n == kin.getNDof());
+    assert(n == nb_var_);
 
     m = 3 ;
    for (int i =0;i<constraints_.size();i++)
   {
-        constraints_[i]->compute(x,g,&kin,&compute_kin);
+        constraints_[i]->compute(x,g,dyns_,&compute_kin);
         //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
   }
     return true;
@@ -282,9 +297,8 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Index m, Index nele_jac, Index * iRow, Index * jCol,
 		   Number * values)
 {
-            assert(n == kin.getNDof());
+            assert(n == nb_var_);
             //assert(m == constraints_.size());
-            m = 3;
 
             bool compute_kin = false;
             int cpt=0;
@@ -308,7 +322,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
                 int cpt=0;
                 for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
                 {
-                    constraints_[i]->compute(X,G,&akin,&compute_kin);
+                    constraints_[i]->compute(X,G,adyns_,&compute_kin);
                 }
 
                 for (int i=0;i<nele_jac;i++)
@@ -352,18 +366,27 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 
 #ifdef MogsVisu_FOUND
     VisuHolder visu("resultats");
+    q.resize(nb_robots_);
+    aq.resize(nb_robots_);
+    for(int k=0;k<nb_robots_;k++)
+    {
+        visu.add(robots_[k]->getRobotName(),robots_[k]);
+        q[k].resize(robots_[k]->getNDof());
+        aq[k].resize(robots_[k]->getNDof());
 
-    visu.add("robot",robots_[0]);
-	q.resize(robots_[0]->getNDof());
-	aq.resize(robots_[0]->getNDof());
+    }
 
-    for (int i=0;i<robots_[0]->getNDof();i++)
-        q(i) = x[i];
+    int cpt = 0;
+    for(int k=0;k<nb_robots_;k++)
+    {
+        for (int i=0;i<robots_[k]->getNDof();i++)
+            q[k](i) = x[cpt++];
 
-	for (int i=0;i<3;i++)	q(i)= 0;
-	std::cout<<"q = "<< q.transpose()<<std::endl;
+        std::cout<<"q["<<k<<"] = "<< q[k].transpose()<<std::endl;
 
-    visu.apply_q("robot",&q);
+        visu.apply_q(robots_[k]->getRobotName(),&q[k]);
+
+    }
 
     visu.wait_close();
 #endif // MogsVisu_FOUND

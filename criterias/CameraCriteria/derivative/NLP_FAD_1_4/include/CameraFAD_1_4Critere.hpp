@@ -8,18 +8,19 @@ class CameraFAD_1_4Critere: public AbstractFAD_1_4Critere, CameraCriteria
 {
  public:
 	CameraFAD_1_4Critere (QDomElement critere,
-                           MogsKinematics<Number> *kin);
+                          std::vector<MogsDynamics<Number> *> dyns);
 
     ~CameraFAD_1_4Critere ();
 
-    Number compute( const Number *x , MogsKinematics<Number> * kin, bool* compute_kin)
+
+    Number compute( const Number *x , std::vector<MogsDynamics<Number> *>dyns, bool* compute_kin)
     {
-        return CameraCriteria::compute<Number>(x,kin, compute_kin);
+        return CameraCriteria::compute<Number>(x,dyns, compute_kin);
     }
 
-    F<Number>  compute( const F<Number>  *x , MogsKinematics<F<Number> > * kin, bool* compute_kin)
+    F<Number>  compute( const F<Number>  *x , std::vector<MogsDynamics<F<Number>>*> dyns, bool* compute_kin)
     {
-        return CameraCriteria::compute<F<Number> >(x,kin, compute_kin);
+        return CameraCriteria::compute<F<Number> >(x,dyns, compute_kin);
     }
 
 

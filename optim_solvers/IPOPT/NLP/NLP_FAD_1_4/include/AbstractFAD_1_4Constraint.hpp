@@ -9,7 +9,7 @@
 #ifndef ABSTRACTFAD_1_4CONSTRAINT_HPP_INCLUDED
 #define ABSTRACTFAD_1_4CONSTRAINT_HPP_INCLUDED
 
-#include "MogsKinematics.h"
+#include "MogsDynamics.h"
 #include <fadiff.h>
 #include "AbstractConstraint.hpp"
 #include "MogsNlpIpopt.hpp"
@@ -20,17 +20,17 @@ class AbstractFAD_1_4Constraint : virtual public AbstractConstraint
     public:
 
 //      From AbstractConstraint
-    virtual void compute( const Number *x , Number *g, MogsKinematics<Number> * kin,bool* compute_kin) = 0;
+    virtual void compute( const Number *x , Number *g, std::vector<MogsDynamics<Number> *> dyn,bool* compute_kin) = 0;
 
-    virtual void  compute( const F<Number>  *x , F<Number>* g, MogsKinematics<F<Number> > * kin,bool* compute_kin) = 0;
+    virtual void  compute( const F<Number>  *x , F<Number>* g, std::vector<MogsDynamics<F<Number> > *> dyn,bool* compute_kin) = 0;
 
-    virtual void  compute( const Dependency  *x , Dependency* g, MogsKinematics<Dependency> * kin,bool* compute_kin) = 0;
+    virtual void  compute( const Dependency  *x , Dependency* g, std::vector<MogsDynamics<Dependency> * > dyn,bool* compute_kin) = 0;
 
 };
 
 // the types of the class factories
 typedef AbstractFAD_1_4Constraint* create_FAD_1_4Constraint(QDomElement constraint,
-													MogsKinematics<Number> *kin);
+                                                            std::vector<MogsDynamics<double> *>& dyns);
 typedef void destroy_FAD_1_4Constraint(AbstractFAD_1_4Constraint*);
 
 

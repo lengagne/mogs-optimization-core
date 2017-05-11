@@ -1,7 +1,7 @@
 #include <PositionDFAD_1_4Constraint.hpp>
 
 PositionDFAD_1_4Constraint::PositionDFAD_1_4Constraint (QDomElement constraint,
-                           MogsKinematics<double> *kin):PositionDConstraint(constraint,kin)
+                           std::vector<MogsDynamics<double> *> dyns):PositionDConstraint(constraint,dyns)
 {
 
 }
@@ -11,9 +11,9 @@ PositionDFAD_1_4Constraint::~PositionDFAD_1_4Constraint ()
 
 }
 
-extern "C" PositionDFAD_1_4Constraint* create(QDomElement constraint, MogsKinematics<double> *kin)
+extern "C" PositionDFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsDynamics<double> *> dyns)
 {
-    return new PositionDFAD_1_4Constraint(constraint, kin);
+    return new PositionDFAD_1_4Constraint(constraint, dyns);
 }
 
 extern "C" void destroy(PositionDFAD_1_4Constraint* p)

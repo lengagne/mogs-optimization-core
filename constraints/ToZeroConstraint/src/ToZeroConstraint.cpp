@@ -1,11 +1,13 @@
 #include <ToZeroConstraint.hpp>
 
 ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
-                                                    MogsKinematics<double>* kin)
+                                       std::vector<MogsDynamics<double> *> dyns)
 {
     qDebug()<<"Constructor of ToZeroConstraint";
     m = 1;
-    n = kin->getNDof();
+    n = 0;
+    for (int i=0;i<dyns.size();i++)
+        n += dyns[i]->getNDof();
     upper.resize(1);
     upper(0) =0;
     lower.resize(1);
