@@ -27,6 +27,7 @@
 #include "VisuHolder.h"
 #include "MogsProblemClassifier.h"
 
+
 using namespace Ipopt;
 
 /* Constructor. */
@@ -150,6 +151,16 @@ void NLP_FAD_1_4::load_xml( )
 bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
+    qmin_.resize(nb_robots_);
+    qmax_.resize(nb_robots_);
+
+    /// FIXME allow to change the type of the AbstractParameteriaztion through plugins
+    for (int i =0;i<nb_robots_;i++)
+    {
+//        parameterization_.push_back(new StaticPostureParameterization(robots_[i]));
+    }
+
+
     nb_var_=0;
     for(int i=0;i<nb_robots_;i++)
         nb_var_ += dyns_[i]->getNDof();
@@ -205,12 +216,12 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     unsigned int cpt = 0;
     for (int k=0;k<nb_robots_;k++)
     {
-        robots_[k]->getPositionLimit(qmin[k],qmax[k]);
-        // the variables have lower bounds of -qmax
+        robots_[k]->getPositionLimit(qmin_[k],qmax_[k]);
+        // the variables have lower bounds of -qmax_
         for (i=0; i<dyns_[k]->getNDof(); i++)
         {
-            x_l[cpt] = qmin[k][i];
-            x_u[cpt++] = qmax[k][i];
+            x_l[cpt] = qmin_[k][i];
+            x_u[cpt++] = qmax_[k][i];
         }
 
     }
@@ -222,8 +233,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
-            std::cout << "Const["<<cpt<<"] : g_l["<<cpt<<"] :" << g_l[cpt] << std::endl;
-            std::cout << "Const["<<cpt<<"] : g_u["<<cpt<<"] :" << g_u[cpt] << std::endl;
+//            std::cout << "Const["<<cpt<<"] : g_l["<<cpt<<"] :" << g_l[cpt] << std::endl;
+//            std::cout << "Const["<<cpt<<"] : g_u["<<cpt<<"] :" << g_u[cpt] << std::endl;
             cpt++;
         }
     }

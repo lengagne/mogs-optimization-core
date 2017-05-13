@@ -5,6 +5,9 @@
     <robot>
         <name>Yogi</name>
     </robot>
+    <robot>
+        <name>KUKA</name>
+    </robot>
 <!--    <robot>-->
 <!--        <name>Yogi</name>-->
 <!--    </robot>-->
@@ -22,14 +25,19 @@
 
    <criteres>
         <critere type="position" weight="1.0">
-           <robot> yogi </robot>
+           <robot> Yogi </robot>
           <body> head </body>
           <body_position> 0 0 0.05 </body_position>
           <desired_position> 0.4 0.4 0.3 </desired_position>
        </critere>
-
+        <critere type="position" weight="1.0">
+           <robot> KUKA </robot>
+          <body> kuka_lwr_7_link </body>
+          <body_position> 0 0 0.1 </body_position>
+          <desired_position> 0.4 0.4 0.3 </desired_position>
+       </critere>
         <critere type="close_to_middle" weight="1.0">
-           <robot> yogi </robot>
+           <robot> Yogi </robot>
        </critere>
 <!---->
 <!--        <critere type="position" weight="0.001">-->
@@ -53,7 +61,7 @@
 <!--          </constraint>-->
 
        <constraint type="PositionD">
-           <robot> yogi </robot>
+           <robot> Yogi </robot>
           <body> righthand </body>
           <body_position> 0 0 0.0 </body_position>
           <desired_position> 0.4 0.4 0.3 </desired_position>

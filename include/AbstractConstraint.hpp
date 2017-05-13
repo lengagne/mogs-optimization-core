@@ -11,7 +11,6 @@ class AbstractConstraint
 
         unsigned int get_nb_constraints()
         {
-            std::cout<<"\t\t m = "<<m<<std::endl;
             return m;
         }
 

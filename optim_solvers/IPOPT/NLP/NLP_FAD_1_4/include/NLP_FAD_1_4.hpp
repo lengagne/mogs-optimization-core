@@ -14,6 +14,7 @@
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
+#include "AbstractParameterization.h"
 #include "Dependency.h"
 
 using namespace Ipopt;
@@ -117,8 +118,10 @@ class NLP_FAD_1_4:public MogsNlpIpopt
             std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
             std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;
 
-            std::vector<std::vector < double > >qmax;
-            std::vector<std::vector < double > >qmin;
+            std::vector<std::vector < double > >qmax_;
+            std::vector<std::vector < double > >qmin_;
+
+            std::vector<AbstractParameterization* > parameterization_;
 
             std::vector<AbstractFAD_1_4Critere* >criteres_;
 

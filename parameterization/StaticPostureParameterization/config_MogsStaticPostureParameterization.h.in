@@ -1,0 +1,9 @@
+#ifndef MogsStaticPostureParameterization_CONFIG_H
+#define MogsStaticPostureParameterization_CONFIG_H
+
+#define MogsStaticPostureParameterization_VERSION_MAJOR @MogsStaticPostureParameterization_VERSION_MAJOR@
+#define MogsStaticPostureParameterization_VERSION_MINOR @MogsStaticPostureParameterization_VERSION_MINOR@
+
+
+#endif
+

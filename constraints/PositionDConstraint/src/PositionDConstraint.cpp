@@ -4,27 +4,17 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
                                             std::vector<MogsDynamics<double> *> dyns)
 {
     qDebug()<<"Constructor of PositionDConstraint";
-    //m = 1;
-//    n = kin->getNDof();
     m = 3; //desired_Position_.size();
-    std::cout << " m  = " << m << std::endl;
-    //Eigen::Matrix<double, 3, 1> upper (0.4 , 0.4 , 0.3);
-    upper.resize(3);
+   upper.resize(3);
     lower.resize(3);
     desired_Position_ = Eigen::Matrix<double,3,1>::Zero();
-    //test= 25;
-    //Eigen::Matrix<double, 3, 1> lower (0.4 , 0.4 , 0.3);
-    //std::cout << " test  = " << test << std::endl;
-
-//    weight_ = critere.attribute("weight").toDouble();
-//    std::cout<<"weight = "<< weight_<<std::endl;
     QDomElement Child=contraint.firstChildElement().toElement();
 
     while (!Child.isNull())
              {
                  if (Child.tagName()=="robot")
                    {
-                        Robot=Child.firstChild().toText().data();
+                        Robot=Child.firstChild().toText().data().simplified();
                         std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
                         robot_id_ = -1;
                         for (int i=0;i<dyns.size();i++)

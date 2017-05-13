@@ -12,15 +12,18 @@ PositionCriteria::PositionCriteria (QDomElement critere,
 
                  if (Child.tagName()=="robot")
                    {
-                        Robot=Child.firstChild().toText().data();
-                        std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
+                        Robot=Child.firstChild().toText().data().simplified();
+                        qDebug() << "   Robot  = " << Robot;
                         robot_id_ = -1;
                         for (int i=0;i<dyns.size();i++)
+                        {
+                            qDebug()<<"robot name = "<< dyns[i]->getRobotName();
                             if(Robot == dyns[i]->getRobotName())
                             {
                                 robot_id_ = i;
                                 break;
                             }
+                        }
                         if(robot_id_==-1)
                         {
                             std::cerr<<"Error in "<<__FILE__<<" at line "<< __LINE__<<std::endl;
