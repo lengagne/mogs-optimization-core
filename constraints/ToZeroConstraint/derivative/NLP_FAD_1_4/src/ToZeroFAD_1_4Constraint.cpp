@@ -1,7 +1,7 @@
 #include <ToZeroFAD_1_4Constraint.hpp>
 
 ToZeroFAD_1_4Constraint::ToZeroFAD_1_4Constraint (QDomElement constraint,
-                           std::vector<MogsDynamics<double> *> dyns):ToZeroConstraint(constraint,dyns)
+                           std::vector<MogsDynamics<double> *>& dyns):ToZeroConstraint(constraint,dyns)
 {
 
 }
@@ -11,7 +11,7 @@ ToZeroFAD_1_4Constraint::~ToZeroFAD_1_4Constraint ()
 
 }
 
-extern "C" ToZeroFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsDynamics<double> *> dyns)
+extern "C" ToZeroFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsDynamics<double> *>& dyns)
 {
     return new ToZeroFAD_1_4Constraint(constraint, dyns);
 }

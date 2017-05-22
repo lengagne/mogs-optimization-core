@@ -1,7 +1,7 @@
 #include <PositionDConstraint.hpp>
 
 PositionDConstraint::PositionDConstraint (  QDomElement contraint,
-                                            std::vector<MogsDynamics<double> *> dyns)
+                                            std::vector<MogsDynamics<double> *>& dyns)
 {
     qDebug()<<"Constructor of PositionDConstraint";
     m = 3; //desired_Position_.size();

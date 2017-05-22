@@ -23,6 +23,10 @@
 
 	<ipopt_options type="string" name="linear_system_scaling" value="mc19"/>
 
+	<parameterization type="StaticPosture">
+        <compute_force> false </compute_force>
+	</parameterization>
+
    <criteres>
         <critere type="position" weight="1.0">
            <robot> Yogi </robot>

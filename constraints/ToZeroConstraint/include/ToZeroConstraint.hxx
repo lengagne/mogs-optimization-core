@@ -2,7 +2,7 @@
 
 
 template<typename T>
-void ToZeroConstraint::compute( const T *x, T* g, std::vector<MogsDynamics<T> *> dyns, bool* compute_kin)
+void ToZeroConstraint::compute( const T *x, T* g, std::vector<MogsDynamics<T> *>& dyns, bool* compute_kin)
 {
     int m = 1;
         g[0] = 0.;

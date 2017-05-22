@@ -8,7 +8,7 @@
 
 #ifndef __MOGS_NLP_IPOPT_HPP__
 #define __MOGS_NLP_IPOPT_HPP__
-#include "MogsKinematics.h"
+#include "MogsRobotProperties.h"
 #include "IpTNLP.hpp"
 using namespace Ipopt;
 

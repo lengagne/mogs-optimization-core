@@ -9,7 +9,6 @@
 #ifndef ABSTRACTFAD_1_4CRITERE_HPP_INCLUDED
 #define ABSTRACTFAD_1_4CRITERE_HPP_INCLUDED
 
-#include "MogsKinematics.h"
 #include <fadiff.h>
 #include "AbstractCriteria.hpp"
 
@@ -18,9 +17,9 @@ class AbstractFAD_1_4Critere : virtual public AbstractCriteria
     public:
 
 //      From AbstractCriteria
-    virtual Number compute( const Number *x , std::vector<MogsDynamics<Number> *> dyns,bool* compute_kin) = 0;
+    virtual Number compute( const Number *x , std::vector<MogsDynamics<Number> *> &dyns,bool* compute_kin) = 0;
 
-    virtual F<Number>  compute( const F<Number>  *x , std::vector<MogsDynamics<F<Number>>*> dyns,bool* compute_kin) = 0;
+    virtual F<Number>  compute( const F<Number>  *x , std::vector<MogsDynamics<F<Number>>*> & dyns,bool* compute_kin) = 0;
 
 };
 

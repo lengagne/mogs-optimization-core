@@ -2,7 +2,7 @@
 
 
 template<typename T>
-void PositionDConstraint::compute( const T *x, T* g, std::vector<MogsDynamics<T> *> dyns, bool* compute_kin)
+void PositionDConstraint::compute( const T *x, T* g, std::vector<MogsDynamics<T> *>& dyns, bool* compute_kin)
 {
 //T obj_value;
 	/// Assume done before

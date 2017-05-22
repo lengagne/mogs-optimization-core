@@ -27,6 +27,8 @@
 #include "VisuHolder.h"
 #include "MogsProblemClassifier.h"
 
+#define PRINT 1
+
 
 using namespace Ipopt;
 
@@ -42,6 +44,9 @@ NLP_FAD_1_4::~NLP_FAD_1_4 ()
 
 void NLP_FAD_1_4::load_xml( )
 {
+    #ifdef PRINT
+    std::cout<<"start load_xml"<<std::endl;
+    #endif // PRINT
     for (int i=0;i<nb_robots_;i++)
     {
         dyns_.push_back( new MogsDynamics<double>(robots_[i]));
@@ -125,14 +130,6 @@ void NLP_FAD_1_4::load_xml( )
 				}
 				// create an instance of the class
 				AbstractFAD_1_4Constraint* ctr = creator(constraint,dyns_);
-//                std::cout << "test : " << ctr->get_test() << std::endl;
-//                for(int ii = 0; ii < 3; ii++){
-//                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
-//                    std::cout << "Constraint created : g_u["<<ii<<"] :" << ctr->get_upper(ii) << std::endl;
-//                }
-				// FIXME for the moment no init from the xml
- 				//ctr->init(constraint);
- 				//std::cout << "test : " << ctr->get_test() << std::endl;
 				std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
 // 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
 				constraints_.push_back(ctr);
@@ -146,24 +143,73 @@ void NLP_FAD_1_4::load_xml( )
 	}
 
 
-	std::cout<<"End of load xml"<<std::endl;
+    /// FIXME allow to change the type of the AbstractParameterization through plugins
+    QDomElement param =root_.firstChildElement("parameterization");
+
+    if (param.tagName()=="parameterization")
+    {
+//        type = "StaticPosture";
+        type=param.attribute("type");
+
+        create_FAD_1_4Parameterization* creator;
+        destroy_FAD_1_4Parameterization* destructor;
+        /// FIXME store the destructor !!
+
+        if ( mpc.get_library_plugin("MogsParameterizationNlpFAD_1_4",type,library_so))
+        {
+            // load the library
+            void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
+            if (!library) {
+                std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+                exit(0);
+            }
+            // load the symbols
+            creator = (create_FAD_1_4Parameterization*) dlsym(library, "create");
+            destructor = (destroy_FAD_1_4Parameterization*) dlsym(library, "destroy");
+            if (!creator || !destructor)
+            {
+                std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
+                exit(0);
+            }
+            // create an instance of the class
+            parameterization_ = creator( param, dyns_ );
+//                std::cout << "test : " << ctr->get_test() << std::endl;
+//                for(int ii = 0; ii < 3; ii++){
+//                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
+//                    std::cout << "Constraint created : g_u["<<ii<<"] :" << ctr->get_upper(ii) << std::endl;
+//                }
+            // FIXME for the moment no init from the xml
+            //ctr->init(constraint);
+            //std::cout << "test : " << ctr->get_test() << std::endl;
+            std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
+// 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
+//            parameterizations_.push_back(prm);
+        }
+        else
+        {
+            qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsParameterizationNlpFAD_1_4 plugin";
+            exit(0);
+        }
+    }else
+    {
+        std::cerr<<"ERROR cannot find balise parameterization"<<std::endl;
+        exit(0);
+    }
+    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+
+    #ifdef PRINT
+    std::cout<<"end of load_xml"<<std::endl;
+    #endif // PRINT
 }
 bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 		     Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
-    qmin_.resize(nb_robots_);
-    qmax_.resize(nb_robots_);
-
-    /// FIXME allow to change the type of the AbstractParameteriaztion through plugins
-    for (int i =0;i<nb_robots_;i++)
-    {
-//        parameterization_.push_back(new StaticPostureParameterization(robots_[i]));
-    }
-
-
-    nb_var_=0;
-    for(int i=0;i<nb_robots_;i++)
-        nb_var_ += dyns_[i]->getNDof();
+    #ifdef PRINT
+    std::cout<<"start get_nlp_info"<<std::endl;
+    #endif // PRINT
+    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+    nb_var_= parameterization_->get_nb_param();
 
     n = nb_var_;
     std::cout << "   n = " << n  << std::endl;
@@ -175,12 +221,16 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     Dependency * X = new Dependency [n];
     for(int i=0;i<n;i++)
         X[i].init(i,n);
+
     Dependency * G = new Dependency [m];
     std::vector< MogsDynamics<Dependency> *> k;
     for(int i=0;i<nb_robots_;i++)
         k.push_back(new MogsDynamics<Dependency>(dyns_[i]->model));
     bool computation_done = false;
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
+
+    parameterization_->compute(X,k);
+
     for (unsigned int i=0; i<constraints_.size(); i++)
     {
         constraints_[i]->compute(X,G,k,&computation_done);
@@ -204,17 +254,37 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 	// destroy the object
 	for(int i=0;i<nb_robots_;i++)
         delete k[i];
+
+    #ifdef PRINT
+    std::cout<<"end of get_nlp_info"<<std::endl;
+    #endif // PRINT
+
 	return true;
 }
 
 bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 			Index m, Number * g_l, Number * g_u)
 {
+    #ifdef PRINT
+    std::cout<<"start get_bounds_info"<<std::endl;
+    #endif // PRINT
     assert(n == nb_var_);
 
     Index i, j;
     unsigned int cpt = 0;
-    for (int k=0;k<nb_robots_;k++)
+    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+
+
+    for (int i=0;i<n;i++)
+    {
+        std::cout<<"i = "<< i<<"  parameterization_ = "<< parameterization_<< std::endl;
+        x_l[i] = parameterization_->get_bounds_inf(i);
+        x_u[i] = parameterization_->get_bounds_sup(i);
+    }
+    std::cout<<"fin "<< std::endl;
+
+/*    for (int k=0;k<nb_robots_;k++)
     {
         robots_[k]->getPositionLimit(qmin_[k],qmax_[k]);
         // the variables have lower bounds of -qmax_
@@ -223,8 +293,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
             x_l[cpt] = qmin_[k][i];
             x_u[cpt++] = qmax_[k][i];
         }
-
-    }
+    }*/
     //added
     cpt = 0;
     for (i=0; i<constraints_.size(); i++)
@@ -238,7 +307,9 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
             cpt++;
         }
     }
-
+    #ifdef PRINT
+    std::cout<<"end of get_bounds_info"<<std::endl;
+    #endif // PRINT
 	return true;
 }
 
@@ -246,31 +317,56 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 			   bool init_z, Number * z_L, Number * z_U,
 			   Index m, bool init_lambda, Number * lambda)
 {
+    #ifdef PRINT
+    std::cout<<"start get_starting_point"<<std::endl;
+    #endif // PRINT
+    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+
     assert(init_x == true);
     assert(init_z == false);
     assert(init_lambda == false);
+
+
     // initialize to the given starting point
     for(int i=0;i<nb_var_;i++)
         x[i] = 0.;
+        //x[i] = parameterization_->get_starting_point(i);
+
+    #ifdef PRINT
+    std::cout<<"end of get_starting_point"<<std::endl;
+    #endif // PRINT
+
 	return true;
 }
 
 bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
 {
+    #ifdef PRINT
+    std::cout<<"start eval_f"<<std::endl;
+    #endif // PRINT
     int nb = criteres_.size();
     obj_value =0;
+
+    parameterization_->compute(x,dyns_);
+
 	bool mem_kin = false;
     for (int i =0;i<nb;i++)
     {
         Number tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
         obj_value+= tmp;
     }
-
-return true;
+    #ifdef PRINT
+    std::cout<<"end of eval_f"<<std::endl;
+    #endif // PRINT
+    return true;
 }
 
 bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
 {
+    #ifdef PRINT
+    std::cout<<"start eval_grad_f"<<std::endl;
+    #endif // PRINT
 	// return the gradient of the objective function grad_{x} f(x)
     assert(n == nb_var_);
 	F<Number>* X = new F<Number>[n];
@@ -279,6 +375,9 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 		X[i] = x[i];
 		X[i].diff(i,n);
 	}
+
+	parameterization_->compute(X,adyns_);
+
 	bool mem_kin = false;
 	F<Number> out=0;
 	for (int j =0;j<criteres_.size();j++)
@@ -287,20 +386,31 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
     {
         grad_f[i] = out.d(i);
     }
+    #ifdef PRINT
+    std::cout<<"end of eval_grad_f"<<std::endl;
+    #endif // PRINT
 	return true;
 }
 
 bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
 {
+    #ifdef PRINT
+    std::cout<<"start eval_g"<<std::endl;
+    #endif // PRINT
     bool compute_kin = false;
     assert(n == nb_var_);
 
+    parameterization_->compute(x,dyns_);
+
     m = 3 ;
-   for (int i =0;i<constraints_.size();i++)
-  {
+    for (int i =0;i<constraints_.size();i++)
+    {
         constraints_[i]->compute(x,g,dyns_,&compute_kin);
         //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
-  }
+    }
+    #ifdef PRINT
+    std::cout<<"end of eval_g"<<std::endl;
+    #endif // PRINT
     return true;
 }
 
@@ -308,37 +418,46 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Index m, Index nele_jac, Index * iRow, Index * jCol,
 		   Number * values)
 {
-            assert(n == nb_var_);
-            //assert(m == constraints_.size());
+    #ifdef PRINT
+    std::cout<<"start eval_jac_g"<<std::endl;
+    #endif // PRINT
+    assert(n == nb_var_);
+    //assert(m == constraints_.size());
 
-            bool compute_kin = false;
-            int cpt=0;
-            if (values == NULL)
-            {
-                for (int i=0;i<nele_jac;i++)
-                {
-                    iRow[i] = row_[i];
-                    jCol[i] = col_[i];
-                }
-            }
-           else
-           {
-                F<Number>* X = new F<Number>[n];
-                F<Number>* G = new F<Number>[m];
-                for(unsigned int i=0;i<n;i++)
-                {
-                    X[i] = x[i];
-                    X[i].diff(i,n);
-                }
-                int cpt=0;
-                for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
-                {
-                    constraints_[i]->compute(X,G,adyns_,&compute_kin);
-                }
+    bool compute_kin = false;
+    int cpt=0;
+    if (values == NULL)
+    {
+        for (int i=0;i<nele_jac;i++)
+        {
+            iRow[i] = row_[i];
+            jCol[i] = col_[i];
+        }
+    }
+    else
+    {
+        F<Number>* X = new F<Number>[n];
+        F<Number>* G = new F<Number>[m];
+        for(unsigned int i=0;i<n;i++)
+        {
+            X[i] = x[i];
+            X[i].diff(i,n);
+        }
 
-                for (int i=0;i<nele_jac;i++)
-                    values[i] = G[row_[i]].d(col_[i]);
-           }
+        parameterization_->compute(X,adyns_);
+
+        int cpt=0;
+        for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
+        {
+            constraints_[i]->compute(X,G,adyns_,&compute_kin);
+        }
+
+        for (int i=0;i<nele_jac;i++)
+            values[i] = G[row_[i]].d(col_[i]);
+    }
+    #ifdef PRINT
+    std::cout<<"end of eval_jac_g"<<std::endl;
+    #endif // PRINT
 	return true;
 }
 

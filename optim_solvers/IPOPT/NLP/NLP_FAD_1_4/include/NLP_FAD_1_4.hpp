@@ -14,7 +14,7 @@
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
-#include "AbstractParameterization.h"
+#include "AbstractFAD_1_4Parameterization.hpp"
 #include "Dependency.h"
 
 using namespace Ipopt;
@@ -106,32 +106,31 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
 	//  NLP_FAD_1_4();
 
-            double tval,weight_;
-            QString type,weight,name;
+        double tval,weight_;
+        QString type,weight,name;
 
-            NLP_FAD_1_4 (const NLP_FAD_1_4 &);
-            NLP_FAD_1_4 & operator= (const NLP_FAD_1_4 &);
+        NLP_FAD_1_4 (const NLP_FAD_1_4 &);
+        NLP_FAD_1_4 & operator= (const NLP_FAD_1_4 &);
 
-            std::vector<MogsDynamics<double>* > dyns_;
-            std::vector<MogsDynamics<F<double> >* > adyns_;
+        std::vector<MogsDynamics<Number>* > dyns_;
+        std::vector<MogsDynamics<F<Number> >* > adyns_;
 
-            std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
-            std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;
+        std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
+        std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;
 
-            std::vector<std::vector < double > >qmax_;
-            std::vector<std::vector < double > >qmin_;
+//        std::vector<AbstractFAD_1_4Parameterization* > parameterizations_;
 
-            std::vector<AbstractParameterization* > parameterization_;
+        AbstractFAD_1_4Parameterization* parameterization_;
 
-            std::vector<AbstractFAD_1_4Critere* >criteres_;
+        std::vector<AbstractFAD_1_4Critere* >criteres_;
 
-            std::vector<AbstractFAD_1_4Constraint*> constraints_;
+        std::vector<AbstractFAD_1_4Constraint*> constraints_;
 
-            // to remeber the dependancies
-            unsigned int nnz_jac_g_;
-            std::vector<unsigned int> col_,row_;
+        // to remeber the dependancies
+        unsigned int nnz_jac_g_;
+        std::vector<unsigned int> col_,row_;
 
-            unsigned int nb_var_;
+        unsigned int nb_var_;
 
         public:
 

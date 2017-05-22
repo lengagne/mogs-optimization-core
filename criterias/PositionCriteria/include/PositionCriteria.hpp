@@ -2,8 +2,6 @@
 #define  PositionCriteria_HPP_
 
 #include "AbstractCriteria.hpp"
-#include "MogsKinematics.h"
-
 
 class PositionCriteria: virtual public AbstractCriteria
 {   public:

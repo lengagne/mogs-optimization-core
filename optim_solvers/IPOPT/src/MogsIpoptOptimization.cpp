@@ -85,7 +85,7 @@ void MogsIpoptOptimization::solve()
 
     std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
      //donne les fichiers des robots
-     nlp_-> set_robots( robots_ );
+    nlp_-> set_robots( robots_ );
 
 	nlp_->set_root(root_);
 	nlp_->load_xml( );
