@@ -7,17 +7,17 @@ class CameraCriteria: virtual public AbstractCriteria
 {
  public:
 	CameraCriteria (QDomElement critere,
-                    std::vector<MogsDynamics<double> *>dyns);
+                    std::vector<MogsOptimDynamics<double> *>dyns);
 
     ~CameraCriteria ();
 
-    double compute( const double *x , std::vector<MogsDynamics<double> *>dyns, bool* compute_kin)
+    double compute( const double *x , std::vector<MogsOptimDynamics<double> *>dyns, bool* compute_kin)
     {
         return compute<double>(x,dyns,compute_kin);
     }
 
     template<typename T>
-      T compute( const T *x,std::vector<MogsDynamics<T> *>dyns, bool*  compute_kin);
+      T compute( const T *x,std::vector<MogsOptimDynamics<T> *>dyns, bool*  compute_kin);
 
 
       private:

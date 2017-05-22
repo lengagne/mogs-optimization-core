@@ -1,34 +1,27 @@
 #ifndef ABSTRACTPARAMETERIZATION_H
 #define ABSTRACTPARAMETERIZATION_H
 
-#include "MogsDynamics.h"
+#include "MogsOptimDynamics.h"
 
 class AbstractParameterization
 {
     public:
 
         /// FIXME voir comment mieux faire le compute_kin
-        virtual void compute( const double *x , std::vector<MogsDynamics<double> *>& dyns) = 0;
+        virtual void compute( const double *x , std::vector<MogsOptimDynamics<double> *>& dyns) = 0;
 
         unsigned int get_nb_param() const
         {
-            std::cout<<"nb_param_ = "<<nb_param_ <<std::endl;
             return nb_param_;
         }
 
         double get_bounds_inf(unsigned int i)
         {
-            std::cout<<"i = "<<i <<std::endl;
-            std::cout<<"nb_param_ = "<<nb_param_ <<std::endl;
-            std::cout<<"bound_inf_.size() = "<< bound_inf_.size()<<std::endl;
             return bound_inf_[i];
         }
 
         double get_bounds_sup(unsigned int i)
         {
-            std::cout<<"i = "<<i <<std::endl;
-            std::cout<<"nb_param_ = "<<nb_param_ <<std::endl;
-            std::cout<<"bound_sup_.size() = "<< bound_sup_.size()<<std::endl;
             return bound_sup_[i];
         }
 

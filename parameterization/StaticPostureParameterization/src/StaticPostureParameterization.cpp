@@ -1,7 +1,7 @@
 #include "StaticPostureParameterization.h"
 
 StaticPostureParameterization::StaticPostureParameterization(   QDomElement Param,
-                                                                std::vector<MogsDynamics<double> *>& dyns)
+                                                                std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     compute_forces_ = false;
     std::cout<<"\tConstructor of StaticPostureParameterization"<<std::endl;
@@ -12,10 +12,14 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
     }
     std::cout<<"\tcompute_forces_ = "<< compute_forces_<<std::endl;
 
-    unsigned int nb_robots = dyns.size();
+    nb_robots_ = dyns.size();
     nb_param_ = 0;
-    for (int i=0;i<nb_robots;i++)
+    for (int i=0;i<nb_robots_;i++)
+    {
+        ndofs_.push_back(dyns[i]->getNDof());
         nb_param_ += dyns[i]->getNDof();
+    }
+
     std::cout<<"\tnb_param_ = "<< nb_param_ <<std::endl;
 //    nb_param_ = robot->getNDof();
 
@@ -25,7 +29,7 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
     bound_inf_.resize(nb_param_);
     bound_sup_.resize(nb_param_);
     unsigned int cpt = 0;
-    for (unsigned int k=0;k<nb_robots;k++)
+    for (unsigned int k=0;k<nb_robots_;k++)
     {
         std::vector < double > qmax;
         std::vector < double > qmin;
@@ -40,7 +44,7 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
             if(init_[cpt]<bound_inf_[cpt])  init_[cpt] = bound_inf_[cpt];
             if(init_[cpt]>bound_sup_[cpt])  init_[cpt] = bound_sup_[cpt];
 
-            std::cout<<" param("<<cpt<<") dans [ "<< bound_inf_[cpt]<<" : "<< bound_sup_[cpt] <<" ] "<<std::endl;
+//            std::cout<<" param("<<cpt<<") dans [ "<< bound_inf_[cpt]<<" : "<< bound_sup_[cpt] <<" ] "<<std::endl;
 
             cpt ++;
 

@@ -1,8 +1,7 @@
 #include <CloseToMiddleCriteria.hpp>
 
-
 CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
-                                                std::vector<MogsDynamics<double> *>& dyns)
+                                                std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     weight_ = critere.attribute("weight").toDouble();
 

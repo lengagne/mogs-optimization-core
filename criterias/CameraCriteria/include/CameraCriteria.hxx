@@ -1,6 +1,6 @@
 
 template<typename T>
-T CameraCriteria::compute( const T *x,std::vector<MogsDynamics<T> *> dyns, bool* compute_kin)
+T CameraCriteria::compute( const T *x,std::vector<MogsOptimDynamics<T> *> dyns, bool* compute_kin)
 {
      /// FIXME For the moment only for the first robot declared
 
@@ -11,20 +11,20 @@ T CameraCriteria::compute( const T *x,std::vector<MogsDynamics<T> *> dyns, bool*
      Eigen::Matrix<T, 2,1> en_2D;
      Eigen::Matrix < T,Eigen::Dynamic, 1 > aq_;
 
-// 	 if (*compute_kin == false)
-	 {
-		aq_.resize(dyns[0]->getNDof());
-// 		std::cout<<"q =";
-		for (int i=0; i<dyns[0]->getNDof(); i++)
-		{
-// 			std::cout<<x[i]<<" ";
-			aq_(i) = x[i];
-		}
-// 		std::cout<<std::endl;
-		dyns[0]->UpdateKinematicsCustom(&aq_);
-		*compute_kin = true;
-
-	 }
+//// 	 if (*compute_kin == false)
+//	 {
+//		aq_.resize(dyns[0]->getNDof());
+//// 		std::cout<<"q =";
+//		for (int i=0; i<dyns[0]->getNDof(); i++)
+//		{
+//// 			std::cout<<x[i]<<" ";
+//			aq_(i) = x[i];
+//		}
+//// 		std::cout<<std::endl;
+//		dyns[0]->UpdateKinematicsCustom(&aq_);
+//		*compute_kin = true;
+//
+//	 }
 
 
     for(int i=0;i<nb_points_;i++)

@@ -1,9 +1,7 @@
 #include <CameraCriteria.hpp>
 
-
  CameraCriteria::CameraCriteria (QDomElement critere,
-                                 std::vector<MogsDynamics<double> *>dyns)
-
+                                 std::vector<MogsOptimDynamics<double> *>dyns)
 {
     QDomElement Child=critere.firstChildElement().toElement();
 

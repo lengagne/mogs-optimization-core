@@ -8,21 +8,21 @@ class StaticPostureFAD_1_4Parameterization: public AbstractFAD_1_4Parameterizati
 {
  public:
 	StaticPostureFAD_1_4Parameterization (  QDomElement Param,
-                                            std::vector<MogsDynamics<double> *>& dyns);
+                                            std::vector<MogsOptimDynamics<double> *>& dyns);
 
     ~StaticPostureFAD_1_4Parameterization();
 
-    void compute( const Number *x , std::vector<MogsDynamics<Number>*> & dyns)
+    void compute( const Number *x , std::vector<MogsOptimDynamics<Number>*> & dyns)
     {
         StaticPostureParameterization::compute<Number>(x,dyns);
     }
 
-    void compute( const F<Number> *x , std::vector<MogsDynamics<F<Number>>*> & dyns)
+    void compute( const F<Number> *x , std::vector<MogsOptimDynamics<F<Number>>*> & dyns)
     {
         StaticPostureParameterization::compute<F<Number>>(x,dyns);
     }
 
-    void  compute( const Dependency  *x, std::vector<MogsDynamics<Dependency> *>& dyns)
+    void  compute( const Dependency  *x, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
     {
         StaticPostureParameterization::compute<Dependency>(x,dyns);
     }

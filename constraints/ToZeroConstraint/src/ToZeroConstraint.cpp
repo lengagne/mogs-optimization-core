@@ -1,7 +1,7 @@
 #include <ToZeroConstraint.hpp>
 
 ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
-                                       std::vector<MogsDynamics<double> *>& dyns)
+                                       std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     qDebug()<<"Constructor of ToZeroConstraint";
     m = 1;

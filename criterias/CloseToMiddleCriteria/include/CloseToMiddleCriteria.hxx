@@ -1,6 +1,6 @@
 
 template<typename T>
-T CloseToMiddleCriteria::compute( const T *x,std::vector<MogsDynamics<T> *>& dyns, bool* compute_kin)
+T CloseToMiddleCriteria::compute( const T *x,std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin)
 {
     T Norm=0.;
 	Eigen::Matrix < T,Eigen::Dynamic, 1 > aq_;

@@ -9,8 +9,8 @@
 #ifndef ABSTRACTFAD_1_4Parameterization_HPP_INCLUDED
 #define ABSTRACTFAD_1_4Parameterization_HPP_INCLUDED
 
-/// FIXME why, we must set #include "MogsDynamics.h" ??
-#include "MogsDynamics.h"
+/// FIXME why, we must set #include "MogsOptimDynamics.h" ??
+#include "MogsOptimDynamics.h"
 #include <fadiff.h>
 #include "MogsNlpIpopt.hpp"
 #include "AbstractParameterization.h"
@@ -19,16 +19,16 @@
 class AbstractFAD_1_4Parameterization : virtual public AbstractParameterization
 {
     public:
-        virtual void compute( const Number *x , std::vector<MogsDynamics<Number>*> & dyns) = 0;
+        virtual void compute( const Number *x , std::vector<MogsOptimDynamics<Number>*> & dyns) = 0;
 
-        virtual void compute( const F<Number> *x , std::vector<MogsDynamics<F<Number>>*> & dyns) = 0;
+        virtual void compute( const F<Number> *x , std::vector<MogsOptimDynamics<F<Number>>*> & dyns) = 0;
 
-        virtual void compute( const Dependency  *x, std::vector<MogsDynamics<Dependency> *>& dyns) = 0;
+        virtual void compute( const Dependency  *x, std::vector<MogsOptimDynamics<Dependency> *>& dyns) = 0;
 };
 
 // the types of the class factories
 typedef AbstractFAD_1_4Parameterization* create_FAD_1_4Parameterization(QDomElement Param,
-                                                                        std::vector<MogsDynamics<double> *>& dyns);
+                                                                        std::vector<MogsOptimDynamics<double> *>& dyns);
 
 typedef void destroy_FAD_1_4Parameterization(AbstractFAD_1_4Parameterization*);
 

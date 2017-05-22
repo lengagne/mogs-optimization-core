@@ -1,13 +1,13 @@
 #ifndef AbstractConstraint_HPP_
 #define AbstractConstraint_HPP_
 
-#include "MogsDynamics.h"
+#include "MogsOptimDynamics.h"
 
 class AbstractConstraint
 {
  public:
 
-        virtual void compute( const double *x , double *g, std::vector<MogsDynamics<double> *> & dyns, bool* compute_kin) = 0;
+        virtual void compute( const double *x , double *g, std::vector<MogsOptimDynamics<double> *> & dyns, bool* compute_kin) = 0;
 
         unsigned int get_nb_constraints()
         {

@@ -10,7 +10,7 @@
 #define __NLP_FAD_1_4_HPP__
 
 #include "MogsNlpIpopt.hpp"
-#include "MogsDynamics.h"
+#include "MogsOptimDynamics.h"
 #include <fadiff.h>
 #include "AbstractFAD_1_4Critere.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
@@ -112,8 +112,8 @@ class NLP_FAD_1_4:public MogsNlpIpopt
         NLP_FAD_1_4 (const NLP_FAD_1_4 &);
         NLP_FAD_1_4 & operator= (const NLP_FAD_1_4 &);
 
-        std::vector<MogsDynamics<Number>* > dyns_;
-        std::vector<MogsDynamics<F<Number> >* > adyns_;
+        std::vector<MogsOptimDynamics<Number>* > dyns_;
+        std::vector<MogsOptimDynamics<F<Number> >* > adyns_;
 
         std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
         std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;

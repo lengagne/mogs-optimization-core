@@ -27,7 +27,7 @@
 #include "VisuHolder.h"
 #include "MogsProblemClassifier.h"
 
-#define PRINT 1
+//#define PRINT 1
 
 
 using namespace Ipopt;
@@ -49,8 +49,8 @@ void NLP_FAD_1_4::load_xml( )
     #endif // PRINT
     for (int i=0;i<nb_robots_;i++)
     {
-        dyns_.push_back( new MogsDynamics<double>(robots_[i]));
-        adyns_.push_back( new MogsDynamics<F<double>>(robots_[i]));
+        dyns_.push_back( new MogsOptimDynamics<double>(robots_[i]));
+        adyns_.push_back( new MogsOptimDynamics<F<double>>(robots_[i]));
     }
 //	kin.SetRobot(robots_[0]);
 //	akin.SetRobot(robots_[0]);
@@ -223,9 +223,9 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         X[i].init(i,n);
 
     Dependency * G = new Dependency [m];
-    std::vector< MogsDynamics<Dependency> *> k;
+    std::vector< MogsOptimDynamics<Dependency> *> k;
     for(int i=0;i<nb_robots_;i++)
-        k.push_back(new MogsDynamics<Dependency>(dyns_[i]->model));
+        k.push_back(new MogsOptimDynamics<Dependency>(dyns_[i]->model));
     bool computation_done = false;
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
 
@@ -272,17 +272,17 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 
     Index i, j;
     unsigned int cpt = 0;
-    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
-    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
 
 
     for (int i=0;i<n;i++)
     {
-        std::cout<<"i = "<< i<<"  parameterization_ = "<< parameterization_<< std::endl;
+//        std::cout<<"i = "<< i<<"  parameterization_ = "<< parameterization_<< std::endl;
         x_l[i] = parameterization_->get_bounds_inf(i);
         x_u[i] = parameterization_->get_bounds_sup(i);
     }
-    std::cout<<"fin "<< std::endl;
+//    std::cout<<"fin "<< std::endl;
 
 /*    for (int k=0;k<nb_robots_;k++)
     {
@@ -320,8 +320,8 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
     #ifdef PRINT
     std::cout<<"start get_starting_point"<<std::endl;
     #endif // PRINT
-    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
-    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
 
     assert(init_x == true);
     assert(init_z == false);
@@ -506,15 +506,14 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 
     }
 
+    parameterization_->compute(x,dyns_);
+
     int cpt = 0;
     for(int k=0;k<nb_robots_;k++)
     {
-        for (int i=0;i<robots_[k]->getNDof();i++)
-            q[k](i) = x[cpt++];
+        std::cout<<"q["<<k<<"] = "<< dyns_[k]->q_.transpose()<<std::endl;
 
-        std::cout<<"q["<<k<<"] = "<< q[k].transpose()<<std::endl;
-
-        visu.apply_q(robots_[k]->getRobotName(),&q[k]);
+        visu.apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
 
     }
 

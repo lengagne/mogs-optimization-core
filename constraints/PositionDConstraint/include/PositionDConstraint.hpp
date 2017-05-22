@@ -7,17 +7,17 @@
 class PositionDConstraint: virtual public AbstractConstraint
 {   public:
 	PositionDConstraint (QDomElement Constraint,
-                         std::vector<MogsDynamics<double> *>& dyns);
+                         std::vector<MogsOptimDynamics<double> *>& dyns);
 
     ~PositionDConstraint ();
 
-    void compute( const double *x , double * g,std::vector<MogsDynamics<double> *>& dyns, bool* compute_kin)
+    void compute( const double *x , double * g,std::vector<MogsOptimDynamics<double> *>& dyns, bool* compute_kin)
     {
         return compute<double>(x,g, dyns, compute_kin);
     }
 
     template<typename T>
-    void compute( const T *x, T *g, std::vector<MogsDynamics<T> *>& dyns, bool* compute_kin);
+    void compute( const T *x, T *g, std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin);
 
 
     private:

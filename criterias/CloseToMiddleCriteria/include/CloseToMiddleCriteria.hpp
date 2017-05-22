@@ -6,17 +6,17 @@
 class CloseToMiddleCriteria: public AbstractCriteria
 {   public:
 	CloseToMiddleCriteria (QDomElement critere,
-                            std::vector<MogsDynamics<double> *>& dyns);
+                            std::vector<MogsOptimDynamics<double> *>& dyns);
 
     ~CloseToMiddleCriteria ();
 
-    double compute( const double *x , std::vector<MogsDynamics<double> *>& dyns, bool* compute_kin)
+    double compute( const double *x , std::vector<MogsOptimDynamics<double> *>& dyns, bool* compute_kin)
     {
         return compute<double>(x,dyns, compute_kin);
     }
 
     template<typename T>
-      T compute( const T *x,std::vector<MogsDynamics<T> *>& dyns, bool* compute_kin);
+      T compute( const T *x,std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin);
       private:
 
         QString Robot;
