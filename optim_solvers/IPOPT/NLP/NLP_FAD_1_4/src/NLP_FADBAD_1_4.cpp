@@ -226,14 +226,13 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     std::vector< MogsOptimDynamics<Dependency> *> k;
     for(int i=0;i<nb_robots_;i++)
         k.push_back(new MogsOptimDynamics<Dependency>(dyns_[i]->model));
-    bool computation_done = false;
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
 
     parameterization_->compute(X,k);
 
     for (unsigned int i=0; i<constraints_.size(); i++)
     {
-        constraints_[i]->compute(X,G,k,&computation_done);
+        constraints_[i]->compute(G,k);
     }
     for(int i=0;i<m;i++)    for(int j=0;j<n;j++)
     {
@@ -349,11 +348,9 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
     obj_value =0;
 
     parameterization_->compute(x,dyns_);
-
-	bool mem_kin = false;
     for (int i =0;i<nb;i++)
     {
-        Number tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
+        Number tmp = criteres_[i]->compute(dyns_);
         obj_value+= tmp;
     }
     #ifdef PRINT
@@ -378,10 +375,9 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 
 	parameterization_->compute(X,adyns_);
 
-	bool mem_kin = false;
 	F<Number> out=0;
 	for (int j =0;j<criteres_.size();j++)
-		out+=criteres_[j]->compute(X,adyns_,&mem_kin);
+		out+=criteres_[j]->compute(adyns_);
     for(unsigned int i=0;i<n;i++)
     {
         grad_f[i] = out.d(i);
@@ -405,7 +401,7 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     m = 3 ;
     for (int i =0;i<constraints_.size();i++)
     {
-        constraints_[i]->compute(x,g,dyns_,&compute_kin);
+        constraints_[i]->compute(g,dyns_);
         //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
     }
     #ifdef PRINT
@@ -424,7 +420,6 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
     assert(n == nb_var_);
     //assert(m == constraints_.size());
 
-    bool compute_kin = false;
     int cpt=0;
     if (values == NULL)
     {
@@ -449,7 +444,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
         int cpt=0;
         for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
         {
-            constraints_[i]->compute(X,G,adyns_,&compute_kin);
+            constraints_[i]->compute(G,adyns_);
         }
 
         for (int i=0;i<nele_jac;i++)

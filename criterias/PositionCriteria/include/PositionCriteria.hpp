@@ -10,13 +10,13 @@ class PositionCriteria: virtual public AbstractCriteria
 
     ~PositionCriteria ();
 
-    double compute( const double *x , std::vector<MogsOptimDynamics<double> *> dyns, bool* compute_kin)
+    double compute( std::vector<MogsOptimDynamics<double> *> dyns)
     {
-        return compute<double>(x,dyns, compute_kin);
+        return compute<double>(dyns);
     }
 
     template<typename T>
-      T compute( const T *x, std::vector<MogsOptimDynamics<T> *> dyns, bool* compute_kin);
+      T compute( std::vector<MogsOptimDynamics<T> *> dyns);
 
       private:
 

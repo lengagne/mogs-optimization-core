@@ -1,10 +1,11 @@
 
 template<typename T>
-void ToZeroConstraint::compute( const T *x, T* g, std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin)
+void ToZeroConstraint::compute( T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
     g[0] = 0.;
-    for (int i=0; i<n; i++)
+    // FIXME only for first robot
+    for (int i=0; i<dyns[0]->getNDof(); i++)
     {
-        g[0] += x[i];
+        g[0] += dyns[0]->q_(i);
     }
 }

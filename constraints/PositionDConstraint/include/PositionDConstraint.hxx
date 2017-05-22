@@ -1,6 +1,6 @@
 
 template<typename T>
-void PositionDConstraint::compute( const T *x, T* g, std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin)
+void PositionDConstraint::compute(T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
 //T obj_value;
 	/// Assume done before

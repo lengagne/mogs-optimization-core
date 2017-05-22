@@ -12,19 +12,19 @@ class PositionDFAD_1_4Constraint: public AbstractFAD_1_4Constraint, PositionDCon
 
     ~PositionDFAD_1_4Constraint();
 
-    void compute( const Number *x , Number* g,std::vector<MogsOptimDynamics<Number> *>& dyns, bool* compute_kin)
+    void compute( Number* g,std::vector<MogsOptimDynamics<Number> *>& dyns)
     {
-        PositionDConstraint::compute<Number>(x,g, dyns, compute_kin);
+        PositionDConstraint::compute<Number>(g, dyns);
     }
 
-    void compute( const F<Number>  *x , F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns, bool* compute_kin)
+    void compute( F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
     {
-        PositionDConstraint::compute<F<Number> >(x,g, dyns, compute_kin);
+        PositionDConstraint::compute<F<Number> >(g, dyns);
     }
 
-    void  compute( const Dependency  *x , Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns,bool* compute_kin)
+    void compute( Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
     {
-        PositionDConstraint::compute<Dependency>(x,g, dyns, compute_kin);
+        PositionDConstraint::compute<Dependency>(g, dyns);
     }
 };
 #endif // PositionDFAD_1_4Critere_HPP_INCLUDED

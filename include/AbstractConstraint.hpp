@@ -7,7 +7,7 @@ class AbstractConstraint
 {
  public:
 
-        virtual void compute( const double *x , double *g, std::vector<MogsOptimDynamics<double> *> & dyns, bool* compute_kin) = 0;
+        virtual void compute(double *g, std::vector<MogsOptimDynamics<double> *> & dyns) = 0;
 
         unsigned int get_nb_constraints()
         {

@@ -17,9 +17,9 @@ class AbstractFAD_1_4Critere : virtual public AbstractCriteria
     public:
 
 //      From AbstractCriteria
-    virtual Number compute( const Number *x , std::vector<MogsOptimDynamics<Number> *> &dyns,bool* compute_kin) = 0;
+    virtual Number compute( std::vector<MogsOptimDynamics<Number> *> &dyns) = 0;
 
-    virtual F<Number>  compute( const F<Number>  *x , std::vector<MogsOptimDynamics<F<Number>>*> & dyns,bool* compute_kin) = 0;
+    virtual F<Number>  compute( std::vector<MogsOptimDynamics<F<Number>>*> & dyns) = 0;
 
 };
 

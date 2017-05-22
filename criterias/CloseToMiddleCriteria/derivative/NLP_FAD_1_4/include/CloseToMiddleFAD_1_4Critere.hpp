@@ -13,14 +13,14 @@ class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, CloseToMiddleC
 
     ~CloseToMiddleFAD_1_4Critere ();
 
-    Number compute( const Number *x , std::vector<MogsOptimDynamics<Number> *>& dyns, bool* compute_kin)
+    Number compute( std::vector<MogsOptimDynamics<Number> *>& dyns)
     {
-        return CloseToMiddleCriteria::compute<Number>(x,dyns, compute_kin);
+        return CloseToMiddleCriteria::compute<Number>(dyns);
     }
 
-    F<Number>  compute( const F<Number>  *x , std::vector<MogsOptimDynamics<F<Number>> *>& dyns, bool* compute_kin)
+    F<Number>  compute(std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
     {
-        return CloseToMiddleCriteria::compute<F<Number> >(x,dyns, compute_kin);
+        return CloseToMiddleCriteria::compute<F<Number> >(dyns);
     }
 
 

@@ -10,13 +10,13 @@ class ToZeroConstraint: virtual public AbstractConstraint
 
     ~ToZeroConstraint ();
 
-    void compute( const double *x , double * g, std::vector<MogsOptimDynamics<double> *>& dyns, bool* compute_kin)
+    void compute(double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
     {
-        return compute<double>(x,g, dyns, compute_kin);
+        return compute<double>(g, dyns);
     }
 
     template<typename T>
-    void compute( const T *x, T *g, std::vector<MogsOptimDynamics<T> *>& dyns, bool* compute_kin);
+    void compute(T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
 
     private:
