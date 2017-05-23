@@ -42,9 +42,9 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
                             }
                                   std::cout << "   body_id_  = " << body_id_ << std::endl;
                     }
-                if (Child.tagName()=="body_Position")
+                if (Child.tagName()=="body_position")
                     {
-                        body_Position = Child.attribute("body_Position");
+                        body_Position = Child.attribute("body_position");
                         body_Position=Child.firstChild().toText().data();
                         std::istringstream smallData (body_Position.toStdString(), std::ios_base::in);
                            for (int i = 0; i < 3; i++)
@@ -54,20 +54,28 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
                                   }
                          std::cout << "   body_Position  = " <<    body_Position_  << std::endl;
                     }
-                 if (Child.tagName()=="desired_Position")
+                if (Child.tagName()=="desired_position")
+                {
+                    desired_Position = Child.attribute("desired_position");
+                    desired_Position=Child.firstChild().toText().data();
+                    std::istringstream smallData (desired_Position.toStdString(), std::ios_base::in);
+                    for (int i = 0; i < 3; i++)
                     {
-                         desired_Position = Child.attribute("desired_Position");
-                         desired_Position=Child.firstChild().toText().data();
-                         std::istringstream smallData (desired_Position.toStdString(), std::ios_base::in);
-                            for (int i = 0; i < 3; i++)
-                                    {
-                                        smallData >> tval;
-                                        desired_Position_(i) = tval;
-                                    }
-                         std::cout << "   desired_Position  = " << desired_Position_.transpose()  << std::endl;
+                        smallData >> tval;
+                        desired_Position_(i) = tval;
                     }
+
+                }
+                else
+                {
+                    std::cerr<<"ERROR you did not specify desired position"<<std::endl;
+                    std::cerr<<"Considering zero."<<std::endl;
+                }
+
                Child = Child.nextSibling().toElement();
             }
+    std::cout<<"desired_Position_ = "<< desired_Position_.transpose() <<std::endl;
+
     upper = desired_Position_;
     lower = desired_Position_;
 }

@@ -100,7 +100,7 @@ void NLP_FAD_1_4::load_xml( )
 		}
 	}
     QDomElement constraints=root_.firstChildElement("constraints");
-
+    unsigned int offset = 0;
     for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
 	{
 
@@ -130,6 +130,8 @@ void NLP_FAD_1_4::load_xml( )
 				}
 				// create an instance of the class
 				AbstractFAD_1_4Constraint* ctr = creator(constraint,dyns_);
+				ctr->set_offset(offset);
+				offset += ctr->get_nb_constraints();
 				std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
 // 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
 				constraints_.push_back(ctr);
@@ -301,8 +303,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
-//            std::cout << "Const["<<cpt<<"] : g_l["<<cpt<<"] :" << g_l[cpt] << std::endl;
-//            std::cout << "Const["<<cpt<<"] : g_u["<<cpt<<"] :" << g_u[cpt] << std::endl;
+            std::cout<<"contrainte "<< cpt<<" comprise dans ["<< g_l[cpt] <<" : "<< g_l[cpt] <<"]"<<std::endl;
             cpt++;
         }
     }
@@ -329,7 +330,7 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 
     // initialize to the given starting point
     for(int i=0;i<nb_var_;i++)
-        x[i] = 0.;
+        x[i] = 0.1;
         //x[i] = parameterization_->get_starting_point(i);
 
     #ifdef PRINT
@@ -453,6 +454,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
     #ifdef PRINT
     std::cout<<"end of eval_jac_g"<<std::endl;
     #endif // PRINT
+
 	return true;
 }
 
