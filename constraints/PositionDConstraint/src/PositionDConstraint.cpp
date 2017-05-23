@@ -61,10 +61,12 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
                                         smallData >> tval;
                                         desired_Position_(i) = tval;
                                     }
-                         std::cout << "   desired_Position  = " << desired_Position_.transpose()  << std::endl;
+
                     }
                Child = Child.nextSibling().toElement();
             }
+
+    //std::cout<<"desired_Position_ = "<< desired_Position_ <<std::endl;
     upper = desired_Position_;
     lower = desired_Position_;
 }

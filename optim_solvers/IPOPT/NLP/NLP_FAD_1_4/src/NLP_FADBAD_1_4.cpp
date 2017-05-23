@@ -89,7 +89,7 @@ void NLP_FAD_1_4::load_xml( )
 		}
 	}
     QDomElement constraints=root_.firstChildElement("constraints");
-
+    unsigned int offset = 0;
     for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
 	{
 
@@ -119,11 +119,15 @@ void NLP_FAD_1_4::load_xml( )
 				}
 				// create an instance of the class
 				AbstractFAD_1_4Constraint* ctr = creator(constraint,&kin);
+				ctr->set_offset(offset);
+				offset += ctr->get_nb_constraints();
+				//ctr.offset = offset;
 //                std::cout << "test : " << ctr->get_test() << std::endl;
-//                for(int ii = 0; ii < 3; ii++){
+//                for(int ii = 0; ii < ctr->get_lower.size(); ii++){
 //                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
 //                    std::cout << "Constraint created : g_u["<<ii<<"] :" << ctr->get_upper(ii) << std::endl;
 //                }
+
 				// FIXME for the moment no init from the xml
  				//ctr->init(constraint);
  				//std::cout << "test : " << ctr->get_test() << std::endl;
@@ -208,7 +212,6 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
             std::cout << "Const["<<cpt<<"] : g_l["<<cpt<<"] :" << g_l[cpt] << std::endl;
-            std::cout << "Const["<<cpt<<"] : g_u["<<cpt<<"] :" << g_u[cpt] << std::endl;
             cpt++;
         }
     }
@@ -269,12 +272,15 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     bool compute_kin = false;
     assert(n == kin.getNDof());
 
-    m = 3 ;
+   for(int i=0;i<m;i++)    g[i] = 1.23456;
+
+    //m = 3 ;
    for (int i =0;i<constraints_.size();i++)
   {
+        //m =constraints_[i]->get_nb_constraints();
         constraints_[i]->compute(x,g,&kin,&compute_kin);
-        //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
   }
+  for(int i=0;i<m;i++)    std::cout<<"g["<<i<<"] = "<< g[i] <<std::endl;
     return true;
 }
 
@@ -283,8 +289,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 		   Number * values)
 {
             assert(n == kin.getNDof());
-            //assert(m == constraints_.size());
-            m = 3;
+            //std::cout << "nele_jac = " << nele_jac << std::endl;
 
             bool compute_kin = false;
             int cpt=0;
@@ -299,7 +304,13 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
            else
            {
                 F<Number>* X = new F<Number>[n];
-                F<Number>* G = new F<Number>[m];
+                for(int i = 0; i < n; i++)
+                {
+                    X[i] = 0;
+                }
+                //std::cout << "X = "<< X[0] << std::endl;
+
+                F<Number>* G = new F<Number>[m]();
                 for(unsigned int i=0;i<n;i++)
                 {
                     X[i] = x[i];
@@ -308,6 +319,7 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
                 int cpt=0;
                 for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
                 {
+                    //m =constraints_[i]->get_nb_constraints();
                     constraints_[i]->compute(X,G,&akin,&compute_kin);
                 }
 

@@ -33,7 +33,6 @@ class PositionDConstraint: virtual public AbstractConstraint
         Eigen::Matrix<double, 3, 1> body_Position_;
         Eigen::Matrix<double, 3, 1> desired_Position_;
 
-
         int n; // number of dof
 };
 
