@@ -1,0 +1,16 @@
+# - Config file for the MogsKinematicContactConstraintNlpFAD lib
+# It defines the following variables
+#
+# MogsKinematicContactConstraintNlpFAD_INCLUDE_DIRS - include directories
+# MogsKinematicContactConstraintNlpFAD_LIBRARY_DIRS - library directory (normally not used!)
+# MogsKinematicContactConstraintNlpFAD_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsKinematicContactConstraintNlpFAD_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsKinematicContactConstraintNlpFAD_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsKinematicContactConstraintNlpFAD_LIBRARIES @MogsKinematicContactConstraintNlpFAD_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsKinematicContactConstraintNlpFAD_FLAGS @MogsKinematicContactConstraintNlpFAD_FLAGS@ @MogsCore_FLAGS@)
