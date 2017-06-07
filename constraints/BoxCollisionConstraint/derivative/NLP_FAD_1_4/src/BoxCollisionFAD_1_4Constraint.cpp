@@ -22,7 +22,7 @@ void BoxCollisionFAD_1_4Constraint::compute( F<Number>* g, std::vector<MogsOptim
 void BoxCollisionFAD_1_4Constraint::compute( Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
 {
     Eigen::Matrix<Dependency,3,1> P1 =     dyns[coll_.robot_1]->getPosition(coll_.body_1,coll_.point_1);
-    Eigen::Matrix<Dependency,3,1> P2 =     dyns[coll_.robot_1]->getPosition(coll_.body_2,coll_.point_2);
+    Eigen::Matrix<Dependency,3,1> P2 =     dyns[coll_.robot_2]->getPosition(coll_.body_2,coll_.point_2);
     g[offset] = P1(0)+P1(1)+P1(2)+P2(0)+P2(1)+P2(2);
 }
 
@@ -32,7 +32,6 @@ void BoxCollisionFAD_1_4Constraint::compute(Number * g, std::vector<MogsOptimDyn
     dyns[coll_.robot_1]->getFrameCoordinate(coll_.body_1,T1);
     dyns[coll_.robot_2]->getFrameCoordinate(coll_.body_2,T2);
     g[offset] =  coll_detector_->compute_one_distance<Number>(T1,T2,coll_,d1_,d2_);
-//    std::cout<<"g["<<offset<<"] = "<< g[offset]  <<std::endl;
 }
 
 

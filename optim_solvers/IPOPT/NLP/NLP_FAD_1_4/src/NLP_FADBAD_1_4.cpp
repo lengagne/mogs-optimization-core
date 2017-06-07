@@ -238,6 +238,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     }
     for(int i=0;i<m;i++)    for(int j=0;j<n;j++)
     {
+//        std::cout<<"G["<<i<<"].get("<<j<<") = "<< G[i].get(j)<<std::endl;
         if(G[i].get(j)){
             col_.push_back(j);
             row_.push_back(i);
@@ -303,7 +304,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
-            std::cout<<"contrainte "<< cpt<<" comprise dans ["<< g_l[cpt] <<" : "<< g_l[cpt] <<"]"<<std::endl;
+//            std::cout<<"contrainte "<< cpt<<" comprise dans ["<< g_l[cpt] <<" : "<< g_u[cpt] <<"]"<<std::endl;
             cpt++;
         }
     }

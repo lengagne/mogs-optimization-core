@@ -11,7 +11,6 @@ void StaticPostureParameterization::compute( const T *x,std::vector<MogsOptimDyn
             dyns[i]->q_(j) = x[cpt++];
         }
     }
-
     for (unsigned int i=0;i<nb_robots_;i++)
         dyns[i]->UpdateStaticDynamics();
 }
