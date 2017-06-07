@@ -100,6 +100,7 @@ void MogsIpoptOptimization::solve()
 
 		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
 		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
+		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toInt());
 		else	qDebug()<<"option of type : "<< type <<" not defined.";
 	}
 

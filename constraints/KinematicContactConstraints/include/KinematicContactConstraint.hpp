@@ -21,8 +21,14 @@ class KinematicContactConstraint: virtual public AbstractConstraint
 
     private:
 
-      QString Robot;
-      int n; // number of dof
+      QString Robot1_, Robot2_, Body1_, Body2_;
+      unsigned int RobotId1_, RobotId2_;
+      unsigned int BodyId1_, BodyId2_;
+
+      Eigen::Matrix<double,3,1> position_1_, position_2_;
+
+      double radius_1_, radius_2_;
+
 };
 
 #include "KinematicContactConstraint.hxx"

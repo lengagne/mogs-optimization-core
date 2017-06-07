@@ -1,0 +1,9 @@
+#ifndef MogsBoxCollisionConstraint_CONFIG_H
+#define MogsBoxCollisionConstraint_CONFIG_H
+
+#define MogsBoxCollisionConstraint_VERSION_MAJOR @MogsBoxCollisionConstraint_VERSION_MAJOR@
+#define MogsBoxCollisionConstraint_VERSION_MINOR @MogsBoxCollisionConstraint_VERSION_MINOR@
+
+
+#endif
+

@@ -1,0 +1,16 @@
+# - Config file for the MogsBoxCollisionCriteriaNlpFAD lib
+# It defines the following variables
+#
+# MogsBoxCollisionCriteriaNlpFAD_INCLUDE_DIRS - include directories
+# MogsBoxCollisionCriteriaNlpFAD_LIBRARY_DIRS - library directory (normally not used!)
+# MogsBoxCollisionCriteriaNlpFAD_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsBoxCollisionCriteriaNlpFAD_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsBoxCollisionCriteriaNlpFAD_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsBoxCollisionCriteriaNlpFAD_LIBRARIES @MogsBoxCollisionCriteriaNlpFAD_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsBoxCollisionCriteriaNlpFAD_FLAGS @MogsBoxCollisionCriteriaNlpFAD_FLAGS@ @MogsCore_FLAGS@)
