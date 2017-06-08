@@ -15,16 +15,19 @@ class BoxCollisionConstraint: virtual public AbstractConstraint
 
     protected:
 
-      unsigned int robot1_, robot2_, body1_, body2_;
+      unsigned int robot1_, robot2_;
+      std::vector<unsigned int> body1_, body2_;
 
-      MogsBoxCollisionDefinition *d1_, *d2_;
+      unsigned int nb_body1_, nb_body2_;
+
+      std::vector<MogsBoxCollisionDefinition*> d1_, d2_;
 
       MogsBoxCollision* coll_detector_;
 
     protected:
-      collision_value coll_;
+      std::vector<collision_value> coll_;
 
-    std::vector<MogsKinematics<double> *> dyns_;
+//    std::vector<MogsKinematics<double> *> dyns_;
 
 };
 
