@@ -26,6 +26,7 @@
 #include <math.h>
 #include "VisuHolder.h"
 #include "MogsProblemClassifier.h"
+#include "AbstractLoader.h"
 
 //#define PRINT 1
 
@@ -52,6 +53,10 @@ void NLP_FAD_1_4::load_xml( )
         dyns_.push_back( new MogsOptimDynamics<double>(robots_[i]));
         adyns_.push_back( new MogsOptimDynamics<F<double>>(robots_[i]));
     }
+    AbstractLoader loader;
+
+
+
 //	kin.SetRobot(robots_[0]);
 //	akin.SetRobot(robots_[0]);
 	MogsProblemClassifier mpc;
@@ -59,145 +64,38 @@ void NLP_FAD_1_4::load_xml( )
     QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
-
-		if (criteres.tagName()=="criteres")
-		{
-			type=critere.attribute("type");
-			name=critere.attribute("name");
-			create_FAD_1_4Critere* creator;
-			destroy_FAD_1_4Critere* destructor;
-
-			if ( mpc.get_library_plugin("MogsCriteriaNlpFAD_1_4",type,library_so))
-			{
-				// load the library
-				void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
-				if (!library) {
-					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-					exit(0);
-				}
-				// load the symbols
-				creator = (create_FAD_1_4Critere*) dlsym(library, "create");
-				destructor = (destroy_FAD_1_4Critere*) dlsym(library, "destroy");
-				/// FIXME store the destructor !!
-				if (!creator || !destructor)
-				{
-					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-					exit(0);
-				}
-				// create an instance of the class
-				AbstractFAD_1_4Critere* crit = creator(critere,dyns_);
-				// FIXME for the moment no init from the xml
-// 				crit->init(critere);
-				std::cout << "name "   <<name.toStdString().c_str() << std::endl;
-// 				criteres_.push_back(new CameraFAD_1_4Critere(critere,&kin));
-				criteres_.push_back(crit);
-			}
-			else
-			{
-				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsCriteriaNlpFAD_1_4 plugin";
-				exit(0);
-			}
-		}
+        AbstractFAD_1_4Critere* crit = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",critere,dyns_));
+        criteres_.push_back(crit);
 	}
+
+
+
     QDomElement constraints=root_.firstChildElement("constraints");
     unsigned int offset = 0;
     for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
 	{
-
-		if (constraints.tagName()=="constraints")
-		{
-			type=constraint.attribute("type");
-			name=constraint.attribute("name");
-			create_FAD_1_4Constraint* creator;
-			destroy_FAD_1_4Constraint* destructor;
-			/// FIXME store the destructor !!
-
-			if ( mpc.get_library_plugin("MogsConstraintNlpFAD_1_4",type,library_so))
-			{
-				// load the library
-				void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
-				if (!library) {
-					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-					exit(0);
-				}
-				// load the symbols
-				creator = (create_FAD_1_4Constraint*) dlsym(library, "create");
-				destructor = (destroy_FAD_1_4Constraint*) dlsym(library, "destroy");
-				if (!creator || !destructor)
-				{
-					std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-					exit(0);
-				}
-				// create an instance of the class
-				AbstractFAD_1_4Constraint* ctr = creator(constraint,dyns_);
-				ctr->set_offset(offset);
-				offset += ctr->get_nb_constraints();
-				std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
-// 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
-				constraints_.push_back(ctr);
-			}
-			else
-			{
-				qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsConstraintNlpFAD_1_4 plugin";
-				exit(0);
-			}
-		}
+        AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
+        ctr->set_offset(offset);
+        offset += ctr->get_nb_constraints();
+        std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
+        constraints_.push_back(ctr);
 	}
-
 
     /// FIXME allow to change the type of the AbstractParameterization through plugins
     QDomElement param =root_.firstChildElement("parameterization");
-
     if (param.tagName()=="parameterization")
     {
-//        type = "StaticPosture";
-        type=param.attribute("type");
-
-        create_FAD_1_4Parameterization* creator;
-        destroy_FAD_1_4Parameterization* destructor;
-        /// FIXME store the destructor !!
-
-        if ( mpc.get_library_plugin("MogsParameterizationNlpFAD_1_4",type,library_so))
-        {
-            // load the library
-            void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
-            if (!library) {
-                std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-                exit(0);
-            }
-            // load the symbols
-            creator = (create_FAD_1_4Parameterization*) dlsym(library, "create");
-            destructor = (destroy_FAD_1_4Parameterization*) dlsym(library, "destroy");
-            if (!creator || !destructor)
-            {
-                std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-                exit(0);
-            }
-            // create an instance of the class
-            parameterization_ = creator( param, dyns_ );
-//                std::cout << "test : " << ctr->get_test() << std::endl;
-//                for(int ii = 0; ii < 3; ii++){
-//                    std::cout << "Constraint created : g_l["<<ii<<"] :" << ctr->get_lower(ii) << std::endl;
-//                    std::cout << "Constraint created : g_u["<<ii<<"] :" << ctr->get_upper(ii) << std::endl;
-//                }
-            // FIXME for the moment no init from the xml
-            //ctr->init(constraint);
-            //std::cout << "test : " << ctr->get_test() << std::endl;
-            std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
-// 				constraints_.push_back(new CameraFAD_1_4constraint(constraint,&kin));
-//            parameterizations_.push_back(prm);
-        }
-        else
-        {
-            qDebug()<<"Error cannot load the plugin "<<type<<" as an MogsParameterizationNlpFAD_1_4 plugin";
-            exit(0);
-        }
+        parameterization_ = dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param,dyns_));
     }else
     {
         std::cerr<<"ERROR cannot find balise parameterization"<<std::endl;
         exit(0);
     }
-    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
+
+    unsigned int nb = parameterization_->get_number_constraints();
+    for (int i=0;i<nb;i++)
+        constraints_.push_back( dynamic_cast<AbstractFAD_1_4Constraint*>(parameterization_->get_constraint(i)));
 
     #ifdef PRINT
     std::cout<<"end of load_xml"<<std::endl;

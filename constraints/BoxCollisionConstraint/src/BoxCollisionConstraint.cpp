@@ -30,8 +30,8 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
         QString body1_name = ElBody1.text().simplified();
         b1.push_back(body1_name);
         d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
-
     }
+
     nb_body1_ = b1.size();
 
     std::vector<QString> b2;
