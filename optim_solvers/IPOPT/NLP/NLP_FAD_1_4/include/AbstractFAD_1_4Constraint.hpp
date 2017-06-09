@@ -20,11 +20,17 @@ class AbstractFAD_1_4Constraint : virtual public AbstractConstraint
     public:
 
 //      From AbstractConstraint
-    virtual void compute(Number *g, std::vector<MogsOptimDynamics<Number> *>& dyn) = 0;
+    virtual void compute(const Number*x,Number *g, std::vector<MogsOptimDynamics<Number> *>& dyn) = 0;
 
-    virtual void compute(F<Number>* g, std::vector<MogsOptimDynamics<F<Number> > *>& dyn) = 0;
+    virtual void compute(const F<Number>*x,F<Number>* g, std::vector<MogsOptimDynamics<F<Number> > *>& dyn) = 0;
 
-    virtual void compute(Dependency* g, std::vector<MogsOptimDynamics<Dependency> * >& dyn) = 0;
+    virtual void compute(const Dependency*x,Dependency* g, std::vector<MogsOptimDynamics<Dependency> * >& dyn) = 0;
+
+    virtual void update_dynamics(const Number *x, std::vector<MogsOptimDynamics<Number> *> & dyns) = 0;
+
+    virtual void update_dynamics(const F<Number> *x, std::vector<MogsOptimDynamics<F<Number>> *> & dyns) = 0;
+
+    virtual void update_dynamics(const Dependency *x, std::vector<MogsOptimDynamics<Dependency> *> & dyns) = 0;
 
 };
 

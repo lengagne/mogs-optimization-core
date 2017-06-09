@@ -11,7 +11,7 @@ BoxCollisionFAD_1_4Constraint::~BoxCollisionFAD_1_4Constraint ()
 
 }
 
-void BoxCollisionFAD_1_4Constraint::compute( F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
+void BoxCollisionFAD_1_4Constraint::compute( const F<Number>* x, F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
 {
    SpatialTransform<F<Number> > T1,T2;
     unsigned int cpt = 0;
@@ -29,7 +29,7 @@ void BoxCollisionFAD_1_4Constraint::compute( F<Number>* g, std::vector<MogsOptim
 //    g[offset] =  coll_detector_->compute_one_distance<F<Number>>(T1,T2,coll_,d1_,d2_);
 }
 
-void BoxCollisionFAD_1_4Constraint::compute( Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
+void BoxCollisionFAD_1_4Constraint::compute( const Dependency* x, Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
 {
     unsigned int cpt = 0;
     for (int i=0;i<nb_body1_;i++)   for (int j=0;j<nb_body2_;j++)
@@ -42,7 +42,7 @@ void BoxCollisionFAD_1_4Constraint::compute( Dependency* g, std::vector<MogsOpti
 
 }
 
-void BoxCollisionFAD_1_4Constraint::compute(Number * g, std::vector<MogsOptimDynamics<Number> *>& dyns)
+void BoxCollisionFAD_1_4Constraint::compute(const Number*x,Number * g, std::vector<MogsOptimDynamics<Number> *>& dyns)
 {
     SpatialTransform<Number> T1,T2;
     unsigned int cpt = 0;

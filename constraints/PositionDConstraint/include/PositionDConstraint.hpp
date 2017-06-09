@@ -11,7 +11,7 @@ class PositionDConstraint: virtual public AbstractConstraint
 
     ~PositionDConstraint ();
 
-    void compute( double * g,std::vector<MogsOptimDynamics<double> *>& dyns)
+    void compute( const double*x, double * g,std::vector<MogsOptimDynamics<double> *>& dyns)
     {
         return compute<double>(g, dyns);
     }
@@ -19,6 +19,11 @@ class PositionDConstraint: virtual public AbstractConstraint
     template<typename T>
     void compute( T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
+    template<typename T>
+    void update_dynamics(const  T *x, std::vector<MogsOptimDynamics<T> *>& dyns)
+    {
+        // no param here
+    }
 
     private:
         QString Body;

@@ -68,19 +68,6 @@ void NLP_FAD_1_4::load_xml( )
         criteres_.push_back(crit);
 	}
 
-
-
-    QDomElement constraints=root_.firstChildElement("constraints");
-    unsigned int offset = 0;
-    for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
-	{
-        AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
-        ctr->set_offset(offset);
-        offset += ctr->get_nb_constraints();
-        std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
-        constraints_.push_back(ctr);
-	}
-
     /// FIXME allow to change the type of the AbstractParameterization through plugins
     QDomElement param =root_.firstChildElement("parameterization");
     if (param.tagName()=="parameterization")
@@ -91,11 +78,20 @@ void NLP_FAD_1_4::load_xml( )
         std::cerr<<"ERROR cannot find balise parameterization"<<std::endl;
         exit(0);
     }
-//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
 
-    unsigned int nb = parameterization_->get_number_constraints();
-    for (int i=0;i<nb;i++)
-        constraints_.push_back( dynamic_cast<AbstractFAD_1_4Constraint*>(parameterization_->get_constraint(i)));
+    QDomElement constraints=root_.firstChildElement("constraints");
+    unsigned int offset = 0;
+    for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
+	{
+        AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
+        ctr->set_offset(offset);
+        offset += ctr->get_nb_constraints();
+        std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
+        constraints_.push_back(ctr);
+        parameterization_->init_from_constraints(ctr);
+	}
+
+    nb_ctr_ = constraints_.size();
 
     #ifdef PRINT
     std::cout<<"end of load_xml"<<std::endl;
@@ -107,16 +103,16 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     #ifdef PRINT
     std::cout<<"start get_nlp_info"<<std::endl;
     #endif // PRINT
-    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
-    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
+//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
     nb_var_= parameterization_->get_nb_param();
 
     n = nb_var_;
     std::cout << "   n = " << n  << std::endl;
     m = 0;
-    for(int i=0;i<constraints_.size();i++)
+    for(int i=0;i<nb_ctr_;i++)
         m += constraints_[i]->get_nb_constraints();
     std::cout << "   m = " << m  << std::endl;
+
     // detection of the dependency
     Dependency * X = new Dependency [n];
     for(int i=0;i<n;i++)
@@ -128,12 +124,15 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         k.push_back(new MogsOptimDynamics<Dependency>(dyns_[i]->model));
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
 
+    parameterization_->prepare_computation(k);
+    for (unsigned int i=0; i<nb_ctr_; i++)
+        constraints_[i]->update_dynamics(X,k);
+
     parameterization_->compute(X,k);
 
-    for (unsigned int i=0; i<constraints_.size(); i++)
-    {
-        constraints_[i]->compute(G,k);
-    }
+    for (unsigned int i=0; i<nb_ctr_; i++)
+        constraints_[i]->compute(X,G,k);
+
     for(int i=0;i<m;i++)    for(int j=0;j<n;j++)
     {
 //        std::cout<<"G["<<i<<"].get("<<j<<") = "<< G[i].get(j)<<std::endl;
@@ -182,19 +181,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         x_l[i] = parameterization_->get_bounds_inf(i);
         x_u[i] = parameterization_->get_bounds_sup(i);
     }
-//    std::cout<<"fin "<< std::endl;
 
-/*    for (int k=0;k<nb_robots_;k++)
-    {
-        robots_[k]->getPositionLimit(qmin_[k],qmax_[k]);
-        // the variables have lower bounds of -qmax_
-        for (i=0; i<dyns_[k]->getNDof(); i++)
-        {
-            x_l[cpt] = qmin_[k][i];
-            x_u[cpt++] = qmax_[k][i];
-        }
-    }*/
-    //added
     cpt = 0;
     for (i=0; i<constraints_.size(); i++)
     {
@@ -229,8 +216,7 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 
     // initialize to the given starting point
     for(int i=0;i<nb_var_;i++)
-        x[i] = 0.1;
-        //x[i] = parameterization_->get_starting_point(i);
+        x[i] = parameterization_->get_starting_point(i);
 
     #ifdef PRINT
     std::cout<<"end of get_starting_point"<<std::endl;
@@ -246,7 +232,7 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
     #endif // PRINT
     int nb = criteres_.size();
     obj_value =0;
-
+    parameterization_->prepare_computation(dyns_);
     parameterization_->compute(x,dyns_);
     for (int i =0;i<nb;i++)
     {
@@ -272,7 +258,7 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 		X[i] = x[i];
 		X[i].diff(i,n);
 	}
-
+    parameterization_->prepare_computation(adyns_);
 	parameterization_->compute(X,adyns_);
 
 	F<Number> out=0;
@@ -295,13 +281,15 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     #endif // PRINT
     bool compute_kin = false;
     assert(n == nb_var_);
-
+    parameterization_->prepare_computation(dyns_);
+    for (unsigned int i=0; i<nb_ctr_; i++)
+        constraints_[i]->update_dynamics(x,dyns_);
     parameterization_->compute(x,dyns_);
 
     m = 3 ;
-    for (int i =0;i<constraints_.size();i++)
+    for (int i =0;i<nb_ctr_;i++)
     {
-        constraints_[i]->compute(g,dyns_);
+        constraints_[i]->compute(x,g,dyns_);
         //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
     }
     #ifdef PRINT
@@ -338,15 +326,17 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
             X[i] = x[i];
             X[i].diff(i,n);
         }
+        parameterization_->prepare_computation(adyns_);
+
+        for (unsigned int i=0; i<nb_ctr_; i++)
+            constraints_[i]->update_dynamics(X,adyns_);
 
         parameterization_->compute(X,adyns_);
 
-        int cpt=0;
-        for (unsigned int i=0; i<constraints_.size(); i++)  // for all physical constraints
-        {
-            constraints_[i]->compute(G,adyns_);
-        }
+        for (unsigned int i=0; i<nb_ctr_; i++)  // for all physical constraints
+            constraints_[i]->compute(X,G,adyns_);
 
+        unsigned int cpt=0;
         for (int i=0;i<nele_jac;i++)
             values[i] = G[row_[i]].d(col_[i]);
     }

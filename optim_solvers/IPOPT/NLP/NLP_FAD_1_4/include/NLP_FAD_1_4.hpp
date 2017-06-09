@@ -131,7 +131,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
         std::vector<unsigned int> col_,row_;
 
         unsigned int nb_var_;
-
+        unsigned int nb_ctr_;       // size of      constraints_
         public:
 
 	//@}

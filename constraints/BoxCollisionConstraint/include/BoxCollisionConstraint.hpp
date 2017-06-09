@@ -13,6 +13,12 @@ class BoxCollisionConstraint: virtual public AbstractConstraint
 
     void compute(double * g, std::vector<MogsOptimDynamics<double> *>& dyns);
 
+    template<typename T>
+    void update_dynamics(const  T *x, std::vector<MogsOptimDynamics<T> *>& dyns)
+    {
+
+    }
+
     protected:
 
       unsigned int robot1_, robot2_;
@@ -26,8 +32,6 @@ class BoxCollisionConstraint: virtual public AbstractConstraint
 
     protected:
       std::vector<collision_value> coll_;
-
-//    std::vector<MogsKinematics<double> *> dyns_;
 
 };
 

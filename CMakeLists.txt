@@ -41,28 +41,25 @@ include_directories (
 
 configure_file ("${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
                 "${PROJECT_SOURCE_DIR}/include/config_MogsOptimizationCore.h" )
-#
-#
-#get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-#set(MOGS_CORE_INCLUDE_DIRS "${Include_Directories}" CACHE INTERNAL "" )
-#
-#link_directories(	${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}
-#)
-#
-## Perform the proper linking
-#SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-#
 
 FILE ( GLOB_RECURSE
         header_files_MogsOptimizationCore
         include/*.h
         include/*.hpp)
-#
+
+FILE ( GLOB_RECURSE
+        sources_files_MogsOptimizationCore
+        src/*.cpp)
+
+ADD_LIBRARY(	MogsOptimizationCore SHARED
+		${sources_files_MogsOptimizationCore}
+)
 ## Perform the proper linking
 #SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 #
 # install the include files// return the structure of the Jacobian
 SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsOptimizationCore)
+SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
 # install the include files
 install(FILES ${header_files_MogsOptimizationCore} DESTINATION ${INSTALL_INCLUDE_DIRS})
@@ -70,11 +67,15 @@ install(FILES ${header_files_MogsOptimizationCore} DESTINATION ${INSTALL_INCLUDE
 ### Configure file
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 SET(MogsOptimizationCore_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
+SET(MogsOptimizationCore_LIBRARIES  MogsOptimizationCore CACHE INTERNAL "")
 SET(MogsOptimizationCore_FLAGS "-DMogsOptimizationCore_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
 SET(MogsOptimizationCore_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsOptimizationCore_FLAGS})
 #  add flags (done before)
 configure_file(MogsOptimizationCoreConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake" @ONLY)
+
+# install the library files
+install( TARGETS MogsOptimizationCore LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimizationCore" COMPONENT dev )

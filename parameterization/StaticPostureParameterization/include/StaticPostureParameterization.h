@@ -17,10 +17,17 @@ class StaticPostureParameterization : virtual public AbstractParameterization
             compute<double>(x,dyns);
         }
 
+        void prepare_computation( std::vector<MogsOptimDynamics<double> *>& dyns)
+        {
+            prepare_computation<double>(dyns);
+        }
 
 
         template<typename T>
           void compute( const T *x,std::vector<MogsOptimDynamics<T> *>& dyns);
+
+        template<typename T>
+          void prepare_computation( std::vector<MogsOptimDynamics<T> *>& dyns);
 
         virtual ~StaticPostureParameterization();
     protected:

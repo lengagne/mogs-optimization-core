@@ -25,6 +25,12 @@ class AbstractFAD_1_4Parameterization : virtual public AbstractParameterization
 
         virtual void compute( const Dependency  *x, std::vector<MogsOptimDynamics<Dependency> *>& dyns) = 0;
 
+        virtual void prepare_computation( std::vector<MogsOptimDynamics<Number> *>& dyns) = 0;
+
+        virtual void prepare_computation( std::vector<MogsOptimDynamics<F<Number>> *>& dyns) = 0;
+
+        virtual void prepare_computation( std::vector<MogsOptimDynamics<Dependency> *>& dyns) = 0;
+
     protected:
 
 };

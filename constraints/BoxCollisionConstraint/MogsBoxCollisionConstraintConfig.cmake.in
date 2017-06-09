@@ -9,7 +9,7 @@
 
 set(MogsBoxCollisionConstraint_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
 
-set(MogsPBoxCollisionConstraint_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+set(MogsBoxCollisionConstraint_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
 
 set(MogsBoxCollisionConstraint_LIBRARIES @MogsBoxCollisionConstraint_LIBRARIES@ @MogsCore_LIBRARIES@)
 

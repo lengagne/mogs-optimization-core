@@ -8,10 +8,8 @@ ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
     n = 0;
     for (int i=0;i<dyns.size();i++)
         n += dyns[i]->getNDof();
-    upper.resize(1);
-    upper(0) =0;
-    lower.resize(1);
-    lower(0) =0;
+    upper_.push_back(0);
+    lower_.push_back(0);
 
     QDomElement Child=ele.firstChildElement().toElement();
 

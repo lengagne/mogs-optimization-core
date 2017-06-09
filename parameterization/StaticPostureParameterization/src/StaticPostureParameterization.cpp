@@ -12,13 +12,6 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
     }
     std::cout<<"\tcompute_forces_ = "<< compute_forces_<<std::endl;
 
-    for (QDomElement ElContact = Param.firstChildElement("contact"); !ElContact.isNull(); ElContact = ElContact.nextSiblingElement("contact") )
-    {
-//        QString body1_name = ElBody1.text().simplified();
-//        b1.push_back(body1_name);
-//        d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
-    }
-
     nb_robots_ = dyns.size();
     nb_param_ = 0;
     for (int i=0;i<nb_robots_;i++)

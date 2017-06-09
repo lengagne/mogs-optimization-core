@@ -1,6 +1,6 @@
 
 template<typename T>
-void ToZeroConstraint::compute( T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
+void ToZeroConstraint::compute( const T*x, T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
     g[offset] = 0.;
     // FIXME only for first robot

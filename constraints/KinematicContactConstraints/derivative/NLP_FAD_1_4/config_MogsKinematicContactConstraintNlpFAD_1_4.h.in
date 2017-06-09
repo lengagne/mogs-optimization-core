@@ -1,8 +1,0 @@
-#ifndef MogsKinematicContactConstraintNlpFAD_CONFIG_H
-#define MogsKinematicContactConstraintNlpFAD_CONFIG_H
-
-#define MogsKinematicContactConstraintNlpFAD_VERSION_MAJOR @MogsKinematicContactConstraintNlpFAD_VERSION_MAJOR@
-#define MogsKinematicContactConstraintNlpFAD_VERSION_MINOR @MogsKinematicContactConstraintNlpFAD_VERSION_MINOR@
-
-#endif
-

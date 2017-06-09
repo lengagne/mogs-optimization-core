@@ -5,8 +5,8 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
 {
     qDebug()<<"Constructor of PositionDConstraint";
     m = 3; //desired_Position_.size();
-   upper.resize(3);
-    lower.resize(3);
+    upper_.resize(3);
+    lower_.resize(3);
     desired_Position_ = Eigen::Matrix<double,3,1>::Zero();
     QDomElement Child=contraint.firstChildElement().toElement();
 
@@ -76,8 +76,10 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
             }
     std::cout<<"desired_Position_ = "<< desired_Position_.transpose() <<std::endl;
 
-    upper = desired_Position_;
-    lower = desired_Position_;
+    for (int i=0;i<3;i++)
+    {
+        upper_[i] = lower_[i] = desired_Position_(i);
+    }
 }
    //
 

@@ -1,9 +1,0 @@
-#ifndef MogsKinematicContactConstraint_CONFIG_H
-#define MogsKinematicContactConstraint_CONFIG_H
-
-#define MogsKinematicContactConstraint_VERSION_MAJOR @MogsKinematicContactConstraint_VERSION_MAJOR@
-#define MogsKinematicContactConstraint_VERSION_MINOR @MogsKinematicContactConstraint_VERSION_MINOR@
-
-
-#endif
-

@@ -45,13 +45,12 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
 
     m = nb_body1_ * nb_body2_;
 
-    unsigned int index_robot_1, index_robot_2;
     unsigned int nb = dyns.size();
     for (int i=0;i<nb;i++)
     {
         if( dyns[i]->getRobotName() == r1)
         {
-            index_robot_1 = i;
+            robot1_ = i;
             break;
         }
     }
@@ -59,7 +58,7 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
     {
         if( dyns[i]->getRobotName() == r2)
         {
-            index_robot_2 = i;
+            robot2_ = i;
             break;
         }
     }
@@ -67,19 +66,21 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
     for (int i=0;i<nb_body1_;i++)   for (int j=0;j<nb_body2_;j++)
     {
         collision_value tmp;
-        tmp.robot_1 = index_robot_1;
-        tmp.robot_2 = index_robot_2;
-        tmp.body_1 = dyns[index_robot_1]->model->GetBodyId(b1[i]);
-        tmp.body_2 = dyns[index_robot_2]->model->GetBodyId(b2[j]);
+        tmp.robot_1 = robot1_;
+        tmp.robot_2 = robot2_;
+        body1_.push_back(dyns[robot1_]->model->GetBodyId(b1[i]));
+        body2_.push_back(dyns[robot2_]->model->GetBodyId(b2[j]));
+        tmp.body_1 = dyns[robot1_]->model->GetBodyId(b1[i]);
+        tmp.body_2 = dyns[robot2_]->model->GetBodyId(b2[j]);
         coll_.push_back(tmp);
     }
 
     QDomElement Eltype=ele.firstChildElement("type");
-    upper.resize(m);
-    lower.resize(m);
+    upper_.resize(m);
+    lower_.resize(m);
     for (int i=0;i<m;i++)
     {
-        upper(i) = lower(i) =0;
+        upper_[i] = lower_[i] =0;
         if (!Eltype.isNull())
         {
             if (Eltype.text().simplified()=="zero")
@@ -87,21 +88,13 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
 
             }else if(Eltype.text().simplified()=="avoid")
             {
-                lower(i) = 0.001;
-                upper(i) = 1e10;
+                lower_[i] = 0.001;
+                upper_[i] = 1e10;
             }
             else if(Eltype.text().simplified()=="penetration")
-                lower(i) = -1e10;
+                lower_[i] = -1e10;
         }
     }
-
-//     for (int i=0;i<dyns.size();i++)
-//        dyns_.push_back((MogsKinematics<double>*)dyns[i]);
-//    collision_computation_ = new MogsBoxCollision(kins,tmp_colls);
-//    dyns_ = dyns;
-
-
-
     coll_detector_ = new MogsBoxCollision();
 }
 
@@ -123,9 +116,7 @@ void BoxCollisionConstraint::compute(double * g, std::vector<MogsOptimDynamics<d
         dyns[coll_[cpt].robot_1]->getFrameCoordinate(coll_[cpt].body_1,T1);
         dyns[coll_[cpt].robot_2]->getFrameCoordinate(coll_[cpt].body_2,T2);
 
-
         g[offset+cpt] = coll_detector_->compute_one_distance<double>(T1,T2,coll_[cpt],d1_[i],d2_[j]);
-        std::cout<<"g["<<offset+cpt<<"] = "<< g[offset+cpt] <<std::endl;
         cpt++;
     }
 }

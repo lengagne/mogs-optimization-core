@@ -60,7 +60,10 @@ if(IPOPT_FOUND)
 
     target_link_libraries( MogsIpoptOptimization
                 ${IPOPT_LIBRARIES}
-                ${MogsCore_LIBRARIES})
+                ${MogsCore_LIBRARIES}
+                ${MogsOptimizationCore_LIBRARIES})
+
+    message("${MogsOptimizationCore_LIBRARIES} = " ${MogsOptimizationCore_LIBRARIES})
 
 ###  Test of IPOPT
 
