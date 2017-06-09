@@ -17,7 +17,7 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
     void update_dynamics(const  T *x, std::vector<MogsOptimDynamics<T> *>& dyns);
 
     template<typename T>
-    void compute_distance_point( const T*x , T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
+    void compute_contact_constraint( const T*x , T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
     protected:
         unsigned int nb_contact_;

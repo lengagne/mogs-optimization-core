@@ -17,14 +17,14 @@ BoxContactFAD_1_4Constraint::~BoxContactFAD_1_4Constraint ()
 void BoxContactFAD_1_4Constraint::compute(const F<Number>*x , F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
 {
     BoxCollisionFAD_1_4Constraint::compute(x,g,dyns);
-    compute_distance_point<F<Number>>(x,g,dyns);
+    compute_contact_constraint<F<Number>>(x,g,dyns);
 }
 
 void BoxContactFAD_1_4Constraint::compute( const Dependency*x, Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
 {
     // Here we do not care of computation validity, only the dependency matters.
     BoxCollisionFAD_1_4Constraint::compute(x,g,dyns);
-    Eigen::Matrix<Dependency,3,1> point, tmp;
+    Eigen::Matrix<Dependency,3,1> point, tmp,tmp2,force;
     unsigned int cpt = offset_distance_point_;
     SpatialTransform<Dependency> trans;
     unsigned int cpt_coll = 0;
@@ -36,8 +36,14 @@ void BoxContactFAD_1_4Constraint::compute( const Dependency*x, Dependency* g, st
         tmp = trans.get_Position(point);
         g[cpt++] = tmp(0)+tmp(1)+tmp(2);
         dyns[robot2_]->getFrameCoordinate(body2_[j],trans);
-        tmp = trans.get_Position(point);
-        g[cpt++] = tmp(0)+tmp(1)+tmp(2);
+        tmp2 = trans.get_Position(point);
+        g[cpt++] = tmp2(0)+tmp2(1)+tmp2(2);
+
+        for(int k=0;k<3;k++)
+            force(k) = x[offset_param_ + 6*cpt_coll + 3+k];
+
+
+        g[cpt++] = tmp(0)+tmp(1)+tmp(2)+force(0)+force(1)+force(2);
         cpt_coll++;
     }
 }
@@ -45,7 +51,7 @@ void BoxContactFAD_1_4Constraint::compute( const Dependency*x, Dependency* g, st
 void BoxContactFAD_1_4Constraint::compute(const Number*x, Number * g, std::vector<MogsOptimDynamics<Number> *>& dyns)
 {
     BoxCollisionFAD_1_4Constraint::compute(x,g,dyns);
-    compute_distance_point<Number>(x,g,dyns);
+    compute_contact_constraint<Number>(x,g,dyns);
 }
 
 

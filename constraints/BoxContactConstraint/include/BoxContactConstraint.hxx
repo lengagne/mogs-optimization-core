@@ -19,21 +19,29 @@ void BoxContactConstraint::update_dynamics(const  T *x, std::vector<MogsOptimDyn
 }
 
 template<typename T>
-void BoxContactConstraint::compute_distance_point(const T*x, T *g, std::vector<MogsOptimDynamics<T> *>& dyns)
+void BoxContactConstraint::compute_contact_constraint(const T*x, T *g, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
-    Eigen::Matrix<T,3,1> point;
+    Eigen::Matrix<T,3,1> force,point, normal,contact_point,dummy;
     unsigned int cpt = offset_distance_point_;
     SpatialTransform<T> trans;
-    int cpt_coll  = 0;
+    unsigned int cpt_coll  = 0;
     for (int i=0;i<nb_body1_;i++) for (int j=0;j<nb_body2_;j++)
     {
         for(int k=0;k<3;k++)
             point(k) = x[offset_param_ + 6*cpt_coll + k];
 
         dyns[robot1_]->getFrameCoordinate(body1_[i],trans);
-        g[cpt++] = coll_detector_->compute_one_distance(trans,d1_[i],point);
+        g[cpt++] = coll_detector_->compute_one_distance(trans,d1_[i],point,contact_point);
         dyns[robot2_]->getFrameCoordinate(body2_[j],trans);
-        g[cpt++] = coll_detector_->compute_one_distance(trans,d2_[j],point);
+        g[cpt++] = coll_detector_->compute_one_distance(trans,d2_[j],point,dummy);
+
+        for(int k=0;k<3;k++)
+            force(k) = x[offset_param_ + 6*cpt_coll + 3+k];
+
+        normal = (point - contact_point);
+        normal.normalize();
+        force.normalize();
+        g[cpt++] = normal.dot(force);
         cpt_coll++;
     }
 }

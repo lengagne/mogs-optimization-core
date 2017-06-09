@@ -19,20 +19,16 @@ BoxContactConstraint::BoxContactConstraint (  QDomElement ele,
     {
         param_inf_.push_back(-1e3);
         param_sup_.push_back(1e3);
-        param_init_.push_back(0.0);
+        param_init_.push_back(0.1);
     }
 
     for (int i=0;i<nb_contact_;i++)
     {
         upper_.push_back(0.1);    lower_.push_back(-0.1);  // distance for first body
         upper_.push_back(0.1);    lower_.push_back(-0.1);  // distance for second body
+        lower_.push_back(0.5); // friction cone for the moment
+        upper_.push_back(1e200);
     }
-
-//    for (int i=0;i<nb_contact_;i++)
-//    {
-//        lower_.push_back(0.5); // friction cone for the moment
-//        upper_.push_back(1e20);
-//    }
 }
 
 BoxContactConstraint::~BoxContactConstraint ()
@@ -49,7 +45,7 @@ void BoxContactConstraint::compute(const double *x , double * g, std::vector<Mog
 {
     BoxCollisionConstraint::compute(g,dyns);
 
-    compute_distance_point<double>(x,g,dyns);
+    compute_contact_constraint<double>(x,g,dyns);
 
 //    SpatialTransform<double> T1,T2;
 //    unsigned int cpt = 0;
