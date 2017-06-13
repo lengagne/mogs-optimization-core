@@ -391,17 +391,21 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
         aq[k].resize(robots_[k]->getNDof());
 
     }
+    parameterization_->prepare_computation(dyns_);
 
+    for (unsigned int i=0; i<nb_ctr_; i++)
+        constraints_[i]->update_dynamics(x,dyns_);
     parameterization_->compute(x,dyns_);
 
     int cpt = 0;
     for(int k=0;k<nb_robots_;k++)
     {
         std::cout<<"q["<<k<<"] = "<< dyns_[k]->q_.transpose()<<std::endl;
-
         visu.apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
-
     }
+
+    for (int i=0;i<constraints_.size();i++)
+        constraints_[i]->update_visu(&visu,dyns_,(const double*) x);
 
     visu.wait_close();
 #endif // MogsVisu_FOUND

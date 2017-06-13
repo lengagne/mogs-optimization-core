@@ -25,7 +25,7 @@ void BoxContactFAD_1_4Constraint::compute( const Dependency*x, Dependency* g, st
     // Here we do not care of computation validity, only the dependency matters.
     BoxCollisionFAD_1_4Constraint::compute(x,g,dyns);
     Eigen::Matrix<Dependency,3,1> point, tmp,tmp2,force;
-    unsigned int cpt = offset_distance_point_;
+    unsigned int cpt = offset+nb_contact_;
     SpatialTransform<Dependency> trans;
     unsigned int cpt_coll = 0;
     for (int i=0;i<nb_body1_;i++) for (int j=0;j<nb_body2_;j++)
@@ -43,7 +43,7 @@ void BoxContactFAD_1_4Constraint::compute( const Dependency*x, Dependency* g, st
             force(k) = x[offset_param_ + 6*cpt_coll + 3+k];
 
 
-        g[cpt++] = tmp(0)+tmp(1)+tmp(2)+force(0)+force(1)+force(2);
+        g[cpt++] = tmp(0)+tmp(1)+tmp(2)+tmp2(0)+tmp2(1)+tmp2(2)+force(0)+force(1)+force(2);
         cpt_coll++;
     }
 }

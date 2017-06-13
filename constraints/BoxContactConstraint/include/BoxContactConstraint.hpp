@@ -19,10 +19,16 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
     template<typename T>
     void compute_contact_constraint( const T*x , T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
+    #ifdef MogsVisu_FOUND
+    virtual void update_visu (VisuHolder *visu,
+                              std::vector<MogsOptimDynamics<double> *> & dyns,
+                              const double * param);
+    #endif // MogsVisu_FOUND
+
     protected:
         unsigned int nb_contact_;
 
-        unsigned int offset_distance_point_, offset_force_;
+//        unsigned int offset_contact_ctr_;
 
 };
 

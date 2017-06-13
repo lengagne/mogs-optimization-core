@@ -33,10 +33,12 @@ foreach(p LIB INCLUDE)
 endforeach()
 
 find_package(MogsCore REQUIRED)
+find_package(MogsVisu QUIET)
 
 include_directories (
 	include
 	${MogsCore_INCLUDE_DIRS}
+	${MogsVisu_INCLUDE_DIRS}
 )
 
 configure_file ("${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
@@ -54,6 +56,9 @@ FILE ( GLOB_RECURSE
 ADD_LIBRARY(	MogsOptimizationCore SHARED
 		${sources_files_MogsOptimizationCore}
 )
+
+target_link_libraries(MogsOptimizationCore
+                        ${MogsVisu_LIBRARIES})
 ## Perform the proper linking
 #SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 #
@@ -70,7 +75,7 @@ SET(MogsOptimizationCore_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsOptimizationCore_LIBRARIES  MogsOptimizationCore CACHE INTERNAL "")
 SET(MogsOptimizationCore_FLAGS "-DMogsOptimizationCore_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
 SET(MogsOptimizationCore_FOUND "TRUE" CACHE INTERNAL "")
-add_definitions(${MogsOptimizationCore_FLAGS})
+add_definitions(${MogsOptimizationCore_FLAGS} ${MogsVisu_FLAGS})
 #  add flags (done before)
 configure_file(MogsOptimizationCoreConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake" @ONLY)
 

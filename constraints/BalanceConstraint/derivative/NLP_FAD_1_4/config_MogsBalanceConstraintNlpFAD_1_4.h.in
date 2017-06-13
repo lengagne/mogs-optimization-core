@@ -1,0 +1,8 @@
+#ifndef MogsBalanceCriteriaNlpFAD_CONFIG_H
+#define MogsBalanceCriteriaNlpFAD_CONFIG_H
+
+#define MogsBalanceCriteriaNlpFAD_VERSION_MAJOR @MogsBalanceCriteriaNlpFAD_VERSION_MAJOR@
+#define MogsBalanceCriteriaNlpFAD_VERSION_MINOR @MogsBalanceCriteriaNlpFAD_VERSION_MINOR@
+
+#endif
+

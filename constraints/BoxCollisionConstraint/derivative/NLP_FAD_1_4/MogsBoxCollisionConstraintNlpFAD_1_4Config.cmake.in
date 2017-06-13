@@ -11,6 +11,6 @@ set(MogsBoxCollisionConstraintNlpFAD_1_4_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @M
 
 set(MogsBoxCollisionConstraintNlpFAD_1_4_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
 
-set(MogsBoxCollisionConstraintNlpFAD_1_4_LIBRARIES @MogsBoxCollisionConstraintNlpFAD_LIBRARIES@ @MogsCore_LIBRARIES@)
+set(MogsBoxCollisionConstraintNlpFAD_1_4_LIBRARIES @MogsBoxCollisionConstraintNlpFAD_1_4_LIBRARIES@ @MogsCore_LIBRARIES@)
 
-SET(MogsBoxCollisionConstraintNlpFAD_1_4_FLAGS @MogsBoxCollisionConstraintNlpFAD_FLAGS@ @MogsCore_FLAGS@)
+SET(MogsBoxCollisionConstraintNlpFAD_1_4_FLAGS @MogsBoxCollisionConstraintNlpFAD_1_4_FLAGS@ @MogsCore_FLAGS@)

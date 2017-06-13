@@ -3,6 +3,10 @@
 
 #include "MogsOptimDynamics.h"
 
+#ifdef MogsVisu_FOUND
+    #include "VisuHolder.h"
+#endif // MogsVisu_FOUND
+
 class AbstractConstraint
 {
  public:
@@ -50,6 +54,16 @@ class AbstractConstraint
             sup = param_sup_;
             init = param_init_;
         }
+
+        #ifdef MogsVisu_FOUND
+        virtual void update_visu (VisuHolder *visu,
+                                  std::vector<MogsOptimDynamics<double> *> & dyns,
+                                  const double * param)
+        {
+
+        }
+        #endif // MogsVisu_FOUND
+
 
  protected:
 

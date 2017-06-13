@@ -31,7 +31,7 @@ endforeach()
 
 include_directories (
 	include
-	${MogsPositionCriteria_INCLUDE_DIRS}
+	${MogsBoxCollisionConstraint_INCLUDE_DIRS}
 	${MogsNlpFAD_1_4_INCLUDE_DIRS}
 )
 
@@ -45,7 +45,8 @@ SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
 FILE ( GLOB_RECURSE
 		header_files_MogsBoxCollisionConstraintNlpFAD_1_4
-		include/*.h)
+		include/*.h
+		include/*.hpp)
 
 FILE ( GLOB_RECURSE
 		source_files_MogsBoxCollisionConstraintNlpFAD_1_4
@@ -88,12 +89,13 @@ get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY 
 SET(MogsBoxCollisionConstraintNlpFAD_1_4_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsBoxCollisionConstraintNlpFAD_1_4_LIBRARIES  MogsBoxCollisionConstraintNlpFAD_1_4 CACHE INTERNAL "")
 SET(MogsBoxCollisionConstraintNlpFAD_1_4_FLAGS "-DMogsBoxCollisionConstraintNlpFAD_1_4_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsBoxCollisionConstraintNlpFAD_1_4_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsBoxCollisionConstraintNlpFAD_1_4_FLAGS} ${MogsVisu_FLAGS})
 #  add flags (done before)
 configure_file(MogsBoxCollisionConstraintNlpFAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintNlpFAD_1_4Config.cmake" @ONLY)
 
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintNlpFAD_1_4Config.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsBoxCollisionConstraintNlpFAD_1_4" COMPONENT dev )
+            DESTINATION "${INSTALL_LIB_PATH}/MogsBoxCollisionConstraintNlpFAD_1_4" COMPONENT dev )
 
 install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraintNlpFAD_1_4 BoxCollision ${INSTALL_LIB_DIRS}/libMogsBoxCollisionConstraintNlpFAD_1_4.so)")

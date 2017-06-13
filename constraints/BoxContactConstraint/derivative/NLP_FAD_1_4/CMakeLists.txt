@@ -12,15 +12,9 @@ if(NOT MogsBoxContactConstraint_FOUND)
 	find_package(MogsBoxContactConstraint REQUIRED)
 endif(NOT MogsBoxContactConstraint_FOUND)
 
-if(NOT MogsBoxCollisionCriteriaNlpFAD_1_4_FOUND)
+if(NOT MogsBoxCollisionConstraintNlpFAD_1_4_FOUND)
 	find_package(MogsBoxCollisionConstraintNlpFAD_1_4 REQUIRED)
-endif(NOT MogsBoxCollisionCriteriaNlpFAD_1_4_FOUND)
-
-if(NOT MogsNlpFAD_1_4_FOUND)
-	find_package(MogsNlpFAD_1_4 REQUIRED)
-endif(NOT MogsNlpFAD_1_4_FOUND)
-
-
+endif(NOT MogsBoxCollisionConstraintNlpFAD_1_4_FOUND)
 
 set( LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
@@ -35,13 +29,12 @@ endforeach()
 
 include_directories (
 	include
-	${MogsPositionCriteria_INCLUDE_DIRS}
+	${MogsBoxContact_INCLUDE_DIRS}
 	${MogsBoxCollisionConstraintNlpFAD_1_4_INCLUDE_DIRS}
 )
 
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/config_MogsBoxContactConstraintNlpFAD_1_4.h.in"
 				"${CMAKE_CURRENT_SOURCE_DIR}/include/config_MogsBoxContactConstraintNlpFAD_1_4.h" )
-
 
 
 # Perform the proper linking
@@ -92,6 +85,7 @@ get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY 
 SET(MogsBoxContactConstraintNlpFAD_1_4_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
 SET(MogsBoxContactConstraintNlpFAD_1_4_LIBRARIES  MogsBoxContactConstraintNlpFAD_1_4 CACHE INTERNAL "")
 SET(MogsBoxContactConstraintNlpFAD_1_4_FLAGS "-DMogsBoxContactConstraintNlpFAD_1_4_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
+SET(MogsBoxContactConstraintNlpFAD_1_4_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsBoxContactConstraintNlpFAD_1_4_FLAGS} ${MogsVisu_FLAGS})
 #  add flags (done before)
 configure_file(MogsBoxContactConstraintNlpFAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintNlpFAD_1_4Config.cmake" @ONLY)
