@@ -21,7 +21,7 @@ void BoxCollisionFAD_1_4Constraint::compute( const F<Number>* x, F<Number>* g, s
         dyns[coll_[cpt].robot_2]->getFrameCoordinate(coll_[cpt].body_2,T2);
 
 
-        g[offset+cpt] = coll_detector_->compute_one_distance<F<Number>>(T1,T2,coll_[cpt],d1_[i],d2_[j]);
+        g[offset+cpt] = coll_detector_->compute_one_distance<F<Number>>(T1,T2,d1_[i],d2_[j]);
         cpt++;
     }
 //    dyns[coll_.robot_1]->getFrameCoordinate(coll_.body_1,T1);
@@ -50,7 +50,7 @@ void BoxCollisionFAD_1_4Constraint::compute(const Number*x,Number * g, std::vect
     {
         dyns[coll_[cpt].robot_1]->getFrameCoordinate(coll_[cpt].body_1,T1);
         dyns[coll_[cpt].robot_2]->getFrameCoordinate(coll_[cpt].body_2,T2);
-        g[offset+cpt] = coll_detector_->compute_one_distance<Number>(T1,T2,coll_[cpt],d1_[i],d2_[j]);
+        g[offset+cpt] = coll_detector_->compute_one_distance<Number>(T1,T2,d1_[i],d2_[j]);
         cpt++;
     }
 }

@@ -26,7 +26,7 @@ void MogsNlpIpopt::save_results( 	Index n,
 	QDomElement node = doc.createElement("result");
 	ElResults.appendChild(node);
 
-	qDebug()<<" fichiers = "<< doc.toString();
+//	qDebug()<<" fichiers = "<< doc.toString();
 // 	root_.
 }
 

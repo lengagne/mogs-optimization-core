@@ -20,6 +20,7 @@ class CloseToMiddleCriteria: public AbstractCriteria
       private:
 
         QString Robot;
+		unsigned int robot_id_;
        Eigen::Matrix<double,Eigen::Dynamic,  1> qm_;
 };
 

@@ -117,7 +117,7 @@ void MogsIpoptOptimization::solve()
 	  }
 
     //set options
-	app_->Options()->SetStringValue("derivative_test", "first-order");
+// 	app_->Options()->SetStringValue("derivative_test", "first-order");
 	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 
 	clock_t begin = clock();

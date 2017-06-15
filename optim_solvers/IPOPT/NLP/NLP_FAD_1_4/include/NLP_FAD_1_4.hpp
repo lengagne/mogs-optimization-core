@@ -132,6 +132,10 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
         unsigned int nb_var_;
         unsigned int nb_ctr_;       // size of      constraints_
+        
+        bool compute_number_, compute_gradient_;
+		
+		F<Number> *G, *X;
         public:
 
 	//@}
