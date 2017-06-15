@@ -1,0 +1,8 @@
+#ifndef MogsTorqueCriteriaNlpFAD_CONFIG_H
+#define MogsTorqueCriteriaNlpFAD_CONFIG_H
+
+#define MogsTorqueCriteriaNlpFAD_VERSION_MAJOR @MogsTorqueCriteriaNlpFAD_VERSION_MAJOR@
+#define MogsTorqueCriteriaNlpFAD_VERSION_MINOR @MogsTorqueCriteriaNlpFAD_VERSION_MINOR@
+
+#endif
+

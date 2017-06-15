@@ -1,0 +1,9 @@
+#ifndef MogsTorqueCriteria_CONFIG_H
+#define MogsTorqueCriteria_CONFIG_H
+
+#define MogsTorqueCriteria_VERSION_MAJOR @MogsTorqueCriteria_VERSION_MAJOR@
+#define MogsTorqueCriteria_VERSION_MINOR @MogsTorqueCriteria_VERSION_MINOR@
+
+
+#endif
+
