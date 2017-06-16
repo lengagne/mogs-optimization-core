@@ -1,5 +1,40 @@
 #include <PositionCriteria.hpp>
 
+PositionCriteria::PositionCriteria(  double weight,
+                                     std::vector<MogsOptimDynamics<double> *> dyns,
+                                     const QString& robot_name,
+                                     const QString& body_name,
+                                     const Eigen::Matrix<double,3,1>& body_position,
+                                     const Eigen::Matrix<double,3,1>& desired_position)
+{
+    weight_ = weight;
+    Robot = robot_name;
+    robot_id_ = -1;
+    for (int i=0;i<dyns.size();i++)
+    {
+        if(Robot == dyns[i]->getRobotName())
+        {
+            robot_id_ = i;
+            break;
+        }
+    }
+    if(robot_id_==-1)
+    {
+        std::cerr<<"Error in "<<__FILE__<<" at line "<< __LINE__<<std::endl;
+        std::cerr<<"Error cannot recognize robot_id !!"<<std::endl;
+        exit(-1);
+    }
+
+    Body=body_name;
+    body_id_ = dyns[robot_id_]->model->GetBodyId(Body);
+    if (body_id_  ==  std::numeric_limits <unsigned int >::max () )
+    {
+        std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
+        exit(0);
+    }
+    body_position_ = body_position;
+    desired_position_ = desired_position;
+}
 
 PositionCriteria::PositionCriteria (QDomElement critere,
                                      std::vector<MogsOptimDynamics<double> *> dyns)

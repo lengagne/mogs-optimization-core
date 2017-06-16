@@ -1,5 +1,13 @@
 #include "StaticPostureParameterization.h"
 
+StaticPostureParameterization::StaticPostureParameterization(   bool compute_forces,
+                                                                std::vector<MogsOptimDynamics<double> *>& dyns)
+{
+    compute_forces_ = compute_forces;
+    init(dyns);
+}
+
+
 StaticPostureParameterization::StaticPostureParameterization(   QDomElement Param,
                                                                 std::vector<MogsOptimDynamics<double> *>& dyns)
 {
@@ -11,7 +19,12 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
         compute_forces_ = convert_to_bool(cf.text().simplified());
     }
     std::cout<<"\tcompute_forces_ = "<< compute_forces_<<std::endl;
+    init(dyns);
+}
 
+
+void StaticPostureParameterization::init(std::vector<MogsOptimDynamics<double> *>& dyns)
+{
     nb_robots_ = dyns.size();
     nb_param_ = 0;
     for (int i=0;i<nb_robots_;i++)
@@ -20,7 +33,7 @@ StaticPostureParameterization::StaticPostureParameterization(   QDomElement Para
         nb_param_ += dyns[i]->getNDof();
     }
 
-    std::cout<<"\tnb_param_ = "<< nb_param_ <<std::endl;
+    std::cout<<"nb_param_ = "<< nb_param_ <<std::endl;
 //    nb_param_ = robot->getNDof();
 
 

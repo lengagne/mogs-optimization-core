@@ -24,13 +24,21 @@
 #define __MOGSABSTRACTOPTIMIZATION__
 
 #include "MogsAbstractProblem.h"
-
+#include "MogsOptimDynamics.h"
+#include "AbstractParameterization.h"
+#include "AbstractCriteria.hpp"
+#include "AbstractConstraint.hpp"
 
 class MogsAbstractOptimization: public MogsAbstractProblem
 {
       public:
 
         virtual void read_problem (const mogs_string & filename) = 0;
+
+        virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                            const AbstractParameterization* param,
+                                            const std::vector<AbstractCriteria* > &criteres,
+                                            const std::vector<AbstractConstraint*> & constraints)=0;
 
 	/** Solve the problem	 */
         virtual void solve() = 0;

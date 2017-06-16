@@ -99,6 +99,11 @@ class NLP_FAD_1_4:public MogsNlpIpopt
     void run_computation(const Number * x,unsigned int n, bool new_x);
     void run_gradient_computation(const Number * x, unsigned int n, bool new_x);
 
+    void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                const AbstractParameterization* param,
+                                const std::vector<AbstractCriteria* > &criteres,
+                                const std::vector<AbstractConstraint*> & constraints);
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.

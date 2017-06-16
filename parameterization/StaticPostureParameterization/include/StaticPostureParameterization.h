@@ -9,6 +9,9 @@
 class StaticPostureParameterization : virtual public AbstractParameterization
 {
     public:
+        StaticPostureParameterization(  bool compute_force,
+                                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
         StaticPostureParameterization(  QDomElement Param,
                                         std::vector<MogsOptimDynamics<double> *>& dyns );
 
@@ -16,6 +19,8 @@ class StaticPostureParameterization : virtual public AbstractParameterization
         {
             compute<double>(x,dyns);
         }
+
+        void init( std::vector<MogsOptimDynamics<double> *>& dyns );
 
         void prepare_computation( std::vector<MogsOptimDynamics<double> *>& dyns)
         {

@@ -5,18 +5,25 @@
 
 class PositionCriteria: virtual public AbstractCriteria
 {   public:
+    PositionCriteria(double weight,
+                     std::vector<MogsOptimDynamics<double> *> dyns,
+                     const QString& robot_name,
+                     const QString& body_name,
+                     const Eigen::Matrix<double,3,1>& body_position,
+                     const Eigen::Matrix<double,3,1>& desired_position);
+
 	PositionCriteria (QDomElement critere,
                        std::vector<MogsOptimDynamics<double> *> dyns);
 
     ~PositionCriteria ();
 
-    double compute( std::vector<MogsOptimDynamics<double> *> dyns)
+    double compute( std::vector<MogsOptimDynamics<double> *>& dyns)
     {
         return compute<double>(dyns);
     }
 
     template<typename T>
-      T compute( std::vector<MogsOptimDynamics<T> *> dyns);
+      T compute( std::vector<MogsOptimDynamics<T> *>& dyns);
 
       private:
 

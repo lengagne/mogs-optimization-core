@@ -480,6 +480,14 @@ void NLP_FAD_1_4::run_gradient_computation(const Number * x, unsigned int n, boo
 
 // For dynamic loading of the library : do not remove !!
 
+void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                            const AbstractParameterization* param,
+                                            const std::vector<AbstractCriteria* > &criteres,
+                                            const std::vector<AbstractConstraint*> & constraints)
+{
+    std::cout<<"set_problem_properties"<<std::endl;
+}
+
 extern "C" NLP_FAD_1_4* create()
 {
     return new NLP_FAD_1_4();

@@ -48,10 +48,19 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     ~MogsIpoptOptimization();
 
+    void init_nlp_problem (const mogs_string & plugin_name);
 
     void read_problem (const mogs_string & filename);
 
     void set_nlp_problem( MogsNlpIpopt * in);
+
+    void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                const AbstractParameterization* param,
+                                const std::vector<AbstractCriteria* > &criteres,
+                                const std::vector<AbstractConstraint*> & constraints)
+    {
+        nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
+    }
 
     /** Solve the problem	 */
     void solve();

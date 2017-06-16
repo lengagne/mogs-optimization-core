@@ -35,13 +35,9 @@ MogsIpoptOptimization::~MogsIpoptOptimization()
     // FIXME
 }
 
-void MogsIpoptOptimization::read_problem (const mogs_string & filename)
+void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 {
-
-    // loaded the good type of problem
-    MogsAbstractProblem::read_problem(filename);
     MogsProblemClassifier mpc;
-    mogs_string plugin_name = root_.attribute("derivative");
     mogs_string library_so;
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {
@@ -61,13 +57,21 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
         }
         // create an instance of the class
         nlp_ = creator_();
-
     }
     else
     {
         qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
         exit(0);
     }
+}
+
+void MogsIpoptOptimization::read_problem (const mogs_string & filename)
+{
+
+    // loaded the good type of problem
+    MogsAbstractProblem::read_problem(filename);
+    mogs_string plugin_name = root_.attribute("derivative");
+    init_nlp_problem(plugin_name);
 
  	// Create an instance of the IpoptApplication
 	app_ = IpoptApplicationFactory ();

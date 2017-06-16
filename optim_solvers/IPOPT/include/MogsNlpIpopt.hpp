@@ -8,7 +8,8 @@
 
 #ifndef __MOGS_NLP_IPOPT_HPP__
 #define __MOGS_NLP_IPOPT_HPP__
-#include "MogsRobotProperties.h"
+#include "MogsOptimDynamics.h"
+#include "MogsAbstractOptimization.h"
 #include "IpTNLP.hpp"
 using namespace Ipopt;
 
@@ -80,6 +81,14 @@ class MogsNlpIpopt:public TNLP
 	{
 		root_ = root;
 	}
+
+    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                        const AbstractParameterization* param,
+                                        const std::vector<AbstractCriteria* > &criteres,
+                                        const std::vector<AbstractConstraint*> & constraints)
+    {
+
+    }
 
     void set_robots(const std::vector<MogsRobotProperties*> & in);
 
