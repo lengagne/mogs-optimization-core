@@ -5,8 +5,8 @@ BoxContactConstraint::BoxContactConstraint (  QDomElement ele,
                                                     BoxCollisionConstraint(ele,dyns)
 
 {
-    std::cout<<"We deal with : "<< coll_.size()<<" contacts."<<std::endl;
-    std::cout<<"m =  "<< m <<std::endl;
+//    std::cout<<"We deal with : "<< coll_.size()<<" contacts."<<std::endl;
+//    std::cout<<"m =  "<< m <<std::endl;
     nb_contact_ = coll_.size();
 
     nb_param_ = nb_contact_ * 6;
@@ -69,8 +69,6 @@ void BoxContactConstraint::update_visu (VisuHolder *visu,
             line(k) = x[offset_param_ + 6*cpt_coll + k];
             line(3+k) = line(k) + x[offset_param_ + cpt_coll*6 + k+3];
         }
-//         std::cout<<"point = "<< line.block(0,0,3,1).transpose()<<std::endl;
-//         std::cout<<"force = "<< (line.block(3,0,3,1)-line.block(0,0,3,1)).transpose()<<std::endl;
         lines.push_back(line);
 		cpt_coll++;
     }
@@ -98,8 +96,6 @@ void BoxContactConstraint::update_visu (VisuHolder *visu,
         visu->draw_additional_lines(lines,255,0,0);
         cpt_coll++;
     }
-//    for (int i=0;i<dyns.size();i++)
-//        std::cout<<"dyns["<<i<<"]->q = "<< dyns[i]->q_.transpose()<<std::endl;
 }
 #endif // MogsVisu_FOUND
 

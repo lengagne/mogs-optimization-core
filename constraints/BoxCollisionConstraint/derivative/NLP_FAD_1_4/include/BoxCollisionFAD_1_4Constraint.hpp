@@ -25,6 +25,7 @@ class BoxCollisionFAD_1_4Constraint: virtual public AbstractFAD_1_4Constraint, v
 
     void update_dynamics(const Number *x, std::vector<MogsOptimDynamics<Number> *> & dyns)
     {
+        computed_in_Number = false;
         BoxCollisionConstraint::update_dynamics<Number>(x, dyns);
     }
 
@@ -35,9 +36,11 @@ class BoxCollisionFAD_1_4Constraint: virtual public AbstractFAD_1_4Constraint, v
 
     void update_dynamics(const Dependency *x, std::vector<MogsOptimDynamics<Dependency> *> & dyns)
     {
+        computed_in_Number = false;
         BoxCollisionConstraint::update_dynamics<Dependency>(x, dyns);
     }
 
-
+    bool computed_in_Number;
+    std::vector<DistanceProperties> distance_properties_;
 };
 #endif // PositionFAD_1_4Critere_HPP_INCLUDED

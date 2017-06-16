@@ -24,7 +24,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <math.h>
-#include "VisuHolder.h"
 #include "MogsProblemClassifier.h"
 #include "AbstractLoader.h"
 
@@ -93,6 +92,22 @@ void NLP_FAD_1_4::load_xml( )
         parameterization_->init_from_constraints(ctr);
 	}
 
+    #ifdef MogsVisu_FOUND
+    visu_during_optim_ = false;
+    QDomElement ElVisuDuring=root_.firstChildElement("visu_during_optim");
+    if (!ElVisuDuring.isNull())
+    {
+        visu_during_optim_ = convert_to_bool(ElVisuDuring.text().simplified());
+    }
+
+    if(visu_during_optim_)
+    {
+        visu_optim_ = new VisuHolder("intermediate result");
+        for(int k=0;k<nb_robots_;k++)
+            visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
+    }
+    #endif // MogsVisu_FOUND
+
     nb_ctr_ = constraints_.size();
 
     #ifdef PRINT
@@ -158,7 +173,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
 	G = new F<Number>[m];
 	X = new F<Number>[n];
-	
+
     #ifdef PRINT
     std::cout<<"end of get_nlp_info"<<std::endl;
     #endif // PRINT
@@ -235,27 +250,27 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
     #ifdef PRINT
     std::cout<<"start eval_f"<<std::endl;
     #endif // PRINT
-	if (new_x)
-	{
-		compute_number_ = true;
-		compute_gradient_ = true;	
-	}
-	
+    run_computation(x,n,new_x);
     int nb = criteres_.size();
     obj_value =0;
-	if(compute_number_)
-	{
-		parameterization_->prepare_computation(dyns_);
-		for (unsigned int i=0; i<nb_ctr_; i++)
-			constraints_[i]->update_dynamics(x,dyns_);
-		parameterization_->compute(x,dyns_);
-		compute_number_ = false;
-	}
     for (int i =0;i<nb;i++)
     {
         Number tmp = criteres_[i]->compute(dyns_);
         obj_value+= tmp;
     }
+
+   #ifdef MogsVisu_FOUND
+    if(visu_during_optim_)
+    {
+        for(int k=0;k<nb_robots_;k++)
+            visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
+
+        visu_optim_-> clear_lines();
+        for (int i=0;i<constraints_.size();i++)
+            constraints_[i]->update_visu(visu_optim_,dyns_,(const double*) x);
+    }
+    #endif // MogsVisu_FOUND
+
     #ifdef PRINT
     std::cout<<"end of eval_f"<<std::endl;
     #endif // PRINT
@@ -267,27 +282,7 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
     #ifdef PRINT
     std::cout<<"start eval_grad_f"<<std::endl;
     #endif // PRINT
-	if (new_x)
-	{
-		compute_number_ = true;
-		compute_gradient_ = true;	
-	}	
-	// return the gradient of the objective function grad_{x} f(x)
-    assert(n == nb_var_);
-	
-	if(compute_gradient_)
-	{
-		for(unsigned int i=0;i<n;i++)
-		{
-			X[i] = x[i];
-			X[i].diff(i,n);
-		}
-		parameterization_->prepare_computation(adyns_);
-        for (unsigned int i=0; i<nb_ctr_; i++)
-            constraints_[i]->update_dynamics(X,adyns_);
-		parameterization_->compute(X,adyns_);
-		compute_gradient_ = false;
-	}
+    run_gradient_computation(x,n,new_x);
 	F<Number> out=0;
 	for (int j =0;j<criteres_.size();j++)
 		out+=criteres_[j]->compute(adyns_);
@@ -306,23 +301,8 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     #ifdef PRINT
     std::cout<<"start eval_g"<<std::endl;
     #endif // PRINT
-	if (new_x)
-	{
-		compute_number_ = true;
-		compute_gradient_ = true;	
-	}	
-//    for (int i=0;i<n;i++)
-//        std::cout<<"x["<<i<<"] = "<< x[i]<<std::endl;
-    bool compute_kin = false;
     assert(n == nb_var_);
-	if(compute_number_)
-	{
-		parameterization_->prepare_computation(dyns_);
-		for (unsigned int i=0; i<nb_ctr_; i++)
-			constraints_[i]->update_dynamics(x,dyns_);
-		parameterization_->compute(x,dyns_);
-		compute_number_ = false;
-	}	
+    run_computation(x,n,new_x);
 
     for (int i =0;i<nb_ctr_;i++)
     {
@@ -345,11 +325,6 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
     #ifdef PRINT
     std::cout<<"start eval_jac_g"<<std::endl;
     #endif // PRINT
-	if (new_x)
-	{
-		compute_number_ = true;
-		compute_gradient_ = true;	
-	}	
     assert(n == nb_var_);
     //assert(m == constraints_.size());
 
@@ -364,26 +339,12 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
     }
     else
     {
-		if(compute_gradient_)
-		{
-			for(unsigned int i=0;i<n;i++)
-			{
-				X[i] = x[i];
-				X[i].diff(i,n);
-			}
-			parameterization_->prepare_computation(adyns_);
-			for (unsigned int i=0; i<nb_ctr_; i++)
-				constraints_[i]->update_dynamics(X,adyns_);
-			parameterization_->compute(X,adyns_);
-			compute_gradient_ = false;
-		}
+        run_gradient_computation(x,n,new_x);
         for (unsigned int i=0; i<nb_ctr_; i++)  // for all physical constraints
             constraints_[i]->compute(X,G,adyns_);
-
-		
 //    for (int i=0;i<m;i++)
 //        std::cout<<"g["<<i<<"] = "<< G[i]<<std::endl;
-		
+
         unsigned int cpt=0;
         for (int i=0;i<nele_jac;i++)
             values[i] = G[row_[i]].d(col_[i]);
@@ -459,8 +420,63 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 #endif // MogsVisu_FOUND
 }
 
+void NLP_FAD_1_4::run_computation(const Number * x, unsigned int n, bool new_x)
+{
+	if (new_x)
+	{
+	    #ifdef PRINT
+	    std::cout<<"new_x"<<std::endl;
+	    #endif
+		compute_number_ = true;
+		compute_gradient_ = true;
+	}
+	if(compute_number_)
+	{
+       #ifdef PRINT
+        std::cout<<"start computation of Number"<<std::endl;
+        #endif // PRINT
+		parameterization_->prepare_computation(dyns_);
+		for (unsigned int i=0; i<nb_ctr_; i++)
+			constraints_[i]->update_dynamics(x,dyns_);
+		parameterization_->compute(x,dyns_);
+		compute_number_ = false;
+       #ifdef PRINT
+        std::cout<<"end of computation of Number"<<std::endl;
+        #endif // PRINT
+	}
+	run_gradient_computation(x,n,new_x);
+}
 
-
+void NLP_FAD_1_4::run_gradient_computation(const Number * x, unsigned int n, bool new_x)
+{
+	if (new_x)
+	{
+	    #ifdef PRINT
+	    std::cout<<"new_x"<<std::endl;
+	    #endif
+		compute_number_ = true;
+		compute_gradient_ = true;
+	}
+    if(compute_gradient_)
+    {
+       #ifdef PRINT
+        std::cout<<"start computation of Gradient"<<std::endl;
+        #endif // PRINT
+        for(unsigned int i=0;i<n;i++)
+        {
+            X[i] = x[i];
+            X[i].diff(i,n);
+        }
+        parameterization_->prepare_computation(adyns_);
+        for (unsigned int i=0; i<nb_ctr_; i++)
+            constraints_[i]->update_dynamics(X,adyns_);
+        parameterization_->compute(X,adyns_);
+        compute_gradient_ = false;
+       #ifdef PRINT
+        std::cout<<"end of computation of Gradient"<<std::endl;
+        #endif // PRINT
+    }
+}
 
 // For dynamic loading of the library : do not remove !!
 

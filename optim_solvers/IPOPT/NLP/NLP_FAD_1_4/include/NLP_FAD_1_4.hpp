@@ -17,6 +17,10 @@
 #include "AbstractFAD_1_4Parameterization.hpp"
 #include "Dependency.h"
 
+#ifdef MogsVisu_FOUND
+#include "VisuHolder.h"
+#endif // MogsVisu_FOUND
+
 using namespace Ipopt;
 
 class NLP_FAD_1_4:public MogsNlpIpopt
@@ -92,6 +96,9 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
         void load_xml( );
 
+    void run_computation(const Number * x,unsigned int n, bool new_x);
+    void run_gradient_computation(const Number * x, unsigned int n, bool new_x);
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -132,10 +139,16 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
         unsigned int nb_var_;
         unsigned int nb_ctr_;       // size of      constraints_
-        
+
         bool compute_number_, compute_gradient_;
-		
+
 		F<Number> *G, *X;
+
+		#ifdef MogsVisu_FOUND
+        bool visu_during_optim_;
+        VisuHolder * visu_optim_;
+		#endif // MogsVisu_FOUND
+
         public:
 
 	//@}
