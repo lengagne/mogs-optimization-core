@@ -28,6 +28,8 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
     protected:
         unsigned int nb_contact_;
 
+        double friction_;
+
 //        unsigned int offset_contact_ctr_;
 
 };

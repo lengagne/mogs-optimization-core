@@ -9,6 +9,14 @@ BoxContactConstraint::BoxContactConstraint (  QDomElement ele,
 //    std::cout<<"m =  "<< m <<std::endl;
     nb_contact_ = coll_.size();
 
+    friction_ = 0.5;
+    QDomElement ElFriction = ele.firstChildElement("friction");
+    if(!ElFriction.isNull())
+    {
+        friction_ = ele.text().toDouble();
+        friction_ = 1/ (1+friction_*friction_);
+    }
+
     nb_param_ = nb_contact_ * 6;
     m += 3*nb_contact_;    // two constraints for the point and one constraint for the effort
 
@@ -25,7 +33,7 @@ BoxContactConstraint::BoxContactConstraint (  QDomElement ele,
     {
         upper_.push_back(0.);    lower_.push_back(-0.);  // distance for first body
         upper_.push_back(0.);    lower_.push_back(-0.);  // distance for second body
-        lower_.push_back(0.8); // friction cone for the moment
+        lower_.push_back(friction_); // friction cone for the moment
         upper_.push_back(1.0);
     }
 
