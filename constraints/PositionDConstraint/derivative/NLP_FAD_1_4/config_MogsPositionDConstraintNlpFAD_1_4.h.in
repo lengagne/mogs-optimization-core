@@ -1,8 +1,0 @@
-#ifndef MogsPositionDConstraintNlpFAD_CONFIG_H
-#define MogsPositionDConstraintNlpFAD_CONFIG_H
-
-#define MogsPositionDConstraintNlpFAD_VERSION_MAJOR @MogsPositionDConstraintNlpFAD_VERSION_MAJOR@
-#define MogsPositionDConstraintNlpFAD_VERSION_MINOR @MogsPositionDConstraintNlpFAD_VERSION_MINOR@
-
-#endif
-

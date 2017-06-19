@@ -1,10 +1,10 @@
-PROJECT (MogsPositionDConstraint)
+PROJECT (MogsPositionConstraint)
 set(PROJECT_CONTACT lengagne@gmail.com)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-set (MogsPositionDConstraint_VERSION_MAJOR 1)
-set (MogsPositionDConstraint_VERSION_MINOR 0)
+set (MogsPositionConstraint_VERSION_MAJOR 1)
+set (MogsPositionConstraint_VERSION_MINOR 0)
 
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 include(CheckCXXCompilerFlag)
@@ -40,51 +40,51 @@ include_directories (
 	${MogsOptimizationCore_INCLUDE_DIRS}
 )
 
-configure_file ("${PROJECT_SOURCE_DIR}/config_MogsPositionDConstraint.h.in"
-                "${PROJECT_SOURCE_DIR}/include/config_MogsPositionDConstraint.h" )
+configure_file ("${PROJECT_SOURCE_DIR}/config_MogsPositionConstraint.h.in"
+                "${PROJECT_SOURCE_DIR}/include/config_MogsPositionConstraint.h" )
 
 
 FILE ( GLOB_RECURSE
-		header_files_MogsPositionDConstraint
+		header_files_MogsPositionConstraint
 		include/*.h
 		include/*.hpp
 		include/*.hxx)
 
 FILE ( GLOB_RECURSE
-		source_files_MogsPositionDConstraint
+		source_files_MogsPositionConstraint
 		src/*.cpp)
 
-ADD_LIBRARY(	MogsPositionDConstraint SHARED
-		${source_files_MogsPositionDConstraint}
+ADD_LIBRARY(	MogsPositionConstraint SHARED
+		${source_files_MogsPositionConstraint}
 )
 
-target_link_libraries( MogsPositionDConstraint
+target_link_libraries( MogsPositionConstraint
 			${MogsIpoptOptimization_LIBRARIES})
 
 
 #
 # install the include files
-SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsPositionDConstraint)
+SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsPositionConstraint)
 SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
 # install the include files
-install(FILES ${header_files_MogsPositionDConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
+install(FILES ${header_files_MogsPositionConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
 
 # install the library files
-install( TARGETS MogsPositionDConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+install( TARGETS MogsPositionConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
 
 ### Configure file
 get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-SET(MogsPositionDConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-SET(MogsPositionDConstraint_LIBRARIES  MogsPositionDConstraint CACHE INTERNAL "")
-SET(MogsPositionDConstraint_FLAGS "-DMogsPositionDConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
-SET(MogsPositionDConstraint_FOUND "TRUE" CACHE INTERNAL "")
-add_definitions(${MogsPositionDConstraint_FLAGS})
+SET(MogsPositionConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
+SET(MogsPositionConstraint_LIBRARIES  MogsPositionConstraint CACHE INTERNAL "")
+SET(MogsPositionConstraint_FLAGS "-DMogsPositionConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
+SET(MogsPositionConstraint_FOUND "TRUE" CACHE INTERNAL "")
+add_definitions(${MogsPositionConstraint_FLAGS})
 #  add flags (done before)
-configure_file(MogsPositionDConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsPositionDConstraintConfig.cmake" @ONLY)
+configure_file(MogsPositionConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsPositionConstraintConfig.cmake" @ONLY)
 
-install ( 	FILES "${PROJECT_BINARY_DIR}/MogsPositionDConstraintConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsPositionDConstraints" COMPONENT dev )
+install ( 	FILES "${PROJECT_BINARY_DIR}/MogsPositionConstraintConfig.cmake"
+		DESTINATION "${INSTALL_LIB_PATH}/MogsPositionConstraints" COMPONENT dev )
 
 
 add_subdirectory(derivative)

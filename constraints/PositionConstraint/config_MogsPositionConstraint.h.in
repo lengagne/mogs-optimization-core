@@ -1,0 +1,9 @@
+#ifndef MogsPositionConstraint_CONFIG_H
+#define MogsPositionConstraint_CONFIG_H
+
+#define MogsPositionConstraint_VERSION_MAJOR @MogsPositionConstraint_VERSION_MAJOR@
+#define MogsPositionConstraint_VERSION_MINOR @MogsPositionConstraint_VERSION_MINOR@
+
+
+#endif
+

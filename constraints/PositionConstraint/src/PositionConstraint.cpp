@@ -1,9 +1,9 @@
-#include <PositionDConstraint.hpp>
+#include <PositionConstraint.hpp>
 
-PositionDConstraint::PositionDConstraint (  QDomElement contraint,
+PositionConstraint::PositionConstraint (  QDomElement contraint,
                                             std::vector<MogsOptimDynamics<double> *>& dyns)
 {
-    qDebug()<<"Constructor of PositionDConstraint";
+    qDebug()<<"Constructor of PositionConstraint";
     m = 3; //desired_Position_.size();
     upper_.resize(3);
     lower_.resize(3);
@@ -83,6 +83,6 @@ PositionDConstraint::PositionDConstraint (  QDomElement contraint,
 }
    //
 
-PositionDConstraint::~PositionDConstraint ()
+PositionConstraint::~PositionConstraint ()
 {
 }

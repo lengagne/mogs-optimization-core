@@ -1,15 +1,15 @@
-#ifndef  PositionDConstraint_HPP_
-#define  PositionDConstraint_HPP_
+#ifndef  PositionConstraint_HPP_
+#define  PositionConstraint_HPP_
 
 #include "MogsKinematics.h"
 #include "AbstractConstraint.hpp"
 
-class PositionDConstraint: virtual public AbstractConstraint
+class PositionConstraint: virtual public AbstractConstraint
 {   public:
-	PositionDConstraint (QDomElement Constraint,
+	PositionConstraint (QDomElement Constraint,
                          std::vector<MogsOptimDynamics<double> *>& dyns);
 
-    ~PositionDConstraint ();
+    ~PositionConstraint ();
 
     void compute( const double*x, double * g,std::vector<MogsOptimDynamics<double> *>& dyns)
     {
@@ -40,6 +40,6 @@ class PositionDConstraint: virtual public AbstractConstraint
 
 };
 
-#include "PositionDConstraint.hxx"
+#include "PositionConstraint.hxx"
 
 #endif
