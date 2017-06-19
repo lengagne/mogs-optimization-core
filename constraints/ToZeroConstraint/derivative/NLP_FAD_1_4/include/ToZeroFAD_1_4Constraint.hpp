@@ -7,8 +7,7 @@
 class ToZeroFAD_1_4Constraint: public AbstractFAD_1_4Constraint, ToZeroConstraint
 {
  public:
-	ToZeroFAD_1_4Constraint (QDomElement constraint,
-                                std::vector<MogsOptimDynamics<double> *>& dyns);
+	ToZeroFAD_1_4Constraint ( );
 
     ~ToZeroFAD_1_4Constraint();
 

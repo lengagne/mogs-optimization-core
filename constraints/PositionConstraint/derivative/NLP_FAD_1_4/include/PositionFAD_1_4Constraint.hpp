@@ -7,10 +7,14 @@
 class PositionFAD_1_4Constraint: public AbstractFAD_1_4Constraint, PositionConstraint
 {
  public:
-	PositionFAD_1_4Constraint (QDomElement constraint,
-                                std::vector<MogsOptimDynamics<double> *>& dyns);
+	PositionFAD_1_4Constraint ( );
 
     ~PositionFAD_1_4Constraint();
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     void compute( const Number*x, Number* g,std::vector<MogsOptimDynamics<Number> *>& dyns)
     {

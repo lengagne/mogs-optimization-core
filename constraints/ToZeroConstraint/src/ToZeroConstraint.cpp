@@ -1,6 +1,16 @@
 #include <ToZeroConstraint.hpp>
 
-ToZeroConstraint::ToZeroConstraint (  QDomElement ele,
+ToZeroConstraint::ToZeroConstraint ( )
+{
+    plugin_name_ = "Balance";
+}
+
+void ToZeroConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    *this =  *(dynamic_cast<ToZeroConstraint*>(c));
+}
+
+void ToZeroConstraint::init_from_xml (  QDomElement ele,
                                        std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     qDebug()<<"Constructor of ToZeroConstraint";

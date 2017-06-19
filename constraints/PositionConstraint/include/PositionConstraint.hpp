@@ -6,14 +6,18 @@
 
 class PositionConstraint: virtual public AbstractConstraint
 {   public:
-	PositionConstraint (QDomElement Constraint,
-                         std::vector<MogsOptimDynamics<double> *>& dyns);
+	PositionConstraint ( );
 
     PositionConstraint( std::vector<MogsOptimDynamics<double> *> &dyns,
                          const QString& robot_name,
                          const QString& body_name,
                          const Eigen::Matrix<double,3,1>& body_position,
                          const Eigen::Matrix<double,3,1>& desired_position);
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     ~PositionConstraint ();
 

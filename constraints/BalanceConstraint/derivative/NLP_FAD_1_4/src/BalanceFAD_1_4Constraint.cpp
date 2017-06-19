@@ -1,7 +1,6 @@
 #include <BalanceFAD_1_4Constraint.hpp>
 
-BalanceFAD_1_4Constraint::BalanceFAD_1_4Constraint (QDomElement constraint,
-                           std::vector<MogsOptimDynamics<double> *>& dyns):BalanceConstraint(constraint,dyns)
+BalanceFAD_1_4Constraint::BalanceFAD_1_4Constraint ():BalanceConstraint( )
 {
 
 }
@@ -11,9 +10,9 @@ BalanceFAD_1_4Constraint::~BalanceFAD_1_4Constraint ()
 
 }
 
-extern "C" BalanceFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsOptimDynamics<double> *>& dyns)
+extern "C" BalanceFAD_1_4Constraint* create()
 {
-    return new BalanceFAD_1_4Constraint(constraint, dyns);
+    return new BalanceFAD_1_4Constraint( );
 }
 
 extern "C" void destroy(BalanceFAD_1_4Constraint* p)

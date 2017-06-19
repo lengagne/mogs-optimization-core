@@ -1,6 +1,16 @@
 #include <BalanceConstraint.hpp>
 
-BalanceConstraint::BalanceConstraint (  QDomElement ele,
+BalanceConstraint::BalanceConstraint ()
+{
+    plugin_name_ = "ToZero";
+}
+
+BalanceConstraint::~BalanceConstraint ()
+{
+
+}
+
+void BalanceConstraint::init_from_xml( QDomElement ele,
                                        std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     qDebug()<<"Constructor of BalanceConstraint";
@@ -15,8 +25,9 @@ BalanceConstraint::BalanceConstraint (  QDomElement ele,
     }
 }
 
-BalanceConstraint::~BalanceConstraint ()
+void BalanceConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
 {
+    *this =  *(dynamic_cast<BalanceConstraint*>(c));
 }
 
 #ifdef MogsVisu_FOUND

@@ -7,8 +7,7 @@
 class BalanceFAD_1_4Constraint: public AbstractFAD_1_4Constraint, BalanceConstraint
 {
  public:
-	BalanceFAD_1_4Constraint (QDomElement constraint,
-                                std::vector<MogsOptimDynamics<double> *>& dyns);
+	BalanceFAD_1_4Constraint ();
 
     ~BalanceFAD_1_4Constraint();
 

@@ -10,9 +10,7 @@ StaticPostureParameterization::StaticPostureParameterization(   bool compute_for
 
 void StaticPostureParameterization::init_from_AbstractParameterization( AbstractParameterization* p)
 {
-    std::cout<<"StaticPostureParameterization p->nb_param = "<< p->get_nb_param()<<std::endl;
     *this =  *(dynamic_cast<StaticPostureParameterization*>(p));
-    std::cout<<"StaticPostureParameterization nb_param = "<< get_nb_param()<<std::endl;
 }
 
 void StaticPostureParameterization::init_from_xml(   QDomElement Param,

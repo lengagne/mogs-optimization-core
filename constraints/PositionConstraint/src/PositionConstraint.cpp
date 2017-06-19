@@ -1,10 +1,15 @@
 #include <PositionConstraint.hpp>
 
+PositionConstraint::PositionConstraint (  )
+{
+    plugin_name_ = "Position";
+}
+
 PositionConstraint::PositionConstraint(  std::vector<MogsOptimDynamics<double> *> &dyns,
                                          const QString& robot_name,
                                          const QString& body_name,
                                          const Eigen::Matrix<double,3,1>& body_position,
-                                         const Eigen::Matrix<double,3,1>& desired_position)
+                                         const Eigen::Matrix<double,3,1>& desired_position):PositionConstraint()
 {
     Robot = robot_name;
     robot_id_ = -1;
@@ -34,7 +39,7 @@ PositionConstraint::PositionConstraint(  std::vector<MogsOptimDynamics<double> *
     desired_Position_ = desired_position;
 }
 
-PositionConstraint::PositionConstraint (  QDomElement contraint,
+void PositionConstraint::init_from_xml(   QDomElement contraint,
                                             std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     qDebug()<<"Constructor of PositionConstraint";
@@ -119,4 +124,10 @@ PositionConstraint::PositionConstraint (  QDomElement contraint,
 
 PositionConstraint::~PositionConstraint ()
 {
+}
+
+
+void PositionConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    *this =  *(dynamic_cast<PositionConstraint*>(c));
 }

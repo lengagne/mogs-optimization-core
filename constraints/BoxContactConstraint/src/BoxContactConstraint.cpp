@@ -1,10 +1,14 @@
 #include <BoxContactConstraint.hpp>
 
-BoxContactConstraint::BoxContactConstraint (  QDomElement ele,
-                                                std::vector<MogsOptimDynamics<double> *>& dyns):
-                                                    BoxCollisionConstraint(ele,dyns)
-
+BoxContactConstraint::BoxContactConstraint (  ):BoxCollisionConstraint()
 {
+    plugin_name_ = "BoxContact";
+}
+
+void BoxContactConstraint::init_from_xml(   QDomElement ele,
+                                            std::vector<MogsOptimDynamics<double> *>& dyns)
+{
+    BoxCollisionConstraint::init_from_xml(ele,dyns);
 //    std::cout<<"We deal with : "<< coll_.size()<<" contacts."<<std::endl;
 //    std::cout<<"m =  "<< m <<std::endl;
     nb_contact_ = coll_.size();
@@ -50,6 +54,12 @@ BoxContactConstraint::~BoxContactConstraint ()
     for (int i=0;i<nb_body2_;i++)
         delete d2_[i];
 }
+
+void BoxContactConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    *this =  *(dynamic_cast<BoxContactConstraint*>(c));
+}
+
 
 void BoxContactConstraint::compute(const double *x , double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
 {

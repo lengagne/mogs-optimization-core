@@ -7,10 +7,15 @@
 class BoxCollisionFAD_1_4Constraint: virtual public AbstractFAD_1_4Constraint, virtual public BoxCollisionConstraint
 {
  public:
-	BoxCollisionFAD_1_4Constraint (QDomElement constraint,
-                                std::vector<MogsOptimDynamics<double> *>& dyns);
+	BoxCollisionFAD_1_4Constraint ( );
 
     ~BoxCollisionFAD_1_4Constraint();
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
+
 
     inline void compute_double(const double *x, double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
     {

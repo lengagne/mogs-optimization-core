@@ -110,6 +110,7 @@ void MogsIpoptOptimization::solve()
 
 void MogsIpoptOptimization::local_solve()
 {
+    std::cout<<"start MogsIpoptOptimization::local_solve()"<<std::endl;
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app_->Initialize ();

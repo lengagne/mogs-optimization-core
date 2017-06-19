@@ -6,8 +6,12 @@
 
 class BoxContactConstraint: virtual public AbstractConstraint, virtual public BoxCollisionConstraint
 {   public:
-	BoxContactConstraint (QDomElement Constraint,
-                          std::vector<MogsOptimDynamics<double> *>& dyns);
+	BoxContactConstraint ();
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     ~BoxContactConstraint ();
 

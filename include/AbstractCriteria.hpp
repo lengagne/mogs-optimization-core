@@ -11,6 +11,13 @@ class AbstractCriteria
 
 	double weight_=1;
 
+    QString get_plugin_name() const
+    {
+        return plugin_name_;
+    }
+
+    QString plugin_name_;
+
 };
 
 #endif // AbstractCriteria_HPP_INCLUDED

@@ -35,8 +35,7 @@ class AbstractFAD_1_4Constraint : virtual public AbstractConstraint
 };
 
 // the types of the class factories
-typedef AbstractFAD_1_4Constraint* create_FAD_1_4Constraint(QDomElement constraint,
-                                                            std::vector<MogsOptimDynamics<double> *>& dyns);
+typedef AbstractFAD_1_4Constraint* create_FAD_1_4Constraint( );
 
 typedef void destroy_FAD_1_4Constraint(AbstractFAD_1_4Constraint*);
 

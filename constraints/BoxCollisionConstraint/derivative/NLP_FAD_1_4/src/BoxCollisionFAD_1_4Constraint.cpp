@@ -1,8 +1,20 @@
 #include <BoxCollisionFAD_1_4Constraint.hpp>
 
-BoxCollisionFAD_1_4Constraint::BoxCollisionFAD_1_4Constraint (QDomElement constraint,
-                           std::vector<MogsOptimDynamics<double> *>& dyns):BoxCollisionConstraint(constraint,dyns)
+BoxCollisionFAD_1_4Constraint::BoxCollisionFAD_1_4Constraint() : BoxCollisionConstraint()
 {
+
+}
+
+void BoxCollisionFAD_1_4Constraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    BoxCollisionConstraint::init_from_AbstractConstraint(c);
+    distance_properties_.resize(nb_body1_*nb_body2_);
+}
+
+void BoxCollisionFAD_1_4Constraint::init_from_xml (QDomElement constraint,
+                           std::vector<MogsOptimDynamics<double> *>& dyns)
+{
+    BoxCollisionConstraint::init_from_xml(constraint,dyns);
     distance_properties_.resize(nb_body1_*nb_body2_);
 }
 
@@ -85,9 +97,9 @@ void BoxCollisionFAD_1_4Constraint::compute(const Number*x,Number * g, std::vect
 }
 
 
-extern "C" BoxCollisionFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsOptimDynamics<double> *>& dyns)
+extern "C" BoxCollisionFAD_1_4Constraint* create( )
 {
-    return new BoxCollisionFAD_1_4Constraint(constraint, dyns);
+    return new BoxCollisionFAD_1_4Constraint();
 }
 
 extern "C" void destroy(BoxCollisionFAD_1_4Constraint* p)

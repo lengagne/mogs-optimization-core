@@ -99,13 +99,6 @@ void NLP_FAD_1_4::load_xml( )
     {
         visu_during_optim_ = convert_to_bool(ElVisuDuring.text().simplified());
     }
-
-    if(visu_during_optim_)
-    {
-        visu_optim_ = new VisuHolder("intermediate result");
-        for(int k=0;k<nb_robots_;k++)
-            visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
-    }
     #endif // MogsVisu_FOUND
 
     nb_ctr_ = constraints_.size();
@@ -143,7 +136,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     for(int i=0;i<nb_robots_;i++)
         k.push_back(new MogsOptimDynamics<Dependency>(robots_[i]));
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
-
+    std::cout<<"k.size() = "<< k.size()<<std::endl;
     parameterization_->prepare_computation(k);
     for (unsigned int i=0; i<nb_ctr_; i++)
         constraints_[i]->update_dynamics(DX,k);
@@ -181,6 +174,15 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     std::cout<<"end of get_nlp_info"<<std::endl;
     #endif // PRINT
 
+    #ifdef MogsVisu_FOUND
+    if(visu_during_optim_)
+    {
+        visu_optim_ = new VisuHolder("intermediate result");
+        for(int k=0;k<nb_robots_;k++)
+            visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
+    }
+    #endif // MogsVisu_FOUND
+
 	return true;
 }
 
@@ -208,6 +210,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     cpt = 0;
     for (i=0; i<constraints_.size(); i++)
     {
+        qDebug()<<"dealing with constraint "<< constraints_[i];
+        qDebug()<<"dealing with constraint of type : "<< constraints_[i]->get_plugin_name();
         for (j=0; j<constraints_[i]->get_nb_constraints(); j++)
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
@@ -265,8 +269,14 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
    #ifdef MogsVisu_FOUND
     if(visu_during_optim_)
     {
+        std::cout<<"robots_.size()  = "<< robots_.size() <<std::endl;
+        std::cout<<"dyns_.size()  = "<< dyns_.size() <<std::endl;
         for(int k=0;k<nb_robots_;k++)
+        {
+            std::cout<<"k  = "<< k<<std::endl;
             visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
+        }
+
 
         visu_optim_-> clear_lines();
         for (int i=0;i<constraints_.size();i++)
@@ -497,15 +507,24 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
         adyns_.push_back(new MogsOptimDynamics<F<Number> >(robots_[i]));
     }
 
-
     AbstractLoader loader;
-
-    QString param_name = param->get_plugin_name();
-    qDebug()<<"param plugin name = "<< param_name;
 
     parameterization_ =  dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param));
 
+    criteres_.clear();
+//    for (int i=0;i<criteres.size();i++)
+//    {
+//        QString ctr_name = criteres[i]->get_plugin_name();
+//        AbstractFAD_1_4Critere* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",criteres[i]));
+//        criteres_.push_back(ctr);
+//    }
 
+    constraints_.clear();
+    for (int i=0;i<constraints.size();i++)
+    {
+        AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraints[i]));
+        constraints_.push_back(ctr);
+    }
 }
 
 extern "C" NLP_FAD_1_4* create()

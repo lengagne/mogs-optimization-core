@@ -5,10 +5,14 @@
 
 class ToZeroConstraint: virtual public AbstractConstraint
 {   public:
-	ToZeroConstraint (QDomElement Constraint,
-                          std::vector<MogsOptimDynamics<double> *>& dyns);
+	ToZeroConstraint ();
 
     ~ToZeroConstraint ();
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     void compute(const double* x,double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
     {

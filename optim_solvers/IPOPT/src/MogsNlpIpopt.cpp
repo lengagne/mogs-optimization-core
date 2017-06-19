@@ -34,4 +34,5 @@ void MogsNlpIpopt::set_robots(const std::vector<MogsRobotProperties*> & in)
 {
     robots_ = in;
     nb_robots_  = robots_.size();
+    std::cout<<"MogsNlpIpopt::set_robots nb_robots_ = "<< nb_robots_<<std::endl;
 }

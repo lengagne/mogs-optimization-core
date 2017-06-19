@@ -1,7 +1,18 @@
 #include <BoxCollisionConstraint.hpp>
 
-BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
-                                                std::vector<MogsOptimDynamics<double> *>& dyns)
+
+BoxCollisionConstraint::BoxCollisionConstraint (   )
+{
+
+}
+
+void BoxCollisionConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    *this =  *(dynamic_cast<BoxCollisionConstraint*>(c));
+}
+
+void BoxCollisionConstraint::init_from_xml( QDomElement ele,
+                                            std::vector<MogsOptimDynamics<double> *>& dyns )
 {
 
 //    qDebug()<<"Constructor of BoxCollisionConstraint";
@@ -96,13 +107,13 @@ BoxCollisionConstraint::BoxCollisionConstraint (  QDomElement ele,
         }
     }
     coll_detector_ = new MogsBoxCollision();
-	
+
 	std::cout<<"robot1 = "<< robot1_ <<std::endl;
 	for (int i=0;i<body1_.size();i++)
 		std::cout<<"body1_["<<i<<"] = "<< body1_[i] <<std::endl;
 	std::cout<<"robot2 = "<< robot2_ <<std::endl;
 	for (int i=0;i<body2_.size();i++)
-		std::cout<<"body2_["<<i<<"] = "<< body2_[i] <<std::endl;	
+		std::cout<<"body2_["<<i<<"] = "<< body2_[i] <<std::endl;
 }
 
 BoxCollisionConstraint::~BoxCollisionConstraint ()

@@ -15,6 +15,11 @@ class AbstractConstraint
 
         virtual void compute( const double *x ,double *g, std::vector<MogsOptimDynamics<double> *> & dyns) = 0;
 
+        virtual void init_from_AbstractConstraint(  AbstractConstraint* c) = 0;
+
+        virtual void init_from_xml( QDomElement ctr,
+                                    std::vector<MogsOptimDynamics<double> *>& dyns ) = 0;
+
         unsigned int get_offset()
         {
             return offset;
@@ -55,6 +60,11 @@ class AbstractConstraint
             init = param_init_;
         }
 
+        QString get_plugin_name() const
+        {
+            return plugin_name_;
+        }
+
         #ifdef MogsVisu_FOUND
         virtual void update_visu (VisuHolder *visu,
                                   std::vector<MogsOptimDynamics<double> *> & dyns,
@@ -77,6 +87,8 @@ class AbstractConstraint
       unsigned int offset_param_ = 0;
 
       std::vector<double> param_inf_, param_sup_, param_init_;
+
+      QString plugin_name_;
 
 };
 

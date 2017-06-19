@@ -52,6 +52,11 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     void read_problem (const mogs_string & filename);
 
+    void set_robots_to_nlp(const std::vector<MogsRobotProperties*> & in)
+    {
+        nlp_->set_robots(in);
+    }
+
     void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
                                 AbstractParameterization* param,
                                 const std::vector<AbstractCriteria* > &criteres,

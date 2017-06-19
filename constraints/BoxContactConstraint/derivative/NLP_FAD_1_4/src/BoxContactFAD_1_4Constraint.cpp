@@ -1,18 +1,29 @@
 #include <BoxContactFAD_1_4Constraint.hpp>
 
-BoxContactFAD_1_4Constraint::BoxContactFAD_1_4Constraint(QDomElement constraint,
-                                                         std::vector<MogsOptimDynamics<double> *>& dyns):
-                                                             BoxCollisionConstraint(constraint,dyns),
-                                                             BoxContactConstraint(constraint,dyns),
-                                                             BoxCollisionFAD_1_4Constraint(constraint,dyns)
+BoxContactFAD_1_4Constraint::BoxContactFAD_1_4Constraint(): BoxContactConstraint()
 {
 
 }
+
 
 BoxContactFAD_1_4Constraint::~BoxContactFAD_1_4Constraint ()
 {
 
 }
+
+void BoxContactFAD_1_4Constraint::init_from_AbstractConstraint(  AbstractConstraint* c)
+{
+    BoxContactConstraint::init_from_AbstractConstraint(c);
+    distance_properties_.resize(nb_body1_*nb_body2_);
+}
+
+void BoxContactFAD_1_4Constraint::init_from_xml (QDomElement constraint,
+                           std::vector<MogsOptimDynamics<double> *>& dyns)
+{
+    BoxContactConstraint::init_from_xml(constraint,dyns);
+    distance_properties_.resize(nb_body1_*nb_body2_);
+}
+
 
 void BoxContactFAD_1_4Constraint::compute(const F<Number>*x , F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)
 {
@@ -55,9 +66,9 @@ void BoxContactFAD_1_4Constraint::compute(const Number*x, Number * g, std::vecto
 }
 
 
-extern "C" BoxContactFAD_1_4Constraint* create(QDomElement constraint, std::vector<MogsOptimDynamics<double> *>& dyns)
+extern "C" BoxContactFAD_1_4Constraint* create( )
 {
-    return new BoxContactFAD_1_4Constraint(constraint, dyns);
+    return new BoxContactFAD_1_4Constraint( );
 }
 
 extern "C" void destroy(BoxContactFAD_1_4Constraint* p)

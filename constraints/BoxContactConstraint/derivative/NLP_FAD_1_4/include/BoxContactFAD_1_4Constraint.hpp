@@ -4,13 +4,17 @@
 #include "BoxCollisionFAD_1_4Constraint.hpp"
 #include "BoxContactConstraint.hpp"
 
-class BoxContactFAD_1_4Constraint: public BoxCollisionFAD_1_4Constraint, public BoxContactConstraint
+class BoxContactFAD_1_4Constraint: public virtual BoxCollisionFAD_1_4Constraint, public BoxContactConstraint
 {
  public:
-	BoxContactFAD_1_4Constraint (QDomElement constraint,
-                                std::vector<MogsOptimDynamics<double> *>& dyns);
+	BoxContactFAD_1_4Constraint ( );
 
     ~BoxContactFAD_1_4Constraint();
+
+    virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     void compute(const Number*x, Number* g,std::vector<MogsOptimDynamics<Number> *>& dyns);
 
