@@ -27,7 +27,7 @@
 #include "MogsProblemClassifier.h"
 #include "AbstractLoader.h"
 
-//#define PRINT 1
+#define PRINT 1
 
 
 using namespace Ipopt;
@@ -120,6 +120,8 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     #ifdef PRINT
     std::cout<<"start get_nlp_info"<<std::endl;
     #endif // PRINT
+    nb_robots_ = robots_.size();
+
 //    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
     nb_var_= parameterization_->get_nb_param();
 
@@ -137,8 +139,9 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
     Dependency * DG = new Dependency [m];
     std::vector< MogsOptimDynamics<Dependency> *> k;
+    std::cout<<"nb_robots_ =" << nb_robots_<<std::endl;
     for(int i=0;i<nb_robots_;i++)
-        k.push_back(new MogsOptimDynamics<Dependency>(dyns_[i]->model));
+        k.push_back(new MogsOptimDynamics<Dependency>(robots_[i]));
     std::cout<<"Compute the dependency of the derivative"<<std::endl;
 
     parameterization_->prepare_computation(k);
@@ -481,11 +484,28 @@ void NLP_FAD_1_4::run_gradient_computation(const Number * x, unsigned int n, boo
 // For dynamic loading of the library : do not remove !!
 
 void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                            const AbstractParameterization* param,
+                                            AbstractParameterization* param,
                                             const std::vector<AbstractCriteria* > &criteres,
                                             const std::vector<AbstractConstraint*> & constraints)
 {
-    std::cout<<"set_problem_properties"<<std::endl;
+    std::cout<<"NLP_FAD_1_4::set_problem_properties"<<std::endl;
+    nb_robots_ = robots_.size();
+
+    for(int i=0;i<nb_robots_;i++)
+    {
+        dyns_.push_back(new MogsOptimDynamics<Number>(robots_[i]));
+        adyns_.push_back(new MogsOptimDynamics<F<Number> >(robots_[i]));
+    }
+
+
+    AbstractLoader loader;
+
+    QString param_name = param->get_plugin_name();
+    qDebug()<<"param plugin name = "<< param_name;
+
+    parameterization_ =  dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param));
+
+
 }
 
 extern "C" NLP_FAD_1_4* create()

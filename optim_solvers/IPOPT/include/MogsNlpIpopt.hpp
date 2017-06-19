@@ -83,11 +83,11 @@ class MogsNlpIpopt:public TNLP
 	}
 
     virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                        const AbstractParameterization* param,
+                                        AbstractParameterization* param,
                                         const std::vector<AbstractCriteria* > &criteres,
                                         const std::vector<AbstractConstraint*> & constraints)
     {
-
+        std::cout<<"MogsNlpIpopt::set_problem_properties"<<std::endl;
     }
 
     void set_robots(const std::vector<MogsRobotProperties*> & in);

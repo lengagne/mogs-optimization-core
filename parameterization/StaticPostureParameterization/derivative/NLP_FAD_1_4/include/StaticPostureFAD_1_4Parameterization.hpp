@@ -4,11 +4,10 @@
 #include "AbstractFAD_1_4Parameterization.hpp"
 #include "StaticPostureParameterization.h"
 
-class StaticPostureFAD_1_4Parameterization: public AbstractFAD_1_4Parameterization, StaticPostureParameterization
+class StaticPostureFAD_1_4Parameterization: public virtual AbstractFAD_1_4Parameterization, StaticPostureParameterization
 {
  public:
-	StaticPostureFAD_1_4Parameterization (  QDomElement Param,
-                                            std::vector<MogsOptimDynamics<double> *>& dyns);
+	StaticPostureFAD_1_4Parameterization (   );
 
     ~StaticPostureFAD_1_4Parameterization();
 

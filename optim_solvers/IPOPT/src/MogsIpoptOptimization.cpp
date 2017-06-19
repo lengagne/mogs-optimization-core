@@ -63,6 +63,8 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
         qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
         exit(0);
     }
+ 	// Create an instance of the IpoptApplication
+	app_ = IpoptApplicationFactory ();
 }
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
@@ -77,11 +79,6 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 	app_ = IpoptApplicationFactory ();
 }
 
-void MogsIpoptOptimization::set_nlp_problem( MogsNlpIpopt *in)
-{
-    nlp_ = in;
-    app_ = IpoptApplicationFactory ();
-}
 
 void MogsIpoptOptimization::solve()
 {
@@ -108,7 +105,11 @@ void MogsIpoptOptimization::solve()
 		else	qDebug()<<"option of type : "<< type <<" not defined.";
 	}
 
+    local_solve();
+}
 
+void MogsIpoptOptimization::local_solve()
+{
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app_->Initialize ();

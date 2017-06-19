@@ -36,8 +36,7 @@ class AbstractFAD_1_4Parameterization : virtual public AbstractParameterization
 };
 
 // the types of the class factories
-typedef AbstractFAD_1_4Parameterization* create_FAD_1_4Parameterization(QDomElement Param,
-                                                                        std::vector<MogsOptimDynamics<double> *>& dyns);
+typedef AbstractFAD_1_4Parameterization* create_FAD_1_4Parameterization( );
 
 typedef void destroy_FAD_1_4Parameterization(AbstractFAD_1_4Parameterization*);
 

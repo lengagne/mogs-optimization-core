@@ -16,17 +16,22 @@ class AbstractParameterization
             return nb_param_;
         }
 
-        double get_bounds_inf(unsigned int i)
+        double get_bounds_inf(unsigned int i) const
         {
             return bound_inf_[i];
         }
 
-        double get_bounds_sup(unsigned int i)
+        double get_bounds_sup(unsigned int i) const
         {
             return bound_sup_[i];
         }
 
-        double get_starting_point(unsigned int i)
+        QString get_plugin_name() const
+        {
+            return plugin_name_;
+        }
+
+        double get_starting_point(unsigned int i) const
         {
             return init_[i];
         }
@@ -35,10 +40,18 @@ class AbstractParameterization
 
         virtual void prepare_computation( std::vector<MogsOptimDynamics<double> *>& dyns) = 0;
 
+        virtual void init_from_AbstractParameterization(  AbstractParameterization* p) = 0;
+
+        virtual void init_from_xml( QDomElement param,
+                                    std::vector<MogsOptimDynamics<double> *>& dyns ) = 0;
+
 protected:
         unsigned int nb_param_;
 
         std::vector<double> bound_inf_, bound_sup_, init_;
+
+        // name of the parameterization (used to perfom cast)
+        QString plugin_name_;
 };
 
 #endif // ABSTRACTPARAMETERIZATION_H

@@ -52,10 +52,8 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     void read_problem (const mogs_string & filename);
 
-    void set_nlp_problem( MogsNlpIpopt * in);
-
     void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                const AbstractParameterization* param,
+                                AbstractParameterization* param,
                                 const std::vector<AbstractCriteria* > &criteres,
                                 const std::vector<AbstractConstraint*> & constraints)
     {
@@ -64,6 +62,10 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     /** Solve the problem	 */
     void solve();
+
+    // solving the problem assuming all the internal values are set.
+    void local_solve();
+
 
     private:
     SmartPtr < MogsNlpIpopt > nlp_;

@@ -1,16 +1,24 @@
 #include "StaticPostureParameterization.h"
 
 StaticPostureParameterization::StaticPostureParameterization(   bool compute_forces,
-                                                                std::vector<MogsOptimDynamics<double> *>& dyns)
+                                                                std::vector<MogsOptimDynamics<double> *>& dyns):StaticPostureParameterization()
 {
+
     compute_forces_ = compute_forces;
     init(dyns);
 }
 
-
-StaticPostureParameterization::StaticPostureParameterization(   QDomElement Param,
-                                                                std::vector<MogsOptimDynamics<double> *>& dyns)
+void StaticPostureParameterization::init_from_AbstractParameterization( AbstractParameterization* p)
 {
+    std::cout<<"StaticPostureParameterization p->nb_param = "<< p->get_nb_param()<<std::endl;
+    *this =  *(dynamic_cast<StaticPostureParameterization*>(p));
+    std::cout<<"StaticPostureParameterization nb_param = "<< get_nb_param()<<std::endl;
+}
+
+void StaticPostureParameterization::init_from_xml(   QDomElement Param,
+                                                     std::vector<MogsOptimDynamics<double> *>& dyns)
+{
+    plugin_name_ = "StaticPosture";
     compute_forces_ = false;
     std::cout<<"\tConstructor of StaticPostureParameterization"<<std::endl;
     QDomElement cf = Param.firstChildElement("compute_force");

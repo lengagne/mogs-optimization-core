@@ -90,12 +90,11 @@ class AbstractLoader
 			}
         }
 
-        template <typename CREATOR>
-        AbstractParameterization * get_parameterization(QString derivative_type,
-                                                QDomElement param,
-                                                std::vector<MogsOptimDynamics<double> *>& dyns )
+
+       template <typename CREATOR>
+        AbstractParameterization * get_parameterization(const QString& derivative_type,
+                                                        const QString& type)
         {
-            QString type=param.attribute("type");
             QString library_so;
             if ( mpc.get_library_plugin(derivative_type,type,library_so))
             {
@@ -115,14 +114,34 @@ class AbstractLoader
                 }
                 std::cout << "loading parameterization_ name "   <<type.toStdString().c_str() << std::endl;
                 // create an instance of the class
-                return (AbstractParameterization *) creator( param, dyns );
-
+                return( AbstractParameterization *) creator();
             }
             else
             {
                 qDebug()<<"Error cannot load the plugin "<<type<<" as a "<<derivative_type<<" plugin";
                 exit(0);
             }
+        }
+
+        template <typename CREATOR>
+        AbstractParameterization * get_parameterization(QString derivative_type,
+                                                        AbstractParameterization* param)
+        {
+            QString type = param->get_plugin_name();
+            AbstractParameterization * p = get_parameterization<CREATOR>(derivative_type,type);
+            p->init_from_AbstractParameterization(param);
+            return p;
+        }
+
+        template <typename CREATOR>
+        AbstractParameterization * get_parameterization(QString derivative_type,
+                                                        QDomElement param,
+                                                        std::vector<MogsOptimDynamics<double> *>& dyns )
+        {
+            QString type=param.attribute("type");
+            AbstractParameterization * p = get_parameterization<CREATOR>(derivative_type,type);
+            p->init_from_xml(param,dyns);
+            return p;
         }
 
 

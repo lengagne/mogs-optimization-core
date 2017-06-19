@@ -36,7 +36,7 @@ class MogsAbstractOptimization: public MogsAbstractProblem
         virtual void read_problem (const mogs_string & filename) = 0;
 
         virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                            const AbstractParameterization* param,
+                                            AbstractParameterization* param,
                                             const std::vector<AbstractCriteria* > &criteres,
                                             const std::vector<AbstractConstraint*> & constraints)=0;
 

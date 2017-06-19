@@ -6,7 +6,7 @@
 class PositionCriteria: virtual public AbstractCriteria
 {   public:
     PositionCriteria(double weight,
-                     std::vector<MogsOptimDynamics<double> *> dyns,
+                     std::vector<MogsOptimDynamics<double> *> &dyns,
                      const QString& robot_name,
                      const QString& body_name,
                      const Eigen::Matrix<double,3,1>& body_position,

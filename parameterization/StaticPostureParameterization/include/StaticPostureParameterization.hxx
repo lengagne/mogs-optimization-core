@@ -17,6 +17,8 @@ void StaticPostureParameterization::compute( const T *x,std::vector<MogsOptimDyn
 template<typename T>
 void StaticPostureParameterization::prepare_computation( std::vector<MogsOptimDynamics<T> *>& dyns)
 {
+    std::cout<<"nb_robots_ = "<< nb_robots_ <<std::endl;
+    std::cout<<"dyns.size() = "<< dyns.size() <<std::endl;
     for (unsigned int i=0;i<nb_robots_;i++)
         dyns[i]->reset_forces();
 }

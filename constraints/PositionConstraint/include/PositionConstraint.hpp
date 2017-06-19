@@ -9,11 +9,22 @@ class PositionConstraint: virtual public AbstractConstraint
 	PositionConstraint (QDomElement Constraint,
                          std::vector<MogsOptimDynamics<double> *>& dyns);
 
+    PositionConstraint( std::vector<MogsOptimDynamics<double> *> &dyns,
+                         const QString& robot_name,
+                         const QString& body_name,
+                         const Eigen::Matrix<double,3,1>& body_position,
+                         const Eigen::Matrix<double,3,1>& desired_position);
+
     ~PositionConstraint ();
 
     void compute( const double*x, double * g,std::vector<MogsOptimDynamics<double> *>& dyns)
     {
         return compute<double>(g, dyns);
+    }
+
+    void update_dynamics(const double  *x, std::vector<MogsOptimDynamics<double> *>& dyns)
+    {
+        // no param here
     }
 
     template<typename T>
