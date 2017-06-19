@@ -5,6 +5,8 @@
 
 class PositionCriteria: virtual public AbstractCriteria
 {   public:
+    PositionCriteria();
+
     PositionCriteria(double weight,
                      std::vector<MogsOptimDynamics<double> *> &dyns,
                      const QString& robot_name,
@@ -12,8 +14,10 @@ class PositionCriteria: virtual public AbstractCriteria
                      const Eigen::Matrix<double,3,1>& body_position,
                      const Eigen::Matrix<double,3,1>& desired_position);
 
-	PositionCriteria (QDomElement critere,
-                       std::vector<MogsOptimDynamics<double> *> dyns);
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     ~PositionCriteria ();
 

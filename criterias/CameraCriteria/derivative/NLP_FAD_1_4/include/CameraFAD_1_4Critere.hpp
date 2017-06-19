@@ -7,11 +7,14 @@
 class CameraFAD_1_4Critere: public AbstractFAD_1_4Critere, CameraCriteria
 {
  public:
-	CameraFAD_1_4Critere (QDomElement critere,
-                          std::vector<MogsOptimDynamics<Number> *>& dyns);
+	CameraFAD_1_4Critere ();
 
     ~CameraFAD_1_4Critere ();
 
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     Number compute( std::vector<MogsOptimDynamics<Number> *>& dyns)
     {

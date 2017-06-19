@@ -8,10 +8,14 @@
 class TorqueFAD_1_4Critere: public AbstractFAD_1_4Critere, TorqueCriteria
 {
  public:
-	TorqueFAD_1_4Critere (QDomElement critere,
-                                 std::vector<MogsOptimDynamics<double> *>& dyns);
+	TorqueFAD_1_4Critere ( );
 
     ~TorqueFAD_1_4Critere ();
+
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     Number compute( std::vector<MogsOptimDynamics<Number> *>& dyns)
     {

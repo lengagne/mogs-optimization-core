@@ -5,10 +5,14 @@
 
 class TorqueCriteria: public AbstractCriteria
 {   public:
-	TorqueCriteria (QDomElement critere,
-                            std::vector<MogsOptimDynamics<double> *>& dyns);
+	TorqueCriteria ( );
 
     ~TorqueCriteria ();
+
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     double compute( std::vector<MogsOptimDynamics<double> *>& dyns)
     {

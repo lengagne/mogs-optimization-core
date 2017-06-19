@@ -1,7 +1,17 @@
 #include <CameraCriteria.hpp>
 
- CameraCriteria::CameraCriteria (QDomElement critere,
-                                 std::vector<MogsOptimDynamics<double> *>dyns)
+CameraCriteria::CameraCriteria()
+{
+    plugin_name_ = "camera";
+}
+
+void CameraCriteria::init_from_AbstractCriteria(  AbstractCriteria* c)
+{
+    *this =  *(dynamic_cast<CameraCriteria*>(c));
+}
+
+void CameraCriteria::init_from_xml (QDomElement critere,
+                                 std::vector<MogsOptimDynamics<double> *>&dyns)
 {
     QDomElement Child=critere.firstChildElement().toElement();
 

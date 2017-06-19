@@ -1,11 +1,16 @@
 #include <PositionCriteria.hpp>
 
+PositionCriteria::PositionCriteria()
+{
+    plugin_name_ = "position";
+}
+
 PositionCriteria::PositionCriteria(  double weight,
                                      std::vector<MogsOptimDynamics<double> *> &dyns,
                                      const QString& robot_name,
                                      const QString& body_name,
                                      const Eigen::Matrix<double,3,1>& body_position,
-                                     const Eigen::Matrix<double,3,1>& desired_position)
+                                     const Eigen::Matrix<double,3,1>& desired_position):PositionCriteria()
 {
     weight_ = weight;
     Robot = robot_name;
@@ -36,8 +41,13 @@ PositionCriteria::PositionCriteria(  double weight,
     desired_position_ = desired_position;
 }
 
-PositionCriteria::PositionCriteria (QDomElement critere,
-                                     std::vector<MogsOptimDynamics<double> *> dyns)
+void PositionCriteria::init_from_AbstractCriteria(  AbstractCriteria* c)
+{
+    *this =  *(dynamic_cast<PositionCriteria*>(c));
+}
+
+void PositionCriteria::init_from_xml (QDomElement critere,
+                                     std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     weight_ = critere.attribute("weight").toDouble();
 //    std::cout<<"weight = "<< weight_<<std::endl;

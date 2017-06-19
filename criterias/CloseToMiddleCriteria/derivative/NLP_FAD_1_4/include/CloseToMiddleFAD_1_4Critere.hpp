@@ -5,13 +5,19 @@
 #include "AbstractFAD_1_4Critere.hpp"
 #include "CloseToMiddleCriteria.hpp"
 
-class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, CloseToMiddleCriteria
+class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, virtual CloseToMiddleCriteria
 {
  public:
-	CloseToMiddleFAD_1_4Critere (QDomElement critere,
-                                 std::vector<MogsOptimDynamics<double> *>& dyns);
+	CloseToMiddleFAD_1_4Critere ( );
 
     ~CloseToMiddleFAD_1_4Critere ();
+
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
+
+    virtual void init_from_xml( QDomElement ctr,
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
+
 
     Number compute( std::vector<MogsOptimDynamics<Number> *>& dyns)
     {

@@ -8,10 +8,14 @@
 class PositionFAD_1_4Critere: public AbstractFAD_1_4Critere, PositionCriteria
 {
  public:
-	PositionFAD_1_4Critere (QDomElement critere,
-                             std::vector<MogsOptimDynamics<Number> *>& dyns);
+	PositionFAD_1_4Critere ( );
 
     ~PositionFAD_1_4Critere ();
+
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     Number compute( std::vector<MogsOptimDynamics<Number> *>& dyns)
     {

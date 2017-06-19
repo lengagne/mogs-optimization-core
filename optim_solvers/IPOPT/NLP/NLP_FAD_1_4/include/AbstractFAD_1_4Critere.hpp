@@ -24,8 +24,8 @@ class AbstractFAD_1_4Critere : virtual public AbstractCriteria
 };
 
 // the types of the class factories
-typedef AbstractFAD_1_4Critere* create_FAD_1_4Critere(QDomElement critere,
-                                                        std::vector<MogsOptimDynamics<double> *>& dyns);
+typedef AbstractFAD_1_4Critere* create_FAD_1_4Critere( );
+
 typedef void destroy_FAD_1_4Critere(AbstractFAD_1_4Critere*);
 
 

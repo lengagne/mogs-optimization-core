@@ -1,7 +1,18 @@
 #include <CloseToMiddleCriteria.hpp>
 
-CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
-                                                std::vector<MogsOptimDynamics<double> *>& dyns)
+CloseToMiddleCriteria::CloseToMiddleCriteria ()
+{
+    plugin_name_ = "close_to_middle";
+}
+
+void CloseToMiddleCriteria::init_from_AbstractCriteria(  AbstractCriteria* c)
+{
+    *this =  *(dynamic_cast<CloseToMiddleCriteria*>(c));
+}
+
+
+void CloseToMiddleCriteria::init_from_xml ( QDomElement critere,
+                                            std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     weight_ = critere.attribute("weight").toDouble();
 
@@ -17,7 +28,7 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
 		std::cerr<<"Error no balise robot found for CloseToMiddleCriteria"<<std::endl;
 		exit(1);
     }
-    
+
     robot_id_ = -1;
     unsigned int nb = dyns.size();
     for (int i=0;i<nb;i++)
@@ -27,7 +38,7 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (  QDomElement critere,
             robot_id_ = i;
             break;
         }
-    }    
+    }
 
    // calcul de qm
     // a partir de dyns[0]->model

@@ -37,6 +37,15 @@ PositionConstraint::PositionConstraint(  std::vector<MogsOptimDynamics<double> *
     }
     body_Position_ = body_position;
     desired_Position_ = desired_position;
+
+    m = 3; //desired_Position_.size();
+    upper_.resize(3);
+    lower_.resize(3);
+    for (int i=0;i<3;i++)
+    {
+        upper_[i] = lower_[i] = desired_Position_(i);
+    }
+
 }
 
 void PositionConstraint::init_from_xml(   QDomElement contraint,

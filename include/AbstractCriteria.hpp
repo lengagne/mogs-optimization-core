@@ -16,6 +16,11 @@ class AbstractCriteria
         return plugin_name_;
     }
 
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c) = 0;
+
+    virtual void init_from_xml( QDomElement criteria,
+                                std::vector<MogsOptimDynamics<double> *>& dyns ) = 0;
+
     QString plugin_name_;
 
 };

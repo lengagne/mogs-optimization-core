@@ -6,10 +6,14 @@
 class CameraCriteria: virtual public AbstractCriteria
 {
  public:
-	CameraCriteria (QDomElement critere,
-                    std::vector<MogsOptimDynamics<double> *>dyns);
+	CameraCriteria ();
 
     ~CameraCriteria ();
+
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     double compute(std::vector<MogsOptimDynamics<double> *>dyns)
     {

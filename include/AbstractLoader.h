@@ -74,11 +74,8 @@ class AbstractLoader
 
         template <typename CREATOR>
         AbstractCriteria * get_criteria(    const QString & derivative_type,
-                                            QDomElement critere,
-                                            std::vector<MogsOptimDynamics<double> *>& dyns )
+                                            const QString & type)
         {
-            QString type=critere.attribute("type");
-			QString name=critere.attribute("name");
             QString library_so;
 			if ( mpc.get_library_plugin(derivative_type,type,library_so))
 			{
@@ -98,7 +95,7 @@ class AbstractLoader
 					exit(0);
 				}
 				// create an instance of the class
-				return (AbstractCriteria*) creator(critere,dyns);
+				return (AbstractCriteria*) creator();
 			}
 			else
 			{
@@ -107,6 +104,27 @@ class AbstractLoader
 			}
         }
 
+        template <typename CREATOR>
+        AbstractCriteria * get_criteria(    const QString & derivative_type,
+                                            QDomElement critere,
+                                            std::vector<MogsOptimDynamics<double> *>& dyns )
+        {
+            QString type=critere.attribute("type");
+            AbstractCriteria * c = get_criteria<CREATOR>(derivative_type,type);
+            c->init_from_xml(critere,dyns);
+            return c;
+        }
+
+        template <typename CREATOR>
+        AbstractCriteria * get_criteria(const QString& derivative_type,
+                                        AbstractCriteria* crit)
+        {
+            QString type = crit->get_plugin_name();
+            qDebug()<<"type  = "<< type;
+            AbstractCriteria * p = get_criteria<CREATOR>(derivative_type,type);
+            p->init_from_AbstractCriteria(crit);
+            return p;
+        }
 
        template <typename CREATOR>
         AbstractParameterization * get_parameterization(const QString& derivative_type,

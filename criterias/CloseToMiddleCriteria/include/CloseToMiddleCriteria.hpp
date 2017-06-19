@@ -5,8 +5,7 @@
 
 class CloseToMiddleCriteria: public AbstractCriteria
 {   public:
-	CloseToMiddleCriteria (QDomElement critere,
-                            std::vector<MogsOptimDynamics<double> *>& dyns);
+	CloseToMiddleCriteria ( );
 
     ~CloseToMiddleCriteria ();
 
@@ -14,6 +13,11 @@ class CloseToMiddleCriteria: public AbstractCriteria
     {
         return compute<double>(dyns);
     }
+
+    virtual void init_from_xml( QDomElement criteria,
+                        std::vector<MogsOptimDynamics<double> *>& dyns );
+
+    virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
     template<typename T>
       T compute( std::vector<MogsOptimDynamics<T> *>& dyns);

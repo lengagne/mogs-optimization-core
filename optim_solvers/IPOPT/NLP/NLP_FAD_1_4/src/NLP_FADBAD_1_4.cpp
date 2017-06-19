@@ -27,7 +27,7 @@
 #include "MogsProblemClassifier.h"
 #include "AbstractLoader.h"
 
-#define PRINT 1
+//#define PRINT 1
 
 
 using namespace Ipopt;
@@ -512,12 +512,11 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
     parameterization_ =  dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param));
 
     criteres_.clear();
-//    for (int i=0;i<criteres.size();i++)
-//    {
-//        QString ctr_name = criteres[i]->get_plugin_name();
-//        AbstractFAD_1_4Critere* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",criteres[i]));
-//        criteres_.push_back(ctr);
-//    }
+    for (int i=0;i<criteres.size();i++)
+    {
+        AbstractFAD_1_4Critere* c = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",criteres[i]));
+        criteres_.push_back(c);
+    }
 
     constraints_.clear();
     for (int i=0;i<constraints.size();i++)
