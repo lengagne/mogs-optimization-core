@@ -19,15 +19,15 @@ void MogsNlpIpopt::save_results( 	Index n,
 	printf("\n\nObjective value\n");
 	printf("f(x*) = %e\n", obj_value);
 
-	QDomElement ElResults = root_.firstChildElement ("results");
+    if (!root_.isNull())
+    {
+        QDomElement ElResults = root_.firstChildElement ("results");
 
-	qDebug()<<"Create node";
-	QDomDocument doc = root_.ownerDocument();
-	QDomElement node = doc.createElement("result");
-	ElResults.appendChild(node);
-
-//	qDebug()<<" fichiers = "<< doc.toString();
-// 	root_.
+        qDebug()<<"Create node";
+        QDomDocument doc = root_.ownerDocument();
+        QDomElement node = doc.createElement("result");
+        ElResults.appendChild(node);
+    }
 }
 
 void MogsNlpIpopt::set_robots(const std::vector<MogsRobotProperties*> & in)

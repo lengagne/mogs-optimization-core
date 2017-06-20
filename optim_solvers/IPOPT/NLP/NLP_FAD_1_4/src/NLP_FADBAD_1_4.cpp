@@ -38,6 +38,7 @@ NLP_FAD_1_4::NLP_FAD_1_4 ()
     std::cout<<"Constructor of NLP_FAD_1_4"<<std::endl;
 	compute_number_ = false;
 	compute_gradient_ = false;
+	visu_during_optim_ = false;
 }
 
 NLP_FAD_1_4::~NLP_FAD_1_4 ()
@@ -56,10 +57,6 @@ void NLP_FAD_1_4::load_xml( )
     }
     AbstractLoader loader;
 
-
-
-//	kin.SetRobot(robots_[0]);
-//	akin.SetRobot(robots_[0]);
 	MogsProblemClassifier mpc;
 	mogs_string library_so;
     QDomElement criteres=root_.firstChildElement("criteres");
@@ -81,15 +78,14 @@ void NLP_FAD_1_4::load_xml( )
     }
 
     QDomElement constraints=root_.firstChildElement("constraints");
-    unsigned int offset = 0;
+
     for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
 	{
         AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
-        ctr->set_offset(offset);
-        offset += ctr->get_nb_constraints();
+
         std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
         constraints_.push_back(ctr);
-        parameterization_->init_from_constraints(ctr);
+
 	}
 
     #ifdef MogsVisu_FOUND
@@ -100,8 +96,6 @@ void NLP_FAD_1_4::load_xml( )
         visu_during_optim_ = convert_to_bool(ElVisuDuring.text().simplified());
     }
     #endif // MogsVisu_FOUND
-
-    nb_ctr_ = constraints_.size();
 
     #ifdef PRINT
     std::cout<<"end of load_xml"<<std::endl;
@@ -120,9 +114,15 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
     n = nb_var_;
     std::cout << "   n = " << n  << std::endl;
+    nb_ctr_ = constraints_.size();
     m = 0;
     for(int i=0;i<nb_ctr_;i++)
+    {
+        constraints_[i]->set_offset(m);
         m += constraints_[i]->get_nb_constraints();
+        parameterization_->init_from_constraints(constraints_[i]);
+    }
+
     std::cout << "   m = " << m  << std::endl;
 
     // detection of the dependency
@@ -132,11 +132,8 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 
     Dependency * DG = new Dependency [m];
     std::vector< MogsOptimDynamics<Dependency> *> k;
-    std::cout<<"nb_robots_ =" << nb_robots_<<std::endl;
     for(int i=0;i<nb_robots_;i++)
         k.push_back(new MogsOptimDynamics<Dependency>(robots_[i]));
-    std::cout<<"Compute the dependency of the derivative"<<std::endl;
-    std::cout<<"k.size() = "<< k.size()<<std::endl;
     parameterization_->prepare_computation(k);
     for (unsigned int i=0; i<nb_ctr_; i++)
         constraints_[i]->update_dynamics(DX,k);
@@ -210,8 +207,8 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     cpt = 0;
     for (i=0; i<constraints_.size(); i++)
     {
-        qDebug()<<"dealing with constraint "<< constraints_[i];
-        qDebug()<<"dealing with constraint of type : "<< constraints_[i]->get_plugin_name();
+//        qDebug()<<"dealing with constraint "<< constraints_[i];
+//        qDebug()<<"dealing with constraint of type : "<< constraints_[i]->get_plugin_name();
         for (j=0; j<constraints_[i]->get_nb_constraints(); j++)
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
@@ -269,14 +266,10 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
    #ifdef MogsVisu_FOUND
     if(visu_during_optim_)
     {
-        std::cout<<"robots_.size()  = "<< robots_.size() <<std::endl;
-        std::cout<<"dyns_.size()  = "<< dyns_.size() <<std::endl;
         for(int k=0;k<nb_robots_;k++)
         {
-            std::cout<<"k  = "<< k<<std::endl;
             visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
         }
-
 
         visu_optim_-> clear_lines();
         for (int i=0;i<constraints_.size();i++)
@@ -422,7 +415,7 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     int cpt = 0;
     for(int k=0;k<nb_robots_;k++)
     {
-        std::cout<<"q["<<k<<"] = "<< dyns_[k]->q_.transpose()<<std::endl;
+//        std::cout<<"q["<<k<<"] = "<< dyns_[k]->q_.transpose()<<std::endl;
         visu.apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
     }
     visu. clear_lines();
