@@ -138,7 +138,5 @@ PositionConstraint::~PositionConstraint ()
 
 void PositionConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
 {
-    std::cout<<"c->m = "<< c->get_nb_constraints() <<std::endl;
     *this =  *(dynamic_cast<PositionConstraint*>(c));
-    std::cout<<"m = "<< m <<std::endl;
 }

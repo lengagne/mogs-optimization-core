@@ -120,7 +120,6 @@ class AbstractLoader
                                         AbstractCriteria* crit)
         {
             QString type = crit->get_plugin_name();
-            qDebug()<<"type  = "<< type;
             AbstractCriteria * p = get_criteria<CREATOR>(derivative_type,type);
             p->init_from_AbstractCriteria(crit);
             return p;

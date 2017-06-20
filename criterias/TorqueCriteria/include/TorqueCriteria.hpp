@@ -7,10 +7,14 @@ class TorqueCriteria: public AbstractCriteria
 {   public:
 	TorqueCriteria ( );
 
+	TorqueCriteria (    double weight,
+                        std::vector<MogsOptimDynamics<double> *>& dyns,
+                        const QString & robot_name );
+
     ~TorqueCriteria ();
 
     virtual void init_from_xml( QDomElement criteria,
-                        std::vector<MogsOptimDynamics<double> *>& dyns );
+                                std::vector<MogsOptimDynamics<double> *>& dyns );
 
     virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
