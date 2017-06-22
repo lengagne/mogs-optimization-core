@@ -6,6 +6,7 @@ add_subdirectory(BoxCollisionConstraint)
 add_subdirectory(BoxContactConstraint)
 add_subdirectory(BalanceConstraint)
 add_subdirectory(PositionConstraint)
+add_subdirectory(TorqueConstraint)
 
 #foreach(dir ${all_valid_subdirs})
 #    message(STATUS "path = ${dir}")

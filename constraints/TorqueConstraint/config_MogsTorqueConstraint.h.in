@@ -1,0 +1,9 @@
+#ifndef MogsTorqueConstraint_CONFIG_H
+#define MogsTorqueConstraint_CONFIG_H
+
+#define MogsTorqueConstraint_VERSION_MAJOR @MogsTorqueConstraint_VERSION_MAJOR@
+#define MogsTorqueConstraint_VERSION_MINOR @MogsTorqueConstraint_VERSION_MINOR@
+
+
+#endif
+

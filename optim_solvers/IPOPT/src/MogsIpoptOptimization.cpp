@@ -94,7 +94,7 @@ void MogsIpoptOptimization::solve()
 	// read the options
 	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
 	{
-		qDebug()<<"We find one option";
+//		qDebug()<<"We find one option";
 		mogs_string type = childOptions.attribute("type");
 		mogs_string name = childOptions.attribute("name");
 		mogs_string value = childOptions.attribute("value");

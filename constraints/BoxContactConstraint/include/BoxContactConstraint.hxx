@@ -14,7 +14,6 @@ void BoxContactConstraint::update_dynamics(const  T *x, std::vector<MogsOptimDyn
             force(k) = x[offset_param_ + 6*cpt_coll + 3+k];
         }
 
-
         local_f.block(0,0,3,1) = point.cross(force);
         local_f.block(3,0,3,1) = force;
         dyns[robot1_]->f_ext_[body1_[i]] -=  local_f;

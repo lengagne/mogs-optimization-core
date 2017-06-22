@@ -83,9 +83,8 @@ void NLP_FAD_1_4::load_xml( )
 	{
         AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
 
-        std::cout << "loading constraints name "   <<type.toStdString().c_str() << std::endl;
+        std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
         constraints_.push_back(ctr);
-
 	}
 
     #ifdef MogsVisu_FOUND
@@ -109,18 +108,21 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     #endif // PRINT
     nb_robots_ = robots_.size();
 
+    nb_ctr_ = constraints_.size();
+    for(int i=0;i<nb_ctr_;i++)
+        parameterization_->init_from_constraints(constraints_[i]);
+
 //    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
     nb_var_= parameterization_->get_nb_param();
 
     n = nb_var_;
     std::cout << "   n = " << n  << std::endl;
-    nb_ctr_ = constraints_.size();
+
     m = 0;
     for(int i=0;i<nb_ctr_;i++)
     {
         constraints_[i]->set_offset(m);
         m += constraints_[i]->get_nb_constraints();
-        parameterization_->init_from_constraints(constraints_[i]);
     }
 
     std::cout << "   m = " << m  << std::endl;
@@ -172,7 +174,7 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     #endif // PRINT
 
     #ifdef MogsVisu_FOUND
-    if(visu_during_optim_)
+    if(visu_during_optim_ && !visu_optim_)
     {
         visu_optim_ = new VisuHolder("intermediate result");
         for(int k=0;k<nb_robots_;k++)

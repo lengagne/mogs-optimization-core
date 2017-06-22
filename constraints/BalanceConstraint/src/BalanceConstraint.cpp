@@ -2,7 +2,7 @@
 
 BalanceConstraint::BalanceConstraint ()
 {
-    plugin_name_ = "ToZero";
+    plugin_name_ = "Balance";
 }
 
 BalanceConstraint::~BalanceConstraint ()
