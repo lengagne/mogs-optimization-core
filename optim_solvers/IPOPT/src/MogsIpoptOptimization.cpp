@@ -39,6 +39,7 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 {
     MogsProblemClassifier mpc;
     mogs_string library_so;
+    
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {
         // load the library
@@ -69,6 +70,7 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
+    std::cout<<"MogsIpoptOptimization::read_problem()"<<std::endl;
 
     // loaded the good type of problem
     MogsAbstractProblem::read_problem(filename);
@@ -114,16 +116,16 @@ void MogsIpoptOptimization::local_solve()
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app_->Initialize ();
+    std::cout<<"app Initialized"<<std::endl;
+
 	if (status != Solve_Succeeded)
 	  {
-		  std::cout << std::endl << std::
-			  endl << "*** Error during initialization!" << std::
-			  endl;
+		  std::cout << std::endl << std::endl << "*** Error during initialization!" << std::endl;
 		  return ;
 	  }
 
     //set options
-// 	app_->Options()->SetStringValue("derivative_test", "first-order");
+    // 	app_->Options()->SetStringValue("derivative_test", "first-order");
 	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 
 	clock_t begin = clock();
@@ -132,19 +134,13 @@ void MogsIpoptOptimization::local_solve()
 	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
 
 	if (status == Solve_Succeeded)
-	  {
-		  // Retrieve some statistics about the solve
-		  Index iter_count = app_->Statistics ()->IterationCount ();
-		  std::cout << std::endl << std::
-			  endl << "*** The problem solved in " << iter_count
-			  << " iterations!" << std::endl;
-
-		  Number final_obj = app_->Statistics ()->FinalObjective ();
-		  std::cout << std::endl << std::
-			  endl <<
-			  "*** The final value of the objective function is "
-			  << final_obj << '.' << std::endl;
-	  }
+	{
+	   // Retrieve some statistics about the solve
+	   Index iter_count = app_->Statistics ()->IterationCount ();
+	   std::cout << std::endl << std::endl << "*** The problem solved in " << iter_count<< " iterations!" << std::endl;
+	   Number final_obj = app_->Statistics ()->FinalObjective ();
+	   std::cout << std::endl << std::endl <<"*** The final value of the objective function is "<< final_obj << '.' << std::endl;
+	}
     std::cout<<"MogsIpoptOptimization::solve()  done"<<std::endl;
 }
 

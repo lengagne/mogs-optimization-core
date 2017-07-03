@@ -11,4 +11,6 @@ set(MogsOptimizationCore_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_
 
 set(MogsOptimizationCore_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
 
+set(MogsOptimizationCore_LIBRARIES  @MogsOptimizationCore_LIBRARIES@)
+
 SET(MogsOptimizationCore_FLAGS @MogsOptimization_FLAGS@ @MogsCore_FLAGS@)

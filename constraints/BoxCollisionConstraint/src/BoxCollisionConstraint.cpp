@@ -15,7 +15,7 @@ void BoxCollisionConstraint::init_from_xml( QDomElement ele,
                                             std::vector<MogsOptimDynamics<double> *>& dyns )
 {
 
-//    qDebug()<<"Constructor of BoxCollisionConstraint";
+    qDebug()<<"Constructor of BoxCollisionConstraint";
     QDomElement ElRobot1=ele.firstChildElement("robot1");
     QDomElement ElRobot2=ele.firstChildElement("robot2");
 
