@@ -26,7 +26,10 @@ PositionCriteria::PositionCriteria(  double weight,
     if(robot_id_==-1)
     {
         std::cerr<<"Error in "<<__FILE__<<" at line "<< __LINE__<<std::endl;
-        std::cerr<<"Error cannot recognize robot_id !!"<<std::endl;
+        std::cerr<<"Error cannot recognize robot_id for robot "<< Robot.toStdString() <<std::endl;
+        std::cerr<<"Known robots are : "<<std::endl;
+        for (int i=0;i<dyns.size();i++)
+            std::cerr<<"\t"<< dyns[i]->getRobotName().toStdString()  <<std::endl;
         exit(-1);
     }
 

@@ -57,13 +57,9 @@ ADD_LIBRARY(	MogsOptimizationCore SHARED
 		${sources_files_MogsOptimizationCore}
 )
 
-message("MogsVisu_LIBRARIES = " ${MogsVisu_LIBRARIES})
-message("MogsCore_LIBRARIES = " ${MogsCore_LIBRARIES})
-
 target_link_libraries(MogsOptimizationCore
                         ${MogsVisu_LIBRARIES}
                         ${MogsCore_LIBRARIES})
-
 
 ## Perform the proper linking
 #SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
