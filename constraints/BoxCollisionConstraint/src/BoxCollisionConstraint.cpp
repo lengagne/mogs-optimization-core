@@ -3,6 +3,16 @@
 
 BoxCollisionConstraint::BoxCollisionConstraint (   )
 {
+    plugin_name_ = "BoxCollision";
+}
+
+BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<double> *> &dyns,
+                                                 const QString& robot1_,
+                                                 const QString& robot2_,
+                                                 const QString& body1_,
+                                                 const QString& body2_,
+                                                 const Eigen::Matrix<double,3,1>& body_position):BoxCollisionConstraint()
+{
 
 }
 
@@ -125,7 +135,7 @@ BoxCollisionConstraint::~BoxCollisionConstraint ()
         delete d2_[i];
 }
 
-void BoxCollisionConstraint::compute(double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
+void BoxCollisionConstraint::compute( const double *x ,double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     SpatialTransform<double> T1,T2;
     unsigned int cpt = 0;

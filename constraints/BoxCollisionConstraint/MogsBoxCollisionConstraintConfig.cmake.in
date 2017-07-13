@@ -7,10 +7,10 @@
 
 # Tell the user project where to find our headers and libraries
 
-set(MogsBoxCollisionConstraint_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+set(MogsBoxCollisionConstraint_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsBoxCollision_INCLUDE_DIRS@)
 
-set(MogsBoxCollisionConstraint_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+set(MogsBoxCollisionConstraint_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsBoxCollision_LIBRARY_DIRS@)
 
-set(MogsBoxCollisionConstraint_LIBRARIES @MogsBoxCollisionConstraint_LIBRARIES@ @MogsCore_LIBRARIES@)
+set(MogsBoxCollisionConstraint_LIBRARIES @MogsBoxCollisionConstraint_LIBRARIES@ @MogsBoxCollision_LIBRARIES@)
 
-SET(MogsBoxCollisionConstraint_FLAGS @MogsBoxCollisionConstraint_FLAGS@ @MogsCore_FLAGS@)
+SET(MogsBoxCollisionConstraint_FLAGS @MogsBoxCollisionConstraint_FLAGS@ @MogsBoxCollision_FLAGS@)

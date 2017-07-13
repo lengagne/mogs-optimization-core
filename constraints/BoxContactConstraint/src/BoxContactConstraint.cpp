@@ -66,7 +66,7 @@ void BoxContactConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
 
 void BoxContactConstraint::compute(const double *x , double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
 {
-    BoxCollisionConstraint::compute(g,dyns);
+    BoxCollisionConstraint::compute(x,g,dyns);
 
     compute_contact_constraint<double>(x,g,dyns);
 }
