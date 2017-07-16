@@ -9,11 +9,13 @@ class BoxCollisionConstraint: virtual public AbstractConstraint
 {   public:
 	BoxCollisionConstraint ( );
     BoxCollisionConstraint(  std::vector<MogsOptimDynamics<double> *> &dyns,
-                             const QString& robot1_,
-                             const QString& robot2_,
-                             const QString& body1_,
-                             const QString& body2_,
-                             const Eigen::Matrix<double,3,1>& body_position);
+                                                 const QString& robot1,
+                                                 const QString& robot2,
+                                                 const std::vector<QString> &body1,
+                                                 const std::vector<QString> &body2,
+                                                 const QString& config1,
+                                                 const QString& config2,
+                                                 const Eigen::Matrix<double,3,1>& body_position);
 
 
     ~BoxCollisionConstraint ();

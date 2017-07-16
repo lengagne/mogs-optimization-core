@@ -7,12 +7,92 @@ BoxCollisionConstraint::BoxCollisionConstraint (   )
 }
 
 BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<double> *> &dyns,
-                                                 const QString& robot1_,
-                                                 const QString& robot2_,
-                                                 const QString& body1_,
-                                                 const QString& body2_,
+                                                 const QString& robot1,
+                                                 const QString& robot2,
+                                                 const std::vector<QString> &body1,
+                                                 const std::vector<QString> &body2,
+                                                 const QString& config1,
+                                                 const QString& config2,
                                                  const Eigen::Matrix<double,3,1>& body_position):BoxCollisionConstraint()
 {
+
+//      unsigned int robot1_, robot2_;
+//      std::vector<unsigned int> body1_, body2_;
+//      unsigned int nb_body1_, nb_body2_;
+
+        // nb_body1_ = 1 ;
+        // nb_body2_ = 1 ;
+
+    qDebug()<<"Constructor of BoxCollisionConstraint";
+
+    for (int i = 0; i < body1.size(); i++)
+    {
+        QString body1_name = body1[i];
+        d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
+    }
+
+    nb_body1_ = body1.size();
+
+    for (int i = 0; i < body2.size(); i++)
+    {
+        QString body2_name = body2[i];
+        d2_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config2),body2_name));
+    }
+    nb_body2_ = body2.size();
+
+    m = nb_body1_ * nb_body2_;
+
+    unsigned int nb = dyns.size();
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == robot1)
+        {
+            robot1_ = i;
+            break;
+        }
+    }
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == robot2)
+        {
+            robot2_ = i;
+            break;
+        }
+    }
+
+    for (int i=0;i<nb_body1_;i++)
+        for (int j=0;j<nb_body2_;j++)
+        {
+            collision_value tmp;
+            tmp.robot_1 = robot1_;
+            tmp.robot_2 = robot2_;
+            body1_.push_back(dyns[robot1_]->model->GetBodyId(body1[i]));
+            body2_.push_back(dyns[robot2_]->model->GetBodyId(body2[j]));
+            tmp.body_1 = dyns[robot1_]->model->GetBodyId(body1[i]);
+            tmp.body_2 = dyns[robot2_]->model->GetBodyId(body2[j]);
+            coll_.push_back(tmp);
+        }
+
+    upper_.resize(m);
+    lower_.resize(m);
+    for (int i=0;i<m;i++)
+    {
+        upper_[i] = lower_[i] =0;
+        // if (!type.simplified().isNull())
+        // {
+        //     if (type.simplified()=="zero")
+        //     {
+
+        //     }else if(type.simplified()=="avoid")
+        //     {
+        //         lower_[i] = 0.001;
+        //         upper_[i] = 1e10;
+        //     }
+        //     else if(type.simplified()=="penetration")
+        //         lower_[i] = -1e10;
+        // }
+    }
+    coll_detector_ = new MogsBoxCollision();
 
 }
 
