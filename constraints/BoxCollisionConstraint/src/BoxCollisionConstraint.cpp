@@ -12,16 +12,8 @@ BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<d
                                                  const std::vector<QString> &body1,
                                                  const std::vector<QString> &body2,
                                                  const QString& config1,
-                                                 const QString& config2,
-                                                 const Eigen::Matrix<double,3,1>& body_position):BoxCollisionConstraint()
+                                                 const QString& config2):BoxCollisionConstraint()
 {
-
-//      unsigned int robot1_, robot2_;
-//      std::vector<unsigned int> body1_, body2_;
-//      unsigned int nb_body1_, nb_body2_;
-
-        // nb_body1_ = 1 ;
-        // nb_body2_ = 1 ;
 
     qDebug()<<"Constructor of BoxCollisionConstraint";
 
@@ -78,19 +70,7 @@ BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<d
     for (int i=0;i<m;i++)
     {
         upper_[i] = lower_[i] =0;
-        // if (!type.simplified().isNull())
-        // {
-        //     if (type.simplified()=="zero")
-        //     {
 
-        //     }else if(type.simplified()=="avoid")
-        //     {
-        //         lower_[i] = 0.001;
-        //         upper_[i] = 1e10;
-        //     }
-        //     else if(type.simplified()=="penetration")
-        //         lower_[i] = -1e10;
-        // }
     }
     coll_detector_ = new MogsBoxCollision();
 

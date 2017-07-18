@@ -1,12 +1,20 @@
 #ifndef  BoxContactConstraint_HPP_
 #define  BoxContactConstraint_HPP_
 
+#include "MogsKinematics.h"
 #include "AbstractConstraint.hpp"
 #include "BoxCollisionConstraint.hpp"
 
 class BoxContactConstraint: virtual public AbstractConstraint, virtual public BoxCollisionConstraint
 {   public:
 	BoxContactConstraint ();
+    BoxContactConstraint (std::vector<MogsOptimDynamics<double> *> &dyns,
+                             const QString& robot1,
+                             const QString& robot2,
+                             const std::vector<QString> &body1,
+                             const std::vector<QString> &body2,
+                             const QString& config1,
+                             const QString& config2);
 
     virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
 
@@ -30,6 +38,12 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
     #endif // MogsVisu_FOUND
 
     protected:
+
+        unsigned int robot1_, robot2_;
+      std::vector<unsigned int> body1_, body2_;
+
+      unsigned int nb_body1_, nb_body2_;
+
         unsigned int nb_contact_;
 
         double friction_;

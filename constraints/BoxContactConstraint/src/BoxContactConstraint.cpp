@@ -5,6 +5,102 @@ BoxContactConstraint::BoxContactConstraint (  ):BoxCollisionConstraint()
     plugin_name_ = "BoxContact";
 }
 
+BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double> *> &dyns,
+                     const QString& robot1,
+                     const QString& robot2,
+                     const std::vector<QString> &body1,
+                     const std::vector<QString> &body2,
+                     const QString& config1,
+                     const QString& config2):BoxContactConstraint()
+
+{
+
+    qDebug()<<"Constructor of BoxCollisionConstraint";
+
+    for (int i = 0; i < body1.size(); i++)
+    {
+        QString body1_name = body1[i];
+        d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
+    }
+
+    nb_body1_ = body1.size();
+
+    for (int i = 0; i < body2.size(); i++)
+    {
+        QString body2_name = body2[i];
+        d2_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config2),body2_name));
+    }
+    nb_body2_ = body2.size();
+
+    m = nb_body1_ * nb_body2_;
+
+    unsigned int nb = dyns.size();
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == robot1)
+        {
+            robot1_ = i;
+            break;
+        }
+    }
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == robot2)
+        {
+            robot2_ = i;
+            break;
+        }
+    }
+
+    for (int i=0;i<nb_body1_;i++)
+        for (int j=0;j<nb_body2_;j++)
+        {
+            collision_value tmp;
+            tmp.robot_1 = robot1_;
+            tmp.robot_2 = robot2_;
+            body1_.push_back(dyns[robot1_]->model->GetBodyId(body1[i]));
+            body2_.push_back(dyns[robot2_]->model->GetBodyId(body2[j]));
+            tmp.body_1 = dyns[robot1_]->model->GetBodyId(body1[i]);
+            tmp.body_2 = dyns[robot2_]->model->GetBodyId(body2[j]);
+            coll_.push_back(tmp);
+        }
+
+    upper_.resize(m);
+    lower_.resize(m);
+    for (int i=0;i<m;i++)
+    {
+        upper_[i] = lower_[i] =0;
+
+    }
+    coll_detector_ = new MogsBoxCollision();
+
+    nb_contact_ = coll_.size();
+
+    friction_ = 0.5;
+
+    nb_param_ = nb_contact_ * 6;
+    std::cout<<"BoxContactConstraint::nb_param_ =  "<< nb_param_ <<std::endl;
+    m += 3*nb_contact_;    // two constraints for the point and one constraint for the effort
+
+//    coll_detector_ = new MogsBoxCollision();
+    for (int i=0;i<nb_param_;i++)
+    {
+        param_inf_.push_back(-1e3);
+        param_sup_.push_back(1e3);
+        param_init_.push_back(0.0);
+    }
+
+
+    for (int i=0;i<nb_contact_;i++)
+    {
+        upper_.push_back(0.);    lower_.push_back(-0.);  // distance for first body
+        upper_.push_back(0.);    lower_.push_back(-0.);  // distance for second body
+        lower_.push_back(friction_); // friction cone for the moment
+        upper_.push_back(1.0);
+    }
+
+}
+
 void BoxContactConstraint::init_from_xml(   QDomElement ele,
                                             std::vector<MogsOptimDynamics<double> *>& dyns)
 {

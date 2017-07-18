@@ -14,3 +14,9 @@ void BalanceConstraint::compute( const T*x, T* g, std::vector<MogsOptimDynamics<
             }
         }
 }
+
+template<typename T>
+    void BalanceConstraint::update_dynamics(const T *x, std::vector<MogsOptimDynamics<T> *>& dyns)
+    {
+        // no param here
+    }

@@ -4,7 +4,21 @@ BalanceConstraint::BalanceConstraint ()
 {
     plugin_name_ = "Balance";
 }
+BalanceConstraint::BalanceConstraint(  std::vector<MogsOptimDynamics<double> *> &dyns):BalanceConstraint()
+{
+    m=0;
+    for (int i=0;i<dyns.size();i++)
+        if( dyns[i]->model->is_robot_floating_base())
+            m+=6;
+    for (int i=0;i<m;i++)
+    {
+        upper_.push_back(0);
+        lower_.push_back(0);
+    }
 
+//    Child = Child.nextSibling().toElement();
+//   Body=Child.firstChild().toText().data().simplified();
+}
 BalanceConstraint::~BalanceConstraint ()
 {
 
