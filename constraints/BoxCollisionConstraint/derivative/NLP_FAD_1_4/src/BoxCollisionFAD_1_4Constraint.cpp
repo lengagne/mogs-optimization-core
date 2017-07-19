@@ -58,15 +58,9 @@ void BoxCollisionFAD_1_4Constraint::compute( const F<Number>* x, F<Number>* g, s
             }
             coll_detector_->compute_one_distance<Number>(NT1,NT2,d1_[i],d2_[j],NULL,NULL,&distance_properties_[cpt]);
             g[offset+cpt] = coll_detector_->compute_one_distance_property<F<Number>>(T1,T2,d1_[i],d2_[j],distance_properties_[cpt]);
-
-            //g[offset+cpt] = coll_detector_->compute_one_distance<F<Number>>(T1,T2,d1_[i],d2_[j]);
-
             cpt++;
         }
     }
-//    dyns[coll_.robot_1]->getFrameCoordinate(coll_.body_1,T1);
-//    dyns[coll_.robot_2]->getFrameCoordinate(coll_.body_2,T2);
-//    g[offset] =  coll_detector_->compute_one_distance<F<Number>>(T1,T2,coll_,d1_,d2_);
 }
 
 void BoxCollisionFAD_1_4Constraint::compute( const Dependency* x, Dependency* g, std::vector<MogsOptimDynamics<Dependency> *>& dyns)
@@ -95,7 +89,6 @@ void BoxCollisionFAD_1_4Constraint::compute(const Number*x,Number * g, std::vect
     }
     computed_in_Number = true;
 }
-
 
 extern "C" BoxCollisionFAD_1_4Constraint* create( )
 {

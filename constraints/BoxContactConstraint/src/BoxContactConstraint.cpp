@@ -14,9 +14,7 @@ BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double
                      const QString& config2):BoxContactConstraint()
 
 {
-
-    qDebug()<<"Constructor of BoxCollisionConstraint";
-
+//    qDebug()<<"Constructor of BoxCollisionConstraint";
     for (int i = 0; i < body1.size(); i++)
     {
         QString body1_name = body1[i];
@@ -79,7 +77,7 @@ BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double
     friction_ = 0.5;
 
     nb_param_ = nb_contact_ * 6;
-    std::cout<<"BoxContactConstraint::nb_param_ =  "<< nb_param_ <<std::endl;
+//    std::cout<<"BoxContactConstraint::nb_param_ =  "<< nb_param_ <<std::endl;
     m += 3*nb_contact_;    // two constraints for the point and one constraint for the effort
 
 //    coll_detector_ = new MogsBoxCollision();
@@ -89,7 +87,6 @@ BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double
         param_sup_.push_back(1e3);
         param_init_.push_back(0.0);
     }
-
 
     for (int i=0;i<nb_contact_;i++)
     {
@@ -106,7 +103,7 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
 {
     BoxCollisionConstraint::init_from_xml(ele,dyns);
 //    std::cout<<"We deal with : "<< coll_.size()<<" contacts."<<std::endl;
-    std::cout<<"BoxCollisionConstraint::m =  "<< m <<std::endl;
+//    std::cout<<"BoxCollisionConstraint::m =  "<< m <<std::endl;
     nb_contact_ = coll_.size();
 
     friction_ = 0.5;
@@ -118,7 +115,6 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
     }
 
     nb_param_ = nb_contact_ * 6;
-    std::cout<<"BoxContactConstraint::nb_param_ =  "<< nb_param_ <<std::endl;
     m += 3*nb_contact_;    // two constraints for the point and one constraint for the effort
 
 //    coll_detector_ = new MogsBoxCollision();
@@ -129,7 +125,6 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
         param_init_.push_back(0.0);
     }
 
-
     for (int i=0;i<nb_contact_;i++)
     {
         upper_.push_back(0.);    lower_.push_back(-0.);  // distance for first body
@@ -137,10 +132,6 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
         lower_.push_back(friction_); // friction cone for the moment
         upper_.push_back(1.0);
     }
-//    std::cout<<"robot1 = "<< robot1_<<std::endl;
-//    std::cout<<"robot2 = "<< robot2_<<std::endl;
-//    std::cout<<"nb_body1_ = "<< nb_body1_ <<std::endl;
-//    std::cout<<"nb_body2_ = "<< nb_body2_ <<std::endl;
 }
 
 BoxContactConstraint::~BoxContactConstraint ()
@@ -156,7 +147,6 @@ BoxContactConstraint::~BoxContactConstraint ()
 void BoxContactConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
 {
     *this =  *(dynamic_cast<BoxContactConstraint*>(c));
-    std::cout<<"nb_body1_ = "<< nb_body1_ <<std::endl;
 }
 
 

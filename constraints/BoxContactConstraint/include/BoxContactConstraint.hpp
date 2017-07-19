@@ -39,11 +39,6 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
 
     protected:
 
-        unsigned int robot1_, robot2_;
-      std::vector<unsigned int> body1_, body2_;
-
-      unsigned int nb_body1_, nb_body2_;
-
         unsigned int nb_contact_;
 
         double friction_;
