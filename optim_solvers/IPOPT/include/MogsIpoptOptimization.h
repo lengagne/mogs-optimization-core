@@ -65,6 +65,15 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
     }
 
+    void set_option_integer( const mogs_string & option_name,
+                             int value);
+
+    void set_option_real( const mogs_string & option_name,
+                             double value);
+
+    void set_option_string( const mogs_string & option_name,
+                            const mogs_string & value);
+
     /** Solve the problem	 */
     void solve();
 

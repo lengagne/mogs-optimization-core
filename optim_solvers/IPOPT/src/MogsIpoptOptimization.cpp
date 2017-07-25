@@ -39,7 +39,7 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 {
     MogsProblemClassifier mpc;
     mogs_string library_so;
-    
+
     if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
     {
         // load the library
@@ -81,6 +81,23 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 	app_ = IpoptApplicationFactory ();
 }
 
+void MogsIpoptOptimization::set_option_integer( const mogs_string & option_name,
+                                                int value)
+{
+    app_->Options()->SetIntegerValue(option_name.toStdString().c_str(), value);
+}
+
+void MogsIpoptOptimization::set_option_real( const mogs_string & option_name,
+                                            double value)
+{
+    app_->Options()->SetNumericValue(option_name.toStdString().c_str(), value);
+}
+
+void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
+                                                const mogs_string & value)
+{
+    app_->Options()->SetStringValue(option_name.toStdString().c_str(), value.toStdString().c_str());
+}
 
 void MogsIpoptOptimization::solve()
 {
@@ -103,7 +120,7 @@ void MogsIpoptOptimization::solve()
 
 		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
 		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
-		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toInt());
+		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toDouble());
 		else	qDebug()<<"option of type : "<< type <<" not defined.";
 	}
 
