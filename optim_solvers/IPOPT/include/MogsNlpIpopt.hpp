@@ -92,7 +92,11 @@ class MogsNlpIpopt:public TNLP
 
     void set_robots(const std::vector<MogsRobotProperties*> & in);
 
+    void set_show_result(bool show_result);
+
      virtual  void load_xml( )=0;
+
+
 
       private:
   /**@name Methods to block default compiler methods.
@@ -114,6 +118,8 @@ class MogsNlpIpopt:public TNLP
 	 std::vector<MogsRobotProperties*> robots_;
 
 	 QDomElement root_;
+
+	 bool show_result_= true;
 
 };
 

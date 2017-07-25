@@ -161,6 +161,12 @@ void MogsIpoptOptimization::local_solve()
     std::cout<<"MogsIpoptOptimization::solve()  done"<<std::endl;
 }
 
+void MogsIpoptOptimization::set_show_result(bool show_result)
+{
+    nlp_->set_show_result(show_result);
+}
+
+
 extern "C" MogsIpoptOptimization* create()
 {
     return new MogsIpoptOptimization();
