@@ -152,6 +152,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 		#ifdef MogsVisu_FOUND
         bool visu_during_optim_;
         VisuHolder * visu_optim_;
+        static VisuHolder * visu_test_;
 		#endif // MogsVisu_FOUND
 
         public:

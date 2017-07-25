@@ -8,7 +8,7 @@ void BalanceConstraint::compute( const T*x, T* g, std::vector<MogsOptimDynamics<
         {
             for(int k=0;k<6;k++)
             {
-				// wr work on internal f, because if we work on torque the optim might go to singularities
+				// we work on internal f, because if we work on torque the optim might go to singularities
                 g[cpt++] = dyns[i]->model->f[1](k);
 // 				std::cout<<"contrainte équilibre g["<<cpt-1<<" ] = "<<g[cpt-1]<<std::endl;
             }

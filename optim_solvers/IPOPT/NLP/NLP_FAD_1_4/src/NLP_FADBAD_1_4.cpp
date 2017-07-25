@@ -32,6 +32,10 @@
 
 using namespace Ipopt;
 
+#ifdef MogsVisu_FOUND
+VisuHolder *NLP_FAD_1_4::visu_test_ = nullptr;
+#endif // MogsVisu_FOUND
+
 /* Constructor. */
 NLP_FAD_1_4::NLP_FAD_1_4 ()
 {
@@ -398,7 +402,10 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 	save_results(n,x,obj_value);
 
 #ifdef MogsVisu_FOUND
-    VisuHolder visu("resultats");
+    if(visu_test_ == nullptr)
+        visu_test_= new VisuHolder("resultats");
+    VisuHolder visu = *visu_test_;
+    // VisuHolder visu("resultats");
     q.resize(nb_robots_);
     aq.resize(nb_robots_);
     for(int k=0;k<nb_robots_;k++)
@@ -423,8 +430,8 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     visu. clear_lines();
     for (int i=0;i<constraints_.size();i++)
         constraints_[i]->update_visu(&visu,dyns_,(const double*) x);
-
-    visu.wait_close();
+    if(show_result_)
+        visu.wait_close();
 #endif // MogsVisu_FOUND
 }
 

@@ -71,6 +71,8 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
     // solving the problem assuming all the internal values are set.
     void local_solve();
 
+    void set_show_result(bool show_result);
+
 
     private:
     SmartPtr < MogsNlpIpopt > nlp_;
