@@ -14,6 +14,12 @@ BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double
                      const QString& config2):BoxContactConstraint()
 
 {
+    qDebug()<< "robot1 : " << robot1;
+    qDebug()<<"robot2 : " << robot2;
+    qDebug()<< "body1 : " << body1[0];
+    qDebug()<<"body2 : " << body2[0];
+    qDebug()<<"config1 : " << config1;
+    qDebug()<<"config2 : " << config2;
 //    qDebug()<<"Constructor of BoxCollisionConstraint";
     for (int i = 0; i < body1.size(); i++)
     {

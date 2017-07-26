@@ -153,6 +153,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
         bool visu_during_optim_;
         VisuHolder * visu_optim_;
         static VisuHolder * visu_test_;
+        static std::vector<VisuHolder> visu_vect;
 		#endif // MogsVisu_FOUND
 
         public:
