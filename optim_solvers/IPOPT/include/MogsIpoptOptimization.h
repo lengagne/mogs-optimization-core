@@ -50,6 +50,11 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     void init_nlp_problem (const mogs_string & plugin_name);
 
+    Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
+    {
+        return nlp_->get_final_q(robot_id);
+    }
+
     void read_problem (const mogs_string & filename);
 
     void set_robots_to_nlp(const std::vector<MogsRobotProperties*> & in)

@@ -63,8 +63,6 @@ if(IPOPT_FOUND)
                 ${MogsCore_LIBRARIES}
                 ${MogsOptimizationCore_LIBRARIES})
 
-    message("${MogsOptimizationCore_LIBRARIES} = " ${MogsOptimizationCore_LIBRARIES})
-
 ###  Test of IPOPT
 
     add_custom_target(test_solver)

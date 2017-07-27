@@ -94,7 +94,13 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq);
 
-        void load_xml( );
+
+    Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
+    {
+        return dyns_[robot_id]->q_;
+    }
+
+    void load_xml( );
 
     void run_computation(const Number * x,unsigned int n, bool new_x);
     void run_gradient_computation(const Number * x, unsigned int n, bool new_x);
