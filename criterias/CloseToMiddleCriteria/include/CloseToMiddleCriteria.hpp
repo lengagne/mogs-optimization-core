@@ -6,7 +6,9 @@
 class CloseToMiddleCriteria: public AbstractCriteria
 {   public:
 	CloseToMiddleCriteria ( );
-
+  CloseToMiddleCriteria (    double weight,
+                        std::vector<MogsOptimDynamics<double> *>& dyns,
+                        const QString & Robot );
     ~CloseToMiddleCriteria ();
 
     double compute( std::vector<MogsOptimDynamics<double> *>& dyns)

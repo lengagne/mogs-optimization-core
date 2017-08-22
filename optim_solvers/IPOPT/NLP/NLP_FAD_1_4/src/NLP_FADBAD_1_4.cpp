@@ -403,13 +403,17 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 	save_results(n,x,obj_value);
 
 #ifdef MogsVisu_FOUND
-    if(visu_test_ == nullptr) {
+    if(!show_result_ && visu_test_ == nullptr)
+    {
         visu_test_= new VisuHolder("resultats");
-        visu_vect.clear();
     }
+    else if(show_result_) 
+    {
+        visu_test_= new VisuHolder("resultats");
+    }
+
     VisuHolder visu = *visu_test_;
     // VisuHolder visu("resultats");
-    visu_vect.push_back(visu);
     q.resize(nb_robots_);
     aq.resize(nb_robots_);
     for(int k=0;k<nb_robots_;k++)
