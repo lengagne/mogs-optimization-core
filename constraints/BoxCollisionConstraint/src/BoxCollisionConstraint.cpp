@@ -10,27 +10,17 @@ BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<d
                                                  const QString& robot1,
                                                  const QString& robot2,
                                                  const std::vector<QString> &body1,
-                                                 const std::vector<QString> &body2,
-                                                 const QString& config1,
-                                                 const QString& config2):BoxCollisionConstraint()
+                                                 const std::vector<QString> &body2):BoxCollisionConstraint()
 {
-    for (int i = 0; i < body1.size(); i++)
-    {
-        QString body1_name = body1[i];
-        d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
-    }
+    init(dyns,robot1,robot2,body1,body2);
+}
 
-    nb_body1_ = body1.size();
-
-    for (int i = 0; i < body2.size(); i++)
-    {
-        QString body2_name = body2[i];
-        d2_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config2),body2_name));
-    }
-    nb_body2_ = body2.size();
-
-    m = nb_body1_ * nb_body2_;
-
+void  BoxCollisionConstraint::init(  std::vector<MogsOptimDynamics<double> *> &dyns,
+                                     const QString& robot1,
+                                     const QString& robot2,
+                                     const std::vector<QString> &body1,
+                                     const std::vector<QString> &body2)
+{
     unsigned int nb = dyns.size();
     for (int i=0;i<nb;i++)
     {
@@ -48,6 +38,27 @@ BoxCollisionConstraint::BoxCollisionConstraint(  std::vector<MogsOptimDynamics<d
             break;
         }
     }
+
+    QString config1, config2;
+    config1 = dyns[robot1_]->model->get_config_file("BoxCollision");
+    config2 = dyns[robot2_]->model->get_config_file("BoxCollision");
+
+    for (int i = 0; i < body1.size(); i++)
+    {
+        QString body1_name = body1[i];
+        d1_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config1),body1_name));
+    }
+
+    nb_body1_ = body1.size();
+
+    for (int i = 0; i < body2.size(); i++)
+    {
+        QString body2_name = body2[i];
+        d2_.push_back(new MogsBoxCollisionDefinition(mogs_get_absolute_link(config2),body2_name));
+    }
+    nb_body2_ = body2.size();
+
+    m = nb_body1_ * nb_body2_;
 
     for (int i=0;i<nb_body1_;i++)
         for (int j=0;j<nb_body2_;j++)
@@ -86,8 +97,31 @@ void BoxCollisionConstraint::init_from_xml( QDomElement ele,
 
     QString r1 = ElRobot1.firstChildElement("name").text().simplified();
     QString r2 = ElRobot2.firstChildElement("name").text().simplified();
-    QString config1 = ElRobot1.firstChildElement("config_file").text().simplified();
-    QString config2 = ElRobot2.firstChildElement("config_file").text().simplified();
+
+    unsigned int nb = dyns.size();
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == r1)
+        {
+            robot1_ = i;
+            break;
+        }
+    }
+    for (int i=0;i<nb;i++)
+    {
+        if( dyns[i]->getRobotName() == r2)
+        {
+            robot2_ = i;
+            break;
+        }
+    }
+
+    QString config1, config2;
+    config1 = dyns[robot1_]->model->get_config_file("BoxCollision");
+    config2 = dyns[robot2_]->model->get_config_file("BoxCollision");
+
+//    QString config1 = ElRobot1.firstChildElement("config_file").text().simplified();
+//    QString config2 = ElRobot2.firstChildElement("config_file").text().simplified();
 
     if(ElRobot1.isNull())
     {
@@ -120,24 +154,6 @@ void BoxCollisionConstraint::init_from_xml( QDomElement ele,
     nb_body2_ = b2.size();
 
     m = nb_body1_ * nb_body2_;
-
-    unsigned int nb = dyns.size();
-    for (int i=0;i<nb;i++)
-    {
-        if( dyns[i]->getRobotName() == r1)
-        {
-            robot1_ = i;
-            break;
-        }
-    }
-    for (int i=0;i<nb;i++)
-    {
-        if( dyns[i]->getRobotName() == r2)
-        {
-            robot2_ = i;
-            break;
-        }
-    }
 
     for (int i=0;i<nb_body1_;i++)   for (int j=0;j<nb_body2_;j++)
     {

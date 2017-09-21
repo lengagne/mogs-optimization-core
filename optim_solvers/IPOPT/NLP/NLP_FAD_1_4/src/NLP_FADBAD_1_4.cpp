@@ -407,7 +407,7 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     {
         visu_test_= new VisuHolder("resultats");
     }
-    else if(show_result_) 
+    else if(show_result_)
     {
         visu_test_= new VisuHolder("resultats");
     }
@@ -526,7 +526,7 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
         dyns_.push_back(new MogsOptimDynamics<Number>(robots_[i]));
         adyns_.push_back(new MogsOptimDynamics<F<Number> >(robots_[i]));
     }
-
+    std::cout<<"number of constraints = "<< constraints.size()<<std::endl;
     AbstractLoader loader;
 
     parameterization_ =  dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param));

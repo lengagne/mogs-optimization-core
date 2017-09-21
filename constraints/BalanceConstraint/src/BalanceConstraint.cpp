@@ -27,7 +27,7 @@ BalanceConstraint::~BalanceConstraint ()
 void BalanceConstraint::init_from_xml( QDomElement ele,
                                        std::vector<MogsOptimDynamics<double> *>& dyns)
 {
-    qDebug()<<"Constructor of BalanceConstraint";
+//     qDebug()<<"Constructor of BalanceConstraint";
     m=0;
     for (int i=0;i<dyns.size();i++)
         if( dyns[i]->model->is_robot_floating_base())

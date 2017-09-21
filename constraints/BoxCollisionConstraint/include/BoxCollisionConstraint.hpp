@@ -12,12 +12,16 @@ class BoxCollisionConstraint: virtual public AbstractConstraint
                                                  const QString& robot1,
                                                  const QString& robot2,
                                                  const std::vector<QString> &body1,
-                                                 const std::vector<QString> &body2,
-                                                 const QString& config1,
-                                                 const QString& config2);
+                                                 const std::vector<QString> &body2);
 
 
     ~BoxCollisionConstraint ();
+
+    void  init(  std::vector<MogsOptimDynamics<double> *> &dyns,
+                 const QString& robot1,
+                 const QString& robot2,
+                 const std::vector<QString> &body1,
+                 const std::vector<QString> &body2);
 
     virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
 

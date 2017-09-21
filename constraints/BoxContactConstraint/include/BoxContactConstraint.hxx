@@ -16,9 +16,21 @@ void BoxContactConstraint::update_dynamics(const  T *x, std::vector<MogsOptimDyn
 
         local_f.block(0,0,3,1) = point.cross(force);
         local_f.block(3,0,3,1) = force;
-        dyns[robot1_]->f_ext_[body1_[i]] -=  local_f;
-        dyns[robot2_]->f_ext_[body2_[j]] +=  local_f;
-
+        if(!dyns[robot1_]->model->IsFixedBodyId(body1_[i]))
+            dyns[robot1_]->f_ext_[body1_[i]] -=  local_f;
+        else
+        {
+            /// FIXME What do if contact on fixed body ?
+        }
+        if(!dyns[robot2_]->model->IsFixedBodyId(body2_[j]))
+        {
+            std::cout<<"body "<< body2_[j] << " is a body id "<<std::endl;
+            dyns[robot2_]->f_ext_[body2_[j]] +=  local_f;
+        }
+        else
+        {
+            /// FIXME What do if contact on fixed body ?
+        }
         cpt_coll++;
     }
 }
