@@ -11,7 +11,6 @@ TorqueCriteria::TorqueCriteria (double weight,
 {
     weight_ = weight;
     unsigned int nb = dyns.size();
-     qDebug()<<"nb = "<< nb;
     for (int i=0;i<nb;i++)
     {
         if( dyns[i]->getRobotName() == robot_name)

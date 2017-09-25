@@ -110,6 +110,10 @@ class NLP_FAD_1_4:public MogsNlpIpopt
                                 const std::vector<AbstractCriteria* > &criteres,
                                 const std::vector<AbstractConstraint*> & constraints);
 
+    /// load additional constraints and criterias from the xml infos
+    void load_ctrs_crits(std::vector<QDomElement> & ctrs,
+                         std::vector<QDomElement> & crits);
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.

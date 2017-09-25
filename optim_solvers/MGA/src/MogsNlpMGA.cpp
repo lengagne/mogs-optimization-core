@@ -68,13 +68,11 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 			x[i] = infos[j].var[i];
 
 		int nb = criteres_.size();
-// 		std::cout<<"nb = "<<nb<<std::endl;
 		double obj_value =0;
 		bool mem_kin = false;
 		for (int i =0;i<nb;i++)
 		{
 			double tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
-// 			std::cout<<"tmp("<<i<<") = "<<tmp<<std::endl;
 			obj_value+= tmp;
 		}
 

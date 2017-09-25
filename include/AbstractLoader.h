@@ -146,7 +146,7 @@ class AbstractLoader
                     std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
                     exit(0);
                 }
-                std::cout << "loading parameterization_ name "   <<type.toStdString().c_str() << std::endl;
+                // std::cout << "loading parameterization_ name "   <<type.toStdString().c_str() << std::endl;
                 // create an instance of the class
                 return( AbstractParameterization *) creator();
             }

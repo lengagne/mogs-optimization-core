@@ -2,6 +2,7 @@
 template<typename T>
 void BoxContactConstraint::update_dynamics(const  T *x, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
+
     Eigen::Matrix<T,3,1> point, point_base_coordinate, force,force_base_coordinate;
     SpatialTransform<T> trans;
     unsigned int cpt_coll  = 0;
@@ -17,14 +18,17 @@ void BoxContactConstraint::update_dynamics(const  T *x, std::vector<MogsOptimDyn
         local_f.block(0,0,3,1) = point.cross(force);
         local_f.block(3,0,3,1) = force;
         if(!dyns[robot1_]->model->IsFixedBodyId(body1_[i]))
+        {
+//            std::cout<<"body "<< body1_[i] << " is a body id "<<std::endl;
             dyns[robot1_]->f_ext_[body1_[i]] -=  local_f;
+        }
         else
         {
             /// FIXME What do if contact on fixed body ?
         }
         if(!dyns[robot2_]->model->IsFixedBodyId(body2_[j]))
         {
-            std::cout<<"body "<< body2_[j] << " is a body id "<<std::endl;
+//            std::cout<<"body "<< body2_[j] << " is a body id "<<std::endl;
             dyns[robot2_]->f_ext_[body2_[j]] +=  local_f;
         }
         else
@@ -64,13 +68,18 @@ void BoxContactConstraint::compute_contact_constraint(const T*x, T *g, std::vect
 
         coll_detector_->compute_normal(trans1,trans2,d1_[i],d2_[j],normal);
 // 		for(unsigned int k=0;k<3;k++)
+//            std::cout<<"normal("<< k <<") = "<< normal(k)<<std::endl;
+// 		for(unsigned int k=0;k<3;k++)
+//            std::cout<<"force("<< k <<") = "<< force(k)<<std::endl;
 // 		{
 // 			std::cout<<"contact_point1("<< k <<") = "<< contact_point1(k)<<std::endl;
 // 			std::cout<<"contact_point2("<< k <<") = "<< contact_point2(k)<<std::endl;
 // 			std::cout<<"normal("<< k <<") = "<< normal(k)<<std::endl;
 // 		}
-		if(force.norm()> 1e-3)
+		if(force.norm()> 0)
 			force.normalize();
+// 		for(unsigned int k=0;k<3;k++)
+//            std::cout<<"force("<< k <<") = "<< force(k)<<std::endl;
         g[cpt++] = normal.dot(force);
 // 		std::cout<<"contrainte sur l'effort g["<<cpt-1<<" ] = "<<g[cpt-1]<<std::endl;
         cpt_coll++;

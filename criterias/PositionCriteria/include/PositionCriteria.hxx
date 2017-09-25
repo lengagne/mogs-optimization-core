@@ -9,5 +9,4 @@ T PositionCriteria::compute( std::vector<MogsOptimDynamics<T> *>& dyns)
 
     obj_value = Pr.squaredNorm();
     return obj_value*weight_;
-
 }

@@ -18,13 +18,17 @@ void StaticPostureParameterization::init_from_xml(   QDomElement Param,
 {
     plugin_name_ = "StaticPosture";
     compute_forces_ = false;
+    #ifdef PRINT
     std::cout<<"\tConstructor of StaticPostureParameterization"<<std::endl;
+    #endif // PRINT
     QDomElement cf = Param.firstChildElement("compute_force");
     if( !cf.isNull())
     {
         compute_forces_ = convert_to_bool(cf.text().simplified());
     }
+    #ifdef PRINT
     std::cout<<"\tcompute_forces_ = "<< compute_forces_<<std::endl;
+    #endif // PRINT
     init(dyns);
 }
 
@@ -38,10 +42,9 @@ void StaticPostureParameterization::init(std::vector<MogsOptimDynamics<double> *
         ndofs_.push_back(dyns[i]->getNDof());
         nb_param_ += dyns[i]->getNDof();
     }
-
+    #ifdef PRINT
     std::cout<<"nb_param_ = "<< nb_param_ <<std::endl;
-//    nb_param_ = robot->getNDof();
-
+    #endif // PRINT
 
     /// FIXME, compute the limits
     init_.resize(nb_param_);

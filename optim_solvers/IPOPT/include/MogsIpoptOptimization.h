@@ -70,6 +70,12 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
     }
 
+    void load_ctrs_crits(std::vector<QDomElement> & ctrs,
+                         std::vector<QDomElement> & crits)
+    {
+        nlp_->load_ctrs_crits(ctrs,crits);
+    }
+
     void set_option_integer( const mogs_string & option_name,
                              int value);
 
@@ -79,10 +85,14 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
     void set_option_string( const mogs_string & option_name,
                             const mogs_string & value);
 
+
+
     /** Solve the problem	 */
+    /// return true is succeed
     void solve();
 
-    // solving the problem assuming all the internal values are set.
+    /// solving the problem assuming all the internal values are set.
+    /// return true is succeed
     void local_solve();
 
     void set_show_result(bool show_result);

@@ -43,8 +43,15 @@ class MogsAbstractOptimization: public MogsAbstractProblem
 	/** Solve the problem	 */
         virtual void solve() = 0;
 
+        bool get_status() const
+        {
+            return status_;
+        }
+
 
       protected:
+
+        bool status_;
 };
 
 

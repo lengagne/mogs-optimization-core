@@ -12,6 +12,12 @@ class BoxContactConstraint: virtual public AbstractConstraint, virtual public Bo
     BoxContactConstraint (std::vector<MogsOptimDynamics<double> *> &dyns,
                              const QString& robot1,
                              const QString& robot2,
+                             const QString& body1,
+                             const QString& body2);
+
+    BoxContactConstraint (std::vector<MogsOptimDynamics<double> *> &dyns,
+                             const QString& robot1,
+                             const QString& robot2,
                              const std::vector<QString> &body1,
                              const std::vector<QString> &body2);
 

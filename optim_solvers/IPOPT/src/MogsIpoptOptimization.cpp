@@ -70,7 +70,7 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
-    std::cout<<"MogsIpoptOptimization::read_problem()"<<std::endl;
+//    std::cout<<"MogsIpoptOptimization::read_problem()"<<std::endl;
 
     // loaded the good type of problem
     MogsAbstractProblem::read_problem(filename);
@@ -102,9 +102,9 @@ void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
 
 void MogsIpoptOptimization::solve()
 {
-    std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
+//    std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
 
-    std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
+//    std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
      //donne les fichiers des robots
     nlp_-> set_robots( robots_ );
 
@@ -130,15 +130,15 @@ void MogsIpoptOptimization::solve()
 
 void MogsIpoptOptimization::local_solve()
 {
-    std::cout<<"start MogsIpoptOptimization::local_solve()"<<std::endl;
+//    std::cout<<"start MogsIpoptOptimization::local_solve()"<<std::endl;
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app_->Initialize ();
-    std::cout<<"app Initialized"<<std::endl;
+//    std::cout<<"app Initialized"<<std::endl;
 
 	if (status != Solve_Succeeded)
 	  {
-		  std::cout << std::endl << std::endl << "*** Error during initialization!" << std::endl;
+		  std::cerr << std::endl << std::endl << "*** Error during initialization!" << std::endl;
 		  return ;
 	  }
 
@@ -149,17 +149,21 @@ void MogsIpoptOptimization::local_solve()
 	clock_t begin = clock();
 	status = app_->OptimizeTNLP (nlp_);
 	clock_t end = clock();
-	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
+//	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
 
-	if (status == Solve_Succeeded)
+	if (status == Solve_Succeeded || status == Solved_To_Acceptable_Level )
 	{
+	    status_ = true;
 	   // Retrieve some statistics about the solve
 	   Index iter_count = app_->Statistics ()->IterationCount ();
-	   std::cout << std::endl << std::endl << "*** The problem solved in " << iter_count<< " iterations!" << std::endl;
+//	   std::cout << std::endl << std::endl << "*** The problem solved in " << iter_count<< " iterations!" << std::endl;
 	   Number final_obj = app_->Statistics ()->FinalObjective ();
-	   std::cout << std::endl << std::endl <<"*** The final value of the objective function is "<< final_obj << '.' << std::endl;
+//	   std::cout << std::endl << std::endl <<"*** The final value of the objective function is "<< final_obj << '.' << std::endl;
+	}else
+	{
+	    status_ = false;
 	}
-    std::cout<<"MogsIpoptOptimization::solve()  done"<<std::endl;
+//    std::cout<<"MogsIpoptOptimization::solve()  done"<<std::endl;
 }
 
 void MogsIpoptOptimization::set_show_result(bool show_result)

@@ -40,8 +40,18 @@ void  BoxCollisionConstraint::init(  std::vector<MogsOptimDynamics<double> *> &d
     }
 
     QString config1, config2;
-    config1 = dyns[robot1_]->model->get_config_file("BoxCollision");
-    config2 = dyns[robot2_]->model->get_config_file("BoxCollision");
+    if(!dyns[robot1_]->model->get_config_file("BoxCollision",config1))
+    {
+        std::cerr<<"Error in "<< __FILE__<<" at line "<<__LINE__<<std::endl;
+        std::cerr<<"Cannot find the config file (BoxCollision) for robot1_"<<std::endl;
+        exit(0);
+    };
+    if(!dyns[robot2_]->model->get_config_file("BoxCollision",config2))
+    {
+        std::cerr<<"Error in "<< __FILE__<<" at line "<<__LINE__<<std::endl;
+        std::cerr<<"Cannot find the config file (BoxCollision) for robot2_"<<std::endl;
+        exit(0);
+    };
 
     for (int i = 0; i < body1.size(); i++)
     {
@@ -117,8 +127,21 @@ void BoxCollisionConstraint::init_from_xml( QDomElement ele,
     }
 
     QString config1, config2;
-    config1 = dyns[robot1_]->model->get_config_file("BoxCollision");
-    config2 = dyns[robot2_]->model->get_config_file("BoxCollision");
+//    config1 = dyns[robot1_]->model->get_config_file("BoxCollision");
+//    config2 = dyns[robot2_]->model->get_config_file("BoxCollision");
+    if(!dyns[robot1_]->model->get_config_file("BoxCollision",config1))
+    {
+        std::cerr<<"Error in "<< __FILE__<<" at line "<<__LINE__<<std::endl;
+        std::cerr<<"Cannot find the config file (BoxCollision) for robot1_"<<std::endl;
+        exit(0);
+    };
+    if(!dyns[robot2_]->model->get_config_file("BoxCollision",config2))
+    {
+        std::cerr<<"Error in "<< __FILE__<<" at line "<<__LINE__<<std::endl;
+        std::cerr<<"Cannot find the config file (BoxCollision) for robot2_"<<std::endl;
+        exit(0);
+    };
+
 
 //    QString config1 = ElRobot1.firstChildElement("config_file").text().simplified();
 //    QString config2 = ElRobot2.firstChildElement("config_file").text().simplified();

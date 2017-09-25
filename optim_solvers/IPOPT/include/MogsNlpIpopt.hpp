@@ -95,6 +95,13 @@ class MogsNlpIpopt:public TNLP
         std::cout<<"MogsNlpIpopt::set_problem_properties"<<std::endl;
     }
 
+    /// load additional constraints and criterias from the xml infos
+    virtual void load_ctrs_crits(std::vector<QDomElement> & ctrs,
+                                 std::vector<QDomElement> & crits)
+    {
+        std::cout<<"MogsNlpIpopt::load_ctrs_crits"<<std::endl;
+    }
+
     void set_robots(const std::vector<MogsRobotProperties*> & in);
 
     void set_show_result(bool show_result);

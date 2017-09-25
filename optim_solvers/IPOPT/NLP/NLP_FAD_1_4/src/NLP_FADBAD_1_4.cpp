@@ -40,7 +40,9 @@ std::vector<VisuHolder> NLP_FAD_1_4::visu_vect;
 /* Constructor. */
 NLP_FAD_1_4::NLP_FAD_1_4 ()
 {
+    #ifdef PRINT
     std::cout<<"Constructor of NLP_FAD_1_4"<<std::endl;
+    #endif
 	compute_number_ = false;
 	compute_gradient_ = false;
 	visu_during_optim_ = false;
@@ -48,6 +50,25 @@ NLP_FAD_1_4::NLP_FAD_1_4 ()
 
 NLP_FAD_1_4::~NLP_FAD_1_4 ()
 {
+}
+
+void NLP_FAD_1_4::load_ctrs_crits(std::vector<QDomElement> & ctrs,
+                                  std::vector<QDomElement> & crits)
+{
+    AbstractLoader loader;
+    for (unsigned int i=0;i<crits.size();i++)
+    {
+        AbstractFAD_1_4Critere* crit = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",crits[i],dyns_));
+        criteres_.push_back(crit);
+    }
+
+    for (unsigned int i=0;i<ctrs.size();i++)
+	{
+        AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",ctrs[i],dyns_));
+
+        // std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
+        constraints_.push_back(ctr);
+	}
 }
 
 void NLP_FAD_1_4::load_xml( )
@@ -88,7 +109,7 @@ void NLP_FAD_1_4::load_xml( )
 	{
         AbstractFAD_1_4Constraint* ctr = dynamic_cast<AbstractFAD_1_4Constraint*> (loader.get_constraint<create_FAD_1_4Constraint*>("MogsConstraintNlpFAD_1_4",constraint,dyns_));
 
-        std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
+        // std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
         constraints_.push_back(ctr);
 	}
 
@@ -117,11 +138,12 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
     for(int i=0;i<nb_ctr_;i++)
         parameterization_->init_from_constraints(constraints_[i]);
 
-//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
     nb_var_= parameterization_->get_nb_param();
 
     n = nb_var_;
+    #ifdef PRINT
     std::cout << "   n = " << n  << std::endl;
+    #endif
 
     m = 0;
     for(int i=0;i<nb_ctr_;i++)
@@ -130,7 +152,9 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
         m += constraints_[i]->get_nb_constraints();
     }
 
+    #ifdef PRINT
     std::cout << "   m = " << m  << std::endl;
+    #endif // PRINT
 
     // detection of the dependency
     Dependency * DX = new Dependency [n];
@@ -158,11 +182,15 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
             row_.push_back(i);
         }
     }
+    #ifdef PRINT
     std::cout<<"End the dependency of the derivative"<<std::endl;
+    #endif // PRINT
 
     nnz_jac_g_ = col_.size();
 	nnz_jac_g = nnz_jac_g_;
+	#ifdef PRINT
 	std::cout<<"nnz_jac_g = "<< nnz_jac_g <<std::endl;
+    #endif // PRINT
 
 	nnz_h_lag = 0;
 	index_style = TNLP::C_STYLE;
@@ -200,15 +228,11 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 
     Index i, j;
     unsigned int cpt = 0;
-//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
-//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
-
-
     for (int i=0;i<n;i++)
     {
-//        std::cout<<"i = "<< i<<"  parameterization_ = "<< parameterization_<< std::endl;
         x_l[i] = parameterization_->get_bounds_inf(i);
         x_u[i] = parameterization_->get_bounds_sup(i);
+        std::cout<<"bounds("<<i<<") = "<< x_l[i]<<" : "<< x_u[i]<<std::endl;
     }
 
     cpt = 0;
@@ -220,7 +244,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
-//            std::cout<<"contrainte "<< cpt<<" comprise dans ["<< g_l[cpt] <<" : "<< g_u[cpt] <<"]"<<std::endl;
+            std::cout<<"g("<<cpt<<") in "<< g_l[cpt]<<" : "<< g_u[cpt]<<std::endl;
             cpt++;
         }
     }
@@ -237,13 +261,9 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
     #ifdef PRINT
     std::cout<<"start get_starting_point"<<std::endl;
     #endif // PRINT
-//    std::cout<<"parameterization_ = "<<  parameterization_<< std::endl;
-//    std::cout<<"nb_param = "<<  parameterization_->get_nb_param()<< std::endl;
-
     assert(init_x == true);
     assert(init_z == false);
     assert(init_lambda == false);
-
 
     // initialize to the given starting point
     for(int i=0;i<nb_var_;i++)
@@ -318,12 +338,7 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     run_computation(x,n,new_x);
 
     for (int i =0;i<nb_ctr_;i++)
-    {
         constraints_[i]->compute(x,g,dyns_);
-        //std::cout << "constraints_["<<i<<"] :" << constraints_[i] << std::endl;
-    }
-//    for (int i=0;i<m;i++)
-//        std::cout<<"g["<<i<<"] = "<< g[i]<<std::endl;
 
     #ifdef PRINT
     std::cout<<"end of eval_g"<<std::endl;
@@ -355,8 +370,6 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
         run_gradient_computation(x,n,new_x);
         for (unsigned int i=0; i<nb_ctr_; i++)  // for all physical constraints
             constraints_[i]->compute(X,G,adyns_);
-//    for (int i=0;i<m;i++)
-//        std::cout<<"g["<<i<<"] = "<< G[i]<<std::endl;
 
         unsigned int cpt=0;
         for (int i=0;i<nele_jac;i++)
@@ -402,6 +415,12 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 {
 	save_results(n,x,obj_value);
 
+//    for (int i=0;i<n;i++)
+//        std::cout<<"x("<<i<<") = "<< x[i]<<std::endl;
+//
+//    for (int i=0;i<m;i++)
+//        std::cout<<"g("<<i<<") = "<< g[i]<<std::endl;
+
 #ifdef MogsVisu_FOUND
     if(!show_result_ && visu_test_ == nullptr)
     {
@@ -432,7 +451,6 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     int cpt = 0;
     for(int k=0;k<nb_robots_;k++)
     {
-//        std::cout<<"q["<<k<<"] = "<< dyns_[k]->q_.transpose()<<std::endl;
         visu.apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
     }
     visu. clear_lines();
@@ -518,7 +536,10 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
                                             const std::vector<AbstractCriteria* > &criteres,
                                             const std::vector<AbstractConstraint*> & constraints)
 {
+    #ifdef PRINT
     std::cout<<"NLP_FAD_1_4::set_problem_properties"<<std::endl;
+    #endif // PRINT
+
     nb_robots_ = robots_.size();
 
     for(int i=0;i<nb_robots_;i++)
@@ -526,7 +547,6 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
         dyns_.push_back(new MogsOptimDynamics<Number>(robots_[i]));
         adyns_.push_back(new MogsOptimDynamics<F<Number> >(robots_[i]));
     }
-    std::cout<<"number of constraints = "<< constraints.size()<<std::endl;
     AbstractLoader loader;
 
     parameterization_ =  dynamic_cast<AbstractFAD_1_4Parameterization*> (loader.get_parameterization<create_FAD_1_4Parameterization*>("MogsParameterizationNlpFAD_1_4",param));

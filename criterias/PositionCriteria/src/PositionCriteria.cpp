@@ -3,6 +3,7 @@
 PositionCriteria::PositionCriteria()
 {
     plugin_name_ = "position";
+    std::cout<<"adding position criteria"<<std::endl;
 }
 
 PositionCriteria::PositionCriteria(  double weight,
