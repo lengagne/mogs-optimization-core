@@ -11,9 +11,9 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (double weight,
 {
     weight_ = weight;
 
-    std::cout<<"weight = "<< weight_<<std::endl;
+//    std::cout<<"weight = "<< weight_<<std::endl;
     this->Robot=Robot;
-    std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
+//    std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
 
     robot_id_ = -1;
     unsigned int nb = dyns.size();

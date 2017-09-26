@@ -7,10 +7,10 @@
 
 # Tell the user project where to find our headers and libraries
 
-set(Mogsclose_to_middleCriteria_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+set(MogsCloseToMiddleCriteria_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
 
-set(Mogsclose_to_middleCriteria_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+set(MogsCloseToMiddleCriteria_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
 
-set(Mogsclose_to_middleCriteria_LIBRARIES @Mogsclose_to_middleCriteria_LIBRARIES@ @MogsCore_LIBRARIES@)
+set(MogsCloseToMiddleCriteria_LIBRARIES @MogsCloseToMiddleCriteria_LIBRARIES@ @MogsCore_LIBRARIES@)
 
-SET(Mogsclose_to_middleCriteria_FLAGS @Mogsclose_to_middleCriteria_FLAGS@ @MogsCore_FLAGS@)
+SET(MogsCloseToMiddleCriteria_FLAGS @MogsCloseToMiddleCriteria_FLAGS@ @MogsCore_FLAGS@)

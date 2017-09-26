@@ -73,6 +73,11 @@ class MogsNlpIpopt:public TNLP
 					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
+	double get_obj()
+	{
+	    return obj_value_;
+	}
+
     virtual Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
     {
         return Eigen::Matrix<double,Eigen::Dynamic,1>::Zero(42);
@@ -132,6 +137,8 @@ class MogsNlpIpopt:public TNLP
 	 QDomElement root_;
 
 	 bool show_result_= true;
+
+	 double obj_value_;
 
 };
 

@@ -55,6 +55,10 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
         return nlp_->get_final_q(robot_id);
     }
 
+    double get_obj()
+    {
+        return nlp_->get_obj();
+    }
     void read_problem (const mogs_string & filename);
 
     void set_robots_to_nlp(const std::vector<MogsRobotProperties*> & in)

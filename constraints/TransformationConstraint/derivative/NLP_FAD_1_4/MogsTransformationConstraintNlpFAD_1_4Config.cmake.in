@@ -1,0 +1,16 @@
+# - Config file for the MogsTransformationConstraintNlpFAD lib
+# It defines the following variables
+#
+# MogsTransformationConstraintNlpFAD_INCLUDE_DIRS - include directories
+# MogsTransformationConstraintNlpFAD_LIBRARY_DIRS - library directory (normally not used!)
+# MogsTransformationConstraintNlpFAD_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsTransformationConstraintNlpFAD_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsTransformationConstraintNlpFAD_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsTransformationConstraintNlpFAD_LIBRARIES @MogsTransformationConstraintNlpFAD_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsTransformationConstraintNlpFAD_FLAGS @MogsTransformationConstraintNlpFAD_FLAGS@ @MogsCore_FLAGS@)

@@ -62,8 +62,8 @@ BoxContactConstraint::BoxContactConstraint (std::vector<MogsOptimDynamics<double
 //    coll_detector_ = new MogsBoxCollision();
     for (int i=0;i<nb_param_;i++)
     {
-        param_inf_.push_back(-1e3);
-        param_sup_.push_back(1e3);
+        param_inf_.push_back(-1e20);
+        param_sup_.push_back(1e20);
         param_init_.push_back(0.0);
     }
 
@@ -99,8 +99,8 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
 //    coll_detector_ = new MogsBoxCollision();
     for (int i=0;i<nb_param_;i++)
     {
-        param_inf_.push_back(-1e3);
-        param_sup_.push_back(1e3);
+        param_inf_.push_back(-1e20);
+        param_sup_.push_back(1e20);
         param_init_.push_back(0.0);
     }
 

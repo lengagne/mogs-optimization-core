@@ -6,7 +6,7 @@ T TorqueCriteria::compute( std::vector<MogsOptimDynamics<T> *>& dyns)
     for (int i=0;i<nb_robots_;i++)
 	{
 		for (int j=start_[i]; j<dyns[robot_id_[i]]->getNDof(); j++)
-			Norm += pow(dyns[robot_id_[i]]->q_[j],2);
+			Norm += pow(dyns[robot_id_[i]]->tau_[j],2);
 	}
     return Norm*weight_;
 }

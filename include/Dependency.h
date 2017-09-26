@@ -117,5 +117,10 @@ Dependency cos(const Dependency & b)
     return b;
 }
 
+Dependency atan2(const Dependency & a,
+                 const Dependency & b)
+{
+    return a+b;
+}
 
 #endif // Dependency_H

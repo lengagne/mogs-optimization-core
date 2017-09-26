@@ -1,0 +1,9 @@
+#ifndef MogsTransformationConstraint_CONFIG_H
+#define MogsTransformationConstraint_CONFIG_H
+
+#define MogsTransformationConstraint_VERSION_MAJOR @MogsTransformationConstraint_VERSION_MAJOR@
+#define MogsTransformationConstraint_VERSION_MINOR @MogsTransformationConstraint_VERSION_MINOR@
+
+
+#endif
+

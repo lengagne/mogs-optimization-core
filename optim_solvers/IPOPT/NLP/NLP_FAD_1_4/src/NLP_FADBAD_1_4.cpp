@@ -232,7 +232,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
     {
         x_l[i] = parameterization_->get_bounds_inf(i);
         x_u[i] = parameterization_->get_bounds_sup(i);
-        std::cout<<"bounds("<<i<<") = "<< x_l[i]<<" : "<< x_u[i]<<std::endl;
+//        std::cout<<"bounds("<<i<<") = "<< x_l[i]<<" : "<< x_u[i]<<std::endl;
     }
 
     cpt = 0;
@@ -244,7 +244,7 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
         {
             g_l[cpt] = constraints_[i]->get_lower(j);
             g_u[cpt] = constraints_[i]->get_upper(j);
-            std::cout<<"g("<<cpt<<") in "<< g_l[cpt]<<" : "<< g_u[cpt]<<std::endl;
+//            std::cout<<"g("<<cpt<<") in "<< g_l[cpt]<<" : "<< g_u[cpt]<<std::endl;
             cpt++;
         }
     }
@@ -413,6 +413,7 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 			  const IpoptData * ip_data,
 			  IpoptCalculatedQuantities * ip_cq)
 {
+    obj_value_ = obj_value;
 	save_results(n,x,obj_value);
 
 //    for (int i=0;i<n;i++)
