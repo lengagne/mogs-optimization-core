@@ -18,7 +18,7 @@ class TransformationFAD_1_4Constraint: public AbstractFAD_1_4Constraint, Transfo
 
     void compute( const Number*x, Number* g,std::vector<MogsOptimDynamics<Number> *>& dyns)
     {
-        TransformationConstraint::compute_print<Number>(g, dyns);
+        TransformationConstraint::compute<Number>(g, dyns);
     }
 
     void compute(const F<Number>*x,F<Number>* g, std::vector<MogsOptimDynamics<F<Number>> *>& dyns)

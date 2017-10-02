@@ -269,6 +269,9 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
     for(int i=0;i<nb_var_;i++)
         x[i] = parameterization_->get_starting_point(i);
 
+//    for(int i=0;i<nb_var_;i++)
+//        std::cout<<"init("<<i<<") = "<< x[i]<<std::endl;
+
     #ifdef PRINT
     std::cout<<"end of get_starting_point"<<std::endl;
     #endif // PRINT
@@ -414,6 +417,7 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 			  IpoptCalculatedQuantities * ip_cq)
 {
     obj_value_ = obj_value;
+    run_computation(x,n,true);
 	save_results(n,x,obj_value);
 
 //    for (int i=0;i<n;i++)

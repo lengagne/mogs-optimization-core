@@ -3,9 +3,13 @@
 StaticPostureParameterization::StaticPostureParameterization(   bool compute_forces,
                                                                 std::vector<MogsOptimDynamics<double> *>& dyns):StaticPostureParameterization()
 {
-
     compute_forces_ = compute_forces;
     init(dyns);
+}
+
+StaticPostureParameterization::~StaticPostureParameterization()
+{
+    //dtor
 }
 
 void StaticPostureParameterization::init_from_AbstractParameterization( AbstractParameterization* p)
@@ -71,7 +75,12 @@ void StaticPostureParameterization::init(std::vector<MogsOptimDynamics<double> *
     }
 }
 
-StaticPostureParameterization::~StaticPostureParameterization()
+void StaticPostureParameterization::set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q)
 {
-    //dtor
+    int cpt=0;
+    for (unsigned int k=0;k<q.size();k++)
+        for (unsigned int i=0; i<q[k].size(); i++)
+            init_[cpt++] = q[k](i);
+    std::cout<<"StaticPostureParameterization::set_init_value"<<std::endl;
 }
+

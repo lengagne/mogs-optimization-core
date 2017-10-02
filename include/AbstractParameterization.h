@@ -45,6 +45,8 @@ class AbstractParameterization
         virtual void init_from_xml( QDomElement param,
                                     std::vector<MogsOptimDynamics<double> *>& dyns ) = 0;
 
+        virtual void set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q);
+
 protected:
         unsigned int nb_param_;
 

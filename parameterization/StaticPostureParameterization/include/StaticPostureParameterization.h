@@ -45,6 +45,8 @@ class StaticPostureParameterization : virtual public AbstractParameterization
           void prepare_computation( std::vector<MogsOptimDynamics<T> *>& dyns);
 
         virtual ~StaticPostureParameterization();
+
+        virtual void set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q);
     protected:
         bool compute_forces_ = true;
 

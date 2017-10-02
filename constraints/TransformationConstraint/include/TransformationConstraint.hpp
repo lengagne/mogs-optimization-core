@@ -44,9 +44,6 @@ class TransformationConstraint: virtual public AbstractConstraint
     void compute( T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
     template<typename T>
-    void compute_print( T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
-
-    template<typename T>
     void update_dynamics(const  T *x, std::vector<MogsOptimDynamics<T> *>& dyns)
     {
         // no param here

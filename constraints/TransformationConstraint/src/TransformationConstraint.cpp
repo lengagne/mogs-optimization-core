@@ -144,7 +144,6 @@ void TransformationConstraint::init_from_xml(   QDomElement contraint,
     SpatialTransform<double> Transformation = SpatialTransform<double>(rot,pos);
 
     Transformation_ = Transformation2.transpose() * Transformation * Transformation1;
-    std::cout<<"Transformation_ = "<<  Transformation_ <<std::endl;
 }
    //
 
