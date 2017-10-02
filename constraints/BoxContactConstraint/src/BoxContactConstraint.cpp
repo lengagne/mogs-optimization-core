@@ -90,9 +90,9 @@ void BoxContactConstraint::init_from_xml(   QDomElement ele,
     if(!ElFriction.isNull())
     {
         friction_ = ele.text().toDouble();
-        friction_ = 1/ (1+friction_*friction_);
+        friction_ = 1./ (1+friction_*friction_);
     }
-
+    std::cout<<"friction_ = "<< friction_ <<std::endl;
     nb_param_ = nb_contact_ * 6;
     m += 3*nb_contact_;    // two constraints for the point and one constraint for the effort
 
@@ -148,6 +148,7 @@ void BoxContactConstraint::update_visu (VisuHolder *visu,
     std::vector<Eigen::Matrix<double,6,1>> lines;
     lines.clear();
     unsigned int cpt_coll  = 0;
+    // plot forces in blue
     for (int i=0;i<nb_body1_;i++) for (int j=0;j<nb_body2_;j++)
     {
         for(int k=0;k<3;k++)
@@ -161,6 +162,8 @@ void BoxContactConstraint::update_visu (VisuHolder *visu,
     visu->draw_additional_lines(lines,0,0,255);
 
     lines.clear();
+    cpt_coll  = 0;
+    // plot normals in red
     for (int i=0;i<nb_body1_;i++) for (int j=0;j<nb_body2_;j++)
     {
         for(int k=0;k<3;k++)

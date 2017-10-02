@@ -30,9 +30,9 @@ void StaticPostureParameterization::init_from_xml(   QDomElement Param,
     {
         compute_forces_ = convert_to_bool(cf.text().simplified());
     }
-    #ifdef PRINT
+//    #ifdef PRINT
     std::cout<<"\tcompute_forces_ = "<< compute_forces_<<std::endl;
-    #endif // PRINT
+//    #endif // PRINT
     init(dyns);
 }
 

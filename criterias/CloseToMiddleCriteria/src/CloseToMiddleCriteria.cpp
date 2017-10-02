@@ -10,7 +10,7 @@ CloseToMiddleCriteria::CloseToMiddleCriteria (double weight,
                                 const QString & Robot ):CloseToMiddleCriteria()
 {
     weight_ = weight;
-
+    std::cout<<"CloseToMiddleCriteria::weight = "<< weight_<<std::endl;
 //    std::cout<<"weight = "<< weight_<<std::endl;
     this->Robot=Robot;
 //    std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
@@ -47,8 +47,7 @@ void CloseToMiddleCriteria::init_from_xml ( QDomElement critere,
                                             std::vector<MogsOptimDynamics<double> *>& dyns)
 {
     weight_ = critere.attribute("weight").toDouble();
-
-    std::cout<<"weight = "<< weight_<<std::endl;
+    std::cout<<"CloseToMiddleCriteria::weight = "<< weight_<<std::endl;
     QDomElement Child=critere.firstChildElement("robot");
     if (!Child.isNull())
 	{

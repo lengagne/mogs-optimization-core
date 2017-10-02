@@ -105,8 +105,8 @@ void BoxCollisionConstraint::init_from_xml( QDomElement ele,
     QDomElement ElRobot1=ele.firstChildElement("robot1");
     QDomElement ElRobot2=ele.firstChildElement("robot2");
 
-    QString r1 = ElRobot1.firstChildElement("name").text().simplified();
-    QString r2 = ElRobot2.firstChildElement("name").text().simplified();
+    QString r1 = ElRobot1.text().simplified();
+    QString r2 = ElRobot2.text().simplified();
 
     unsigned int nb = dyns.size();
     for (int i=0;i<nb;i++)
