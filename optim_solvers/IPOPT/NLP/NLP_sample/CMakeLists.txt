@@ -83,6 +83,6 @@ if(IPOPT_FOUND)
     install(CODE "execute_process(COMMAND mogs2 plugins add ipopt_optimization_nlp NLP_sample ${INSTALL_LIB_DIRS}/libMogsNlpSample.so)")
 
 else()
-    mesage("IPOPT was not FOUND, so we do not compile MogsNlpSample")
+    message("IPOPT was not FOUND, so we do not compile MogsNlpSample")
 endif(IPOPT_FOUND)
 

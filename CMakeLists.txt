@@ -32,13 +32,22 @@ foreach(p LIB INCLUDE)
 	endif()
 endforeach()
 
-find_package(MogsCore REQUIRED)
-find_package(MogsVisu QUIET)
+if(NOT MogsCore_FOUND)
+    find_package(MogsCore REQUIRED)
+endif(NOT MogsCore_FOUND)
+
+if(NOT MogsVisu_FOUND)
+    find_package(MogsVisu QUIET)
+endif(NOT MogsVisu_FOUND)
+
+message("MogsCore_INCLUDE_DIRS = " ${MogsCore_INCLUDE_DIRS})
 
 include_directories (
 	include
 	${MogsCore_INCLUDE_DIRS}
 	${MogsVisu_INCLUDE_DIRS}
+	${MogsCore_INCLUDE_DIRS_LOCAL}
+	${MogsVisu_INCLUDE_DIRS_LOCAL}
 )
 
 configure_file ("${PROJECT_SOURCE_DIR}/config_MogsOptimizationCore.h.in"
@@ -79,7 +88,7 @@ SET(MogsOptimizationCore_FLAGS "-DMogsOptimizationCore_FOUND ${IPOPT_FLAGS} ${Mo
 SET(MogsOptimizationCore_FOUND "TRUE" CACHE INTERNAL "")
 add_definitions(${MogsOptimizationCore_FLAGS} )
 
-message( "${MogsVisu_FLAGS} = " ${MogsVisu_FLAGS} )
+# message( "${MogsVisu_FLAGS} = " ${MogsVisu_FLAGS} )
 # ++++++++ add flags (done before)
 configure_file(MogsOptimizationCoreConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake" @ONLY)
 
@@ -89,7 +98,7 @@ install( TARGETS MogsOptimizationCore LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  C
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsOptimizationCore" COMPONENT dev )
 
-message("before include_directories")
+# message("before include_directories")
 
 
 add_subdirectory(optim_solvers)
