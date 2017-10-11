@@ -7,7 +7,7 @@ MogsNlpIpopt::MogsNlpIpopt ()
 MogsNlpIpopt::~MogsNlpIpopt ()
 {
 }
-void MogsNlpIpopt::save_results( 	Index n,
+void MogsNlpIpopt::save_results( 	Ipopt::Index n,
 									const Number* x,
 									Number obj_value)
 {

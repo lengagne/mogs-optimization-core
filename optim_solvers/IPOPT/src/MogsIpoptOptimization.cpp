@@ -155,7 +155,7 @@ void MogsIpoptOptimization::local_solve()
 	{
 	    status_ = true;
 	   // Retrieve some statistics about the solve
-	   Index iter_count = app_->Statistics ()->IterationCount ();
+	   Ipopt::Index iter_count = app_->Statistics ()->IterationCount ();
 //	   std::cout << std::endl << std::endl << "*** The problem solved in " << iter_count<< " iterations!" << std::endl;
 	   Number final_obj = app_->Statistics ()->FinalObjective ();
 //	   std::cout << std::endl << std::endl <<"*** The final value of the objective function is "<< final_obj << '.' << std::endl;

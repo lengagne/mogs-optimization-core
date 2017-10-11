@@ -126,8 +126,8 @@ void NLP_FAD_1_4::load_xml( )
     std::cout<<"end of load_xml"<<std::endl;
     #endif // PRINT
 }
-bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
-		     Index & nnz_h_lag, IndexStyleEnum & index_style)
+bool NLP_FAD_1_4::get_nlp_info (Ipopt::Index & n, Ipopt::Index & m, Ipopt::Index & nnz_jac_g,
+		     Ipopt::Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
     #ifdef PRINT
     std::cout<<"start get_nlp_info"<<std::endl;
@@ -218,15 +218,15 @@ bool NLP_FAD_1_4::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 	return true;
 }
 
-bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
-			Index m, Number * g_l, Number * g_u)
+bool NLP_FAD_1_4::get_bounds_info (Ipopt::Index n, Number * x_l, Number * x_u,
+			Ipopt::Index m, Number * g_l, Number * g_u)
 {
     #ifdef PRINT
     std::cout<<"start get_bounds_info"<<std::endl;
     #endif // PRINT
     assert(n == nb_var_);
 
-    Index i, j;
+    Ipopt::Index i, j;
     unsigned int cpt = 0;
     for (int i=0;i<n;i++)
     {
@@ -254,9 +254,9 @@ bool NLP_FAD_1_4::get_bounds_info (Index n, Number * x_l, Number * x_u,
 	return true;
 }
 
-bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
+bool NLP_FAD_1_4::get_starting_point (Ipopt::Index n, bool init_x, Number * x,
 			   bool init_z, Number * z_L, Number * z_U,
-			   Index m, bool init_lambda, Number * lambda)
+			   Ipopt::Index m, bool init_lambda, Number * lambda)
 {
     #ifdef PRINT
     std::cout<<"start get_starting_point"<<std::endl;
@@ -279,7 +279,7 @@ bool NLP_FAD_1_4::get_starting_point (Index n, bool init_x, Number * x,
 	return true;
 }
 
-bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
+bool NLP_FAD_1_4::eval_f (Ipopt::Index n, const Number * x, bool new_x, Number & obj_value)
 {
     #ifdef PRINT
     std::cout<<"start eval_f"<<std::endl;
@@ -313,7 +313,7 @@ bool NLP_FAD_1_4::eval_f (Index n, const Number * x, bool new_x, Number & obj_va
     return true;
 }
 
-bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
+bool NLP_FAD_1_4::eval_grad_f (Ipopt::Index n, const Number * x, bool new_x, Number * grad_f)
 {
     #ifdef PRINT
     std::cout<<"start eval_grad_f"<<std::endl;
@@ -332,7 +332,7 @@ bool NLP_FAD_1_4::eval_grad_f (Index n, const Number * x, bool new_x, Number * g
 	return true;
 }
 
-bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
+bool NLP_FAD_1_4::eval_g (Ipopt::Index n, const Number * x, bool new_x, Ipopt::Index m, Number * g)
 {
     #ifdef PRINT
     std::cout<<"start eval_g"<<std::endl;
@@ -349,8 +349,8 @@ bool NLP_FAD_1_4::eval_g (Index n, const Number * x, bool new_x, Index m, Number
     return true;
 }
 
-bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
-		   Index m, Index nele_jac, Index * iRow, Index * jCol,
+bool NLP_FAD_1_4::eval_jac_g (Ipopt::Index n, const Number * x, bool new_x,
+		   Ipopt::Index m, Ipopt::Index nele_jac, Ipopt::Index * iRow, Ipopt::Index * jCol,
 		   Number * values)
 {
     #ifdef PRINT
@@ -385,10 +385,10 @@ bool NLP_FAD_1_4::eval_jac_g (Index n, const Number * x, bool new_x,
 	return true;
 }
 
-bool NLP_FAD_1_4::eval_h (Index n, const Number * x, bool new_x,
-	       Number obj_factor, Index m, const Number * lambda,
-	       bool new_lambda, Index nele_hess, Index * iRow,
-	       Index * jCol, Number * values)
+bool NLP_FAD_1_4::eval_h (Ipopt::Index n, const Number * x, bool new_x,
+	       Number obj_factor, Ipopt::Index m, const Number * lambda,
+	       bool new_lambda, Ipopt::Index nele_hess, Ipopt::Index * iRow,
+	       Ipopt::Index * jCol, Number * values)
 {
         //assert(n == kin.getNDof());
         //assert(m == constraints_.size());
@@ -410,8 +410,8 @@ bool NLP_FAD_1_4::eval_h (Index n, const Number * x, bool new_x,
 }
 
 void NLP_FAD_1_4::finalize_solution (SolverReturn status,
-			  Index n, const Number * x, const Number * z_L,
-			  const Number * z_U, Index m, const Number * g,
+			  Ipopt::Index n, const Number * x, const Number * z_L,
+			  const Number * z_U, Ipopt::Index m, const Number * g,
 			  const Number * lambda, Number obj_value,
 			  const IpoptData * ip_data,
 			  IpoptCalculatedQuantities * ip_cq)

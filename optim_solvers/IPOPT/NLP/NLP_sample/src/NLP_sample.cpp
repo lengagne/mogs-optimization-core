@@ -32,8 +32,8 @@ NLP_sample::NLP_sample ()
 NLP_sample::~NLP_sample ()
 {
 }
-bool NLP_sample::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
-		     Index & nnz_h_lag, IndexStyleEnum & index_style)
+bool NLP_sample::get_nlp_info (Ipopt::Index & n, Ipopt::Index & m, Ipopt::Index & nnz_jac_g,
+		     Ipopt::Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
 	// The problem described in NLP_sample.hpp has 2 variables, x1, & x2,
 	n = 2;
@@ -55,8 +55,8 @@ bool NLP_sample::get_nlp_info (Index & n, Index & m, Index & nnz_jac_g,
 	return true;
 }
 
-bool NLP_sample::get_bounds_info (Index n, Number * x_l, Number * x_u,
-			Index m, Number * g_l, Number * g_u)
+bool NLP_sample::get_bounds_info (Ipopt::Index n, Number * x_l, Number * x_u,
+			Ipopt::Index m, Number * g_l, Number * g_u)
 {
 	// here, the n and m we gave IPOPT in get_nlp_info are passed back to us.
 	// If desired, we could assert to make sure they are what we think they are.
@@ -81,9 +81,9 @@ bool NLP_sample::get_bounds_info (Index n, Number * x_l, Number * x_u,
 	return true;
 }
 
-bool NLP_sample::get_starting_point (Index n, bool init_x, Number * x,
+bool NLP_sample::get_starting_point (Ipopt::Index n, bool init_x, Number * x,
 			   bool init_z, Number * z_L, Number * z_U,
-			   Index m, bool init_lambda, Number * lambda)
+			   Ipopt::Index m, bool init_lambda, Number * lambda)
 {
 	// Here, we assume we only have starting values for x, if you code
 	// your own NLP, you can provide starting values for the others if
@@ -99,7 +99,7 @@ bool NLP_sample::get_starting_point (Index n, bool init_x, Number * x,
 	return true;
 }
 
-bool NLP_sample::eval_f (Index n, const Number * x, bool new_x, Number & obj_value)
+bool NLP_sample::eval_f (Ipopt::Index n, const Number * x, bool new_x, Number & obj_value)
 {
 	// return the value of the objective function
 	Number x2 = x[1];
@@ -107,7 +107,7 @@ bool NLP_sample::eval_f (Index n, const Number * x, bool new_x, Number & obj_val
 	return true;
 }
 
-bool NLP_sample::eval_grad_f (Index n, const Number * x, bool new_x, Number * grad_f)
+bool NLP_sample::eval_grad_f (Ipopt::Index n, const Number * x, bool new_x, Number * grad_f)
 {
 	// return the gradient of the objective function grad_{x} f(x)
 
@@ -121,7 +121,7 @@ bool NLP_sample::eval_grad_f (Index n, const Number * x, bool new_x, Number * gr
 	return true;
 }
 
-bool NLP_sample::eval_g (Index n, const Number * x, bool new_x, Index m, Number * g)
+bool NLP_sample::eval_g (Ipopt::Index n, const Number * x, bool new_x, Ipopt::Index m, Number * g)
 {
 	// return the value of the constraints: g(x)
 	Number x1 = x[0];
@@ -132,8 +132,8 @@ bool NLP_sample::eval_g (Index n, const Number * x, bool new_x, Index m, Number 
 	return true;
 }
 
-bool NLP_sample::eval_jac_g (Index n, const Number * x, bool new_x,
-		   Index m, Index nele_jac, Index * iRow, Index * jCol,
+bool NLP_sample::eval_jac_g (Ipopt::Index n, const Number * x, bool new_x,
+		   Ipopt::Index m, Ipopt::Index nele_jac, Ipopt::Index * iRow, Ipopt::Index * jCol,
 		   Number * values)
 {
 	if (values == NULL)
@@ -163,10 +163,10 @@ bool NLP_sample::eval_jac_g (Index n, const Number * x, bool new_x,
 	return true;
 }
 
-bool NLP_sample::eval_h (Index n, const Number * x, bool new_x,
-	       Number obj_factor, Index m, const Number * lambda,
-	       bool new_lambda, Index nele_hess, Index * iRow,
-	       Index * jCol, Number * values)
+bool NLP_sample::eval_h (Ipopt::Index n, const Number * x, bool new_x,
+	       Number obj_factor, Ipopt::Index m, const Number * lambda,
+	       bool new_lambda, Ipopt::Index nele_hess, Ipopt::Index * iRow,
+	       Ipopt::Index * jCol, Number * values)
 {
 	if (values == NULL)
 	  {
@@ -200,8 +200,8 @@ bool NLP_sample::eval_h (Index n, const Number * x, bool new_x,
 }
 
 void NLP_sample::finalize_solution (SolverReturn status,
-			  Index n, const Number * x, const Number * z_L,
-			  const Number * z_U, Index m, const Number * g,
+			  Ipopt::Index n, const Number * x, const Number * z_L,
+			  const Number * z_U, Ipopt::Index m, const Number * g,
 			  const Number * lambda, Number obj_value,
 			  const IpoptData * ip_data,
 			  IpoptCalculatedQuantities * ip_cq)

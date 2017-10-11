@@ -40,8 +40,6 @@ if(NOT MogsVisu_FOUND)
     find_package(MogsVisu QUIET)
 endif(NOT MogsVisu_FOUND)
 
-message("MogsCore_INCLUDE_DIRS = " ${MogsCore_INCLUDE_DIRS})
-
 include_directories (
 	include
 	${MogsCore_INCLUDE_DIRS}

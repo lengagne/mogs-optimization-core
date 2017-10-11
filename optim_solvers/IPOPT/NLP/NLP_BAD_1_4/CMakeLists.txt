@@ -96,7 +96,7 @@ elseif(IPOPT_FOUND)
     SET(MogsNlpBAD_1_4_LIBRARIES  MogsNlpBAD_1_4 CACHE INTERNAL "")
     SET(MogsNlpBAD_1_4_FLAGS "-DMogsNlpBAD_1_4_FOUND ${IPOPT_FLAGS}" CACHE INTERNAL "")
     SET(MogsNlpBAD_1_4_FOUND "TRUE" CACHE INTERNAL "")
-    
+
     add_definitions(${MogsNlpBAD_1_4_FLAGS} ${MogsVisu_FLAGS})
     #  add flags (done before)
     configure_file(MogsNlpBAD_1_4Config.cmake.in "${PROJECT_BINARY_DIR}/MogsNlpBAD_1_4Config.cmake" @ONLY)
@@ -106,8 +106,6 @@ elseif(IPOPT_FOUND)
             DESTINATION "${INSTALL_LIB_PATH}/MogsNlpBAD_1_4" COMPONENT dev )
 
     install(CODE "execute_process(COMMAND mogs2 plugins add ipopt_optimization_nlp NLP_BAD_1_4 ${INSTALL_LIB_DIRS}/libMogsNlpBAD_1_4.so)")
-    
-    message("dans le cmake MogsNlpBAD_1_4_FOUND = " ${MogsNlpBAD_1_4_FOUND} )
 
 else()
     message("IPOPT was not FOUND, so we do not compile MogsNlpBAD_1_4")

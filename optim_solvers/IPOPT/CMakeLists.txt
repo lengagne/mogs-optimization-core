@@ -5,7 +5,9 @@ find_package(IPOPT QUIET)
 
 if(IPOPT_FOUND)
 
-    find_package(MogsCore REQUIRED)
+    if (NOT MogsCore_FOUND)
+        find_package(MogsCore REQUIRED)
+    endif (NOT MogsCore_FOUND)
 
     if (NOT MogsOptimizationCore_FOUND)
         find_package(MogsOptimizationCore REQUIRED)

@@ -101,6 +101,11 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
 
     void set_show_result(bool show_result);
 
+    void set_nlp_problem(MogsNlpIpopt* n)
+    {
+        nlp_ = n;
+    }
+
 
     private:
     SmartPtr < MogsNlpIpopt > nlp_;

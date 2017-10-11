@@ -9,7 +9,7 @@
 
 set(MogsIpoptOptimization_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@ @IPOPT_INCLUDE_DIRS@)
 
-set(MogsIpoptOptimization_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@ @IPOPT_LIBRARIES@)
+set(MogsIpoptOptimization_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@ @IPOPT_LIBRARY_DIRS@)
 
 set(MogsIpoptOptimization_LIBRARIES @MogsIpoptOptimization_LIBRARIES@ @MogsCore_LIBRARIES@ @IPOPT_LIBRARIES@)
 
