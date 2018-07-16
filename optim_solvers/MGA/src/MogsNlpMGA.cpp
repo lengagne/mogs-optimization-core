@@ -102,20 +102,13 @@ void MogsNlpMGA::finalize_solution( optim_infos &info)
 	 std::cout<<"tmp criteria = "<< tmp[1].obj[0]<<std::endl;
 
 #ifdef MogsVisu_FOUND
-    VisuHolder visu("resultats");
-
-    visu.add("robot",robots_[0]);
-	Eigen::Matrix < double,Eigen::Dynamic, 1 > q;
-	q.resize(robots_[0]->getNDof());
-
+    Eigen::Matrix<double,Eigen::Dynamic,1> q(robots_[0]->getNDof());
     for (int i=0;i<robots_[0]->getNDof();i++)
         q(i) = info.var[i];
 	std::cout<<"q = "<< q.transpose()<<std::endl;
 	for (int i=0;i<3;i++)	q(i)= 0;
-
-    visu.apply_q("robot",&q);
-
-    visu.wait_close();
+    visu_optim_->apply_q(robots_[0]->getRobotName(),&q);
+    visu_optim_->wait_close();
 #endif // MogsVisu_FOUND
 }
 

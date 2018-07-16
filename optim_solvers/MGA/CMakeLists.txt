@@ -6,7 +6,7 @@ if(MogsGeneticAlgorithm_FOUND)
     message("MogsGeneticAlgorithm FOUND")
 
 	find_package(MogsVisu QUIET)
-    
+
     find_package(MogsCore REQUIRED)
 
     if (NOT MogsOptimizationCore_FOUND)
@@ -33,7 +33,7 @@ if(MogsGeneticAlgorithm_FOUND)
         ${MogsGeneticAlgorithm_INCLUDE_DIRS}
         ${MogsVisu_INCLUDE_DIRS}
     )
-    
+
 
     configure_file ( "${CMAKE_CURRENT_SOURCE_DIR}/config_MogsMGAOptimization.h.in"
              "${CMAKE_CURRENT_SOURCE_DIR}/include/config_MogsMGAOptimization.h" )
@@ -67,6 +67,7 @@ if(MogsGeneticAlgorithm_FOUND)
                 ${MogsCore_LIBRARIES}
                 ${MogsCriteria_LIBRARIES}
                 ${MogsVisu_LIBRARIES}
+                ${MogsOptimizationCore_LIBRARIES}
                 )
 
 

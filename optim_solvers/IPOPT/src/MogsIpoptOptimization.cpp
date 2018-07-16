@@ -103,9 +103,6 @@ void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
 void MogsIpoptOptimization::solve()
 {
     MogsAbstractOptimization::solve();
-//    std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
-
-//    std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
     #ifdef MogsVisu_FOUND
     nlp_->set_visu(visu_optim_,visu_during_optim_);
     #endif

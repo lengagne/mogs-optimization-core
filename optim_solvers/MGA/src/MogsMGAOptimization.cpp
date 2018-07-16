@@ -35,8 +35,7 @@ void MogsMGAOptimization::read_problem (const mogs_string & filename)
 {
 
    // loaded the good type of problem
-    MogsAbstractProblem::read_problem(filename);
-
+    MogsAbstractOptimization::read_problem(filename);
     my_pb_ = new MogsNlpMGA();
 
 
@@ -137,6 +136,11 @@ void MogsMGAOptimization::set_problem_properties(   const std::vector<MogsOptimD
 void MogsMGAOptimization::solve()
 {
     std::cout<<"MogsMGAOptimization::solve()"<<std::endl;
+
+    MogsAbstractOptimization::solve();
+    #ifdef MogsVisu_FOUND
+    my_pb_->set_visu(visu_optim_,visu_during_optim_);
+    #endif
 
 	my_pb_->set_robots(robots_);
 

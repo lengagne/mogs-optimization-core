@@ -13,6 +13,11 @@
 #include "MogsAbstractGeneticProblem.h"
 #include "AbstractCriteria.hpp"
 
+
+#ifdef MogsVisu_FOUND
+#include "VisuHolder.h"
+#endif
+
 class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 {
       public:
@@ -40,6 +45,15 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 	// intern
 
 	void set_robots(const std::vector<MogsRobotProperties*> & in);
+
+    #ifdef MogsVisu_FOUND
+    void set_visu( VisuHolder * v,
+                  bool during = false)
+    {
+        visu_optim_ = v;
+        visu_during_optim_ = during;
+    }
+    #endif
 
 //
 //  /**@name Overloaded from TNLP */
@@ -91,7 +105,7 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //					Number obj_value,
 //					const MGAData * ip_data,
 //					MGACalculatedQuantities * ip_cq) =0;
-//	//@}
+//	//@}visu_optim_
 //
 //    void set_robot_url(const std::vector<mogs_string> & in);
 //
@@ -112,13 +126,18 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //		  MogsNlpMGA (const MogsNlpMGA &);
 //          MogsNlpMGA & operator= (const MogsNlpMGA &);
 //	//@}
-//
+//visu_optim_
     std::vector<MogsRobotProperties*> robots_;
 
     unsigned int nb_robots_;
     std::vector<MogsDynamics<double>*> dyns_;
 
 	std::vector<AbstractCriteria* >criteres_;
+
+	#ifdef MogsVisu_FOUND
+	VisuHolder *visu_optim_;
+	bool visu_during_optim_ = false;
+	#endif
 
 };
 

@@ -17,13 +17,11 @@ void MogsAbstractOptimization::read_problem(const mogs_string & filename)
 
 void MogsAbstractOptimization::solve()
 {
-    std::cout<<"MogsAbstractOptimization::solve()"<<std::endl;
-#ifdef MogsVisu_FOUND
+    #ifdef MogsVisu_FOUND
     qDebug()<<"MogsVisu found";
-	visu_optim_ = new VisuHolder();
+	visu_optim_ = new VisuHolder("MogsOptimization");
 	visu_optim_->init_from_problem(this);
-#else
+    #else
     qDebug()<<"MogsVisu not found";
-#endif
-std::cout<<"MogsAbstractOptimization::solve() end"<<std::endl;
+    #endif
 }

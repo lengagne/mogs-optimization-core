@@ -192,15 +192,6 @@ bool NLP_FAD_1_4::get_nlp_info (Ipopt::Index & n, Ipopt::Index & m, Ipopt::Index
     std::cout<<"end of get_nlp_info"<<std::endl;
     #endif // PRINT
 
-    #ifdef MogsVisu_FOUND
-    if(visu_during_optim_ && !visu_optim_)
-    {
-        visu_optim_ = new VisuHolder("intermediate result");
-        for(int k=0;k<nb_robots_;k++)
-            visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
-    }
-    #endif // MogsVisu_FOUND
-
 	return true;
 }
 
@@ -413,16 +404,6 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 //        std::cout<<"g("<<i<<") = "<< g[i]<<std::endl;
 
 #ifdef MogsVisu_FOUND
-
-    q.resize(nb_robots_);
-    aq.resize(nb_robots_);
-    for(int k=0;k<nb_robots_;k++)
-    {
-       visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
-        q[k].resize(robots_[k]->getNDof());
-        aq[k].resize(robots_[k]->getNDof());
-
-    }
     parameterization_->prepare_computation(dyns_);
 
     for (unsigned int i=0; i<nb_ctr_; i++)
