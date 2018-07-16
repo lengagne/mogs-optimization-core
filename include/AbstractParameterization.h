@@ -2,8 +2,7 @@
 #define ABSTRACTPARAMETERIZATION_H
 
 #include "MogsOptimDynamics.h"
-#include "AbstractConstraint.hpp"
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class AbstractParameterization
 {
@@ -55,5 +54,9 @@ protected:
         // name of the parameterization (used to perfom cast)
         QString plugin_name_;
 };
+
+typedef AbstractParameterization* create_Parameterization( );
+
+typedef void destroy_Parameterization(AbstractParameterization*);
 
 #endif // ABSTRACTPARAMETERIZATION_H

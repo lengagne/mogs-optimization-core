@@ -4,7 +4,7 @@
 #include <NLP_FAD_1_4.hpp>
 #include "CameraCriteria.hpp"
 
-class CameraFAD_1_4Critere: public AbstractFAD_1_4Critere, CameraCriteria
+class CameraFAD_1_4Critere: public AbstractFAD_1_4Criteria, CameraCriteria
 {
  public:
 	CameraFAD_1_4Critere ();

@@ -2,10 +2,10 @@
 #define CloseToMiddleFAD_1_4Critere_HPP_
 
 #include <NLP_FAD_1_4.hpp>
-#include "AbstractFAD_1_4Critere.hpp"
+#include "AbstractFAD_1_4Criteria.hpp"
 #include "CloseToMiddleCriteria.hpp"
 
-class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Critere, virtual CloseToMiddleCriteria
+class CloseToMiddleFAD_1_4Critere: public AbstractFAD_1_4Criteria, virtual CloseToMiddleCriteria
 {
  public:
 	CloseToMiddleFAD_1_4Critere ( );

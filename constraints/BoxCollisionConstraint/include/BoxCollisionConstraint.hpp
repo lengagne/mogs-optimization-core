@@ -2,7 +2,7 @@
 #define  BoxCollisionConstraint_HPP_
 
 #include "MogsKinematics.h"
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 #include "MogsBoxCollision.h"
 
 class BoxCollisionConstraint: virtual public AbstractConstraint

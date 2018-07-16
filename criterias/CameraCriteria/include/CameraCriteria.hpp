@@ -1,7 +1,7 @@
 #ifndef CameraCriteria_HPP_
 #define CameraCriteria_HPP_
 
-#include "AbstractCriteria.hpp"
+#include "AbstractCriteria.h"
 
 class CameraCriteria: virtual public AbstractCriteria
 {

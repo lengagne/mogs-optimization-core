@@ -2,7 +2,7 @@
 #define  TransformationConstraint_HPP_
 
 #include "MogsKinematics.h"
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class TransformationConstraint: virtual public AbstractConstraint
 {   public:

@@ -12,7 +12,7 @@
 #include "MogsNlpIpopt.hpp"
 #include "MogsOptimDynamics.h"
 #include <fadiff.h>
-#include "AbstractFAD_1_4Critere.hpp"
+#include "AbstractFAD_1_4Criteria.hpp"
 #include "AbstractFAD_1_4Constraint.hpp"
 #include "AbstractFAD_1_4Parameterization.hpp"
 #include "Dependency.h"
@@ -144,7 +144,7 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
         AbstractFAD_1_4Parameterization* parameterization_;
 
-        std::vector<AbstractFAD_1_4Critere* >criteres_;
+        std::vector<AbstractFAD_1_4Criteria* >criteres_;
 
         std::vector<AbstractFAD_1_4Constraint*> constraints_;
 

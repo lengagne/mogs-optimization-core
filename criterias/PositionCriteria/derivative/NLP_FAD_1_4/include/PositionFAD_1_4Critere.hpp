@@ -2,10 +2,10 @@
 #define PositionFAD_1_4Critere_HPP_
 
 #include <NLP_FAD_1_4.hpp>
-#include "AbstractFAD_1_4Critere.hpp"
+#include "AbstractFAD_1_4Criteria.hpp"
 #include "PositionCriteria.hpp"
 
-class PositionFAD_1_4Critere: public AbstractFAD_1_4Critere, PositionCriteria
+class PositionFAD_1_4Critere: public AbstractFAD_1_4Criteria, PositionCriteria
 {
  public:
 	PositionFAD_1_4Critere ( );

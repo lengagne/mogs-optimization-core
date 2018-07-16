@@ -2,10 +2,10 @@
 #define TorqueFAD_1_4Critere_HPP_
 
 #include <NLP_FAD_1_4.hpp>
-#include "AbstractFAD_1_4Critere.hpp"
+#include "AbstractFAD_1_4Criteria.hpp"
 #include "TorqueCriteria.hpp"
 
-class TorqueFAD_1_4Critere: public AbstractFAD_1_4Critere, TorqueCriteria
+class TorqueFAD_1_4Critere: public AbstractFAD_1_4Criteria, TorqueCriteria
 {
  public:
 	TorqueFAD_1_4Critere ( );

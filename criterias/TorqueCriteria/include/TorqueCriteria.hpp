@@ -1,7 +1,7 @@
 #ifndef  TorqueCriteria_HPP_
 #define  TorqueCriteria_HPP_
 
-#include "AbstractCriteria.hpp"
+#include "AbstractCriteria.h"
 
 class TorqueCriteria: public AbstractCriteria
 {   public:

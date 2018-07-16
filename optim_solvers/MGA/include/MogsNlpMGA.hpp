@@ -1,18 +1,12 @@
-// Copyright (C) 2004, 2006 International Business Machines and others.
-// All Rights Reserved.
-// This code is published under the Eclipse Public License.
-//
-// $Id: MogsNlpMGA.hpp 1861 2010-12-21 21:34:47Z andreasw $
-//
-// Authors:  Carl Laird, Andreas Waechter     IBM    2004-11-05
 
 #ifndef __MOGS_NLP_MGA_HPP__
 #define __MOGS_NLP_MGA_HPP__
 
 #include "MogsKinematics.h"
 #include "MogsAbstractGeneticProblem.h"
-#include "AbstractCriteria.hpp"
-
+#include "AbstractCriteria.h"
+#include "AbstractConstraint.h"
+#include "AbstractParameterization.h"
 
 #ifdef MogsVisu_FOUND
 #include "VisuHolder.h"
@@ -40,11 +34,20 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     void finalize_solution( optim_infos &info);
 
-    void load_xml(QDomElement criteres);
+//    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+//                                AbstractParameterization* param,
+//                                const std::vector<AbstractCriteria* > &criteres,
+//                                const std::vector<AbstractConstraint*> & constraints);
 
-	// intern
+    void load_xml();
 
 	void set_robots(const std::vector<MogsRobotProperties*> & in);
+
+	void set_root(QDomElement root)
+	{
+		root_ = root;
+	}
+
 
     #ifdef MogsVisu_FOUND
     void set_visu( VisuHolder * v,
@@ -132,7 +135,13 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
     unsigned int nb_robots_;
     std::vector<MogsDynamics<double>*> dyns_;
 
-	std::vector<AbstractCriteria* >criteres_;
+    AbstractParameterization* parameterization_;
+
+    std::vector<AbstractCriteria* >criteres_;
+
+    std::vector<AbstractConstraint*> constraints_;
+
+    QDomElement root_;
 
 	#ifdef MogsVisu_FOUND
 	VisuHolder *visu_optim_;

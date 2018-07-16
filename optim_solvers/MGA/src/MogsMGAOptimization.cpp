@@ -125,14 +125,6 @@ void MogsMGAOptimization::read_problem (const mogs_string & filename)
 //	app_ = MGAApplicationFactory ();
 }
 
-void MogsMGAOptimization::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                                    AbstractParameterization* param,
-                                                    const std::vector<AbstractCriteria* > &criteres,
-                                                    const std::vector<AbstractConstraint*> & constraints)
-{
-    std::cout<<__FILE__<<" at line "<< __LINE__ <<" not implemented yet "<<std::endl;
-}
-
 void MogsMGAOptimization::solve()
 {
     std::cout<<"MogsMGAOptimization::solve()"<<std::endl;

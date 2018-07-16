@@ -1,7 +1,7 @@
 #ifndef  CloseToMiddleCriteria_HPP_
 #define  CloseToMiddleCriteria_HPP_
 
-#include "AbstractCriteria.hpp"
+#include "AbstractCriteria.h"
 
 class CloseToMiddleCriteria: public AbstractCriteria
 {   public:

@@ -10,9 +10,9 @@
 #define ABSTRACTFAD_1_4CRITERE_HPP_INCLUDED
 
 #include <fadiff.h>
-#include "AbstractCriteria.hpp"
+#include "AbstractCriteria.h"
 
-class AbstractFAD_1_4Critere : virtual public AbstractCriteria
+class AbstractFAD_1_4Criteria : virtual public AbstractCriteria
 {
     public:
 
@@ -24,9 +24,8 @@ class AbstractFAD_1_4Critere : virtual public AbstractCriteria
 };
 
 // the types of the class factories
-typedef AbstractFAD_1_4Critere* create_FAD_1_4Critere( );
+typedef AbstractFAD_1_4Criteria* create_FAD_1_4Criteria( );
 
-typedef void destroy_FAD_1_4Critere(AbstractFAD_1_4Critere*);
-
+typedef void destroy_FAD_1_4Criteria(AbstractFAD_1_4Criteria*);
 
 #endif  // ABSTRACTFAD_1_4CRITERIA_HPP_INCLUDED

@@ -2,7 +2,7 @@
 #define  PositionConstraint_HPP_
 
 #include "MogsKinematics.h"
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class PositionConstraint: virtual public AbstractConstraint
 {   public:

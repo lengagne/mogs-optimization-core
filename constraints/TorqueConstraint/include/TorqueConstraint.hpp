@@ -1,7 +1,7 @@
 #ifndef  TorqueConstraint_HPP_
 #define  TorqueConstraint_HPP_
 
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class TorqueConstraint: virtual public AbstractConstraint
 {   public:

@@ -11,7 +11,7 @@
 
 #include "MogsOptimDynamics.h"
 #include <fadiff.h>
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 #include "MogsNlpIpopt.hpp"
 #include "Dependency.h"
 

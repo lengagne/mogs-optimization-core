@@ -53,7 +53,7 @@ void NLP_FAD_1_4::load_ctrs_crits(std::vector<QDomElement> & ctrs,
     AbstractLoader loader;
     for (unsigned int i=0;i<crits.size();i++)
     {
-        AbstractFAD_1_4Critere* crit = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",crits[i],dyns_));
+        AbstractFAD_1_4Criteria* crit = dynamic_cast<AbstractFAD_1_4Criteria*> (loader.get_criteria<create_FAD_1_4Criteria*>("MogsCriteriaNlpFAD_1_4",crits[i],dyns_));
         criteres_.push_back(crit);
     }
 
@@ -83,7 +83,7 @@ void NLP_FAD_1_4::load_xml( )
     QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
-        AbstractFAD_1_4Critere* crit = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",critere,dyns_));
+        AbstractFAD_1_4Criteria* crit = dynamic_cast<AbstractFAD_1_4Criteria*> (loader.get_criteria<create_FAD_1_4Criteria*>("MogsCriteriaNlpFAD_1_4",critere,dyns_));
         criteres_.push_back(crit);
 	}
 
@@ -112,6 +112,7 @@ void NLP_FAD_1_4::load_xml( )
     std::cout<<"end of load_xml"<<std::endl;
     #endif // PRINT
 }
+
 bool NLP_FAD_1_4::get_nlp_info (Ipopt::Index & n, Ipopt::Index & m, Ipopt::Index & nnz_jac_g,
 		     Ipopt::Index & nnz_h_lag, IndexStyleEnum & index_style)
 {
@@ -506,7 +507,7 @@ void NLP_FAD_1_4::set_problem_properties(   const std::vector<MogsOptimDynamics<
     criteres_.clear();
     for (int i=0;i<criteres.size();i++)
     {
-        AbstractFAD_1_4Critere* c = dynamic_cast<AbstractFAD_1_4Critere*> (loader.get_criteria<create_FAD_1_4Critere*>("MogsCriteriaNlpFAD_1_4",criteres[i]));
+        AbstractFAD_1_4Criteria* c = dynamic_cast<AbstractFAD_1_4Criteria*> (loader.get_criteria<create_FAD_1_4Criteria*>("MogsCriteriaNlpFAD_1_4",criteres[i]));
         criteres_.push_back(c);
     }
 

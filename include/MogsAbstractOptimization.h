@@ -26,8 +26,8 @@
 #include "MogsAbstractProblem.h"
 #include "MogsOptimDynamics.h"
 #include "AbstractParameterization.h"
-#include "AbstractCriteria.hpp"
-#include "AbstractConstraint.hpp"
+#include "AbstractCriteria.h"
+#include "AbstractConstraint.h"
 
 class MogsAbstractOptimization: public MogsAbstractProblem
 {

@@ -42,7 +42,10 @@ class MogsMGAOptimization: public MogsAbstractOptimization
     void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
                                 AbstractParameterization* param,
                                 const std::vector<AbstractCriteria* > &criteres,
-                                const std::vector<AbstractConstraint*> & constraints);
+                                const std::vector<AbstractConstraint*> & constraints)
+    {
+        my_pb_->set_problem_properties(dyns,param,criteres,constraints);
+    }
 
     /** Solve the problem	 */
     void solve();

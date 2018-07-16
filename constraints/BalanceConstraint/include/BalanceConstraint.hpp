@@ -1,7 +1,7 @@
 #ifndef  BalanceConstraint_HPP_
 #define  BalanceConstraint_HPP_
 
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class BalanceConstraint: virtual public AbstractConstraint
 {   public:

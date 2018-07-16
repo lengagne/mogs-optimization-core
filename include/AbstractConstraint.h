@@ -92,4 +92,9 @@ class AbstractConstraint
 
 };
 
+// the types of the class factories
+typedef AbstractConstraint* create_Constraint( );
+
+typedef void destroy_Constraint(AbstractConstraint*);
+
 #endif // AbstractConstraint_HPP_INCLUDED
