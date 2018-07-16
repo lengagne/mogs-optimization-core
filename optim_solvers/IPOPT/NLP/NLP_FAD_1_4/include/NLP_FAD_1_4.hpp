@@ -157,14 +157,9 @@ class NLP_FAD_1_4:public MogsNlpIpopt
 
         bool compute_number_, compute_gradient_;
 
-		F<Number> *G, *X;
+        F<Number> *G, *X;
 
-		#ifdef MogsVisu_FOUND
-        bool visu_during_optim_;
-        VisuHolder * visu_optim_;
-        static VisuHolder * visu_test_;
-        static std::vector<VisuHolder> visu_vect;
-		#endif // MogsVisu_FOUND
+
 
         public:
 

@@ -70,10 +70,10 @@ void MogsIpoptOptimization::init_nlp_problem (const mogs_string & plugin_name)
 
 void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 {
+    MogsAbstractOptimization::read_problem(filename);
 //    std::cout<<"MogsIpoptOptimization::read_problem()"<<std::endl;
 
     // loaded the good type of problem
-    MogsAbstractProblem::read_problem(filename);
     mogs_string plugin_name = root_.attribute("derivative");
     init_nlp_problem(plugin_name);
 
@@ -102,9 +102,13 @@ void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
 
 void MogsIpoptOptimization::solve()
 {
+    MogsAbstractOptimization::solve();
 //    std::cout<<"MogsIpoptOptimization::solve()"<<std::endl;
 
 //    std::cout<<"il y a "<< robots_.size()<<" robots."<<std::endl;
+    #ifdef MogsVisu_FOUND
+    nlp_->set_visu(visu_optim_,visu_during_optim_);
+    #endif
      //donne les fichiers des robots
     nlp_-> set_robots( robots_ );
 

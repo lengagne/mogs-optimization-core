@@ -33,7 +33,7 @@ class MogsAbstractOptimization: public MogsAbstractProblem
 {
       public:
 
-        virtual void read_problem (const mogs_string & filename) = 0;
+        virtual void read_problem (const mogs_string & filename);
 
         virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
                                             AbstractParameterization* param,
@@ -41,7 +41,7 @@ class MogsAbstractOptimization: public MogsAbstractProblem
                                             const std::vector<AbstractConstraint*> & constraints)=0;
 
 	/** Solve the problem	 */
-        virtual void solve() = 0;
+        virtual void solve();
 
         bool get_status() const
         {
@@ -52,6 +52,12 @@ class MogsAbstractOptimization: public MogsAbstractProblem
       protected:
 
         bool status_;
+
+	#ifdef MogsVisu_FOUND
+	bool visu_during_optim_;
+	VisuHolder * visu_optim_;
+	#endif // MogsVisu_FOUND
+
 };
 
 

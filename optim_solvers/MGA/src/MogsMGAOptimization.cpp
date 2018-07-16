@@ -38,8 +38,8 @@ void MogsMGAOptimization::read_problem (const mogs_string & filename)
     MogsAbstractProblem::read_problem(filename);
 
     my_pb_ = new MogsNlpMGA();
-	
-	
+
+
 
 	/*
     std::cout<<"find criteres = "<< !criteres.isNull()<<std::endl;
@@ -126,16 +126,24 @@ void MogsMGAOptimization::read_problem (const mogs_string & filename)
 //	app_ = MGAApplicationFactory ();
 }
 
+void MogsMGAOptimization::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                                    AbstractParameterization* param,
+                                                    const std::vector<AbstractCriteria* > &criteres,
+                                                    const std::vector<AbstractConstraint*> & constraints)
+{
+    std::cout<<__FILE__<<" at line "<< __LINE__ <<" not implemented yet "<<std::endl;
+}
+
 void MogsMGAOptimization::solve()
 {
     std::cout<<"MogsMGAOptimization::solve()"<<std::endl;
 
 	my_pb_->set_robots(robots_);
-	
+
      QDomElement criteres=root_.firstChildElement("criteres");
 //
-     my_pb_->load_xml(criteres);	
-	
+     my_pb_->load_xml(criteres);
+
     MogsGeneticSolver solver;
     solver.set_nb_queue(10000);
     solver.set_nb_selected(100);

@@ -72,8 +72,9 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 		bool mem_kin = false;
 		for (int i =0;i<nb;i++)
 		{
-			double tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
-			obj_value+= tmp;
+		    std::cout<<__FILE__<<" at line "<< __LINE__<<" must be set properly"<<std::endl;
+//			double tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
+//			obj_value+= tmp;
 		}
 
 		infos[j].obj[0] = obj_value;

@@ -111,6 +111,15 @@ class MogsNlpIpopt:public TNLP
 
     void set_show_result(bool show_result);
 
+    #ifdef MogsVisu_FOUND
+    void set_visu( VisuHolder * v,
+                  bool during = false)
+    {
+        visu_optim_ = v;
+        visu_during_optim_ = during;
+    }
+    #endif
+
      virtual  void load_xml( )=0;
 
 
@@ -131,7 +140,7 @@ class MogsNlpIpopt:public TNLP
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
     protected:
-     unsigned int nb_robots_;
+	unsigned int nb_robots_;
 	 std::vector<MogsRobotProperties*> robots_;
 
 	 QDomElement root_;
@@ -139,6 +148,12 @@ class MogsNlpIpopt:public TNLP
 	 bool show_result_= true;
 
 	 double obj_value_;
+
+    #ifdef MogsVisu_FOUND
+    bool visu_during_optim_ = false;
+    VisuHolder * visu_optim_;
+    #endif // MogsVisu_FOUND
+
 
 };
 

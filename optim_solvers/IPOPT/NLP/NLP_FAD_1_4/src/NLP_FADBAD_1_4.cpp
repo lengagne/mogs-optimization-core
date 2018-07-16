@@ -32,11 +32,6 @@
 
 using namespace Ipopt;
 
-#ifdef MogsVisu_FOUND
-VisuHolder *NLP_FAD_1_4::visu_test_ = nullptr;
-std::vector<VisuHolder> NLP_FAD_1_4::visu_vect;
-#endif // MogsVisu_FOUND
-
 /* Constructor. */
 NLP_FAD_1_4::NLP_FAD_1_4 ()
 {
@@ -45,7 +40,7 @@ NLP_FAD_1_4::NLP_FAD_1_4 ()
     #endif
 	compute_number_ = false;
 	compute_gradient_ = false;
-	visu_during_optim_ = false;
+
 }
 
 NLP_FAD_1_4::~NLP_FAD_1_4 ()
@@ -112,15 +107,6 @@ void NLP_FAD_1_4::load_xml( )
         // std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
         constraints_.push_back(ctr);
 	}
-
-    #ifdef MogsVisu_FOUND
-    visu_during_optim_ = false;
-    QDomElement ElVisuDuring=root_.firstChildElement("visu_during_optim");
-    if (!ElVisuDuring.isNull())
-    {
-        visu_during_optim_ = convert_to_bool(ElVisuDuring.text().simplified());
-    }
-    #endif // MogsVisu_FOUND
 
     #ifdef PRINT
     std::cout<<"end of load_xml"<<std::endl;
@@ -427,22 +413,12 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
 //        std::cout<<"g("<<i<<") = "<< g[i]<<std::endl;
 
 #ifdef MogsVisu_FOUND
-    if(!show_result_ && visu_test_ == nullptr)
-    {
-        visu_test_= new VisuHolder("resultats");
-    }
-    else if(show_result_)
-    {
-        visu_test_= new VisuHolder("resultats");
-    }
 
-    VisuHolder visu = *visu_test_;
-    // VisuHolder visu("resultats");
     q.resize(nb_robots_);
     aq.resize(nb_robots_);
     for(int k=0;k<nb_robots_;k++)
     {
-        visu.add(robots_[k]->getRobotName(),robots_[k]);
+       visu_optim_->add(robots_[k]->getRobotName(),robots_[k]);
         q[k].resize(robots_[k]->getNDof());
         aq[k].resize(robots_[k]->getNDof());
 
@@ -456,25 +432,15 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     int cpt = 0;
     for(int k=0;k<nb_robots_;k++)
     {
-        visu.apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
+       visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
     }
-    visu. clear_lines();
+   visu_optim_-> clear_lines();
     for (int i=0;i<constraints_.size();i++)
-        constraints_[i]->update_visu(&visu,dyns_,(const double*) x);
+        constraints_[i]->update_visu(visu_optim_,dyns_,(const double*) x);
     if(show_result_)
-        visu.wait_close();
+       visu_optim_->wait_close();
 #endif // MogsVisu_FOUND
 }
-
-// void NLP_FAD_1_4::show_visu ()
-// {
-// #ifdef MogsVisu_FOUND
-//     for(int i = 0; i < visu_vect.size(); i++) {
-//         visu_vect[i].show();
-//         usleep(1e6);
-//     }
-// #endif // MogsVisu_FOUND
-// }
 
 void NLP_FAD_1_4::run_computation(const Number * x, unsigned int n, bool new_x)
 {
