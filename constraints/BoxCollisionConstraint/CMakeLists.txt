@@ -90,5 +90,6 @@ configure_file(MogsBoxCollisionConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsBoxCollisionConstraints" COMPONENT dev )
 
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxCollision ${INSTALL_LIB_DIRS}/libMogsBoxCollisionConstraint.so)")
 
 add_subdirectory(derivative)

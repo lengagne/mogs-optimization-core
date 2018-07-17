@@ -188,3 +188,13 @@ void BoxContactConstraint::update_visu (VisuHolder *visu,
 }
 #endif // MogsVisu_FOUND
 
+extern "C" BoxContactConstraint* create()
+{
+    return new BoxContactConstraint( );
+}
+
+extern "C" void destroy(BoxContactConstraint* p)
+{
+    delete p;
+}
+

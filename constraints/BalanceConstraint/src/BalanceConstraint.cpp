@@ -97,3 +97,13 @@ void BalanceConstraint::update_visu (VisuHolder *visu,
     visu->draw_additional_lines(lines,0,255,0);
 }
 #endif // MogsVisu_FOUND
+
+extern "C" BalanceConstraint* create()
+{
+    return new BalanceConstraint( );
+}
+
+extern "C" void destroy(BalanceConstraint* p)
+{
+    delete p;
+}

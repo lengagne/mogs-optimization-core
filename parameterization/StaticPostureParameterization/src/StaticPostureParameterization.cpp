@@ -84,3 +84,14 @@ void StaticPostureParameterization::set_init_value(const std::vector<Eigen::Matr
     std::cout<<"StaticPostureParameterization::set_init_value"<<std::endl;
 }
 
+
+extern "C" StaticPostureParameterization* create()
+{
+    return new StaticPostureParameterization( );
+}
+
+extern "C" void destroy(StaticPostureParameterization* p)
+{
+    delete p;
+}
+

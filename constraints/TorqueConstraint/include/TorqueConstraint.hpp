@@ -28,6 +28,11 @@ class TorqueConstraint: virtual public AbstractConstraint
         // no param here
     }
 
+    void update_dynamics(const double *x, std::vector<MogsOptimDynamics<double> *>& dyns)
+    {
+        update_dynamics<double>(x,dyns);
+    }
+
         #ifdef MogsVisu_FOUND
         virtual void update_visu (VisuHolder *visu,
                                   std::vector<MogsOptimDynamics<double> *> & dyns,

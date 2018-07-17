@@ -86,5 +86,6 @@ configure_file(MogsCloseToMiddleCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/M
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsCloseToMiddleCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsCloseToMiddleCriteria" COMPONENT dev )
 
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsCriteria close_to_middle ${INSTALL_LIB_DIRS}/libMogsTorqueCriteria.so)")
 
 add_subdirectory(derivative)

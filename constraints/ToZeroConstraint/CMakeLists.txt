@@ -86,5 +86,6 @@ configure_file(MogsToZeroConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsTo
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsToZeroConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsToZeroConstraints" COMPONENT dev )
 
-
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint ToZero ${INSTALL_LIB_DIRS}/libMogsToZeroConstraint.so)")
+		
 add_subdirectory(derivative)

@@ -15,14 +15,13 @@ class CameraCriteria: virtual public AbstractCriteria
 
     virtual void init_from_AbstractCriteria(  AbstractCriteria* c);
 
-    double compute(std::vector<MogsOptimDynamics<double> *>dyns)
+    template<typename T>
+      T compute( std::vector<MogsOptimDynamics<T> *>&dyns);
+
+    double compute(std::vector<MogsOptimDynamics<double> *>&dyns)
     {
         return compute<double>(dyns);
     }
-
-    template<typename T>
-      T compute( std::vector<MogsOptimDynamics<T> *>dyns);
-
 
       private:
 

@@ -34,10 +34,10 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     void finalize_solution( optim_infos &info);
 
-//    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-//                                AbstractParameterization* param,
-//                                const std::vector<AbstractCriteria* > &criteres,
-//                                const std::vector<AbstractConstraint*> & constraints);
+    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                AbstractParameterization* param,
+                                const std::vector<AbstractCriteria* > &criteres,
+                                const std::vector<AbstractConstraint*> & constraints);
 
     void load_xml();
 
@@ -133,7 +133,7 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
     std::vector<MogsRobotProperties*> robots_;
 
     unsigned int nb_robots_;
-    std::vector<MogsDynamics<double>*> dyns_;
+    std::vector<MogsOptimDynamics<double>*> dyns_;
 
     AbstractParameterization* parameterization_;
 

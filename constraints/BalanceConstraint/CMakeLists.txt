@@ -85,6 +85,7 @@ configure_file(MogsBalanceConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsB
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBalanceConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsBalanceConstraints" COMPONENT dev )
-
+		
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint Balance ${INSTALL_LIB_DIRS}/libMogsBalanceConstraint.so)")
 
 add_subdirectory(derivative)

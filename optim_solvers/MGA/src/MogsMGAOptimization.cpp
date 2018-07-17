@@ -135,10 +135,8 @@ void MogsMGAOptimization::solve()
     #endif
 
 	my_pb_->set_robots(robots_);
-
-     QDomElement criteres=root_.firstChildElement("criteres");
-//
-     my_pb_->load_xml(criteres);
+    my_pb_->set_root(root_);
+    my_pb_->load_xml();
 
     MogsGeneticSolver solver;
     solver.set_nb_queue(10000);

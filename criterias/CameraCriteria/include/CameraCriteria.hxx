@@ -1,6 +1,6 @@
 
 template<typename T>
-T CameraCriteria::compute(std::vector<MogsOptimDynamics<T> *> dyns)
+T CameraCriteria::compute(std::vector<MogsOptimDynamics<T> *>&dyns)
 {
      /// FIXME For the moment only for the first robot declared
 

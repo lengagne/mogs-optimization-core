@@ -69,7 +69,15 @@ TorqueCriteria::~TorqueCriteria ()
 {
 }
 
+extern "C" TorqueCriteria* create( )
+{
+    return new TorqueCriteria( );
+}
 
+extern "C" void destroy(TorqueCriteria* p)
+{
+    delete p;
+}
 
 
 

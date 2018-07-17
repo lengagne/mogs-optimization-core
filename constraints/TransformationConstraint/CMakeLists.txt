@@ -85,6 +85,7 @@ configure_file(MogsTransformationConstraintConfig.cmake.in "${PROJECT_BINARY_DIR
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsTransformationConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsTransformationConstraints" COMPONENT dev )
-
+		
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint Transformation ${INSTALL_LIB_DIRS}/libMogsTransformationConstraint.so)")
 
 add_subdirectory(derivative)

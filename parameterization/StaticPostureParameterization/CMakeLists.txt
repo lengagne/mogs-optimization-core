@@ -87,4 +87,6 @@ install ( 	FILES "${PROJECT_BINARY_DIR}/MogsStaticPostureParameterizationConfig.
 		DESTINATION "${INSTALL_LIB_PATH}/MogsStaticPostureParameterizations" COMPONENT dev )
 
 
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsParameterization StaticPosture ${INSTALL_LIB_DIRS}/libMogsStaticPostureParameterization.so)")		
+		
 add_subdirectory(derivative)

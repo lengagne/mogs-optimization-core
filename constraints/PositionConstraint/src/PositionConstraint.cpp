@@ -138,8 +138,17 @@ PositionConstraint::~PositionConstraint ()
 {
 }
 
-
 void PositionConstraint::init_from_AbstractConstraint(  AbstractConstraint* c)
 {
     *this =  *(dynamic_cast<PositionConstraint*>(c));
+}
+
+extern "C" PositionConstraint* create()
+{
+    return new PositionConstraint( );
+}
+
+extern "C" void destroy(PositionConstraint* p)
+{
+    delete p;
 }

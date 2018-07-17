@@ -85,6 +85,7 @@ configure_file(MogsPositionConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/Mogs
 
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsPositionConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsPositionConstraints" COMPONENT dev )
-
+		
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint Position ${INSTALL_LIB_DIRS}/libMogsPositionConstraint.so)")
 
 add_subdirectory(derivative)

@@ -86,5 +86,6 @@ configure_file(MogsTorqueCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsTorq
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsTorqueCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsTorqueCriteria" COMPONENT dev )
 
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsCriteria torque ${INSTALL_LIB_DIRS}/libMogsTorqueCriteria.so)")
 
 add_subdirectory(derivative)

@@ -236,3 +236,12 @@ void BoxCollisionConstraint::compute( const double *x ,double * g, std::vector<M
     }
 }
 
+extern "C" BoxCollisionConstraint* create()
+{
+    return new BoxCollisionConstraint( );
+}
+
+extern "C" void destroy(BoxCollisionConstraint* p)
+{
+    delete p;
+}

@@ -9,10 +9,11 @@ add_subdirectory(PositionConstraint)
 add_subdirectory(TorqueConstraint)
 add_subdirectory(TransformationConstraint)
 
+
 #foreach(dir ${all_valid_subdirs})
 #    message(STATUS "path = ${dir}")
 #    if(${dir} MATCHES "^([^/]*)//CMakeLists.txt")
-#        string(REGEX REPLACE "^([^/]*)//CMakeLists.txt" "\\1" dir_trimmed ${dir})	
+#        string(REGEX REPLACE "^([^/]*)//CMakeLists.txt" "\\1" dir_trimmed ${dir})
 #        add_subdirectory(${dir_trimmed})
 #    endif()
 #endforeach(dir)

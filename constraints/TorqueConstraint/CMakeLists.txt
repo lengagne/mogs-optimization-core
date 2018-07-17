@@ -86,5 +86,6 @@ configure_file(MogsTorqueConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsTo
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsTorqueConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsTorqueConstraints" COMPONENT dev )
 
-
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint Torque ${INSTALL_LIB_DIRS}/libMogsTorqueConstraint.so)")
+		
 add_subdirectory(derivative)

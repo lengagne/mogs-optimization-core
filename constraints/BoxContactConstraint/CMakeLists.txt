@@ -91,5 +91,6 @@ configure_file(MogsBoxContactConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/Mo
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsBoxContactConstraints" COMPONENT dev )
 
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxContact ${INSTALL_LIB_DIRS}/libMogsBoxContactConstraint.so)")
 
 add_subdirectory(derivative)

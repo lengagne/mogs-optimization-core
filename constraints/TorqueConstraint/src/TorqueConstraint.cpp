@@ -65,3 +65,13 @@ void TorqueConstraint::update_visu (VisuHolder *visu,
 
 }
 #endif // MogsVisu_FOUND
+
+extern "C" TorqueConstraint* create()
+{
+    return new TorqueConstraint( );
+}
+
+extern "C" void destroy(TorqueConstraint* p)
+{
+    delete p;
+}

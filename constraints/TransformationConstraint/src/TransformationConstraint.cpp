@@ -156,3 +156,13 @@ void TransformationConstraint::init_from_AbstractConstraint(  AbstractConstraint
 {
     *this =  *(dynamic_cast<TransformationConstraint*>(c));
 }
+
+extern "C" TransformationConstraint* create()
+{
+    return new TransformationConstraint( );
+}
+
+extern "C" void destroy(TransformationConstraint* p)
+{
+    delete p;
+}

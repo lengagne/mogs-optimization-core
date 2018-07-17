@@ -235,6 +235,39 @@ void MogsNlpMGA::load_xml( )
 //    }
 //}
 
+void MogsNlpMGA::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
+                                            AbstractParameterization* param,
+                                            const std::vector<AbstractCriteria* > &criteres,
+                                            const std::vector<AbstractConstraint*> & constraints)
+{
+    #ifdef PRINT
+    std::cout<<"MogsNlpMGA::set_problem_properties"<<std::endl;
+    #endif // PRINT
+
+    nb_robots_ = robots_.size();
+
+    for(int i=0;i<nb_robots_;i++)
+    {
+        dyns_.push_back(new MogsOptimDynamics<double>(robots_[i]));
+    }
+    AbstractLoader loader;
+
+    parameterization_ =  dynamic_cast<AbstractParameterization*> (loader.get_parameterization<create_Parameterization*>("MogsParameterization",param));
+
+    criteres_.clear();
+    for (int i=0;i<criteres.size();i++)
+    {
+        AbstractCriteria* c = dynamic_cast<AbstractCriteria*> (loader.get_criteria<create_Criteria*>("MogsCriteria",criteres[i]));
+        criteres_.push_back(c);
+    }
+
+    constraints_.clear();
+    for (int i=0;i<constraints.size();i++)
+    {
+        AbstractConstraint* ctr = dynamic_cast<AbstractConstraint*> (loader.get_constraint<create_Constraint*>("MogsConstraint",constraints[i]));
+        constraints_.push_back(ctr);
+    }
+}
 
 void MogsNlpMGA::set_robots(const std::vector<MogsRobotProperties*> & in)
 {
