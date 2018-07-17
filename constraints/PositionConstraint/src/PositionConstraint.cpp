@@ -81,7 +81,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                             exit(-1);
                         }
                    }
-                 if (Child.tagName()=="body")
+                 else if (Child.tagName()=="body")
                    {
                                 Body=Child.firstChild().toText().data().simplified();
                                 std::cout << "   Body  = " << Body.toStdString() << std::endl;
@@ -93,7 +93,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                             }
                                   std::cout << "   body_id_  = " << body_id_ << std::endl;
                     }
-                if (Child.tagName()=="body_position")
+                else if (Child.tagName()=="body_position")
                     {
                         body_Position = Child.attribute("body_position");
                         body_Position=Child.firstChild().toText().data();
@@ -105,7 +105,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                                   }
                          std::cout << "   body_Position  = " <<    body_Position_  << std::endl;
                     }
-                if (Child.tagName()=="desired_position")
+                else if (Child.tagName()=="desired_position")
                 {
                     desired_Position = Child.attribute("desired_position");
                     desired_Position=Child.firstChild().toText().data();

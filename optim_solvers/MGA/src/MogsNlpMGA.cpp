@@ -30,12 +30,13 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
     for(int i=0;i<nb_ctr;i++)
         parameterization_->init_from_constraints(constraints_[i]);
     std::cout<<"init from constraint done"<<std::endl;
-    nb_variables = parameterization_->get_nb_param();
+    nb_var_ = parameterization_->get_nb_param();
+    nb_variables = nb_var_;
     std::cout<<"nb_variables = "<< nb_variables <<std::endl;
     min_var.resize(nb_variables);
     max_var.resize(nb_variables);
 
-    for (int i=0;i<nb_variables;i++)
+    for (int i=0;i<nb_var_;i++)
     {
         std::cout<<"i = "<< i<< std::endl;
         min_var[i] = parameterization_->get_bounds_inf(i);
@@ -46,9 +47,11 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 //    for(int i=0;i<nb_robots_;i++)
 //        nb_variables += dyns_[i]->getNDof();
 //
-//	nb_objectives = 1;
-//	nb_constraints = 0;
-//	seuils.push_back(0);
+	nb_objectives = nb_crit_ = criteres_.size();
+	nb_constraints = 0;
+	for (int i=0;i<nb_crit_;i++)
+        seuils.push_back(1e-3);
+
 //
 //	for (unsigned int i = 0; i<nb_robots_;i++)
 //    {
@@ -67,7 +70,7 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 //        }
 //    }
 
-	for (int i=0;i<nb_variables;i++)
+	for (int i=0;i<nb_var_;i++)
 	{
 		std::cout<<"variables in ["<< min_var [i]<<":"<<max_var [i]<<":]"<<std::endl;
 	}
@@ -77,9 +80,27 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 {
 // 	std::cout<<"infos.size() = "<< infos.size() <<std::endl;
+    unsigned int nb_ctr = constraints_.size();
+    double x[nb_var_];
+    unsigned int cpt =0;
+   	for (int j=0;j<infos.size();j++)    // for all the element of the generation
+    {
+        for (int i=0;i<nb_var_;i++)
+            x[i] = infos[j].var[i];
 
+        parameterization_->prepare_computation(dyns_);
+        for (unsigned int i=0; i<nb_ctr; i++)
+            constraints_[i]->update_dynamics(x,dyns_);
+        parameterization_->compute(x,dyns_);
 
-    parameterization_->prepare_computation(dyns_);
+        double obj_value = 0.0;
+		for (int i =0;i<nb_crit_;i++)
+		{
+			double tmp = criteres_[i]->compute(dyns_);
+			obj_value+= tmp;
+		}
+        infos[j].obj[0] = obj_value;
+    }
 //    double x[nb_variables];
 //    unsigned int cpt =0;
 //   	for (int j=0;j<infos.size();j++)
@@ -126,13 +147,10 @@ void MogsNlpMGA::finalize_solution( optim_infos &info)
 
 
 	 std::vector<optim_infos> tmp;
-	 optim_infos t = info;
-	 t.var[6] = 0.;
 	 tmp.push_back(info);
-	 tmp.push_back(t);
 	 evaluate(tmp);
 	 std::cout<<"Optimal criteria = "<< tmp[0].obj[0]<<std::endl;
-	 std::cout<<"tmp criteria = "<< tmp[1].obj[0]<<std::endl;
+//	 std::cout<<"tmp criteria = "<< tmp[1].obj[0]<<std::endl;
 
 #ifdef MogsVisu_FOUND
     Eigen::Matrix<double,Eigen::Dynamic,1> q(robots_[0]->getNDof());

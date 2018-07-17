@@ -7,7 +7,11 @@ void StaticPostureParameterization::compute( const T *x,std::vector<MogsOptimDyn
     for (unsigned int i=0;i<nb_robots_;i++)
     {
         for (unsigned int j=0;j<ndofs_[i];j++)
+        {
             dyns[i]->q_(j) = x[cpt++];
+//            std::cout<<" dyns["<<i<<"]->q_("<<j<<")  = "<< dyns[i]->q_(j)  <<std::endl;
+        }
+
     }
 
     for (unsigned int i=0;i<nb_robots_;i++)

@@ -398,8 +398,8 @@ void NLP_FAD_1_4::finalize_solution (SolverReturn status,
     run_computation(x,n,true);
 	save_results(n,x,obj_value);
 
-//    for (int i=0;i<n;i++)
-//        std::cout<<"x("<<i<<") = "<< x[i]<<std::endl;
+    for (int i=0;i<n;i++)
+        std::cout<<"x("<<i<<") = "<< x[i]<<std::endl;
 //
 //    for (int i=0;i<m;i++)
 //        std::cout<<"g("<<i<<") = "<< g[i]<<std::endl;
