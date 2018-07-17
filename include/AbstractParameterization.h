@@ -12,6 +12,7 @@ class AbstractParameterization
 
         unsigned int get_nb_param() const
         {
+            std::cout<<"AbstractParameterization::nb_param_ = "<< nb_param_ <<std::endl;
             return nb_param_;
         }
 
@@ -54,9 +55,5 @@ protected:
         // name of the parameterization (used to perfom cast)
         QString plugin_name_;
 };
-
-typedef AbstractParameterization* create_Parameterization( );
-
-typedef void destroy_Parameterization(AbstractParameterization*);
 
 #endif // ABSTRACTPARAMETERIZATION_H

@@ -73,6 +73,8 @@ void StaticPostureParameterization::init(std::vector<MogsOptimDynamics<double> *
 
         }
     }
+
+    std::cout<<"StaticPostureParameterization nb_param_ = "<< nb_param_ <<std::endl;
 }
 
 void StaticPostureParameterization::set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q)
@@ -82,16 +84,5 @@ void StaticPostureParameterization::set_init_value(const std::vector<Eigen::Matr
         for (unsigned int i=0; i<q[k].size(); i++)
             init_[cpt++] = q[k](i);
     std::cout<<"StaticPostureParameterization::set_init_value"<<std::endl;
-}
-
-
-extern "C" StaticPostureParameterization* create()
-{
-    return new StaticPostureParameterization( );
-}
-
-extern "C" void destroy(StaticPostureParameterization* p)
-{
-    delete p;
 }
 

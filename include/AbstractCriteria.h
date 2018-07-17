@@ -25,8 +25,4 @@ class AbstractCriteria
 
 };
 
-typedef AbstractCriteria* create_Criteria( );
-
-typedef void destroy_Criteria(AbstractCriteria*);
-
 #endif // AbstractCriteria_HPP_INCLUDED

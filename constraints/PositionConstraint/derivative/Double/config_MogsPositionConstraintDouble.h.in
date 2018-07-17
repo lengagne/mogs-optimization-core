@@ -1,0 +1,8 @@
+#ifndef MogsPositionConstraintDouble_CONFIG_H
+#define MogsPositionConstraintDouble_CONFIG_H
+
+#define MogsPositionConstraintDouble_VERSION_MAJOR @MogsPositionConstraintDouble_VERSION_MAJOR@
+#define MogsPositionConstraintDouble_VERSION_MINOR @MogsPositionConstraintDouble_VERSION_MINOR@
+
+#endif
+

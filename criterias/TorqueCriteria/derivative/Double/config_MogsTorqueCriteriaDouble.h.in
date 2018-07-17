@@ -1,0 +1,8 @@
+#ifndef MogsTorqueCriteriaDouble_CONFIG_H
+#define MogsTorqueCriteriaDouble_CONFIG_H
+
+#define MogsTorqueCriteriaDouble_VERSION_MAJOR @MogsTorqueCriteriaDouble_VERSION_MAJOR@
+#define MogsTorqueCriteriaDouble_VERSION_MINOR @MogsTorqueCriteriaDouble_VERSION_MINOR@
+
+#endif
+

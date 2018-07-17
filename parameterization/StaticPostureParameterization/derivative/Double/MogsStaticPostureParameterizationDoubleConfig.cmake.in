@@ -1,0 +1,13 @@
+# - Config file for the MogsStaticPostureParameterizationDouble lib
+# It defines the following variables
+#
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsStaticPostureParameterizationDouble_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsStaticPostureParameterizationDouble_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsStaticPostureParameterizationDouble_LIBRARIES @MogsStaticPostureParameterizationDouble_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsStaticPostureParameterizationDouble_FLAGS @MogsStaticPostureParameterizationDouble_FLAGS@ @MogsCore_FLAGS@)

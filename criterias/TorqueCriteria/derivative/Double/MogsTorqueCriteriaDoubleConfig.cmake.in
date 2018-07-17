@@ -1,0 +1,16 @@
+# - Config file for the MogsTorqueCriteriaDouble lib
+# It defines the following variables
+#
+# MogsTorqueCriteriaDouble_INCLUDE_DIRS - include directories
+# MogsTorqueCriteriaDouble_LIBRARY_DIRS - library directory (normally not used!)
+# MogsTorqueCriteriaDouble_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsTorqueCriteriaDouble_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsTorqueCriteriaDouble_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsTorqueCriteriaDouble_LIBRARIES @MogsTorqueCriteriaDouble_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsTorqueCriteriaDouble_FLAGS @MogsTorqueCriteriaDouble_FLAGS@ @MogsCore_FLAGS@)

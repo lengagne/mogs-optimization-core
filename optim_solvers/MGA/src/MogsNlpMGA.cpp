@@ -1,6 +1,8 @@
 #include <MogsNlpMGA.hpp>
 
-#include "AbstractCriteria.h"
+#include "AbstractDoubleCriteria.hpp"
+#include "AbstractDoubleParameterization.hpp"
+#include "AbstractDoubleConstraint.hpp"
 #include "AbstractLoader.h"
 #include "VisuHolder.h"
 
@@ -22,70 +24,94 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
                                   std::vector<double>& min_var,
                                   std::vector<double>& max_var)
 {
-    if (nb_robots_ != 1)
+    std::cout<<"get_problem_info debut "<<std::endl;
+    unsigned int nb_ctr = constraints_.size();
+    std::cout<<"nb_ctr = "<< nb_ctr <<std::endl;
+    for(int i=0;i<nb_ctr;i++)
+        parameterization_->init_from_constraints(constraints_[i]);
+    std::cout<<"init from constraint done"<<std::endl;
+    nb_variables = parameterization_->get_nb_param();
+    std::cout<<"nb_variables = "<< nb_variables <<std::endl;
+    min_var.resize(nb_variables);
+    max_var.resize(nb_variables);
+
+    for (int i=0;i<nb_variables;i++)
     {
-        std::cerr<<"Error for the moment MogsNLPMGA is only for one robot"<<std::endl;
-        exit(0);
+        std::cout<<"i = "<< i<< std::endl;
+        min_var[i] = parameterization_->get_bounds_inf(i);
+        max_var[i] = parameterization_->get_bounds_sup(i);
     }
-
-    nb_variables=0;
-    for(int i=0;i<nb_robots_;i++)
-        nb_variables += dyns_[i]->getNDof();
-
-	nb_objectives = 1;
-	nb_constraints = 0;
-	seuils.push_back(0);
-
-	for (unsigned int i = 0; i<nb_robots_;i++)
-    {
-        std::vector<double> minq,maxq;
-        robots_[0]->getPositionLimit(minq,maxq);
-        if (dyns_[0]->is_free_floating_base())
-            for (int i=0;i<3;i++)
-            {
-                if (minq [i] < -1000.)	minq [i] = -1000.;
-                if (maxq [i] >  1000.)	maxq [i] =  1000.;
-            }
-        for (unsigned int j=0;j<minq.size();j++)
-        {
-            min_var.push_back(minq[j]);
-            max_var.push_back(maxq[j]);
-        }
-    }
+    std::cout<<"prepare bounds"<<std::endl;
+//    nb_variables=0;
+//    for(int i=0;i<nb_robots_;i++)
+//        nb_variables += dyns_[i]->getNDof();
+//
+//	nb_objectives = 1;
+//	nb_constraints = 0;
+//	seuils.push_back(0);
+//
+//	for (unsigned int i = 0; i<nb_robots_;i++)
+//    {
+//        std::vector<double> minq,maxq;
+//        robots_[0]->getPositionLimit(minq,maxq);
+//        if (dyns_[0]->is_free_floating_base())
+//            for (int i=0;i<3;i++)
+//            {
+//                if (minq [i] < -1000.)	minq [i] = -1000.;
+//                if (maxq [i] >  1000.)	maxq [i] =  1000.;
+//            }
+//        for (unsigned int j=0;j<minq.size();j++)
+//        {
+//            min_var.push_back(minq[j]);
+//            max_var.push_back(maxq[j]);
+//        }
+//    }
 
 	for (int i=0;i<nb_variables;i++)
 	{
 		std::cout<<"variables in ["<< min_var [i]<<":"<<max_var [i]<<":]"<<std::endl;
 	}
-
+    std::cout<<"get_problem_info fin "<<std::endl;
 }
 
 void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 {
 // 	std::cout<<"infos.size() = "<< infos.size() <<std::endl;
 
-	double x[dyns_[0]->getNDof()];
-	for (int j=0;j<infos.size();j++)
-	{
-		if (dyns_[0]->is_free_floating_base())
-			for (int i=3;i<6;i++)
-				infos[j].var[i] =	fmod(infos[j].var[i],2*Pi);
 
-		for (int i =0;i<dyns_[0]->getNDof();i++)
-			x[i] = infos[j].var[i];
-
-		int nb = criteres_.size();
-		double obj_value =0;
-		bool mem_kin = false;
-		for (int i =0;i<nb;i++)
-		{
-		    std::cout<<__FILE__<<" at line "<< __LINE__<<" must be set properly"<<std::endl;
+    parameterization_->prepare_computation(dyns_);
+//    double x[nb_variables];
+//    unsigned int cpt =0;
+//   	for (int j=0;j<infos.size();j++)
+//    {
+//        x[cpt++] = infos[j].var[i];
+//    }
+//
+//
+//    for (unsigned int i=0; i<nb_ctr_; i++)
+//        constraints_[i]->update_dynamics(x,adyns_);
+//    parameterization_->compute(x,adyns_);
+//
+//	for (int j=0;j<infos.size();j++)
+//	{
+//		if (dyns_[0]->is_free_floating_base())
+//			for (int i=3;i<6;i++)
+//				infos[j].var[i] =	fmod(infos[j].var[i],2*Pi);
+//
+//		for (int i =0;i<dyns_[0]->getNDof();i++)
+//			x[i] = infos[j].var[i];
+//
+//		int nb = criteres_.size();
+//		double obj_value =0;
+//		bool mem_kin = false;
+//		for (int i =0;i<nb;i++)
+//		{
 //			double tmp = criteres_[i]->compute(x,dyns_,&mem_kin);
 //			obj_value+= tmp;
-		}
-
-		infos[j].obj[0] = obj_value;
-	}
+//		}
+//
+//		infos[j].obj[0] = obj_value;
+//	}
 
 }
 
@@ -156,9 +182,9 @@ void MogsNlpMGA::finalize_solution( optim_infos &info)
 
 void MogsNlpMGA::load_xml( )
 {
-    #ifdef PRINT
+//    #ifdef PRINT
     std::cout<<"start load_xml"<<std::endl;
-    #endif // PRINT
+//    #endif // PRINT
     for (int i=0;i<nb_robots_;i++)
     {
         dyns_.push_back( new MogsOptimDynamics<double>(robots_[i]));
@@ -170,15 +196,16 @@ void MogsNlpMGA::load_xml( )
     QDomElement criteres=root_.firstChildElement("criteres");
     for (QDomElement critere = criteres.firstChildElement ("critere"); !critere.isNull();critere = critere.nextSiblingElement("critere"))
 	{
-        AbstractCriteria* crit = dynamic_cast<AbstractCriteria*> (loader.get_criteria<create_Criteria*>("MogsCriteria",critere,dyns_));
+        AbstractCriteria* crit = dynamic_cast<AbstractCriteria*> (loader.get_criteria<create_AbstractDoubleCriteria*>("MogsCriteriaDouble",critere,dyns_));
         criteres_.push_back(crit);
 	}
 
     /// FIXME allow to change the type of the AbstractParameterization through plugins
+    std::cout<<"nb_robot = "<< dyns_.size()<<std::endl;
     QDomElement param =root_.firstChildElement("parameterization");
     if (param.tagName()=="parameterization")
     {
-        parameterization_ = dynamic_cast<AbstractParameterization*> (loader.get_parameterization<create_Parameterization*>("MogsParameterization",param,dyns_));
+        parameterization_ = dynamic_cast<AbstractParameterization*> (loader.get_parameterization<create_AbstractDoubleParameterization*>("MogsParameterizationDouble",param,dyns_));
     }else
     {
         std::cerr<<"ERROR cannot find balise parameterization"<<std::endl;
@@ -189,15 +216,15 @@ void MogsNlpMGA::load_xml( )
 
     for (QDomElement constraint = constraints.firstChildElement ("constraint"); !constraint.isNull();constraint = constraint.nextSiblingElement("constraint"))
 	{
-        AbstractConstraint* ctr = dynamic_cast<AbstractConstraint*> (loader.get_constraint<create_Constraint*>("MogsConstraint",constraint,dyns_));
+        AbstractConstraint* ctr = dynamic_cast<AbstractConstraint*> (loader.get_constraint<create_AbstractDoubleConstraint*>("MogsConstraintDouble",constraint,dyns_));
 
-        // std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
+         std::cout << "loading constraints name "   <<constraint.attribute("type").toStdString().c_str() << std::endl;
         constraints_.push_back(ctr);
 	}
 
-    #ifdef PRINT
+//    #ifdef PRINT
     std::cout<<"end of load_xml"<<std::endl;
-    #endif // PRINT
+//    #endif // PRINT
 }
 
 //void MogsNlpMGA::set_problem_properties(   const std::vector<MogsOptimDynamics<double>* >& dyns,
@@ -252,19 +279,19 @@ void MogsNlpMGA::set_problem_properties(   const std::vector<MogsOptimDynamics<d
     }
     AbstractLoader loader;
 
-    parameterization_ =  dynamic_cast<AbstractParameterization*> (loader.get_parameterization<create_Parameterization*>("MogsParameterization",param));
+    parameterization_ =  dynamic_cast<AbstractDoubleParameterization*> (loader.get_parameterization<create_AbstractDoubleParameterization*>("MogsParameterization",param));
 
     criteres_.clear();
     for (int i=0;i<criteres.size();i++)
     {
-        AbstractCriteria* c = dynamic_cast<AbstractCriteria*> (loader.get_criteria<create_Criteria*>("MogsCriteria",criteres[i]));
+        AbstractCriteria* c = dynamic_cast<AbstractDoubleCriteria*> (loader.get_criteria<create_AbstractDoubleCriteria*>("MogsCriteria",criteres[i]));
         criteres_.push_back(c);
     }
 
     constraints_.clear();
     for (int i=0;i<constraints.size();i++)
     {
-        AbstractConstraint* ctr = dynamic_cast<AbstractConstraint*> (loader.get_constraint<create_Constraint*>("MogsConstraint",constraints[i]));
+        AbstractConstraint* ctr = dynamic_cast<AbstractDoubleConstraint*> (loader.get_constraint<create_AbstractDoubleConstraint*>("MogsConstraint",constraints[i]));
         constraints_.push_back(ctr);
     }
 }
