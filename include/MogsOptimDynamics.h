@@ -46,10 +46,10 @@ namespace RigidBodyDynamics
 		void SetRobot(MogsRobotProperties* Robot_in)
 		{
 		    MogsDynamics < T >::SetRobot(Robot_in);
-		    q_.resize( MogsDynamics < T >::getNDof());
-		    dq_.resize( MogsDynamics < T >::getNDof());
-		    ddq_.resize( MogsDynamics < T >::getNDof());
-		    tau_.resize( MogsDynamics < T >::getNDof());
+		    q_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero( MogsDynamics < T >::getNDof());
+		    dq_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero( MogsDynamics < T >::getNDof());
+		    ddq_ =Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero( MogsDynamics < T >::getNDof());
+		    tau_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero( MogsDynamics < T >::getNDof());
 		    q_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero(MogsDynamics < T >::getNDof());
 		    dq_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero(MogsDynamics < T >::getNDof());
 		    ddq_ = Eigen::Matrix < T, Eigen::Dynamic, 1 >::Zero(MogsDynamics < T >::getNDof());
@@ -72,7 +72,5 @@ namespace RigidBodyDynamics
 
 
 }
-
-//#include "MogsDynamics.hxx"
 
 #endif /* _MOGS_OPTIM_DYNAMICS_H */

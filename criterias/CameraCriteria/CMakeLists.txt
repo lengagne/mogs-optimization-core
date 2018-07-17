@@ -87,6 +87,4 @@ configure_file(MogsCameraCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsCame
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsCameraCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsCameraCriteria" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add MogsCriteria camera ${INSTALL_LIB_DIRS}/libMogsTorqueCriteria.so)")
-
 add_subdirectory(derivative)

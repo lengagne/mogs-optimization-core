@@ -10,6 +10,7 @@ void MogsAbstractOptimization::read_problem(const mogs_string & filename)
     if (!ElVisuDuring.isNull())
     {
         visu_during_optim_ = convert_to_bool(ElVisuDuring.text().simplified());
+        std::cout<<"visu_during_optim_ = "<< visu_during_optim_ <<std::endl;
     }
     #endif // MogsVisu_FOUND
 }

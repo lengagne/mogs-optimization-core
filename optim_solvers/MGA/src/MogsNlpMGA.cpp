@@ -83,6 +83,10 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
     unsigned int nb_ctr = constraints_.size();
     double x[nb_var_];
     unsigned int cpt =0;
+
+    double objmax = 1e30;
+    unsigned int mem=0;
+
    	for (int j=0;j<infos.size();j++)    // for all the element of the generation
     {
         for (int i=0;i<nb_var_;i++)
@@ -98,7 +102,38 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 			infos[j].obj[i] = criteres_[i]->compute(dyns_);
 		}
 
+        if(objmax> infos[j].obj[0])
+        {
+            objmax = infos[j].obj[0];
+            mem = j;
+        }
+
     }
+
+    #ifdef MogsVisu_FOUND
+    if (visu_during_optim_)
+    {
+        for (int i=0;i<nb_var_;i++)
+            x[i] = infos[mem].var[i];
+
+        parameterization_->prepare_computation(dyns_);
+        for (unsigned int i=0; i<nb_ctr; i++)
+            constraints_[i]->update_dynamics(x,dyns_);
+        parameterization_->compute(x,dyns_);
+
+        for(int k=0;k<nb_robots_;k++)
+        {
+            visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
+        }
+
+        visu_optim_-> clear_lines();
+        for (int i=0;i<constraints_.size();i++)
+            constraints_[i]->update_visu(visu_optim_,dyns_,(const double*) x);
+    }
+    #endif // MogsVisu_FOUND
+
+
+
 //    double x[nb_variables];
 //    unsigned int cpt =0;
 //   	for (int j=0;j<infos.size();j++)
@@ -136,27 +171,38 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 
 void MogsNlpMGA::finalize_solution( optim_infos &info)
 {
-	double x[dyns_[0]->getNDof()];
 	std::cout<<"Optimal criteria = "<< info.obj[0]<<std::endl;
 	printf("\n\nSolution of the variables, x\n");
-	for (int i=0; i<dyns_[0]->getNDof(); i++) {
+	for (int i=0; i<nb_var_; i++) {
 	printf("x[%d] = %e\n", i,  info.var[i]);
 	}
 
 
-	 std::vector<optim_infos> tmp;
-	 tmp.push_back(info);
-	 evaluate(tmp);
-	 std::cout<<"Optimal criteria = "<< tmp[0].obj[0]<<std::endl;
+//	 std::vector<optim_infos> tmp;
+//	 tmp.push_back(info);
+//	 evaluate(tmp);
+//	 std::cout<<"Optimal criteria = "<< tmp[0].obj[0]<<std::endl;
 //	 std::cout<<"tmp criteria = "<< tmp[1].obj[0]<<std::endl;
 
 #ifdef MogsVisu_FOUND
-    Eigen::Matrix<double,Eigen::Dynamic,1> q(robots_[0]->getNDof());
-    for (int i=0;i<robots_[0]->getNDof();i++)
-        q(i) = info.var[i];
-	std::cout<<"q = "<< q.transpose()<<std::endl;
-	for (int i=0;i<3;i++)	q(i)= 0;
-    visu_optim_->apply_q(robots_[0]->getRobotName(),&q);
+    unsigned int nb_ctr = constraints_.size();
+    double x[nb_var_];
+    for (int i=0;i<nb_var_;i++)
+        x[i] = info.var[i];
+
+    parameterization_->prepare_computation(dyns_);
+    for (unsigned int i=0; i<nb_ctr; i++)
+        constraints_[i]->update_dynamics(x,dyns_);
+    parameterization_->compute(x,dyns_);
+
+    for(int k=0;k<nb_robots_;k++)
+    {
+        visu_optim_->apply_q(robots_[k]->getRobotName(),&dyns_[k]->q_);
+    }
+
+    visu_optim_-> clear_lines();
+    for (int i=0;i<constraints_.size();i++)
+        constraints_[i]->update_visu(visu_optim_,dyns_,(const double*) x);
     visu_optim_->wait_close();
 #endif // MogsVisu_FOUND
 }
