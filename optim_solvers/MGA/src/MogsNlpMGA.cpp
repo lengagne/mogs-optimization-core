@@ -93,13 +93,11 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
             constraints_[i]->update_dynamics(x,dyns_);
         parameterization_->compute(x,dyns_);
 
-        double obj_value = 0.0;
 		for (int i =0;i<nb_crit_;i++)
 		{
-			double tmp = criteres_[i]->compute(dyns_);
-			obj_value+= tmp;
+			infos[j].obj[i] = criteres_[i]->compute(dyns_);
 		}
-        infos[j].obj[0] = obj_value;
+
     }
 //    double x[nb_variables];
 //    unsigned int cpt =0;
