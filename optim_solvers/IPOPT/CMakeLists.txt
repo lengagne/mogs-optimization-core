@@ -112,7 +112,8 @@ if(IPOPT_FOUND)
     install ( 	FILES "${PROJECT_BINARY_DIR}/MogsIpoptOptimizationConfig.cmake"
             DESTINATION "${INSTALL_LIB_PATH}/MogsIpoptOptimization" COMPONENT dev )
 
-    install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-ipopt-optimization ${INSTALL_LIB_DIRS}/libMogsIpoptOptimization.so)")
+    install(CODE "execute_process(COMMAND mogs2 plugins add optim_solver ipopt ${INSTALL_LIB_DIRS}/libMogsIpoptOptimization.so)")
+
 
 else()
     message("IPOPT was not FOUND, so we do not compile MogsIpoptOptimization")

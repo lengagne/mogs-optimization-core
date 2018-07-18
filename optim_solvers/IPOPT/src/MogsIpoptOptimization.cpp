@@ -81,23 +81,23 @@ void MogsIpoptOptimization::read_problem (const mogs_string & filename)
 	app_ = IpoptApplicationFactory ();
 }
 
-void MogsIpoptOptimization::set_option_integer( const mogs_string & option_name,
-                                                int value)
-{
-    app_->Options()->SetIntegerValue(option_name.toStdString().c_str(), value);
-}
-
-void MogsIpoptOptimization::set_option_real( const mogs_string & option_name,
-                                            double value)
-{
-    app_->Options()->SetNumericValue(option_name.toStdString().c_str(), value);
-}
-
-void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
-                                                const mogs_string & value)
-{
-    app_->Options()->SetStringValue(option_name.toStdString().c_str(), value.toStdString().c_str());
-}
+//void MogsIpoptOptimization::set_option_integer( const mogs_string & option_name,
+//                                                int value)
+//{
+//    app_->Options()->SetIntegerValue(option_name.toStdString().c_str(), value);
+//}
+//
+//void MogsIpoptOptimization::set_option_real( const mogs_string & option_name,
+//                                            double value)
+//{
+//    app_->Options()->SetNumericValue(option_name.toStdString().c_str(), value);
+//}
+//
+//void MogsIpoptOptimization::set_option_string( const mogs_string & option_name,
+//                                                const mogs_string & value)
+//{
+//    app_->Options()->SetStringValue(option_name.toStdString().c_str(), value.toStdString().c_str());
+//}
 
 
 void MogsIpoptOptimization::solve()
@@ -111,19 +111,19 @@ void MogsIpoptOptimization::solve()
 	nlp_->set_root(root_);
 	nlp_->load_xml( );
 
-	// read the options
-	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
-	{
-//		qDebug()<<"We find one option";
-		mogs_string type = childOptions.attribute("type");
-		mogs_string name = childOptions.attribute("name");
-		mogs_string value = childOptions.attribute("value");
-
-		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
-		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
-		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toDouble());
-		else	qDebug()<<"option of type : "<< type <<" not defined.";
-	}
+//	// read the options
+//	for (QDomElement childOptions = root_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
+//	{
+////		qDebug()<<"We find one option";
+//		mogs_string type = childOptions.attribute("type");
+//		mogs_string name = childOptions.attribute("name");
+//		mogs_string value = childOptions.attribute("value");
+//
+//		if(type =="string")	 		app_->Options()->SetStringValue(name.toStdString().c_str(), value.toStdString().c_str());
+//		else if (type =="integer")	app_->Options()->SetIntegerValue(name.toStdString().c_str(), value.toInt());
+//		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toDouble());
+//		else	qDebug()<<"option of type : "<< type <<" not defined.";
+//	}
 
     local_solve();
 }
@@ -171,14 +171,14 @@ void MogsIpoptOptimization::set_show_result(bool show_result)
     nlp_->set_show_result(show_result);
 }
 
-
-extern "C" MogsIpoptOptimization* create()
-{
-    return new MogsIpoptOptimization();
-}
-
-extern "C" void destroy(MogsIpoptOptimization* p)
-{
-    delete p;
-}
+//
+//extern "C" MogsIpoptOptimization* create()
+//{
+//    return new MogsIpoptOptimization();
+//}
+//
+//extern "C" void destroy(MogsIpoptOptimization* p)
+//{
+//    delete p;
+//}
 

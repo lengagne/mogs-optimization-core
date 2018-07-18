@@ -71,6 +71,7 @@ void NLP_FAD_1_4::load_xml( )
     #ifdef PRINT
     std::cout<<"start load_xml"<<std::endl;
     #endif // PRINT
+    std::cout<<"NLP_FAD_1_4::nb_robots_ = "<< nb_robots_ <<std::endl;
     for (int i=0;i<nb_robots_;i++)
     {
         dyns_.push_back( new MogsOptimDynamics<double>(robots_[i]));

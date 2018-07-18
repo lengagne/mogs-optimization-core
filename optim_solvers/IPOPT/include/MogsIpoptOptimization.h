@@ -71,23 +71,23 @@ class MogsIpoptOptimization: public MogsAbstractOptimization
                                 const std::vector<AbstractCriteria* > &criteres,
                                 const std::vector<AbstractConstraint*> & constraints)
     {
-        nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
+//        nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
     }
 
     void load_ctrs_crits(std::vector<QDomElement> & ctrs,
                          std::vector<QDomElement> & crits)
     {
-        nlp_->load_ctrs_crits(ctrs,crits);
+//        nlp_->load_ctrs_crits(ctrs,crits);
     }
 
-    void set_option_integer( const mogs_string & option_name,
-                             int value);
-
-    void set_option_real( const mogs_string & option_name,
-                             double value);
-
-    void set_option_string( const mogs_string & option_name,
-                            const mogs_string & value);
+//    void set_option_integer( const mogs_string & option_name,
+//                             int value);
+//
+//    void set_option_real( const mogs_string & option_name,
+//                             double value);
+//
+//    void set_option_string( const mogs_string & option_name,
+//                            const mogs_string & value);
 
 
 

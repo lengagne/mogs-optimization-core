@@ -8,12 +8,12 @@
 
 #ifndef __MOGS_NLP_IPOPT_HPP__
 #define __MOGS_NLP_IPOPT_HPP__
-#include "MogsOptimDynamics.h"
-#include "MogsAbstractOptimization.h"
+
+#include "AbstractOptimizationProblem.h"
 #include "IpTNLP.hpp"
 using namespace Ipopt;
 
-class MogsNlpIpopt:public TNLP
+class MogsNlpIpopt:public TNLP, public AbstractOptimizationProblem
 {
       public:
   /** default constructor */
@@ -73,11 +73,6 @@ class MogsNlpIpopt:public TNLP
 					IpoptCalculatedQuantities * ip_cq) =0;
 	//@}
 
-	double get_obj()
-	{
-	    return obj_value_;
-	}
-
     virtual Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
     {
         return Eigen::Matrix<double,Eigen::Dynamic,1>::Zero(42);
@@ -87,38 +82,22 @@ class MogsNlpIpopt:public TNLP
 						const Number* x,
 						Number obj_value);
 
-	void set_root(QDomElement root)
-	{
-		root_ = root;
-	}
+//    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+//                                        AbstractParameterization* param,
+//                                        const std::vector<AbstractCriteria* > &criteres,
+//                                        const std::vector<AbstractConstraint*> & constraints)
+//    {
+//        std::cout<<"MogsNlpIpopt::set_problem_properties"<<std::endl;
+//    }
+//
+//    /// load additional constraints and criterias from the xml infos
+//    virtual void load_ctrs_crits(std::vector<QDomElement> & ctrs,
+//                                 std::vector<QDomElement> & crits)
+//    {
+//        std::cout<<"MogsNlpIpopt::load_ctrs_crits"<<std::endl;
+//    }
 
-    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                        AbstractParameterization* param,
-                                        const std::vector<AbstractCriteria* > &criteres,
-                                        const std::vector<AbstractConstraint*> & constraints)
-    {
-        std::cout<<"MogsNlpIpopt::set_problem_properties"<<std::endl;
-    }
 
-    /// load additional constraints and criterias from the xml infos
-    virtual void load_ctrs_crits(std::vector<QDomElement> & ctrs,
-                                 std::vector<QDomElement> & crits)
-    {
-        std::cout<<"MogsNlpIpopt::load_ctrs_crits"<<std::endl;
-    }
-
-    void set_robots(const std::vector<MogsRobotProperties*> & in);
-
-    void set_show_result(bool show_result);
-
-    #ifdef MogsVisu_FOUND
-    void set_visu( VisuHolder * v,
-                  bool during = false)
-    {
-        visu_optim_ = v;
-        visu_during_optim_ = during;
-    }
-    #endif
 
      virtual  void load_xml( )=0;
 
@@ -140,22 +119,11 @@ class MogsNlpIpopt:public TNLP
           MogsNlpIpopt & operator= (const MogsNlpIpopt &);
 	//@}
     protected:
-	unsigned int nb_robots_;
-	 std::vector<MogsRobotProperties*> robots_;
-
-	 QDomElement root_;
-
-	 bool show_result_= true;
-
-	 double obj_value_;
-
-    #ifdef MogsVisu_FOUND
-    bool visu_during_optim_ = false;
-    VisuHolder * visu_optim_;
-    #endif // MogsVisu_FOUND
-
 
 };
+
+typedef MogsNlpIpopt* create_nlp_ipopt();
+typedef void destroy_nlp_ipopt(MogsNlpIpopt*);
 
 
 #endif
