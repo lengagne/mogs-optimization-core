@@ -1,0 +1,8 @@
+#ifndef MogsBoxContactCriteriaDouble_CONFIG_H
+#define MogsBoxContactCriteriaDouble_CONFIG_H
+
+#define MogsBoxContactCriteriaDouble_VERSION_MAJOR @MogsBoxContactCriteriaDouble_VERSION_MAJOR@
+#define MogsBoxContactCriteriaDouble_VERSION_MINOR @MogsBoxContactCriteriaDouble_VERSION_MINOR@
+
+#endif
+

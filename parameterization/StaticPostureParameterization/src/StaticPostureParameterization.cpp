@@ -61,6 +61,17 @@ void StaticPostureParameterization::init(std::vector<MogsOptimDynamics<double> *
         std::vector < double > qmin;
         dyns[k]->model->getPositionLimit(qmin,qmax);
 
+        if (dyns[k]->model->is_robot_floating_base())
+        {
+            for (int i=0;i<3;i++)
+            {
+                qmin[i] = -10;
+                qmax[i] =  10;
+                qmin[3+i] = -5;
+                qmax[3+i] =  5;
+            }
+        }
+
         for (unsigned int i=0; i<dyns[k]->getNDof(); i++)
         {
             bound_inf_[cpt] = qmin[i];
