@@ -28,7 +28,9 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
                           unsigned int & nb_constraints,
                           std::vector<double>& seuils,
                           std::vector<double>& min_var,
-                          std::vector<double>& max_var);
+                          std::vector<double>& max_var,
+                          std::vector<double>& min_ctr,
+                          std::vector<double>& max_ctr);
 
     void evaluate(  std::vector<optim_infos> &infos);
 
@@ -145,6 +147,7 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     unsigned int nb_var_;
     unsigned int nb_crit_;
+    unsigned int nb_ctr_;
 
 	#ifdef MogsVisu_FOUND
 	VisuHolder *visu_optim_;

@@ -22,7 +22,9 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
                                   unsigned int & nb_constraints,
                                   std::vector<double>& seuils,
                                   std::vector<double>& min_var,
-                                  std::vector<double>& max_var)
+                                  std::vector<double>& max_var,
+                                  std::vector<double>& min_ctr,
+                                  std::vector<double>& max_ctr)
 {
     std::cout<<"get_problem_info debut "<<std::endl;
     unsigned int nb_ctr = constraints_.size();
@@ -38,7 +40,6 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 
     for (int i=0;i<nb_var_;i++)
     {
-        std::cout<<"i = "<< i<< std::endl;
         min_var[i] = parameterization_->get_bounds_inf(i);
         max_var[i] = parameterization_->get_bounds_sup(i);
     }
@@ -48,7 +49,22 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 //        nb_variables += dyns_[i]->getNDof();
 //
 	nb_objectives = nb_crit_ = criteres_.size();
-	nb_constraints = 0;
+
+	min_ctr.clear();
+	max_ctr.clear();
+    std::cout<<"constraints_.size() = "<< constraints_.size()<<std::endl;
+    for (int i=0;i<constraints_.size();i++)
+    {
+        constraints_[i]->set_offset(min_ctr.size());
+        unsigned int n = constraints_[i]->get_nb_constraints();
+        for (int j=0;j<n;j++)
+        {
+            min_ctr.push_back(constraints_[i]->get_lower(j));
+            max_ctr.push_back(constraints_[i]->get_upper(j));
+        }
+    }
+    nb_constraints = nb_ctr_ = min_ctr.size();
+    std::cout<<"nb_constraints = "<< nb_constraints <<std::endl;
 	for (int i=0;i<nb_crit_;i++)
         seuils.push_back(1e-3);
 
@@ -72,7 +88,7 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 
 	for (int i=0;i<nb_var_;i++)
 	{
-		std::cout<<"variables in ["<< min_var [i]<<":"<<max_var [i]<<":]"<<std::endl;
+		std::cout<<"variables["<<i<<"] in ["<< min_var [i]<<":"<<max_var [i]<<":]"<<std::endl;
 	}
     std::cout<<"get_problem_info fin "<<std::endl;
 }
@@ -80,12 +96,12 @@ void MogsNlpMGA::get_problem_info(unsigned int & nb_variables,
 void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 {
 // 	std::cout<<"infos.size() = "<< infos.size() <<std::endl;
-    unsigned int nb_ctr = constraints_.size();
+    unsigned int N = constraints_.size();
     double x[nb_var_];
+    double g [nb_ctr_];
     unsigned int cpt =0;
 
-    double objmax = 1e30;
-    unsigned int mem=0;
+
 
    	for (int j=0;j<infos.size();j++)    // for all the element of the generation
     {
@@ -93,7 +109,7 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
             x[i] = infos[j].var[i];
 
         parameterization_->prepare_computation(dyns_);
-        for (unsigned int i=0; i<nb_ctr; i++)
+        for (unsigned int i=0; i<N; i++)
             constraints_[i]->update_dynamics(x,dyns_);
         parameterization_->compute(x,dyns_);
 
@@ -101,23 +117,47 @@ void MogsNlpMGA::evaluate(  std::vector<optim_infos> &infos)
 		{
 			infos[j].obj[i] = criteres_[i]->compute(dyns_);
 		}
+		for (int i =0;i<N;i++)
+		{
+		    constraints_[i]->compute(x,g,dyns_);
+		}
 
-        if(objmax> infos[j].obj[0])
-        {
-            objmax = infos[j].obj[0];
-            mem = j;
-        }
-
+        for (int k=0;k<nb_ctr_;k++)
+            infos[j].ctr[k] = g[k];
     }
+
+
 
     #ifdef MogsVisu_FOUND
     if (visu_during_optim_)
     {
+        double objmax = 1e30;
+        double ctrmax = 1e30;
+        unsigned int mem=0;
+        for (int j=0;j<infos.size();j++)
+        {
+            if (ctrmax > 1e-3)
+            {
+                if(ctrmax> infos[j].equivalent_ctr)
+                {
+                    ctrmax = infos[j].equivalent_ctr;
+                    mem = j;
+                }
+            }else
+            {
+                if(infos[j].equivalent_ctr < 1e-3 && objmax> infos[j].obj[0])
+                {
+                    objmax = infos[j].obj[0];
+                    mem = j;
+                }
+            }
+        }
+
         for (int i=0;i<nb_var_;i++)
             x[i] = infos[mem].var[i];
 
         parameterization_->prepare_computation(dyns_);
-        for (unsigned int i=0; i<nb_ctr; i++)
+        for (unsigned int i=0; i<N; i++)
             constraints_[i]->update_dynamics(x,dyns_);
         parameterization_->compute(x,dyns_);
 
