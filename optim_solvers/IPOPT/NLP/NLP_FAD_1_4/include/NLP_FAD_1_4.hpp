@@ -126,8 +126,6 @@ class NLP_FAD_1_4:public MogsIpoptProblem
    *
    */
 
-	//  NLP_FAD_1_4();
-
         double tval,weight_;
         QString type,weight,name;
 
@@ -139,8 +137,6 @@ class NLP_FAD_1_4:public MogsIpoptProblem
 
         std::vector<Eigen::Matrix < double,Eigen::Dynamic, 1 > > q,dq,ddq;
         std::vector<Eigen::Matrix < F<double> ,Eigen::Dynamic, 1 > > aq,adq,addq;
-
-//        std::vector<AbstractFAD_1_4Parameterization* > parameterizations_;
 
         AbstractFAD_1_4Parameterization* parameterization_;
 

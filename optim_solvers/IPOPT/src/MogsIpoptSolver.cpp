@@ -58,12 +58,9 @@ void MogsIpoptSolver::init_problem(AbstractOptimizationProblem** pb)
             exit(0);
         }
         // create an instance of the class
-        qDebug()<<"create problem of type ipopt_optimization_nlp with derivative type"<< derivative_name_;
         *pb = (AbstractOptimizationProblem*) creator();
-        std::cout<<"MogsIpoptSolver::init_problem *pb = "<< *pb <<std::endl;
          nlp_ = (MogsIpoptProblem*) *pb;
          pb_ = *pb;
-         std::cout<<"MogsIpoptSolver::init_problem nlp_ = "<< &(*nlp_) <<std::endl;
     }
     else
     {
@@ -150,7 +147,6 @@ void MogsIpoptSolver::local_solve()
 	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 
 	clock_t begin = clock();
-	std::cout<<"local solve nlp_ = "<< &(*nlp_)<<std::endl;
 	ipopt_status_ = app_->OptimizeTNLP (nlp_);
 	clock_t end = clock();
 //	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;

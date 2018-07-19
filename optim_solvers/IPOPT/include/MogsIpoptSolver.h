@@ -54,23 +54,6 @@ class MogsIpoptSolver: public  AbstractOptimizationSolver
     virtual void init_problem(AbstractOptimizationProblem** pb);
 
     virtual void solve();
-//
-//
-//
-//    /** Solve the problem	 */
-//    /// return true is succeed
-//    void solve();
-//
-//    /// solving the problem assuming all the internal values are set.
-//    /// return true is succeed
-//    void local_solve();
-//
-//    void set_show_result(bool show_result);
-//
-//    void set_nlp_problem(MogsNlpIpopt* n)
-//    {
-//        nlp_ = n;
-//    }
 
     protected:
         virtual void read_solver_option ();

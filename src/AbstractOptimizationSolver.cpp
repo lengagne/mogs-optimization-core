@@ -24,12 +24,9 @@
 
 void AbstractOptimizationSolver::prepare()
 {
-    std::cout<<"AbstractOptimizationSolver::prepare pb = "<< pb_ <<std::endl;
     pb_->set_robots( robots_ );
     pb_->set_root(root_);
-    std::cout<<"loading xml"<<std::endl;
     pb_->load_xml();
-    std::cout<<"prepare done"<<std::endl;
 }
 
 void AbstractOptimizationSolver::set_root(QDomElement root)
