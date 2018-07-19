@@ -9,7 +9,7 @@
 #ifndef __NLP_sample_HPP__
 #define __NLP_sample_HPP__
 
-#include "MogsNlpIpopt.hpp"
+#include "MogsIpoptProblem.hpp"
 
 using namespace Ipopt;
 
@@ -25,7 +25,7 @@ using namespace Ipopt;
  *       -1 <= x1 <= 1
  *
  */
-class NLP_sample:public MogsNlpIpopt
+class NLP_sample:public MogsIpoptProblem
 {
       public:
   /** default constructor */

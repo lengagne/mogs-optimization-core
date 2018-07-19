@@ -9,11 +9,16 @@
 #ifndef ABSTRACTFAD_1_4CONSTRAINT_HPP_INCLUDED
 #define ABSTRACTFAD_1_4CONSTRAINT_HPP_INCLUDED
 
-#include "MogsOptimDynamics.h"
-#include <fadiff.h>
 #include "AbstractConstraint.h"
-#include "MogsNlpIpopt.hpp"
+#include <fadiff.h>
+#include "MogsIpoptProblem.hpp"
 #include "Dependency.h"
+
+//#include "MogsOptimDynamics.h"
+//#include "AbstractConstraint.h"
+//#include "NLP_FAD_1_4.hpp"
+//#include <fadiff.h>
+//#include "Dependency.h"
 
 class AbstractFAD_1_4Constraint : virtual public AbstractConstraint
 {

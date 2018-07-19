@@ -1,13 +1,13 @@
-#include <MogsNlpIpopt.hpp>
+#include <MogsIpoptProblem.hpp>
 using namespace Ipopt;
 
-MogsNlpIpopt::MogsNlpIpopt ()
+MogsIpoptProblem::MogsIpoptProblem ()
 {
 }
-MogsNlpIpopt::~MogsNlpIpopt ()
+MogsIpoptProblem::~MogsIpoptProblem ()
 {
 }
-void MogsNlpIpopt::save_results( 	Ipopt::Index n,
+void MogsIpoptProblem::save_results( 	Ipopt::Index n,
 									const Number* x,
 									Number obj_value)
 {

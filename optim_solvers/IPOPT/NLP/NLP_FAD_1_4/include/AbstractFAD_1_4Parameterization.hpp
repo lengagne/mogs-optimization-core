@@ -9,11 +9,10 @@
 #ifndef ABSTRACTFAD_1_4Parameterization_HPP_INCLUDED
 #define ABSTRACTFAD_1_4Parameterization_HPP_INCLUDED
 
-/// FIXME why, we must set #include "MogsOptimDynamics.h" ??
-#include "MogsOptimDynamics.h"
-#include <fadiff.h>
-#include "MogsNlpIpopt.hpp"
+//#include "MogsIpoptProblem.hpp"
 #include "AbstractParameterization.h"
+#include <fadiff.h>
+#include "MogsIpoptProblem.hpp"
 #include "Dependency.h"
 
 class AbstractFAD_1_4Parameterization : virtual public AbstractParameterization

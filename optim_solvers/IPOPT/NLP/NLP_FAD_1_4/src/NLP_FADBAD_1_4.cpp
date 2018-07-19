@@ -20,7 +20,6 @@
 
 #include "NLP_FAD_1_4.hpp"
 #include <cassert>
-#include <fadiff.h>
 #include <iostream>
 #include <cstdlib>
 #include <math.h>

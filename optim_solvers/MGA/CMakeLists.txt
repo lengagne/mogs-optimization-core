@@ -105,7 +105,8 @@ if(MogsGeneticAlgorithm_FOUND)
     install ( 	FILES "${PROJECT_BINARY_DIR}/MogsMGAOptimizationConfig.cmake"
             DESTINATION "${INSTALL_LIB_PATH}/MogsMGAOptimization" COMPONENT dev )
 
-    install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-mga-optimization ${INSTALL_LIB_DIRS}/libMogsMGAOptimization.so)")
+#    install(CODE "execute_process(COMMAND mogs2 plugins add problem mogs-mga-optimization ${INSTALL_LIB_DIRS}/libMogsMGAOptimization.so)")
+    install(CODE "execute_process(COMMAND mogs2 plugins add optim_solver mogs-genetic-algorithm ${INSTALL_LIB_DIRS}/libMogsMGAOptimization.so)")
 
 else()
     message("MGA was not FOUND, so we do not compile MogsMGAOptimization")

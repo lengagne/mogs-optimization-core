@@ -11,6 +11,9 @@
 
 #include <fadiff.h>
 #include "AbstractCriteria.h"
+#include "NLP_FAD_1_4.hpp"
+#include "Dependency.h"
+
 
 class AbstractFAD_1_4Criteria : virtual public AbstractCriteria
 {

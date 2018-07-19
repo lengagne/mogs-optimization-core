@@ -29,7 +29,6 @@ void AbstractOptimizationSolver::prepare()
     pb_->set_root(root_);
     std::cout<<"loading xml"<<std::endl;
     pb_->load_xml();
-
     std::cout<<"prepare done"<<std::endl;
 }
 

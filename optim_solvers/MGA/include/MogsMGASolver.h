@@ -1,4 +1,4 @@
-//      MogsAbstractOptimization.h
+//      MogsMGASolver.h
 //      Copyright (C) 2012 lengagne (lengagne@gmail.com)
 //
 //      This program is free software: you can redistribute it and/or modify
@@ -20,46 +20,33 @@
 //      2012-2013:  IUT de Beziers/ LIRMM, Beziers, France
 //	from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
-#ifndef __MOGSABSTRACTOPTIMIZATION__
-#define __MOGSABSTRACTOPTIMIZATION__
+#ifndef __MogsMGASolver__
+#define __MogsMGASolver__
 
-#include "MogsAbstractProblem.h"
-#include "MogsOptimDynamics.h"
-#include "AbstractParameterization.h"
-#include "AbstractCriteria.h"
-#include "AbstractConstraint.h"
+#include "AbstractOptimizationSolver.h"
+#include "config_MogsMGAOptimization.h"
+#include "MogsGeneticSolver.h"
+#include "MogsMGAProblem.h"
 
-class MogsAbstractOptimization: public MogsAbstractProblem
+
+class MogsMGASolver: public AbstractOptimizationSolver
 {
       public:
 
-        virtual void read_problem (const mogs_string & filename);
+	MogsMGASolver();
 
-        virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                            AbstractParameterization* param,
-                                            const std::vector<AbstractCriteria* > &criteres,
-                                            const std::vector<AbstractConstraint*> & constraints)=0;
+	~MogsMGASolver();
 
-	/** Solve the problem	 */
-        virtual void solve();
+	//  herited functions
+    virtual void init_problem(AbstractOptimizationProblem** pb);
 
-        bool get_status() const
-        {
-            return status_;
-        }
+    virtual void solve();
+//
+    protected:
+        virtual void read_solver_option ();
 
-
-      protected:
-
-        bool status_;
-
-	#ifdef MogsVisu_FOUND
-	bool visu_during_optim_;
-	VisuHolder * visu_optim_;
-	#endif // MogsVisu_FOUND
-
+      private:
+        MogsMGAProblem* my_pb_;
 };
-
-
 
 #endif

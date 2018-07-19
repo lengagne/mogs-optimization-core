@@ -61,7 +61,7 @@ void MogsIpoptSolver::init_problem(AbstractOptimizationProblem** pb)
         qDebug()<<"create problem of type ipopt_optimization_nlp with derivative type"<< derivative_name_;
         *pb = (AbstractOptimizationProblem*) creator();
         std::cout<<"MogsIpoptSolver::init_problem *pb = "<< *pb <<std::endl;
-         nlp_ = (MogsNlpIpopt*) *pb;
+         nlp_ = (MogsIpoptProblem*) *pb;
          pb_ = *pb;
          std::cout<<"MogsIpoptSolver::init_problem nlp_ = "<< &(*nlp_) <<std::endl;
     }
@@ -71,51 +71,6 @@ void MogsIpoptSolver::init_problem(AbstractOptimizationProblem** pb)
         exit(0);
     }
 }
-
-//void MogsIpoptSolver::init_nlp_problem (const mogs_string & plugin_name)
-//{
-//    MogsProblemClassifier mpc;
-//    mogs_string library_so;
-//
-//    if ( mpc.get_library_plugin("ipopt_optimization_nlp",plugin_name,library_so))
-//    {
-//        // load the library
-//        void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
-//        if (!library) {
-//            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-//            exit(0);
-//        }
-//        // load the symbols
-//        creator_ = (create_nlp_ipopt*) dlsym(library, "create");
-//        destructor_ = (destroy_nlp_ipopt*) dlsym(library, "destroy");
-//        if (!creator_ || !destructor_)
-//        {
-//            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-//            exit(0);
-//        }
-//        // create an instance of the class
-//        nlp_ = creator_();
-//    }
-//    else
-//    {
-//        qDebug()<<"Error cannot load the plugin "<<plugin_name<<" as an ipopt_optimization_nlp plugin";
-//        exit(0);
-//    }
-//}
-//
-////void MogsIpoptSolver::read_problem (const mogs_string & filename)
-////{
-////    MogsAbstractOptimization::read_problem(filename);
-//////    std::cout<<"MogsIpoptSolver::read_problem()"<<std::endl;
-////
-////    // loaded the good type of problem
-////    mogs_string plugin_name = root_.attribute("derivative");
-////    init_nlp_problem(plugin_name);
-////
-////}
-//
-
-
 
 ////void read_problem (const mogs_string & filename);
 void MogsIpoptSolver::read_solver_option ()

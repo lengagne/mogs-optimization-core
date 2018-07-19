@@ -9,7 +9,7 @@
 #ifndef __NLP_FAD_1_4_HPP__
 #define __NLP_FAD_1_4_HPP__
 
-#include "MogsNlpIpopt.hpp"
+#include "MogsIpoptProblem.hpp"
 #include "MogsOptimDynamics.h"
 #include <fadiff.h>
 #include "AbstractFAD_1_4Criteria.hpp"
@@ -23,7 +23,7 @@
 
 using namespace Ipopt;
 
-class NLP_FAD_1_4:public MogsNlpIpopt
+class NLP_FAD_1_4:public MogsIpoptProblem
 {
       public:
   /** default constructor */

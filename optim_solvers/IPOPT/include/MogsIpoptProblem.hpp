@@ -2,7 +2,7 @@
 // All Rights Reserved.
 // This code is published under the Eclipse Public License.
 //
-// $Id: MogsNlpIpopt.hpp 1861 2010-12-21 21:34:47Z andreasw $
+// $Id: MogsIpoptProblem.hpp 1861 2010-12-21 21:34:47Z andreasw $
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-11-05
 
@@ -13,14 +13,14 @@
 #include "IpTNLP.hpp"
 using namespace Ipopt;
 
-class MogsNlpIpopt:public TNLP, public AbstractOptimizationProblem
+class MogsIpoptProblem:public TNLP, public AbstractOptimizationProblem
 {
       public:
   /** default constructor */
-	MogsNlpIpopt ();
+	MogsIpoptProblem ();
 
   /** default destructor */
-	virtual ~ MogsNlpIpopt ();
+	virtual ~ MogsIpoptProblem ();
 
   /**@name Overloaded from TNLP */
 	//@{
@@ -87,14 +87,14 @@ class MogsNlpIpopt:public TNLP, public AbstractOptimizationProblem
 //                                        const std::vector<AbstractCriteria* > &criteres,
 //                                        const std::vector<AbstractConstraint*> & constraints)
 //    {
-//        std::cout<<"MogsNlpIpopt::set_problem_properties"<<std::endl;
+//        std::cout<<"MogsIpoptProblem::set_problem_properties"<<std::endl;
 //    }
 //
 //    /// load additional constraints and criterias from the xml infos
 //    virtual void load_ctrs_crits(std::vector<QDomElement> & ctrs,
 //                                 std::vector<QDomElement> & crits)
 //    {
-//        std::cout<<"MogsNlpIpopt::load_ctrs_crits"<<std::endl;
+//        std::cout<<"MogsIpoptProblem::load_ctrs_crits"<<std::endl;
 //    }
 
 
@@ -115,15 +115,15 @@ class MogsNlpIpopt:public TNLP, public AbstractOptimizationProblem
    *
    */
 	//@{
-		  MogsNlpIpopt (const MogsNlpIpopt &);
-          MogsNlpIpopt & operator= (const MogsNlpIpopt &);
+		  MogsIpoptProblem (const MogsIpoptProblem &);
+          MogsIpoptProblem & operator= (const MogsIpoptProblem &);
 	//@}
     protected:
 
 };
 
-typedef MogsNlpIpopt* create_nlp_ipopt();
-typedef void destroy_nlp_ipopt(MogsNlpIpopt*);
+typedef MogsIpoptProblem* create_nlp_ipopt();
+typedef void destroy_nlp_ipopt(MogsIpoptProblem*);
 
 
 #endif

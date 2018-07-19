@@ -6,8 +6,8 @@
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-11-05
 
-#ifndef DoubleParameterization_HPP_INCLUDED
-#define DoubleParameterization_HPP_INCLUDED
+#ifndef AbstractDoubleParameterizationHPP_INCLUDED
+#define AbstractDoubleParameterizationHPP_INCLUDED
 
 /// FIXME why, we must set #include "MogsOptimDynamics.h" ??
 #include "AbstractParameterization.h"

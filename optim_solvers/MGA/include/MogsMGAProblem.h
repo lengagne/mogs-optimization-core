@@ -1,26 +1,23 @@
 
-#ifndef __MOGS_NLP_MGA_HPP__
-#define __MOGS_NLP_MGA_HPP__
+#ifndef __MOGS_MGA_PROBLEM_HPP__
+#define __MOGS_MGA_PROBLEM_HPP__
 
-#include "MogsKinematics.h"
 #include "MogsAbstractGeneticProblem.h"
-#include "AbstractCriteria.h"
-#include "AbstractConstraint.h"
-#include "AbstractParameterization.h"
+#include "AbstractOptimizationProblem.h"
 
 #ifdef MogsVisu_FOUND
 #include "VisuHolder.h"
 #endif
 
-class MogsNlpMGA:  public  MogsAbstractGeneticProblem
+class MogsMGAProblem:  public  MogsAbstractGeneticProblem,  public AbstractOptimizationProblem
 {
       public:
 //	 MogsRobotProperties robot;
   /** default constructor */
-	MogsNlpMGA ();
+	MogsMGAProblem ();
 
   /** default destructor */
-	virtual ~ MogsNlpMGA ();
+	virtual ~ MogsMGAProblem ();
 
 
     void get_problem_info(unsigned int & nb_variables,
@@ -36,14 +33,14 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     void finalize_solution( optim_infos &info);
 
-    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-                                        AbstractParameterization* param,
-                                        const std::vector<AbstractCriteria* > &criteres,
-                                        const std::vector<AbstractConstraint*> & constraints);
+//    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
+//                                        AbstractParameterization* param,
+//                                        const std::vector<AbstractCriteria* > &criteres,
+//                                        const std::vector<AbstractConstraint*> & constraints);
 
-    void load_xml();
+    virtual  void load_xml( );
 
-	void set_robots(const std::vector<MogsRobotProperties*> & in);
+//	void set_robots(const std::vector<MogsRobotProperties*> & in);
 
 	void set_root(QDomElement root)
 	{
@@ -128,13 +125,13 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 //   *
 //   */
 //	//@{
-//		  MogsNlpMGA (const MogsNlpMGA &);
-//          MogsNlpMGA & operator= (const MogsNlpMGA &);
+//		  MogsMGAProblem (const MogsMGAProblem &);
+//          MogsMGAProblem & operator= (const MogsMGAProblem &);
 //	//@}
 //visu_optim_
-    std::vector<MogsRobotProperties*> robots_;
-
-    unsigned int nb_robots_;
+//    std::vector<MogsRobotProperties*> robots_;
+//
+//    unsigned int nb_robots_;
     std::vector<MogsOptimDynamics<double>*> dyns_;
 
     AbstractParameterization* parameterization_;
@@ -143,16 +140,9 @@ class MogsNlpMGA:  public  MogsAbstractGeneticProblem
 
     std::vector<AbstractConstraint*> constraints_;
 
-    QDomElement root_;
-
     unsigned int nb_var_;
     unsigned int nb_crit_;
     unsigned int nb_ctr_;
-
-	#ifdef MogsVisu_FOUND
-	VisuHolder *visu_optim_;
-	bool visu_during_optim_ = false;
-	#endif
 
 };
 

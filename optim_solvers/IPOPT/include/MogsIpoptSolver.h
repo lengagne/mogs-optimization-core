@@ -26,14 +26,9 @@
 #include "AbstractOptimizationSolver.h"
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
-
-#include "MogsNlpIpopt.hpp"
+#include "MogsIpoptProblem.hpp"
 
 using namespace Ipopt;
-//
-//// the types of the class factories
-//typedef MogsNlpIpopt* create_nlp_ipopt();
-//typedef void destroy_nlp_ipopt(MogsNlpIpopt*);
 
 class MogsIpoptSolver: public  AbstractOptimizationSolver
 {
@@ -42,39 +37,6 @@ class MogsIpoptSolver: public  AbstractOptimizationSolver
     MogsIpoptSolver();
 
     ~MogsIpoptSolver();
-
-//    void init_nlp_problem (const mogs_string & plugin_name);
-//
-//    Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
-//    {
-//        return nlp_->get_final_q(robot_id);
-//    }
-//
-//    double get_obj()
-//    {
-//        return nlp_->get_obj();
-//    }
-////    void read_problem (const mogs_string & filename);
-//    void read_solver_option ( );
-//
-//    void set_robots_to_nlp(const std::vector<MogsRobotProperties*> & in)
-//    {
-//        nlp_->set_robots(in);
-//    }
-//
-//    void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-//                                AbstractParameterization* param,
-//                                const std::vector<AbstractCriteria* > &criteres,
-//                                const std::vector<AbstractConstraint*> & constraints)
-//    {
-//        nlp_ ->set_problem_properties(dyns,param,criteres,constraints);
-//    }
-//
-//    void load_ctrs_crits(std::vector<QDomElement> & ctrs,
-//                         std::vector<QDomElement> & crits)
-//    {
-//        nlp_->load_ctrs_crits(ctrs,crits);
-//    }
 
     void local_solve();
 
@@ -118,7 +80,7 @@ class MogsIpoptSolver: public  AbstractOptimizationSolver
 
     mogs_string derivative_name_="not_defined";
 
-    SmartPtr < MogsNlpIpopt > nlp_;
+    SmartPtr < MogsIpoptProblem > nlp_;
     SmartPtr < IpoptApplication > app_;
     ApplicationReturnStatus ipopt_status_;
 //    create_nlp_ipopt* creator_;
