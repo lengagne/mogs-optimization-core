@@ -47,6 +47,7 @@ class MogsMGASolver: public AbstractOptimizationSolver
 
       private:
         MogsMGAProblem* my_pb_;
+        MogsGeneticSolver* solver_;
 };
 
 #endif

@@ -43,7 +43,37 @@ void MogsMGASolver::init_problem(AbstractOptimizationProblem** pb)
 void MogsMGASolver::read_solver_option ()
 {
     // For the moment we do not read the options
+    solver_ = new MogsGeneticSolver();
+	for (QDomElement childOptions = solver_xml_.firstChildElement("mga_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("mga_options") )
+	{
+		qDebug()<<"We find one option";
+		mogs_string type = childOptions.attribute("type");
+		mogs_string name = childOptions.attribute("name");
+		mogs_string value = childOptions.attribute("value");
 
+		if(type =="integer")
+        {
+            int v = value.toInt();
+            if (name == "nb_queue")
+                solver_->set_nb_queue(v);
+            else if (name == "nb_selected")
+                solver_->set_nb_selected(v);
+            else if (name == "max_iter")
+                solver_->set_max_iter(v);
+        }
+		else if (type =="real")
+        {
+            double v = value.toDouble();
+            if (name == "threshold")
+                solver_->set_search_range_th(v);
+            else if (name == "max_barrier")
+                solver_->set_max_barrier(v);
+            else if (name == "min_barrier")
+                solver_->set_min_barrier(v);
+
+        }
+		else	qDebug()<<"option of type : "<< type <<" not defined.";
+	}
 }
 
 
@@ -51,14 +81,7 @@ void MogsMGASolver::read_solver_option ()
 void MogsMGASolver::solve()
 {
     std::cout<<"MogsMGASolver::solve()"<<std::endl;
-
-    MogsGeneticSolver solver;
-    solver.set_nb_queue(10000);
-    solver.set_nb_selected(100);
-    solver.set_max_iter(100);
-    solver.set_search_range_th(1e-3);
-
-    solver.solve(my_pb_);
+    solver_->solve(my_pb_);
 }
 
 extern "C" MogsMGASolver* create()
