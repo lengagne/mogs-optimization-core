@@ -13,7 +13,7 @@ void AbstractParameterization::init_from_constraints(AbstractConstraint* ctr)
     init_.insert(std::end(init_), std::begin(init), std::end(init));
 }
 
-void AbstractParameterization::set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q)
-{
-
-}
+//void AbstractParameterization::set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q)
+//{
+//
+//}
