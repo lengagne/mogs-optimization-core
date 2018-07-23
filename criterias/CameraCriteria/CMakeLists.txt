@@ -87,4 +87,4 @@ configure_file(MogsCameraCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsCame
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsCameraCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsCameraCriteria" COMPONENT dev )
 
-add_subdirectory(derivative)
+# add_subdirectory(derivative)

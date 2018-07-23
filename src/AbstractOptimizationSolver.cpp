@@ -18,15 +18,23 @@
 //      2009-2011:  Joint robotics Laboratory - CNRS/AIST,Tsukuba, Japan.
 //      2011-2012:  Karlsruhe Institute fur Technologie, Karlsruhe, Germany
 //      2012-2013:  IUT de Beziers/ LIRMM, Beziers, France
-//	from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
+//	    from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
 #include "AbstractOptimizationSolver.h"
 
-void AbstractOptimizationSolver::prepare()
+void AbstractOptimizationSolver::prepare(AbstractOptimizationProblem* pb)
 {
-    pb_->set_robots( robots_ );
-    pb_->set_root(root_);
-    pb_->load_xml();
+	#ifdef MogsVisu_FOUND
+	if(need_visu())
+	{
+		pb->set_visu(visu_optim_,true);
+	}
+	#endif
+	pb->set_robots( robots_ );
+	pb->set_root(root_);
+	std::cout<<"before pb load_xml"<<std::endl;
+	pb->load_xml();
+	std::cout<<"before after load_xml"<<std::endl;
 }
 
 void AbstractOptimizationSolver::set_root(QDomElement root)

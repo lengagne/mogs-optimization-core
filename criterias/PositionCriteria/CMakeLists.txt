@@ -86,5 +86,4 @@ configure_file(MogsPositionCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsPo
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsPositionCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsPositionCriteria" COMPONENT dev )
 
-
-add_subdirectory(derivative)
+# add_subdirectory(derivative)

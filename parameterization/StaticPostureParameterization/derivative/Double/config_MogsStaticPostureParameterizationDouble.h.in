@@ -1,8 +1,0 @@
-#ifndef MogsStaticPostureParameterizationDouble_CONFIG_H
-#define MogsStaticPostureParameterizationDouble_CONFIG_H
-
-#define MogsStaticPostureParameterizationDouble_VERSION_MAJOR @MogsStaticPostureParameterizationDouble_VERSION_MAJOR@
-#define MogsStaticPostureParameterizationDouble_VERSION_MINOR @MogsStaticPostureParameterizationDouble_VERSION_MINOR@
-
-#endif
-

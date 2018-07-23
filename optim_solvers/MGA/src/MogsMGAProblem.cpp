@@ -188,7 +188,6 @@ void MogsMGAProblem::load_xml( )
 	}
 
     /// FIXME allow to change the type of the AbstractParameterization through plugins
-    std::cout<<"nb_robot = "<< dyns_.size()<<std::endl;
     QDomElement param =root_.firstChildElement("parameterization");
     if (param.tagName()=="parameterization")
     {

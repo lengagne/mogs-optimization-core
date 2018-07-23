@@ -1,0 +1,8 @@
+#ifndef MogsIpopt_CONFIG_H
+#define MogsIpopt_CONFIG_H
+
+#define MogsIpopt_VERSION_MAJOR @MogsIpopt_VERSION_MAJOR@
+#define MogsIpopt_VERSION_MINOR @MogsIpopt_VERSION_MINOR@
+
+#endif
+

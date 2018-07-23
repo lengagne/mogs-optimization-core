@@ -1,0 +1,16 @@
+# - Config file for the MogsIpopt lib
+# It defines the following variables
+#
+# MogsIpopt_INCLUDE_DIRS - include directories
+# MogsIpopt_LIBRARY_DIRS - library directory (normally not used!)
+# MogsIpopt_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsIpopt_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@ @IPOPT_INCLUDE_DIRS@)
+
+set(MogsIpopt_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@ @IPOPT_LIBRARY_DIRS@)
+
+set(MogsIpopt_LIBRARIES @MogsIpopt_LIBRARIES@ @MogsCore_LIBRARIES@ @IPOPT_LIBRARIES@)
+
+SET(MogsIpopt_FLAGS @MogsIpopt_FLAGS@ @MogsCore_FLAGS@)

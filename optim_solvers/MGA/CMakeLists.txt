@@ -78,6 +78,7 @@ if(MogsGeneticAlgorithm_FOUND)
 
     ### Configure file
     get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+    SET(MogsMGAOptimization_INCLUDE_DIRS_LOCAL  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsMGAOptimization_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
     SET(MogsMGAOptimization_LIBRARIES  MogsMGAOptimization CACHE INTERNAL "")
     SET(MogsMGAOptimization_FLAGS "-DMogsMGAOptimization_FOUND ${MGA_FLAGS}" CACHE INTERNAL "")

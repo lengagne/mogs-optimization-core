@@ -1,8 +1,0 @@
-#ifndef MogsPositionCriteriaNlpFAD_CONFIG_H
-#define MogsPositionCriteriaNlpFAD_CONFIG_H
-
-#define MogsPositionCriteriaNlpFAD_VERSION_MAJOR @MogsPositionCriteriaNlpFAD_VERSION_MAJOR@
-#define MogsPositionCriteriaNlpFAD_VERSION_MINOR @MogsPositionCriteriaNlpFAD_VERSION_MINOR@
-
-#endif
-

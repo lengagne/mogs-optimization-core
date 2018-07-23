@@ -33,9 +33,9 @@ MogsMGASolver::~MogsMGASolver()
 
 void MogsMGASolver::init_problem(AbstractOptimizationProblem** pb)
 {
-    my_pb_ = new MogsMGAProblem();
-    *pb = (AbstractOptimizationProblem*) my_pb_;
-    pb_ = *pb;
+    std::cout<<"MogsMGASolver::init_problem"<<std::endl;
+    *pb = new MogsMGAProblem();
+    std::cout<<"MogsMGASolver::init_problem done"<<std::endl;
 }
 
 
@@ -78,10 +78,10 @@ void MogsMGASolver::read_solver_option ()
 
 
 
-void MogsMGASolver::solve()
+void MogsMGASolver::solve(AbstractOptimizationProblem* pb)
 {
     std::cout<<"MogsMGASolver::solve()"<<std::endl;
-    solver_->solve(my_pb_);
+    solver_->solve((MogsMGAProblem*)pb);
 }
 
 extern "C" MogsMGASolver* create()

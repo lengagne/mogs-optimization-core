@@ -102,4 +102,3 @@ install ( 	FILES "${PROJECT_BINARY_DIR}/MogsOptimizationCoreConfig.cmake"
 add_subdirectory(optim_solvers)
 add_subdirectory(criterias)
 add_subdirectory(constraints)
-add_subdirectory(parameterization)

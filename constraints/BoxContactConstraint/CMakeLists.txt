@@ -32,65 +32,71 @@ foreach(p LIB INCLUDE)
 endforeach()
 
 IF (NOT MogsOptimizationCore_FOUND)
-    find_package(MogsOptimizationCore REQUIRED)
+    find_package(MogsOptimizationCore QUIET)
 endIF (NOT MogsOptimizationCore_FOUND)
 
 IF (NOT MogsBoxCollisionConstraint_FOUND)
-    find_package(MogsBoxCollisionConstraint REQUIRED)
+    find_package(MogsBoxCollisionConstraint QUIET)
 endIF (NOT MogsBoxCollisionConstraint_FOUND)
 
 
-include_directories (
-	include
-	${MogsOptimizationCore_INCLUDE_DIRS}
-	${MogsBoxCollisionConstraint_INCLUDE_DIRS}
-)
+if(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
 
-configure_file ("${PROJECT_SOURCE_DIR}/config_MogsBoxContactConstraint.h.in"
-                "${PROJECT_SOURCE_DIR}/include/config_MogsBoxContactConstraint.h" )
+	include_directories (
+		include
+		${MogsOptimizationCore_INCLUDE_DIRS}
+		${MogsBoxCollisionConstraint_INCLUDE_DIRS}
+	)
+
+	configure_file ("${PROJECT_SOURCE_DIR}/config_MogsBoxContactConstraint.h.in"
+			"${PROJECT_SOURCE_DIR}/include/config_MogsBoxContactConstraint.h" )
 
 
-FILE ( GLOB_RECURSE
-		header_files_MogsBoxContactConstraint
-		include/*.h
-		include/*.hpp
-		include/*.hxx)
+	FILE ( GLOB_RECURSE
+			header_files_MogsBoxContactConstraint
+			include/*.h
+			include/*.hpp
+			include/*.hxx)
 
-FILE ( GLOB_RECURSE
-		source_files_MogsBoxContactConstraint
-		src/*.cpp)
+	FILE ( GLOB_RECURSE
+			source_files_MogsBoxContactConstraint
+			src/*.cpp)
 
-ADD_LIBRARY(	MogsBoxContactConstraint SHARED
-		${source_files_MogsBoxContactConstraint}
-)
+	ADD_LIBRARY(	MogsBoxContactConstraint SHARED
+			${source_files_MogsBoxContactConstraint}
+	)
 
-target_link_libraries( MogsBoxContactConstraint
-			${MogsOptimizationCore_LIBRARIES}
-			${MogsBoxCollisionConstraint_LIBRARIES})
+	target_link_libraries( MogsBoxContactConstraint
+				${MogsOptimizationCore_LIBRARIES}
+				${MogsBoxCollisionConstraint_LIBRARIES})
 
-# install the include files
-SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsBoxContactConstraint)
-SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
+	# install the include files
+	SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsBoxContactConstraint)
+	SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
-# install the include files
-install(FILES ${header_files_MogsBoxContactConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
+	# install the include files
+	install(FILES ${header_files_MogsBoxContactConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
 
-# install the library files
-install( TARGETS MogsBoxContactConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+	# install the library files
+	install( TARGETS MogsBoxContactConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
 
-### Configure file
-get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-SET(MogsBoxContactConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-SET(MogsBoxContactConstraint_LIBRARIES  MogsBoxContactConstraint ${MogsBoxCollisionConstraint_LIBRARIES} CACHE INTERNAL "")
-SET(MogsBoxContactConstraint_FLAGS "-DMogsBoxContactConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
-SET(MogsBoxContactConstraint_FOUND "TRUE" CACHE INTERNAL "")
-add_definitions(${MogsBoxContactConstraint_FLAGS})
-#  add flags (done before)
-configure_file(MogsBoxContactConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintConfig.cmake" @ONLY)
+	### Configure file
+	get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+	SET(MogsBoxContactConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
+	SET(MogsBoxContactConstraint_LIBRARIES  MogsBoxContactConstraint ${MogsBoxCollisionConstraint_LIBRARIES} CACHE INTERNAL "")
+	SET(MogsBoxContactConstraint_FLAGS "-DMogsBoxContactConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
+	SET(MogsBoxContactConstraint_FOUND "TRUE" CACHE INTERNAL "")
+	add_definitions(${MogsBoxContactConstraint_FLAGS})
+	#  add flags (done before)
+	configure_file(MogsBoxContactConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintConfig.cmake" @ONLY)
 
-install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsBoxContactConstraints" COMPONENT dev )
+	install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxContactConstraintConfig.cmake"
+			DESTINATION "${INSTALL_LIB_PATH}/MogsBoxContactConstraints" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxContact ${INSTALL_LIB_DIRS}/libMogsBoxContactConstraint.so)")
+	install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxContact ${INSTALL_LIB_DIRS}/libMogsBoxContactConstraint.so)")
 
-add_subdirectory(derivative)
+	add_subdirectory(derivative)
+
+else(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
+	message("Do not compile MogsBoxContactConstraint")	
+endif(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)

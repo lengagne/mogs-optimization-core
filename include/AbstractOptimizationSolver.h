@@ -23,34 +23,27 @@
 #ifndef __MOGSAbstractOptimizationSolver__
 #define __MOGSAbstractOptimizationSolver__
 
-//#include "MogsOptimDynamics.h"
-//#include "AbstractParameterization.h"
-//#include "AbstractCriteria.h"
-//#include "AbstractConstraint.h"
 #include "AbstractOptimizationProblem.h"
 
 #ifdef MogsVisu_FOUND
 #include "VisuHolder.h"
 #endif
 
-
 class AbstractOptimizationSolver
 {
       public:
 
-
     virtual void init_problem(AbstractOptimizationProblem** pb) = 0;
 
-    virtual void prepare();
+    virtual void prepare(AbstractOptimizationProblem* pb);
 
 	/** Solve the problem	 */
-    virtual void solve() = 0;
+    virtual void solve(AbstractOptimizationProblem* pb) = 0;
 
     virtual void set_robots(const std::vector<MogsRobotProperties*> & in)
     {
         robots_ = in;
         nb_robots_ = robots_.size();
-        std::cout<<"AbstractOptimizationSolver::nb_robots_ = "<< nb_robots_ <<std::endl;
     }
 
     void set_root(QDomElement root);
@@ -65,31 +58,8 @@ class AbstractOptimizationSolver
      {
          visu_during_optim_ = b;
          visu_optim_ = v;
-         pb_->set_visu(v,b);
      }
      #endif
-
-
-//        virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-//                                            AbstractParameterization* param,
-//                                            const std::vector<AbstractCriteria* > &criteres,
-//                                            const std::vector<AbstractConstraint*> & constraints)=0;
-
-
-
-//        bool get_status() const
-//        {
-//            return status_;
-//        }
-
-
-//      protected:
-//
-//        bool status_;
-//
-//        mogs_string solver_name_;
-//
-
 
     #ifdef MogsVisu_FOUND
     bool visu_during_optim_ = false;
@@ -99,8 +69,6 @@ class AbstractOptimizationSolver
 protected:
     virtual void read_solver_option () = 0;
 
-    AbstractOptimizationProblem* pb_;
-
     QDomElement solver_xml_,root_;
 
     std::vector<MogsRobotProperties*> robots_;
@@ -109,10 +77,5 @@ protected:
     bool status_;
 
 };
-
-// the types of the class factories
-typedef AbstractOptimizationSolver* create_optimization_solver();
-typedef void destroy_optimization_solver(AbstractOptimizationSolver*);
-
 
 #endif

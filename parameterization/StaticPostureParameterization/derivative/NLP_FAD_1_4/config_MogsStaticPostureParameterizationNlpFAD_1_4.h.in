@@ -1,8 +1,0 @@
-#ifndef MogsStaticPostureParameterizationNlpFAD_CONFIG_H
-#define MogsStaticPostureParameterizationNlpFAD_CONFIG_H
-
-#define MogsStaticPostureParameterizationNlpFAD_VERSION_MAJOR @MogsStaticPostureParameterizationNlpFAD_VERSION_MAJOR@
-#define MogsStaticPostureParameterizationNlpFAD_VERSION_MINOR @MogsStaticPostureParameterizationNlpFAD_VERSION_MINOR@
-
-#endif
-

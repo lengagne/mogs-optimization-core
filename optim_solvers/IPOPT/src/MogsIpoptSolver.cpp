@@ -21,7 +21,6 @@
 //	    from 2013:  Université Blaise Pascal / axis : ISPR / theme MACCS
 
 #include "MogsIpoptSolver.h"
-#include "MogsProblemClassifier.h"
 #include <ctime>
 
 
@@ -35,56 +34,21 @@ MogsIpoptSolver::~MogsIpoptSolver()
     // FIXME
 }
 
-void MogsIpoptSolver::init_problem(AbstractOptimizationProblem** pb)
-{
-    MogsProblemClassifier mpc;
-    mogs_string library_so;
-    create_nlp_ipopt* creator;
-    destroy_nlp_ipopt* destructor;
-    if ( mpc.get_library_plugin("ipopt_optimization_nlp",derivative_name_,library_so))
-    {
-        // load the library
-        void * library = dlopen(library_so.toAscii(), RTLD_LAZY);
-        if (!library) {
-            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load library ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-            exit(0);
-        }
-        // load the symbols
-        creator = (create_nlp_ipopt*) dlsym(library, "create");
-        destructor = (destroy_nlp_ipopt*) dlsym(library, "destroy");
-        if (!creator || !destructor)
-        {
-            std::cerr <<"Error in "<<__FILE__<<" at line "<<__LINE__<< " : Cannot load symbols of ("<< library_so.toStdString()<<"), with the error : " << dlerror() << '\n';
-            exit(0);
-        }
-        // create an instance of the class
-        *pb = (AbstractOptimizationProblem*) creator();
-         nlp_ = (MogsIpoptProblem*) *pb;
-         pb_ = *pb;
-    }
-    else
-    {
-        qDebug()<<"Error cannot load the plugin "<<derivative_name_<<" as an ipopt_optimization_nlp plugin";
-        exit(0);
-    }
-}
+
 
 ////void read_problem (const mogs_string & filename);
-void MogsIpoptSolver::read_solver_option ()
+void MogsIpoptSolver::read_solver_option (QDomElement solver_xml)
 {
+    // loaded the good type of problem
+    QDomElement ElDerivative=solver_xml.firstChildElement("derivative");
+    derivative_name_ = ElDerivative.text().simplified();
+    qDebug()<<"derivative_name_ = "<< derivative_name_;
 
  	// Create an instance of the IpoptApplication
 	app_ = IpoptApplicationFactory ();
 
-
-    // loaded the good type of problem
-    QDomElement ElDerivative=solver_xml_.firstChildElement("derivative");
-    derivative_name_ = ElDerivative.text().simplified();
-    qDebug()<<"derivative_name_ = "<< derivative_name_;
-//    init_nlp_problem(plugin_name);
-
 	// read the options
-	for (QDomElement childOptions = solver_xml_.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
+	for (QDomElement childOptions = solver_xml.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
 	{
 		qDebug()<<"We find one option";
 		mogs_string type = childOptions.attribute("type");
@@ -116,30 +80,16 @@ void MogsIpoptSolver::set_option_string( const mogs_string & option_name,
 {
     app_->Options()->SetStringValue(option_name.toStdString().c_str(), value.toStdString().c_str());
 }
-//
-//
-void MogsIpoptSolver::solve()
-{
-     //donne les fichiers des robots
-//    nlp_->set_robots( robots_ );
-//	nlp_->set_root(root_);
-//	nlp_->load_xml( );
 
-    local_solve();
-}
-//
-void MogsIpoptSolver::local_solve()
+bool MogsIpoptSolver::solve()
 {
-//    std::cout<<"start MogsIpoptSolver::local_solve()"<<std::endl;
-	// Initialize the IpoptApplication and process the options
 
 	ipopt_status_ = app_->Initialize ();
 //    std::cout<<"app Initialized"<<std::endl;
-
 	if (ipopt_status_ != Solve_Succeeded)
 	  {
 		  std::cerr << std::endl << std::endl << "*** Error during initialization!" << std::endl;
-		  return ;
+		  return false;
 	  }
 
     //set options
@@ -151,9 +101,10 @@ void MogsIpoptSolver::local_solve()
 	clock_t end = clock();
 //	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
 
+    bool status;
 	if (ipopt_status_ == Solve_Succeeded || ipopt_status_ == Solved_To_Acceptable_Level )
 	{
-	    status_ = true;
+	    status = true;
 	   // Retrieve some statistics about the solve
 	   Ipopt::Index iter_count = app_->Statistics ()->IterationCount ();
 //	   std::cout << std::endl << std::endl << "*** The problem solved in " << iter_count<< " iterations!" << std::endl;
@@ -161,24 +112,8 @@ void MogsIpoptSolver::local_solve()
 //	   std::cout << std::endl << std::endl <<"*** The final value of the objective function is "<< final_obj << '.' << std::endl;
 	}else
 	{
-	    status_ = false;
+	    status = false;
 	}
 //    std::cout<<"MogsIpoptSolver::solve()  done"<<std::endl;
+    return status;
 }
-//
-//void MogsIpoptSolver::set_show_result(bool show_result)
-//{
-//    nlp_->set_show_result(show_result);
-//}
-
-
-extern "C" MogsIpoptSolver* create()
-{
-    return new MogsIpoptSolver();
-}
-
-extern "C" void destroy(MogsIpoptSolver* p)
-{
-    delete p;
-}
-

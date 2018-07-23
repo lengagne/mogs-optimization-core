@@ -32,64 +32,70 @@ foreach(p LIB INCLUDE)
 endforeach()
 
 IF (NOT MogsOptimizationCore_FOUND)
-    find_package(MogsOptimizationCore REQUIRED)
+    find_package(MogsOptimizationCore QUIET)
 endIF (NOT MogsOptimizationCore_FOUND)
 
 IF (NOT MogsBoxCollision_FOUND)
-    find_package(MogsBoxCollision REQUIRED)
+    find_package(MogsBoxCollision QUIET)
 endIF (NOT MogsBoxCollision_FOUND)
 
-include_directories (
-	include
-	${MogsOptimizationCore_INCLUDE_DIRS}
-	${MogsBoxCollision_INCLUDE_DIRS}
-)
+if(MogsBoxCollision_FOUND AND MogsOptimizationCore_FOUND)
 
-configure_file ("${PROJECT_SOURCE_DIR}/config_MogsBoxCollisionConstraint.h.in"
-                "${PROJECT_SOURCE_DIR}/include/config_MogsBoxCollisionConstraint.h" )
+	include_directories (
+		include
+		${MogsOptimizationCore_INCLUDE_DIRS}
+		${MogsBoxCollision_INCLUDE_DIRS}
+	)
+
+	configure_file ("${PROJECT_SOURCE_DIR}/config_MogsBoxCollisionConstraint.h.in"
+			"${PROJECT_SOURCE_DIR}/include/config_MogsBoxCollisionConstraint.h" )
 
 
-FILE ( GLOB_RECURSE
-		header_files_MogsBoxCollisionConstraint
-		include/*.h
-		include/*.hpp
-		include/*.hxx)
+	FILE ( GLOB_RECURSE
+			header_files_MogsBoxCollisionConstraint
+			include/*.h
+			include/*.hpp
+			include/*.hxx)
 
-FILE ( GLOB_RECURSE
-		source_files_MogsBoxCollisionConstraint
-		src/*.cpp)
+	FILE ( GLOB_RECURSE
+			source_files_MogsBoxCollisionConstraint
+			src/*.cpp)
 
-ADD_LIBRARY(	MogsBoxCollisionConstraint SHARED
-		${source_files_MogsBoxCollisionConstraint}
-)
+	ADD_LIBRARY(	MogsBoxCollisionConstraint SHARED
+			${source_files_MogsBoxCollisionConstraint}
+	)
 
-target_link_libraries( MogsBoxCollisionConstraint
-			${MogsOptimizationCore_LIBRARIES}
-			${MogsBoxCollision_LIBRARIES})
+	target_link_libraries( MogsBoxCollisionConstraint
+				${MogsOptimizationCore_LIBRARIES}
+				${MogsBoxCollision_LIBRARIES})
 
-# install the include files
-SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsBoxCollisionConstraint)
-SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
+	# install the include files
+	SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsBoxCollisionConstraint)
+	SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
 
-# install the include files
-install(FILES ${header_files_MogsBoxCollisionConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
+	# install the include files
+	install(FILES ${header_files_MogsBoxCollisionConstraint} DESTINATION ${INSTALL_INCLUDE_DIRS})
 
-# install the library files
-install( TARGETS MogsBoxCollisionConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+	# install the library files
+	install( TARGETS MogsBoxCollisionConstraint LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
 
-### Configure file
-get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-SET(MogsBoxCollisionConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-SET(MogsBoxCollisionConstraint_LIBRARIES  MogsBoxCollisionConstraint CACHE INTERNAL "")
-SET(MogsBoxCollisionConstraint_FLAGS "-DMogsBoxCollisionConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
-SET(MogsBoxCollisionConstraint_FOUND "TRUE" CACHE INTERNAL "")
-add_definitions(${MogsBoxCollisionConstraint_FLAGS})
-#  add flags (done before)
-configure_file(MogsBoxCollisionConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintConfig.cmake" @ONLY)
+	### Configure file
+	get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+	SET(MogsBoxCollisionConstraint_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
+	SET(MogsBoxCollisionConstraint_LIBRARIES  MogsBoxCollisionConstraint CACHE INTERNAL "")
+	SET(MogsBoxCollisionConstraint_FLAGS "-DMogsBoxCollisionConstraint_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
+	SET(MogsBoxCollisionConstraint_FOUND "TRUE" CACHE INTERNAL "")
+	add_definitions(${MogsBoxCollisionConstraint_FLAGS})
+	#  add flags (done before)
+	configure_file(MogsBoxCollisionConstraintConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintConfig.cmake" @ONLY)
 
-install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsBoxCollisionConstraints" COMPONENT dev )
+	install ( 	FILES "${PROJECT_BINARY_DIR}/MogsBoxCollisionConstraintConfig.cmake"
+			DESTINATION "${INSTALL_LIB_PATH}/MogsBoxCollisionConstraints" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxCollision ${INSTALL_LIB_DIRS}/libMogsBoxCollisionConstraint.so)")
+	install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraint BoxCollision ${INSTALL_LIB_DIRS}/libMogsBoxCollisionConstraint.so)")
 
-add_subdirectory(derivative)
+	add_subdirectory(derivative)
+else(MogsBoxCollision_FOUND AND MogsOptimizationCore_FOUND)
+	message("Do not compile MogsBoxCollisionConstraint")
+	
+endif(MogsBoxCollision_FOUND AND MogsOptimizationCore_FOUND)

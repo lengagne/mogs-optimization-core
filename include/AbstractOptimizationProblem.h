@@ -1,5 +1,5 @@
-#ifndef __MOGSABSTRACTOPTIMIZATIONPROBLEM__
-#define __MOGSABSTRACTOPTIMIZATIONPROBLEM__
+#ifndef __ABSTRACTOPTIMIZATIONPROBLEM__
+#define __ABSTRACTOPTIMIZATIONPROBLEM__
 
 #include "MogsOptimDynamics.h"
 #include "AbstractParameterization.h"
@@ -11,13 +11,6 @@
 class AbstractOptimizationProblem
 {
       public:
-
-//        virtual void read_problem (const mogs_string & filename);
-
-//        virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-//                                            AbstractParameterization* param,
-//                                            const std::vector<AbstractCriteria* > &criteres,
-//                                            const std::vector<AbstractConstraint*> & constraints)=0;
 
         double get_obj()
         {
@@ -65,11 +58,11 @@ class AbstractOptimizationProblem
         bool visu_during_optim_ = false;
         VisuHolder * visu_optim_;
         #endif // MogsVisu_FOUND
-};
 
-// the types of the class factories
-typedef AbstractOptimizationProblem* create_optimization_problem();
-typedef void destroy_optimization_problem(AbstractOptimizationProblem*);
+    unsigned int nb_var_;
+    unsigned int nb_crit_;
+    unsigned int nb_ctr_;
+};
 
 
 #endif

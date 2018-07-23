@@ -23,14 +23,14 @@
 #ifndef __MogsIpoptSolver__
 #define __MogsIpoptSolver__
 
-#include "AbstractOptimizationSolver.h"
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
 #include "MogsIpoptProblem.hpp"
 
+
 using namespace Ipopt;
 
-class MogsIpoptSolver: public  AbstractOptimizationSolver
+class MogsIpoptSolver
 {
     public:
 
@@ -38,7 +38,7 @@ class MogsIpoptSolver: public  AbstractOptimizationSolver
 
     ~MogsIpoptSolver();
 
-    void local_solve();
+//    void local_solve(AbstractOptimizationProblem* pb);
 
 //
     void set_option_integer( const mogs_string & option_name,
@@ -50,26 +50,20 @@ class MogsIpoptSolver: public  AbstractOptimizationSolver
     void set_option_string( const mogs_string & option_name,
                             const mogs_string & value);
 
-//  herited functions
-    virtual void init_problem(AbstractOptimizationProblem** pb);
 
-    virtual void solve();
+    bool solve();
 
     protected:
-        virtual void read_solver_option ();
+        virtual void read_solver_option (QDomElement solver_xml);
 
+        mogs_string derivative_name_="not_defined";
+
+        SmartPtr < MogsIpoptProblem > nlp_;
+
+        SmartPtr < IpoptApplication > app_;
+        ApplicationReturnStatus ipopt_status_;
 
     private:
-
-    mogs_string derivative_name_="not_defined";
-
-    SmartPtr < MogsIpoptProblem > nlp_;
-    SmartPtr < IpoptApplication > app_;
-    ApplicationReturnStatus ipopt_status_;
-//    create_nlp_ipopt* creator_;
-//    destroy_nlp_ipopt* destructor_;
-
-
 
 };
 

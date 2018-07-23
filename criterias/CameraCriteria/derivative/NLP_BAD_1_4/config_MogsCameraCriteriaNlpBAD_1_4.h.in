@@ -1,8 +1,0 @@
-#ifndef MogsCameraCriteriaNlpBAD_CONFIG_H
-#define MogsCameraCriteriaNlpBAD_CONFIG_H
-
-#define MogsCameraCriteriaNlpBAD_VERSION_MAJOR @MogsCameraCriteriaNlpBAD_VERSION_MAJOR@
-#define MogsCameraCriteriaNlpBAD_VERSION_MINOR @MogsCameraCriteriaNlpBAD_VERSION_MINOR@
-
-#endif
-

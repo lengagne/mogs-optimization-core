@@ -6,14 +6,13 @@
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-11-05
 
-#ifndef __MOGS_NLP_IPOPT_HPP__
-#define __MOGS_NLP_IPOPT_HPP__
-
-#include "AbstractOptimizationProblem.h"
+#ifndef __MOGS_IPOPT_PROBLEM_HPP__
+#define __MOGS_IPOPT_PROBLEM_HPP__
+#include "MogsProblemClassifier.h"
 #include "IpTNLP.hpp"
 using namespace Ipopt;
 
-class MogsIpoptProblem:public TNLP, public AbstractOptimizationProblem
+class MogsIpoptProblem:public TNLP
 {
       public:
   /** default constructor */
@@ -71,37 +70,10 @@ class MogsIpoptProblem:public TNLP, public AbstractOptimizationProblem
 					Number obj_value,
 					const IpoptData * ip_data,
 					IpoptCalculatedQuantities * ip_cq) =0;
-	//@}
 
-    virtual Eigen::Matrix<double,Eigen::Dynamic,1> get_final_q(unsigned int robot_id) const
-    {
-        return Eigen::Matrix<double,Eigen::Dynamic,1>::Zero(42);
-    }
-
-	void save_results( 	Ipopt::Index n,
-						const Number* x,
-						Number obj_value);
-
-//    virtual void set_problem_properties(const std::vector<MogsOptimDynamics<double>* >& dyns,
-//                                        AbstractParameterization* param,
-//                                        const std::vector<AbstractCriteria* > &criteres,
-//                                        const std::vector<AbstractConstraint*> & constraints)
-//    {
-//        std::cout<<"MogsIpoptProblem::set_problem_properties"<<std::endl;
-//    }
-//
-//    /// load additional constraints and criterias from the xml infos
-//    virtual void load_ctrs_crits(std::vector<QDomElement> & ctrs,
-//                                 std::vector<QDomElement> & crits)
-//    {
-//        std::cout<<"MogsIpoptProblem::load_ctrs_crits"<<std::endl;
-//    }
-
-
-
-     virtual  void load_xml( )=0;
-
-
+//	void save_results( 	Ipopt::Index n,
+//						const Number* x,
+//						Number obj_value);
 
       private:
   /**@name Methods to block default compiler methods.
@@ -122,8 +94,7 @@ class MogsIpoptProblem:public TNLP, public AbstractOptimizationProblem
 
 };
 
-typedef MogsIpoptProblem* create_nlp_ipopt();
-typedef void destroy_nlp_ipopt(MogsIpoptProblem*);
-
+typedef MogsIpoptProblem* create_ipopt_problem();
+typedef void destroy_ipopt_problem(MogsIpoptProblem*);
 
 #endif

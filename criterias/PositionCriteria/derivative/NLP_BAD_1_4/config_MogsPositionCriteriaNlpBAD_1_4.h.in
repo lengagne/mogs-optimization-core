@@ -1,8 +1,0 @@
-#ifndef MogsPositionCriteriaNlpBAD_CONFIG_H
-#define MogsPositionCriteriaNlpBAD_CONFIG_H
-
-#define MogsPositionCriteriaNlpBAD_VERSION_MAJOR @MogsPositionCriteriaNlpBAD_VERSION_MAJOR@
-#define MogsPositionCriteriaNlpBAD_VERSION_MINOR @MogsPositionCriteriaNlpBAD_VERSION_MINOR@
-
-#endif
-
