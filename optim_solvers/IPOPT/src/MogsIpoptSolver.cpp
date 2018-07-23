@@ -24,15 +24,15 @@
 #include <ctime>
 
 
-MogsIpoptSolver::MogsIpoptSolver()
-{
-
-}
-
-MogsIpoptSolver::~MogsIpoptSolver()
-{
-    // FIXME
-}
+// MogsIpoptSolver::MogsIpoptSolver()
+// {
+//
+// }
+//
+// MogsIpoptSolver::~MogsIpoptSolver()
+// {
+//     // FIXME
+// }
 
 
 
@@ -50,7 +50,6 @@ void MogsIpoptSolver::read_solver_option (QDomElement solver_xml)
 	// read the options
 	for (QDomElement childOptions = solver_xml.firstChildElement("ipopt_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("ipopt_options") )
 	{
-		qDebug()<<"We find one option";
 		mogs_string type = childOptions.attribute("type");
 		mogs_string name = childOptions.attribute("name");
 		mogs_string value = childOptions.attribute("value");
@@ -60,7 +59,6 @@ void MogsIpoptSolver::read_solver_option (QDomElement solver_xml)
 		else if (type =="real")     app_->Options()->SetNumericValue(name.toStdString().c_str(), value.toDouble());
 		else	qDebug()<<"option of type : "<< type <<" not defined.";
 	}
-
 }
 
 void MogsIpoptSolver::set_option_integer( const mogs_string & option_name,
@@ -81,11 +79,12 @@ void MogsIpoptSolver::set_option_string( const mogs_string & option_name,
     app_->Options()->SetStringValue(option_name.toStdString().c_str(), value.toStdString().c_str());
 }
 
-bool MogsIpoptSolver::solve()
+bool MogsIpoptSolver::solve_ipopt(   SmartPtr < MogsIpoptProblem > nlp )
 {
-
+//    nlp_ = (MogsIpoptProblem*) pb;
+    std::cout<<"MogsIpoptSolver::solve()"<<std::endl;
 	ipopt_status_ = app_->Initialize ();
-//    std::cout<<"app Initialized"<<std::endl;
+    std::cout<<"app Initialized"<<std::endl;
 	if (ipopt_status_ != Solve_Succeeded)
 	  {
 		  std::cerr << std::endl << std::endl << "*** Error during initialization!" << std::endl;
@@ -97,7 +96,10 @@ bool MogsIpoptSolver::solve()
 	app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 
 	clock_t begin = clock();
-	ipopt_status_ = app_->OptimizeTNLP (nlp_);
+	std::cout<<"before optimization"<<std::endl;
+	nlp->print_name();
+	ipopt_status_ = app_->OptimizeTNLP (nlp);
+	std::cout<<"after optimization"<<std::endl;
 	clock_t end = clock();
 //	qDebug()<<"Optimization time =" << double(end - begin) / CLOCKS_PER_SEC;
 
@@ -114,6 +116,6 @@ bool MogsIpoptSolver::solve()
 	{
 	    status = false;
 	}
-//    std::cout<<"MogsIpoptSolver::solve()  done"<<std::endl;
+    std::cout<<"MogsIpoptSolver::solve()  done"<<std::endl;
     return status;
 }

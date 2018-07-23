@@ -34,13 +34,11 @@ class MogsIpoptSolver
 {
     public:
 
-    MogsIpoptSolver();
+//     MogsIpoptSolver();
+// 
+//     ~MogsIpoptSolver();
 
-    ~MogsIpoptSolver();
 
-//    void local_solve(AbstractOptimizationProblem* pb);
-
-//
     void set_option_integer( const mogs_string & option_name,
                              int value);
 
@@ -50,15 +48,12 @@ class MogsIpoptSolver
     void set_option_string( const mogs_string & option_name,
                             const mogs_string & value);
 
-
-    bool solve();
+    bool solve_ipopt(   SmartPtr < MogsIpoptProblem > nlp );
 
     protected:
         virtual void read_solver_option (QDomElement solver_xml);
 
         mogs_string derivative_name_="not_defined";
-
-        SmartPtr < MogsIpoptProblem > nlp_;
 
         SmartPtr < IpoptApplication > app_;
         ApplicationReturnStatus ipopt_status_;

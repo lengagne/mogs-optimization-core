@@ -54,7 +54,7 @@ PositionConstraint::PositionConstraint(  std::vector<MogsOptimDynamics<double> *
 void PositionConstraint::init_from_xml(   QDomElement contraint,
                                             std::vector<MogsOptimDynamics<double> *>& dyns)
 {
-    qDebug()<<"Constructor of PositionConstraint";
+//    qDebug()<<"Constructor of PositionConstraint";
     m = 3; //desired_Position_.size();
     upper_.resize(3);
     lower_.resize(3);
@@ -66,7 +66,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                  if (Child.tagName()=="robot")
                    {
                         Robot=Child.firstChild().toText().data().simplified();
-                        std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
+//                        std::cout << "   Robot  = " << Robot.toStdString().c_str() << std::endl;
                         robot_id_ = -1;
                         for (int i=0;i<dyns.size();i++)
                             if(Robot == dyns[i]->getRobotName())
@@ -83,15 +83,15 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                    }
                  else if (Child.tagName()=="body")
                    {
-                                Body=Child.firstChild().toText().data().simplified();
-                                std::cout << "   Body  = " << Body.toStdString() << std::endl;
-                                body_id_ = dyns[robot_id_]->model->GetBodyId(Body);
+                        Body=Child.firstChild().toText().data().simplified();
+//                                std::cout << "   Body  = " << Body.toStdString() << std::endl;
+                        body_id_ = dyns[robot_id_]->model->GetBodyId(Body);
                          if (body_id_  ==  std::numeric_limits <unsigned int >::max () )
                             {
                                   std::cout << "   Body_ (" <<  Body.toStdString() <<") is unkown"<< std::endl;
                                   exit(0);
                             }
-                                  std::cout << "   body_id_  = " << body_id_ << std::endl;
+//                                  std::cout << "   body_id_  = " << body_id_ << std::endl;
                     }
                 else if (Child.tagName()=="body_position")
                     {
@@ -103,7 +103,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
                                     smallData >> tval;
                                     body_Position_(i) = tval;
                                   }
-                         std::cout << "   body_Position  = " <<    body_Position_  << std::endl;
+//                         std::cout << "   body_Position  = " <<    body_Position_  << std::endl;
                     }
                 else if (Child.tagName()=="desired_position")
                 {
@@ -125,7 +125,7 @@ void PositionConstraint::init_from_xml(   QDomElement contraint,
 
                Child = Child.nextSibling().toElement();
             }
-    std::cout<<"desired_Position_ = "<< desired_Position_.transpose() <<std::endl;
+//    std::cout<<"desired_Position_ = "<< desired_Position_.transpose() <<std::endl;
 
     for (int i=0;i<3;i++)
     {

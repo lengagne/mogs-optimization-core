@@ -15,11 +15,11 @@ using namespace Ipopt;
 class MogsIpoptProblem:public TNLP
 {
       public:
-  /** default constructor */
-	MogsIpoptProblem ();
-
-  /** default destructor */
-	virtual ~ MogsIpoptProblem ();
+//  /** default constructor */
+//	MogsIpoptProblem ();
+//
+//  /** default destructor */
+//	virtual ~ MogsIpoptProblem ();
 
   /**@name Overloaded from TNLP */
 	//@{
@@ -75,6 +75,11 @@ class MogsIpoptProblem:public TNLP
 //						const Number* x,
 //						Number obj_value);
 
+	virtual void print_name() const
+	{
+		std::cout<<"name = MogsIpoptProblem"<<std::endl;
+	}
+
       private:
   /**@name Methods to block default compiler methods.
    * The compiler automatically generates the following three methods.
@@ -87,14 +92,11 @@ class MogsIpoptProblem:public TNLP
    *
    */
 	//@{
-		  MogsIpoptProblem (const MogsIpoptProblem &);
-          MogsIpoptProblem & operator= (const MogsIpoptProblem &);
+//		  MogsIpoptProblem (const MogsIpoptProblem &);
+//          MogsIpoptProblem & operator= (const MogsIpoptProblem &);
 	//@}
     protected:
 
 };
-
-typedef MogsIpoptProblem* create_ipopt_problem();
-typedef void destroy_ipopt_problem(MogsIpoptProblem*);
 
 #endif

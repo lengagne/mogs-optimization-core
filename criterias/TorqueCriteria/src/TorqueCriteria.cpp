@@ -10,7 +10,7 @@ TorqueCriteria::TorqueCriteria (double weight,
                                 const QString & robot_name ):TorqueCriteria()
 {
     weight_ = weight;
-    std::cout<<"TorqueCriteria::weight = "<< weight_<<std::endl;
+//    std::cout<<"TorqueCriteria::weight = "<< weight_<<std::endl;
     unsigned int nb = dyns.size();
     for (int i=0;i<nb;i++)
     {
@@ -42,7 +42,7 @@ void TorqueCriteria::init_from_xml (QDomElement critere,
 {
     weight_ = critere.attribute("weight").toDouble();
 
-    std::cout<<"TorqueCriteria::weight = "<< weight_<<std::endl;
+//    std::cout<<"TorqueCriteria::weight = "<< weight_<<std::endl;
 	for (QDomElement ElRobot = critere.firstChildElement("robot"); !ElRobot.isNull(); ElRobot = ElRobot.nextSiblingElement("robot") )
 	{
 		QString robot_name = ElRobot.text().simplified();

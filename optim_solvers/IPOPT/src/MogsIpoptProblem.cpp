@@ -1,12 +1,6 @@
 #include <MogsIpoptProblem.hpp>
 using namespace Ipopt;
 
-MogsIpoptProblem::MogsIpoptProblem ()
-{
-}
-MogsIpoptProblem::~MogsIpoptProblem ()
-{
-}
 
 //void MogsIpoptProblem::save_results( 	Ipopt::Index n,
 //									const Number* x,

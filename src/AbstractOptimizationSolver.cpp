@@ -34,7 +34,7 @@ void AbstractOptimizationSolver::prepare(AbstractOptimizationProblem* pb)
 	pb->set_root(root_);
 	std::cout<<"before pb load_xml"<<std::endl;
 	pb->load_xml();
-	std::cout<<"before after load_xml"<<std::endl;
+	std::cout<<"after load_xml"<<std::endl;
 }
 
 void AbstractOptimizationSolver::set_root(QDomElement root)

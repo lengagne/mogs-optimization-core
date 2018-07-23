@@ -35,7 +35,7 @@ class AbstractOptimizationSolver
 
     virtual void init_problem(AbstractOptimizationProblem** pb) = 0;
 
-    virtual void prepare(AbstractOptimizationProblem* pb);
+    void prepare(AbstractOptimizationProblem* pb);
 
 	/** Solve the problem	 */
     virtual void solve(AbstractOptimizationProblem* pb) = 0;

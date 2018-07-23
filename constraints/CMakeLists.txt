@@ -1,7 +1,7 @@
-add_subdirectory(BoxCollisionConstraint)
-add_subdirectory(BoxContactConstraint)
-add_subdirectory(BalanceConstraint)
-add_subdirectory(PositionConstraint)
-add_subdirectory(TorqueConstraint)
-add_subdirectory(TransformationConstraint)
+add_subdirectory(BoxCollision)
+add_subdirectory(BoxContact)
+add_subdirectory(Balance)
+add_subdirectory(Position)
+add_subdirectory(Torque)
+add_subdirectory(Transformation)
 

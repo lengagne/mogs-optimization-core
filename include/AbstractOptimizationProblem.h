@@ -23,9 +23,7 @@ class AbstractOptimizationProblem
         {
             robots_ = in;
             nb_robots_  = robots_.size();
-            std::cout<<"AbstractOptimizationProblem::nb_robots_ = "<< nb_robots_ <<std::endl;
         }
-
 
         void set_root(QDomElement root)
         {
