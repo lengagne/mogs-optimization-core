@@ -1,8 +1,0 @@
-#ifndef MogsBoxCollisionCriteriaNlpFAD_CONFIG_H
-#define MogsBoxCollisionCriteriaNlpFAD_CONFIG_H
-
-#define MogsBoxCollisionCriteriaNlpFAD_VERSION_MAJOR @MogsBoxCollisionCriteriaNlpFAD_VERSION_MAJOR@
-#define MogsBoxCollisionCriteriaNlpFAD_VERSION_MINOR @MogsBoxCollisionCriteriaNlpFAD_VERSION_MINOR@
-
-#endif
-
