@@ -29,7 +29,7 @@
 #include "MogsMGAProblem.h"
 
 
-class MogsMGASolver: public AbstractOptimizationSolver
+class MogsMGASolver//: //public AbstractOptimizationSolver
 {
       public:
 
@@ -43,7 +43,7 @@ class MogsMGASolver: public AbstractOptimizationSolver
     virtual void solve(AbstractOptimizationProblem* pb);
 //
     protected:
-        virtual void read_solver_option ();
+        virtual void read_solver_option (QDomElement solver_xml);
 
         MogsGeneticSolver* solver_;
 };

@@ -87,4 +87,4 @@ configure_file(MogsPositionConstraintDoubleConfig.cmake.in "${PROJECT_BINARY_DIR
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsPositionConstraintDoubleConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsPositionConstraintDouble" COMPONENT dev )
 
-install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraintDouble Position ${INSTALL_LIB_DIRS}/libMogsPositionConstraintDouble.so)")
+install(CODE "execute_process(COMMAND mogs2 plugins add MogsConstraintDouble position ${INSTALL_LIB_DIRS}/libMogsPositionConstraintDouble.so)")
