@@ -11,7 +11,7 @@ class TorqueConstraint: virtual public AbstractConstraint
 
     void compute(const double* x,double * g, std::vector<MogsOptimDynamics<double> *>& dyns)
     {
-        return compute<double>(x,g, dyns);
+        return compute<double>(g, dyns);
     }
 
     virtual void init_from_AbstractConstraint(  AbstractConstraint* c);
@@ -20,7 +20,7 @@ class TorqueConstraint: virtual public AbstractConstraint
                                 std::vector<MogsOptimDynamics<double> *>& dyns );
 
     template<typename T>
-    void compute(const T*x, T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
+    void compute( T *g, std::vector<MogsOptimDynamics<T> *>& dyns);
 
     template<typename T>
     void update_dynamics(const T *x, std::vector<MogsOptimDynamics<T> *>& dyns)

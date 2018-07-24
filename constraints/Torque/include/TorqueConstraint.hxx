@@ -1,6 +1,6 @@
 
 template<typename T>
-void TorqueConstraint::compute( const T*x, T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
+void TorqueConstraint::compute(T* g, std::vector<MogsOptimDynamics<T> *>& dyns)
 {
     unsigned int cpt = offset;
     for (int i=0;i<robot_id_.size();i++)
