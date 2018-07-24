@@ -11,7 +11,7 @@ endif(NOT MogsTorqueCriteria_FOUND)
 if(NOT MogsTorqueCriteria_FOUND)
 	message("Cannot compile MogsTorqueCriteriaDouble since MogsTorqueCriteria not found")
 else(NOT MogsTorqueCriteria_FOUND)
-	message("Will compile MogsTorqueCriteriaDouble")
+# 	message("Will compile MogsTorqueCriteriaDouble")
 	set( LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 	SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 

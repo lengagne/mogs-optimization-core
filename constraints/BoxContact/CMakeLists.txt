@@ -40,7 +40,7 @@ IF (NOT MogsBoxCollisionConstraint_FOUND)
 endIF (NOT MogsBoxCollisionConstraint_FOUND)
 
 
-if(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
+if(MogsBoxCollisionConstraint_FOUND AND MogsOptimizationCore_FOUND)
 
 	include_directories (
 		include
@@ -97,6 +97,12 @@ if(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
 
 	add_subdirectory(derivative)
 
-else(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
-	message("Do not compile MogsBoxContactConstraint")	
-endif(MogsBoxContact_FOUND AND MogsOptimizationCore_FOUND)
+else(MogsBoxCollisionConstraint_FOUND AND MogsOptimizationCore_FOUND)
+	message("cannot compile MogsBoxContactConstraint")
+	IF (NOT MogsOptimizationCore_FOUND)
+		message("cannot compile MogsBoxContactConstraint since MogsOptimizationCore was not found")
+	ENDIF (NOT MogsOptimizationCore_FOUND)
+	IF (NOT MogsBoxCollisionConstraint_FOUND)
+		message("cannot compile MogsBoxContactConstraint since MogsBoxCollisionConstraint was not found")
+	ENDIF (NOT MogsBoxCollisionConstraint_FOUND)	
+endif(MogsBoxCollisionConstraint_FOUND AND MogsOptimizationCore_FOUND)

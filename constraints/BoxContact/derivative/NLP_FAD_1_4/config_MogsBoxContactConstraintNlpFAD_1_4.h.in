@@ -1,8 +1,0 @@
-#ifndef MogsBoxContactCriteriaNlpFAD_CONFIG_H
-#define MogsBoxContactCriteriaNlpFAD_CONFIG_H
-
-#define MogsBoxContactCriteriaNlpFAD_VERSION_MAJOR @MogsBoxContactCriteriaNlpFAD_VERSION_MAJOR@
-#define MogsBoxContactCriteriaNlpFAD_VERSION_MINOR @MogsBoxContactCriteriaNlpFAD_VERSION_MINOR@
-
-#endif
-
