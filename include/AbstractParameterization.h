@@ -53,9 +53,6 @@ protected:
 
         // name of the parameterization (used to perfom cast)
         QString plugin_name_;
-
-        unsigned int nb_robots_;
-        std::vector<unsigned int> ndofs_;
 };
 
 #endif // ABSTRACTPARAMETERIZATION_H
