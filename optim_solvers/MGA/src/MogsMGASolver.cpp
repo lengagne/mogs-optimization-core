@@ -32,30 +32,22 @@ MogsMGASolver::~MogsMGASolver()
 
 void MogsMGASolver::read_solver_option (QDomElement solver_xml)
 {
-    std::cout<<"MogsMGASolver::read_solver_option" <<std::endl;
-    // For the moment we do not read the options
     solver_ = new MogsGeneticSolver();
 	for (QDomElement childOptions = solver_xml.firstChildElement("mga_options"); !childOptions.isNull(); childOptions = childOptions.nextSiblingElement("mga_options") )
 	{
-		qDebug()<<"We find one option";
 		mogs_string type = childOptions.attribute("type");
 		mogs_string name = childOptions.attribute("name");
 		mogs_string value = childOptions.attribute("value");
 
 		if(type =="integer")
         {
-            std::cout<<"read integer"<<std::endl;
             int v = value.toInt();
             if (name == "nb_queue")
                 solver_->set_nb_queue(v);
             else if (name == "nb_selected")
                 solver_->set_nb_selected(v);
             else if (name == "max_iter")
-            {
-                std::cout<<"Set the max iter to "<< v <<std::endl;
                 solver_->set_max_iter(v);
-            }
-
         }
 		else if (type =="real")
         {
