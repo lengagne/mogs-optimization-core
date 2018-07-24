@@ -2,7 +2,7 @@
 
 TorqueDoubleCritere::TorqueDoubleCritere ( ):TorqueCriteria()
 {
-    std::cout<<"Constructor of TorqueDoubleCritere"<<std::endl;
+
 }
 
 TorqueDoubleCritere::~TorqueDoubleCritere ()

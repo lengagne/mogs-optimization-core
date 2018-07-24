@@ -30,13 +30,6 @@ MogsMGASolver::~MogsMGASolver()
 
 }
 
-void MogsMGASolver::init_problem(AbstractOptimizationProblem** pb)
-{
-    std::cout<<"MogsMGASolver::init_problem"<<std::endl;
-    *pb = new MogsMGAProblem();
-    std::cout<<"MogsMGASolver::init_problem done"<<std::endl;
-}
-
 void MogsMGASolver::read_solver_option (QDomElement solver_xml)
 {
     std::cout<<"MogsMGASolver::read_solver_option" <<std::endl;
@@ -83,14 +76,6 @@ void MogsMGASolver::solve(AbstractOptimizationProblem* pb)
 {
     std::cout<<"MogsMGASolver::solve()"<<std::endl;
     solver_->solve((MogsMGAProblem*)pb);
+    std::cout<<"MogsMGASolver::solve() done"<<std::endl;
 }
 
-extern "C" MogsMGASolver* create()
-{
-    return new MogsMGASolver();
-}
-
-extern "C" void destroy(MogsMGASolver* p)
-{
-    delete p;
-}

@@ -37,9 +37,6 @@ class MogsMGASolver//: //public AbstractOptimizationSolver
 
 	~MogsMGASolver();
 
-	//  herited functions
-    virtual void init_problem(AbstractOptimizationProblem** pb);
-
     virtual void solve(AbstractOptimizationProblem* pb);
 //
     protected:
