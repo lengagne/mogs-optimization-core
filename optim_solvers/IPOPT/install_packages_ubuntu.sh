@@ -14,7 +14,7 @@ cd ../Blas
 cd ../Lapack
 ./get.Lapack
 
-cd ../Metis-
+cd ../Metis
 ./get.Metis
 
 cd ../Mumps
