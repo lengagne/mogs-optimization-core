@@ -1,7 +1,7 @@
 
 SET(CMAKE_MODULE_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
-find_package(IPOPT QUIET)
+find_package(IPOPT REQUIRED)
 
 if(IPOPT_FOUND)
 
