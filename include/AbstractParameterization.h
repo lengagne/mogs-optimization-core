@@ -2,8 +2,7 @@
 #define ABSTRACTPARAMETERIZATION_H
 
 #include "MogsOptimDynamics.h"
-#include "AbstractConstraint.hpp"
-#include "AbstractConstraint.hpp"
+#include "AbstractConstraint.h"
 
 class AbstractParameterization
 {
@@ -13,6 +12,7 @@ class AbstractParameterization
 
         unsigned int get_nb_param() const
         {
+            std::cout<<"AbstractParameterization::nb_param_ = "<< nb_param_ <<std::endl;
             return nb_param_;
         }
 
@@ -45,7 +45,6 @@ class AbstractParameterization
         virtual void init_from_xml( QDomElement param,
                                     std::vector<MogsOptimDynamics<double> *>& dyns ) = 0;
 
-        virtual void set_init_value(const std::vector<Eigen::Matrix<double,Eigen::Dynamic,1> > q);
 
 protected:
         unsigned int nb_param_;

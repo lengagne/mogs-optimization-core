@@ -39,3 +39,13 @@ void ToZeroConstraint::init_from_xml (  QDomElement ele,
 ToZeroConstraint::~ToZeroConstraint ()
 {
 }
+
+extern "C" ToZeroConstraint* create()
+{
+    return new ToZeroConstraint( );
+}
+
+extern "C" void destroy(ToZeroConstraint* p)
+{
+    delete p;
+}

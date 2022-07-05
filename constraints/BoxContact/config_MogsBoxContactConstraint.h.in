@@ -1,0 +1,9 @@
+#ifndef MogsBoxContactConstraint_CONFIG_H
+#define MogsBoxContactConstraint_CONFIG_H
+
+#define MogsBoxContactConstraint_VERSION_MAJOR @MogsBoxContactConstraint_VERSION_MAJOR@
+#define MogsBoxContactConstraint_VERSION_MINOR @MogsBoxContactConstraint_VERSION_MINOR@
+
+
+#endif
+

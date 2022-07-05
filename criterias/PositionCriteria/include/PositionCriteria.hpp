@@ -1,7 +1,7 @@
 #ifndef  PositionCriteria_HPP_
 #define  PositionCriteria_HPP_
 
-#include "AbstractCriteria.hpp"
+#include "AbstractCriteria.h"
 
 class PositionCriteria: virtual public AbstractCriteria
 {   public:

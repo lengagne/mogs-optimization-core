@@ -1,0 +1,8 @@
+#ifndef MogsBoxCollisionCriteriaDouble_CONFIG_H
+#define MogsBoxCollisionCriteriaDouble_CONFIG_H
+
+#define MogsBoxCollisionCriteriaDouble_VERSION_MAJOR @MogsBoxCollisionCriteriaDouble_VERSION_MAJOR@
+#define MogsBoxCollisionCriteriaDouble_VERSION_MINOR @MogsBoxCollisionCriteriaDouble_VERSION_MINOR@
+
+#endif
+

@@ -50,6 +50,11 @@ class Dependency
                 d(i) |= a.d(i);
         }
 
+        void operator -= (const Dependency& a)
+        {
+            *this += a;
+        }
+
         inline Dependency operator + (const Dependency& a) const
         {
             Dependency s=*this;

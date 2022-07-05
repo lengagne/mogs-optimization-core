@@ -14,7 +14,7 @@ cd ../Blas
 cd ../Lapack
 ./get.Lapack
 
-cd ../Metis-
+cd ../Metis
 ./get.Metis
 
 cd ../Mumps
@@ -23,7 +23,9 @@ cd ../Mumps
 
 cd ../../
 pwd
-./configure --prefix=/usr/local/  CXXFLAGS=-fopenmp
+./configure --prefix=/usr/local/  CXXFLAGS=-fopenmp 
+# to install ipopt using external hsl 
+./configure --prefix=/usr/local/  CXXFLAGS=-fopenmp  --with-hsl-lib=libcoinhsl.so # --with-hsl-incdir  XXX --with-hsl-datadir XXX may be required
 make
 make test
 sudo make install

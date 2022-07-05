@@ -224,6 +224,15 @@ CameraCriteria::~CameraCriteria ()
 {
 }
 
+extern "C" CameraCriteria* create( )
+{
+    return new CameraCriteria( );
+}
+
+extern "C" void destroy(CameraCriteria* p)
+{
+    delete p;
+}
 
 
 

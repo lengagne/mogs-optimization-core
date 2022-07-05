@@ -1,0 +1,8 @@
+#ifndef MogsTransformationConstraintNlpFAD_CONFIG_H
+#define MogsTransformationConstraintNlpFAD_CONFIG_H
+
+#define MogsTransformationConstraintNlpFAD_VERSION_MAJOR @MogsTransformationConstraintNlpFAD_VERSION_MAJOR@
+#define MogsTransformationConstraintNlpFAD_VERSION_MINOR @MogsTransformationConstraintNlpFAD_VERSION_MINOR@
+
+#endif
+

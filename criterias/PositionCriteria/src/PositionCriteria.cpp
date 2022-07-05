@@ -124,6 +124,15 @@ PositionCriteria::~PositionCriteria ()
 }
 
 
+extern "C" PositionCriteria* create( )
+{
+    return new PositionCriteria( );
+}
+
+extern "C" void destroy(PositionCriteria* p)
+{
+    delete p;
+}
 
 
 

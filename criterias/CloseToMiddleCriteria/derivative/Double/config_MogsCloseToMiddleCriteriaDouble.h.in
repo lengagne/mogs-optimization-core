@@ -1,0 +1,8 @@
+#ifndef MogsPositionCriteriaDouble_CONFIG_H
+#define MogsPositionCriteriaDouble_CONFIG_H
+
+#define MogsPositionCriteriaDouble_VERSION_MAJOR @MogsPositionCriteriaDouble_VERSION_MAJOR@
+#define MogsPositionCriteriaDouble_VERSION_MINOR @MogsPositionCriteriaDouble_VERSION_MINOR@
+
+#endif
+

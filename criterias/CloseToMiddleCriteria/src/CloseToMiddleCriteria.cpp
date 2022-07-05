@@ -89,7 +89,12 @@ CloseToMiddleCriteria::~CloseToMiddleCriteria ()
 {
 }
 
+extern "C" CloseToMiddleCriteria* create( )
+{
+    return new CloseToMiddleCriteria( );
+}
 
-
-
-
+extern "C" void destroy(CloseToMiddleCriteria* p)
+{
+    delete p;
+}

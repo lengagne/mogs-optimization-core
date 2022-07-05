@@ -42,7 +42,7 @@ int main (int argv, char *argc[])
 			  endl;
 		  return (int) status;
 	  }
-
+        app->Options()->SetStringValue("linear_solver", "ma27");
 	status = app->OptimizeTNLP (mynlp);
 
 	if (status == Solve_Succeeded)

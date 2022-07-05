@@ -1,0 +1,8 @@
+#ifndef MogsBalanceCriteriaDouble_CONFIG_H
+#define MogsBalanceCriteriaDouble_CONFIG_H
+
+#define MogsBalanceCriteriaDouble_VERSION_MAJOR @MogsBalanceCriteriaDouble_VERSION_MAJOR@
+#define MogsBalanceCriteriaDouble_VERSION_MINOR @MogsBalanceCriteriaDouble_VERSION_MINOR@
+
+#endif
+

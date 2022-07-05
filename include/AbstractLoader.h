@@ -3,8 +3,8 @@
 
 #include "MogsProblemClassifier.h"
 
-#include "AbstractConstraint.hpp"
-#include "AbstractCriteria.hpp"
+#include "AbstractConstraint.h"
+#include "AbstractCriteria.h"
 #include "AbstractParameterization.h"
 
 class AbstractLoader

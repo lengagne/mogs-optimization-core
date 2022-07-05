@@ -1,0 +1,16 @@
+# - Config file for the MogsBoxContactCriteriaDouble lib
+# It defines the following variables
+#
+# MogsBoxContactCriteriaDouble_INCLUDE_DIRS - include directories
+# MogsBoxContactCriteriaDouble_LIBRARY_DIRS - library directory (normally not used!)
+# MogsBoxContactCriteriaDouble_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsBoxContactCriteriaDouble_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsBoxContactCriteriaDouble_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsBoxContactCriteriaDouble_LIBRARIES @MogsBoxContactCriteriaDouble_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsBoxContactCriteriaDouble_FLAGS @MogsBoxContactCriteriaDouble_FLAGS@ @MogsCore_FLAGS@)

@@ -86,5 +86,4 @@ configure_file(MogsCloseToMiddleCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/M
 install ( 	FILES "${PROJECT_BINARY_DIR}/MogsCloseToMiddleCriteriaConfig.cmake"
 		DESTINATION "${INSTALL_LIB_PATH}/MogsCloseToMiddleCriteria" COMPONENT dev )
 
-
-add_subdirectory(derivative)
+# add_subdirectory(derivative)

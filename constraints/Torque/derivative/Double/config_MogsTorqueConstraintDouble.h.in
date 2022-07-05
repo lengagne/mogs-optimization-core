@@ -1,0 +1,8 @@
+#ifndef MogsTorqueConstraintDouble_CONFIG_H
+#define MogsTorqueConstraintDouble_CONFIG_H
+
+#define MogsTorqueConstraintDouble_VERSION_MAJOR @MogsTorqueConstraintDouble_VERSION_MAJOR@
+#define MogsTorqueConstraintDouble_VERSION_MINOR @MogsTorqueConstraintDouble_VERSION_MINOR@
+
+#endif
+

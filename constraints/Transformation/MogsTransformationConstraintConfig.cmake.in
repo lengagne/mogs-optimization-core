@@ -1,0 +1,16 @@
+# - Config file for the MogsTransformationDCriteria lib
+# It defines the following variables
+#
+# MogsTransformationDCriteria_INCLUDE_DIRS - include directories
+# MogsTransformationDCriteria_LIBRARY_DIRS - library directory (normally not used!)
+# MogsTransformationDCriteria_LIBRARIES - libraries to link against
+
+# Tell the user project where to find our headers and libraries
+
+set(MogsTransformationConstraint_INCLUDE_DIRS  @INSTALL_INCLUDE_DIRS@ @MogsCore_INCLUDE_DIRS@)
+
+set(MogsTransformationConstraint_LIBRARY_DIRS  @INSTALL_LIB_DIRS@ @MogsCore_LIBRARY_DIRS@)
+
+set(MogsTransformationConstraint_LIBRARIES @MogsTransformationConstraint_LIBRARIES@ @MogsCore_LIBRARIES@)
+
+SET(MogsTransformationConstraint_FLAGS @MogsTransformationConstraint_FLAGS@ @MogsCore_FLAGS@)

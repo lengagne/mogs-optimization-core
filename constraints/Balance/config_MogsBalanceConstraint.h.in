@@ -1,0 +1,9 @@
+#ifndef MogsBalanceConstraint_CONFIG_H
+#define MogsBalanceConstraint_CONFIG_H
+
+#define MogsBalanceConstraint_VERSION_MAJOR @MogsBalanceConstraint_VERSION_MAJOR@
+#define MogsBalanceConstraint_VERSION_MINOR @MogsBalanceConstraint_VERSION_MINOR@
+
+
+#endif
+

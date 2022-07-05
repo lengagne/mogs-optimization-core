@@ -35,56 +35,61 @@ IF (NOT MogsOptimizationCore_FOUND)
     find_package(MogsOptimizationCore REQUIRED)
 endIF (NOT MogsOptimizationCore_FOUND)
 
-include_directories (
-	include
-	${MogsOptimizationCore_INCLUDE_DIRS}
-)
 
-configure_file ("${PROJECT_SOURCE_DIR}/config_MogsTorqueCriteria.h.in"
-                "${PROJECT_SOURCE_DIR}/include/config_MogsTorqueCriteria.h" )
+IF (NOT MogsOptimizationCore_FOUND)
+	message("Cannot compile MogsTorqueCriteria since MogsOptimizationCore not found")
+ELSE (NOT MogsOptimizationCore_FOUND)
+	include_directories (
+		include
+		${MogsOptimizationCore_INCLUDE_DIRS}
+	)
 
-
-FILE ( GLOB_RECURSE
-		header_files_MogsTorqueCriteria
-		include/*.h
-		include/*.hpp
-		include/*.hxx)
-
-FILE ( GLOB_RECURSE
-		source_files_MogsTorqueCriteria
-		src/*.cpp)
-
-ADD_LIBRARY(	MogsTorqueCriteria SHARED
-		${source_files_MogsTorqueCriteria}
-)
-
-target_link_libraries( MogsTorqueCriteria
-			${MogsIpoptOptimization_LIBRARIES})
+	configure_file ("${PROJECT_SOURCE_DIR}/config_MogsTorqueCriteria.h.in"
+			"${PROJECT_SOURCE_DIR}/include/config_MogsTorqueCriteria.h" )
 
 
-#
-# install the include files
-SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsTorqueCriteria)
-SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
+	FILE ( GLOB_RECURSE
+			header_files_MogsTorqueCriteria
+			include/*.h
+			include/*.hpp
+			include/*.hxx)
 
-# install the include files
-install(FILES ${header_files_MogsTorqueCriteria} DESTINATION ${INSTALL_INCLUDE_DIRS})
+	FILE ( GLOB_RECURSE
+			source_files_MogsTorqueCriteria
+			src/*.cpp)
 
-# install the library files
-install( TARGETS MogsTorqueCriteria LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+	ADD_LIBRARY(	MogsTorqueCriteria SHARED
+			${source_files_MogsTorqueCriteria}
+	)
 
-### Configure file
-get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-SET(MogsTorqueCriteria_INCLUDE_DIRS  ${Include_Directories} CACHE INTERNAL "")
-SET(MogsTorqueCriteria_LIBRARIES  MogsTorqueCriteria CACHE INTERNAL "")
-SET(MogsTorqueCriteria_FLAGS "-DMogsTorqueCriteria_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
-SET(MogsTorqueCriteria_FOUND "TRUE" CACHE INTERNAL "")
-add_definitions(${MogsTorqueCriteria_FLAGS})
-#  add flags (done before)
-configure_file(MogsTorqueCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsTorqueCriteriaConfig.cmake" @ONLY)
-
-install ( 	FILES "${PROJECT_BINARY_DIR}/MogsTorqueCriteriaConfig.cmake"
-		DESTINATION "${INSTALL_LIB_PATH}/MogsTorqueCriteria" COMPONENT dev )
+	target_link_libraries( MogsTorqueCriteria
+				${MogsOptimizationCore_LIBRARIES})
 
 
-add_subdirectory(derivative)
+	#
+	# install the include files
+	SET(INSTALL_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR}/include/Mogs2/MogsTorqueCriteria)
+	SET(INSTALL_LIB_DIRS ${CMAKE_INSTALL_LIBDIR}/lib )
+
+	# install the include files
+	install(FILES ${header_files_MogsTorqueCriteria} DESTINATION ${INSTALL_INCLUDE_DIRS})
+
+	# install the library files
+	install( TARGETS MogsTorqueCriteria LIBRARY DESTINATION ${INSTALL_LIB_DIRS}  COMPONENT main)
+
+	### Configure file
+	get_property(Include_Directories DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+	SET(MogsTorqueCriteria_INCLUDE_DIRS_LOCAL  ${Include_Directories} CACHE INTERNAL "")
+	SET(MogsTorqueCriteria_INCLUDE_DIRS  ${Include_Directories} ${MogsOptimizationCore_INCLUDE_DIRS} CACHE INTERNAL "")
+	SET(MogsTorqueCriteria_LIBRARIES  MogsTorqueCriteria CACHE INTERNAL "")
+	SET(MogsTorqueCriteria_FLAGS "-DMogsTorqueCriteria_FOUND ${MogsIpoptOptimization_FLAGS}" CACHE INTERNAL "")
+	SET(MogsTorqueCriteria_FOUND "TRUE" CACHE INTERNAL "")
+	add_definitions(${MogsTorqueCriteria_FLAGS})
+	#  add flags (done before)
+	configure_file(MogsTorqueCriteriaConfig.cmake.in "${PROJECT_BINARY_DIR}/MogsTorqueCriteriaConfig.cmake" @ONLY)
+
+	install ( 	FILES "${PROJECT_BINARY_DIR}/MogsTorqueCriteriaConfig.cmake"
+			DESTINATION "${INSTALL_LIB_PATH}/MogsTorqueCriteria" COMPONENT dev )
+
+	add_subdirectory(derivative)
+ENDIF (NOT MogsOptimizationCore_FOUND)
