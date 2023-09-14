@@ -52,7 +52,7 @@ class MogsAbstractOptimizationProblem: public MogsAbstractProblem
         mogs_string solver_name_;
 
         AbstractOptimizationProblem* pb_;
-        AbstractOptimizationSolver* solver_;
+        AbstractOptimizationSolver* optim_solver_;
 
 	#ifdef MogsVisu_FOUND
 	bool visu_during_optim_;
