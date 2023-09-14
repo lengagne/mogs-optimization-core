@@ -34,7 +34,20 @@
 //     // FIXME
 // }
 
+void MogsIpoptSolver::init_problem(AbstractOptimizationProblem** pb)
+{
+    
+}
 
+void MogsIpoptSolver::solve(AbstractOptimizationProblem* pb)
+{
+    
+}
+
+void MogsIpoptSolver::read_solver_option ( )
+{
+    
+}
 
 ////void read_problem (const mogs_string & filename);
 void MogsIpoptSolver::read_solver_option (QDomElement solver_xml)

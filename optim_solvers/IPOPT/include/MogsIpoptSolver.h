@@ -26,17 +26,25 @@
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
 #include "MogsIpoptProblem.hpp"
+#include "AbstractOptimizationSolver.h"
 
 
 using namespace Ipopt;
 
-class MogsIpoptSolver
+class MogsIpoptSolver : public AbstractOptimizationSolver
 {
     public:
 
-//     MogsIpoptSolver();
+    MogsIpoptSolver()
+    {
+        
+    }
 // 
 //     ~MogsIpoptSolver();
+
+    virtual void init_problem(AbstractOptimizationProblem** pb);
+
+    virtual void solve(AbstractOptimizationProblem* pb);
 
 
     void set_option_integer( const mogs_string & option_name,
@@ -51,6 +59,9 @@ class MogsIpoptSolver
     bool solve_ipopt(   SmartPtr < MogsIpoptProblem > nlp );
 
     protected:
+        
+        virtual void read_solver_option ( );
+        
         virtual void read_solver_option (QDomElement solver_xml);
 
         mogs_string derivative_name_="not_defined";
