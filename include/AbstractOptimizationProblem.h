@@ -19,6 +19,12 @@ class AbstractOptimizationProblem
 
         virtual  void load_xml( )=0;
 
+        void set_robot(MogsRobotProperties* in)
+        {
+            robots_.push_back(in);
+            nb_robots_  = robots_.size();
+        }
+        
         void set_robots(const std::vector<MogsRobotProperties*> & in)
         {
             robots_ = in;
